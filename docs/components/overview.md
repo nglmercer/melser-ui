@@ -161,7 +161,7 @@ Aquí puedes probar algunos componentes en tiempo real:
 
 <melser-rating id="demo-rating" label="Califica este servicio" max="5"></melser-rating>
 
-<button  id="demo-form-btn" variant="outline">Probar Formulario</button >
+<button  id="demo-form-btn" variant="outline" type="submit">Probar Formulario</button >
 
 <div id="demo-result" style="margin-top: 1rem; padding: 0.5rem; background: #f5f5f5; border-radius: 4px; display: none;">
   <strong>Valores del formulario:</strong>
