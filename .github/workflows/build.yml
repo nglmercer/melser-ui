@@ -1,0 +1,45 @@
+name: Build Melser UI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Type Check
+      run: npm run type-check
+
+    - name: Build Library (tsup)
+      run: npm run build:lib
+
+    - name: Build Demo Web (Vite)
+      run: npm run build:web
+
+    # Optional: Upload artifacts if you want to inspect the build
+    - name: Upload Library Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: melser-ui-lib
+        path: dist/
+
+    - name: Upload Web Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: melser-ui-web
+        path: dist-web/
