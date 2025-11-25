@@ -209,9 +209,9 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
     </melser-file-upload>
   </div>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Completar Registro
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -298,9 +298,9 @@ if (form) {
     </melser-file-upload>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Procesar Archivos
-  </melser-button>
+  </button >
 </form>
 
 <div id="upload-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">

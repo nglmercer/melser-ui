@@ -105,7 +105,7 @@ import type { MelserComponent } from 'melser-ui/types';
 // Importar componentes específicos
 import 'melser-ui/components/melser-checkbox.js';
 import 'melser-ui/components/melser-text-input.js';
-import 'melser-ui/components/melser-button.js';
+import 'melser-ui/components/button .js';
 
 // Esto es más eficiente si solo usas algunos componentes
 ```
@@ -126,7 +126,7 @@ import { registerComponents } from 'melser-ui/utils/registration';
 registerComponents({
   'melser-checkbox': MelserCheckbox,
   'melser-text-input': MelserTextInput,
-  'melser-button': MelserButton
+  'button ': MelserButton
 });
 ```
 
@@ -154,7 +154,7 @@ declare namespace JSX {
   interface IntrinsicElements {
     'melser-checkbox': any;
     'melser-text-input': any;
-    'melser-button': any;
+    'button ': any;
     // Agregar otros componentes aquí
   }
 }
@@ -196,7 +196,7 @@ declare namespace JSX {
 <body>
   <div id="app">
     <melser-checkbox id="accept" label="Acepto los términos"></melser-checkbox>
-    <melser-button id="submit" variant="primary">Enviar</melser-button>
+    <button  id="submit" variant="primary">Enviar</button >
   </div>
   
   <script type="module">

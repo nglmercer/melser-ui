@@ -224,9 +224,9 @@ Un componente de calificación con estrellas interactivo, soporte para medios pu
     </melser-textarea>
   </div>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Enviar Reseña
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -348,9 +348,9 @@ if (form) {
     <div id="rating-details"></div>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Enviar Calificación
-  </melser-button>
+  </button >
 </form>
 
 <div id="rating-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">

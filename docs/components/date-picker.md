@@ -213,9 +213,9 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
     </melser-date-picker>
   </div>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Buscar Disponibilidad
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -339,9 +339,9 @@ if (form) {
     </melser-date-picker>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Crear Evento
-  </melser-button>
+  </button >
 </form>
 
 <div id="date-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">

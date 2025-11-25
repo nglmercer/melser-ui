@@ -129,9 +129,9 @@ Un componente de rango (slider) personalizable para selección de valores numér
     label="Volumen">
   </melser-range>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Guardar Configuración
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -175,9 +175,9 @@ if (form) {
     </melser-range>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Guardar Configuración
-  </melser-button>
+  </button >
 </form>
 
 

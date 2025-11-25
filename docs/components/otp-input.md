@@ -126,13 +126,13 @@ Un componente de entrada de código OTP (One-Time Password) para verificación d
     label="Recordar dispositivo por 30 días">
   </melser-checkbox>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Verificar
-  </melser-button>
+  </button >
   
-  <melser-button type="button" variant="secondary">
+  <button  type="button" variant="secondary">
     Reenviar código
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -183,13 +183,13 @@ if (form) {
   </div>
   
   <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-    <melser-button type="submit" variant="primary" id="form-submit">
+    <button  type="submit" variant="primary" id="form-submit">
       Verificar
-    </melser-button>
+    </button >
     
-    <melser-button type="button" variant="secondary" id="resend-btn">
+    <button  type="button" variant="secondary" id="resend-btn">
       Reenviar código
-    </melser-button>
+    </button >
   </div>
 </form>
 

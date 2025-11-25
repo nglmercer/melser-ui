@@ -116,9 +116,9 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
     placeholder="Repite tu contraseña">
   </melser-password-input>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Registrarse
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -200,9 +200,9 @@ if (form) {
     </melser-password-input>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Cambiar Contraseña
-  </melser-button>
+  </button >
 </form>
 
 ## Personalización con CSS

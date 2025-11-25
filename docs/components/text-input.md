@@ -173,9 +173,9 @@ Un componente de entrada de texto avanzado y personalizable con validación, ico
     placeholder="https://miweb.com">
   </melser-text-input>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Registrarse
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -246,9 +246,9 @@ if (form) {
     </melser-text-input>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Enviar Formulario
-  </melser-button>
+  </button >
 </form>
 
 ## Personalización con CSS
@@ -317,13 +317,6 @@ melser-text-input {
 
 ## Accesibilidad
 
-El componente MelserTextInput incluye:
-
-  --melser-input-font-size: 14px;
-  --melser-input-background: #ffffff;
-  --melser-input-disabled-bg: #f9fafb;
-}
-```
 
 ### Ejemplos de Personalización
 

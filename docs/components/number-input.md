@@ -189,9 +189,9 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
     value="0">
   </melser-number-input>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Guardar Producto
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -273,9 +273,9 @@ if (form) {
     </melser-number-input>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Calcular Total
-  </melser-button>
+  </button >
 </form>
 
 <div id="calculation-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">

@@ -115,9 +115,9 @@ Un componente checkbox accesible y personalizable construido con Lit.
     id="privacy">
   </melser-checkbox>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Crear Cuenta
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -171,9 +171,9 @@ if (form) {
     </melser-checkbox>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Crear Cuenta
-  </melser-button>
+  </button >
 </form>
 
 

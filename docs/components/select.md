@@ -225,9 +225,9 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
     <option value="student">Cuenta Estudiantil</option>
   </melser-select>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Completar Registro
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -338,9 +338,9 @@ function updateCities(citySelect, country) {
     </melser-select>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Enviar Formulario
-  </melser-button>
+  </button >
 </form>
 
 

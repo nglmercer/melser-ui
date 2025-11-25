@@ -138,9 +138,9 @@ Un componente de rango doble (dual slider) para selección de rangos de valores 
     label="Distancia (km)">
   </melser-dual-range>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Aplicar Filtros
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -197,9 +197,9 @@ if (form) {
     </melser-dual-range>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Aplicar Filtros
-  </melser-button>
+  </button >
 </form>
 
 ## Ejemplos Avanzados

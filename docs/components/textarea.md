@@ -153,9 +153,9 @@ Un componente de área de texto avanzado con redimensionamiento automático, con
     placeholder="Cualquier información extra que consideres relevante">
   </melser-textarea>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Enviar Mensaje
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -206,9 +206,9 @@ if (form) {
     </melser-textarea>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Enviar Formulario
-  </melser-button>
+  </button >
 </form>
 
 ## Personalización con CSS

@@ -230,9 +230,9 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
     </melser-switch>
   </div>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Guardar Configuración
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -333,9 +333,9 @@ if (form) {
     </melser-switch>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Aplicar Configuración
-  </melser-button>
+  </button >
 </form>
 
 <div id="switch-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">

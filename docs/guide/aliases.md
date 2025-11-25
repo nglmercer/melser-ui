@@ -37,7 +37,7 @@ import type { MelserComponent } from '@/types';
 // ✅ Importaciones específicas de componentes
 import { MelserCheckbox } from '@/components/melser-checkbox';
 import { MelserTextInput } from '@/components/melser-text-input';
-import { MelserButton } from '@/components/melser-button';
+import { MelserButton } from '@/components/button ';
 
 // ✅ Importación de estilos
 import '@/styles/theme.css';
@@ -71,7 +71,7 @@ import type { MelserFormData } from '@/types';
 // ✅ Importar otros componentes
 import '@/components/melser-text-input';
 import '@/components/melser-checkbox';
-import '@/components/melser-button';
+import '@/components/button ';
 
 @customElement('melser-form')
 export class MelserForm extends LitElement {
@@ -101,9 +101,9 @@ export class MelserForm extends LitElement {
           required>
         </melser-checkbox>
 
-        <melser-button type="submit" variant="primary">
+        <button  type="submit" variant="primary">
           Enviar
-        </melser-button>
+        </button >
       </form>
     `;
   }

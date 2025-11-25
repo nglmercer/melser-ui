@@ -56,12 +56,12 @@ Todos los componentes siguen el mismo patrón de uso:
 </melser-text-input>
 
 <!-- Con eventos -->
-<melser-button 
+<button  
   id="submit-btn" 
   variant="primary" 
   disabled>
   Guardar
-</melser-button>
+</button >
 ```
 
 ```javascript
@@ -140,12 +140,12 @@ Aquí puedes probar algunos componentes en tiempo real:
     id="remember-checkbox">
   </melser-checkbox>
   
-  <melser-button 
+  <button  
     variant="primary" 
     type="submit"
     id="submit-btn">
     Iniciar Sesión
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -161,7 +161,7 @@ Aquí puedes probar algunos componentes en tiempo real:
 
 <melser-rating id="demo-rating" label="Califica este servicio" max="5"></melser-rating>
 
-<melser-button id="demo-form-btn" variant="outline">Probar Formulario</melser-button>
+<button  id="demo-form-btn" variant="outline">Probar Formulario</button >
 
 <div id="demo-result" style="margin-top: 1rem; padding: 0.5rem; background: #f5f5f5; border-radius: 4px; display: none;">
   <strong>Valores del formulario:</strong>
@@ -184,7 +184,7 @@ Todos los componentes de Melser UI están diseñados con accesibilidad en mente:
 Los componentes usan **CSS Custom Properties** para facilitar la personalización:
 
 ```css
-melser-button {
+button  {
   --melser-primary-color: #3b82f6;
   --melser-border-radius: 6px;
   --melser-padding: 8px 16px;

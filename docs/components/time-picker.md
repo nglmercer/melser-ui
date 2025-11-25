@@ -216,9 +216,9 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
     </melser-time-picker>
   </div>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Agendar Cita
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -352,9 +352,9 @@ if (form) {
     </melser-time-picker>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Configurar Horarios
-  </melser-button>
+  </button >
 </form>
 
 <div id="time-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">

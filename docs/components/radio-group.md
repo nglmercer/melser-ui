@@ -12,9 +12,9 @@ Un componente de grupo de radio buttons accesible y personalizable con orientaci
 <melser-radio-group 
   label="Selecciona una opción" 
   name="opcion">
-  <melser-radio value="opcion1" label="Opción 1"></melser-radio>
-  <melser-radio value="opcion2" label="Opción 2"></melser-radio>
-  <melser-radio value="opcion3" label="Opción 3"></melser-radio>
+  <option value="opcion1" label="Opción 1"></option>
+  <option value="opcion2" label="Opción 2"></option>
+  <option value="opcion3" label="Opción 3"></option>
 </melser-radio-group>
 ```
 
@@ -24,9 +24,9 @@ Un componente de grupo de radio buttons accesible y personalizable con orientaci
   id="demo-basic" 
   label="Radio básico" 
   name="demo-basic">
-  <melser-radio value="opcion1" label="Primera opción"></melser-radio>
-  <melser-radio value="opcion2" label="Segunda opción"></melser-radio>
-  <melser-radio value="opcion3" label="Tercera opción"></melser-radio>
+  <option value="opcion1" label="Primera opción"></option>
+  <option value="opcion2" label="Segunda opción"></option>
+  <option value="opcion3" label="Tercera opción"></option>
 </melser-radio-group>
 
 <melser-radio-group 
@@ -34,9 +34,9 @@ Un componente de grupo de radio buttons accesible y personalizable con orientaci
   label="Con selección inicial" 
   name="demo-selected"
   value="opcion2">
-  <melser-radio value="opcion1" label="Opción A"></melser-radio>
-  <melser-radio value="opcion2" label="Opción B"></melser-radio>
-  <melser-radio value="opcion3" label="Opción C"></melser-radio>
+  <option value="opcion1" label="Opción A"></option>
+  <option value="opcion2" label="Opción B"></option>
+  <option value="opcion3" label="Opción C"></option>
 </melser-radio-group>
 
 <melser-radio-group 
@@ -44,9 +44,9 @@ Un componente de grupo de radio buttons accesible y personalizable con orientaci
   label="Con opciones deshabilitadas" 
   name="demo-disabled"
   value="opcion1">
-  <melser-radio value="opcion1" label="Opción disponible"></melser-radio>
-  <melser-radio value="opcion2" label="Opción no disponible" disabled></melser-radio>
-  <melser-radio value="opcion3" label="Otra opción disponible"></melser-radio>
+  <option value="opcion1" label="Opción disponible"></option>
+  <option value="opcion2" label="Opción no disponible" disabled></option>
+  <option value="opcion3" label="Otra opción disponible"></option>
 </melser-radio-group>
 
 <melser-radio-group 
@@ -54,9 +54,9 @@ Un componente de grupo de radio buttons accesible y personalizable con orientaci
   label="Orientación horizontal" 
   name="demo-horizontal"
   orientation="horizontal">
-  <melser-radio value="si" label="Sí"></melser-radio>
-  <melser-radio value="no" label="No"></melser-radio>
-  <melser-radio value="tal vez" label="Tal vez"></melser-radio>
+  <option value="si" label="Sí"></option>
+  <option value="no" label="No"></option>
+  <option value="tal vez" label="Tal vez"></option>
 </melser-radio-group>
 
 <melser-radio-group 
@@ -64,8 +64,8 @@ Un componente de grupo de radio buttons accesible y personalizable con orientaci
   label="Campo requerido *" 
   name="demo-required"
   required>
-  <melser-radio value="si" label="Acepto los términos"></melser-radio>
-  <melser-radio value="no" label="No acepto los términos"></melser-radio>
+  <option value="si" label="Acepto los términos"></option>
+  <option value="no" label="No acepto los términos"></option>
 </melser-radio-group>
 
 <melser-radio-group 
@@ -74,15 +74,15 @@ Un componente de grupo de radio buttons accesible y personalizable con orientaci
   name="demo-groups">
   <fieldset style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <legend style="padding: 0 0.5rem; font-weight: bold;">Tipo de usuario</legend>
-    <melser-radio value="personal" label="Personal" name="user-type"></melser-radio>
-    <melser-radio value="empresarial" label="Empresarial" name="user-type"></melser-radio>
+    <option value="personal" label="Personal" name="user-type"></option>
+    <option value="empresarial" label="Empresarial" name="user-type"></option>
   </fieldset>
   
   <fieldset style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px;">
     <legend style="padding: 0 0.5rem; font-weight: bold;">Nivel de experiencia</legend>
-    <melser-radio value="principiante" label="Principiante" name="experience"></melser-radio>
-    <melser-radio value="intermedio" label="Intermedio" name="experience"></melser-radio>
-    <melser-radio value="avanzado" label="Avanzado" name="experience"></melser-radio>
+    <option value="principiante" label="Principiante" name="experience"></option>
+    <option value="intermedio" label="Intermedio" name="experience"></option>
+    <option value="avanzado" label="Avanzado" name="experience"></option>
   </fieldset>
 </melser-radio-group>
 
@@ -95,9 +95,9 @@ El componente radio group puede usarse de dos formas:
 
 ```html
 <melser-radio-group label="Mi selección" name="mi-seleccion">
-  <melser-radio value="opcion1" label="Primera opción"></melser-radio>
-  <melser-radio value="opcion2" label="Segunda opción"></melser-radio>
-  <melser-radio value="opcion3" label="Tercera opción"></melser-radio>
+  <option value="opcion1" label="Primera opción"></option>
+  <option value="opcion2" label="Segunda opción"></option>
+  <option value="opcion3" label="Tercera opción"></option>
 </melser-radio-group>
 ```
 
@@ -154,9 +154,9 @@ El componente radio group puede usarse de dos formas:
   name="agreement"
   orientation="horizontal"
   required>
-  <melser-radio value="si" label="Sí"></melser-radio>
-  <melser-radio value="no" label="No"></melser-radio>
-  <melser-radio value="nsnc" label="No sé / No contesto"></melser-radio>
+  <option value="si" label="Sí"></option>
+  <option value="no" label="No"></option>
+  <option value="nsnc" label="No sé / No contesto"></option>
 </melser-radio-group>
 ```
 
@@ -168,10 +168,10 @@ El componente radio group puede usarse de dos formas:
   name="paymentMethod"
   required
   error="Debes seleccionar un método de pago">
-  <melser-radio value="credit" label="Tarjeta de crédito"></melser-radio>
-  <melser-radio value="debit" label="Tarjeta de débito"></melser-radio>
-  <melser-radio value="paypal" label="PayPal"></melser-radio>
-  <melser-radio value="transfer" label="Transferencia bancaria"></melser-radio>
+  <option value="credit" label="Tarjeta de crédito"></option>
+  <option value="debit" label="Tarjeta de débito"></option>
+  <option value="paypal" label="PayPal"></option>
+  <option value="transfer" label="Transferencia bancaria"></option>
 </melser-radio-group>
 ```
 
@@ -184,16 +184,16 @@ El componente radio group puede usarse de dos formas:
   
   <fieldset style="border: 1px solid #d1d5db; padding: 1rem; border-radius: 6px;">
     <legend>Email</legend>
-    <melser-radio value="email-all" name="email" label="Todas las notificaciones"></melser-radio>
-    <melser-radio value="email-important" name="email" label="Solo importantes"></melser-radio>
-    <melser-radio value="email-none" name="email" label="Ninguna"></melser-radio>
+    <option value="email-all" name="email" label="Todas las notificaciones"></option>
+    <option value="email-important" name="email" label="Solo importantes"></option>
+    <option value="email-none" name="email" label="Ninguna"></option>
   </fieldset>
   
   <fieldset style="border: 1px solid #d1d5db; padding: 1rem; border-radius: 6px; margin-top: 1rem;">
     <legend>SMS</legend>
-    <melser-radio value="sms-all" name="sms" label="Todas las notificaciones"></melser-radio>
-    <melser-radio value="sms-important" name="sms" label="Solo urgentes"></melser-radio>
-    <melser-radio value="sms-none" name="sms" label="Ninguna"></melser-radio>
+    <option value="sms-all" name="sms" label="Todas las notificaciones"></option>
+    <option value="sms-important" name="sms" label="Solo urgentes"></option>
+    <option value="sms-none" name="sms" label="Ninguna"></option>
   </fieldset>
 </melser-radio-group>
 ```
@@ -205,11 +205,11 @@ El componente radio group puede usarse de dos formas:
   label="¿Cómo conociste nuestro servicio?"
   name="referral"
   required>
-  <melser-radio value="google" label="Google / Buscador"></melser-radio>
-  <melser-radio value="social" label="Redes sociales"></melser-radio>
-  <melser-radio value="friend" label="Recomendación de amigo"></melser-radio>
-  <melser-radio value="advertisement" label="Publicidad"></melser-radio>
-  <melser-radio value="other" label="Otro"></melser-radio>
+  <option value="google" label="Google / Buscador"></option>
+  <option value="social" label="Redes sociales"></option>
+  <option value="friend" label="Recomendación de amigo"></option>
+  <option value="advertisement" label="Publicidad"></option>
+  <option value="other" label="Otro"></option>
 </melser-radio-group>
 ```
 
@@ -224,32 +224,32 @@ El componente radio group puede usarse de dos formas:
     name="plan"
     required
     orientation="vertical">
-    <melser-radio value="basic" label="Plan Básico - Gratis"></melser-radio>
-    <melser-radio value="pro" label="Plan Pro - €9.99/mes"></melser-radio>
-    <melser-radio value="enterprise" label="Plan Enterprise - €29.99/mes"></melser-radio>
+    <option value="basic" label="Plan Básico - Gratis"></option>
+    <option value="pro" label="Plan Pro - €9.99/mes"></option>
+    <option value="enterprise" label="Plan Enterprise - €29.99/mes"></option>
   </melser-radio-group>
   
   <melser-radio-group 
     label="Frecuencia de notificaciones"
     name="frequency"
     orientation="horizontal">
-    <melser-radio value="immediate" label="Inmediatas"></melser-radio>
-    <melser-radio value="daily" label="Diarias"></melser-radio>
-    <melser-radio value="weekly" label="Semanales"></melser-radio>
-    <melser-radio value="never" label="Nunca"></melser-radio>
+    <option value="immediate" label="Inmediatas"></option>
+    <option value="daily" label="Diarias"></option>
+    <option value="weekly" label="Semanales"></option>
+    <option value="never" label="Nunca"></option>
   </melser-radio-group>
   
   <melser-radio-group 
     label="Preferencias de tema"
     name="theme">
-    <melser-radio value="light" label="Claro"></melser-radio>
-    <melser-radio value="dark" label="Oscuro"></melser-radio>
-    <melser-radio value="auto" label="Automático (según sistema)"></melser-radio>
+    <option value="light" label="Claro"></option>
+    <option value="dark" label="Oscuro"></option>
+    <option value="auto" label="Automático (según sistema)"></option>
   </melser-radio-group>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Guardar Configuración
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -297,10 +297,10 @@ if (form) {
       required
       orientation="horizontal"
       id="form-opinion">
-      <melser-radio value="me_encanta" label="¡Me encanta!"></melser-radio>
-      <melser-radio value="me_gusta" label="Me gusta"></melser-radio>
-      <melser-radio value="es_aceptable" label="Es aceptable"></melser-radio>
-      <melser-radio value="no_me_gusta" label="No me gusta"></melser-radio>
+      <option value="me_encanta" label="¡Me encanta!"></option>
+      <option value="me_gusta" label="Me gusta"></option>
+      <option value="es_aceptable" label="Es aceptable"></option>
+      <option value="no_me_gusta" label="No me gusta"></option>
     </melser-radio-group>
   </div>
   
@@ -310,9 +310,9 @@ if (form) {
       name="experience"
       orientation="vertical"
       id="form-experience">
-      <melser-radio value="principiante" label="🟢 Principiante - Es mi primera vez"></melser-radio>
-      <melser-radio value="intermedio" label="🟡 Intermedio - Tengo algo de experiencia"></melser-radio>
-      <melser-radio value="avanzado" label="🔴 Avanzado - Soy experto"></melser-radio>
+      <option value="principiante" label="🟢 Principiante - Es mi primera vez"></option>
+      <option value="intermedio" label="🟡 Intermedio - Tengo algo de experiencia"></option>
+      <option value="avanzado" label="🔴 Avanzado - Soy experto"></option>
     </melser-radio-group>
   </div>
   
@@ -322,15 +322,15 @@ if (form) {
       name="preference"
       orientation="horizontal"
       id="form-preference">
-      <melser-radio value="codigo" label="💻 Prefiero código"></melser-radio>
-      <melser-radio value="visual" label="🎨 Prefiero interfaces visuales"></melser-radio>
-      <melser-radio value="ambos" label="⚖️ Ambos son útiles"></melser-radio>
+      <option value="codigo" label="💻 Prefiero código"></option>
+      <option value="visual" label="🎨 Prefiero interfaces visuales"></option>
+      <option value="ambos" label="⚖️ Ambos son útiles"></option>
     </melser-radio-group>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Enviar Respuestas
-  </melser-button>
+  </button >
 </form>
 
 <div id="radio-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">
@@ -386,9 +386,9 @@ melser-radio-group {
     label="Radio personalizado"
     name="custom"
     value="opcion2">
-    <melser-radio value="opcion1" label="Opción verde"></melser-radio>
-    <melser-radio value="opcion2" label="Opción seleccionada"></melser-radio>
-    <melser-radio value="opcion3" label="Otra opción"></melser-radio>
+    <option value="opcion1" label="Opción verde"></option>
+    <option value="opcion2" label="Opción seleccionada"></option>
+    <option value="opcion3" label="Otra opción"></option>
   </melser-radio-group>
 </div>
 
@@ -397,9 +397,9 @@ melser-radio-group {
     label="Radio minimalista"
     name="minimal"
     value="minimal2">
-    <melser-radio value="minimal1" label="Pequeño"></melser-radio>
-    <melser-radio value="minimal2" label="Compact"></melser-radio>
-    <melser-radio value="minimal3" label="Discreto"></melser-radio>
+    <option value="minimal1" label="Pequeño"></option>
+    <option value="minimal2" label="Compact"></option>
+    <option value="minimal3" label="Discreto"></option>
   </melser-radio-group>
 </div>
 
@@ -408,9 +408,9 @@ melser-radio-group {
     label="Tema oscuro"
     name="dark"
     value="dark2">
-    <melser-radio value="dark1" label="Dark Mode"></melser-radio>
-    <melser-radio value="dark2" label="Night Theme"></melser-radio>
-    <melser-radio value="dark3" label="Black Theme"></melser-radio>
+    <option value="dark1" label="Dark Mode"></option>
+    <option value="dark2" label="Night Theme"></option>
+    <option value="dark3" label="Black Theme"></option>
   </melser-radio-group>
 </div>
 
@@ -470,10 +470,10 @@ if (radioGroup) {
 
 ```html
 <melser-radio-group label="Selecciona un icono" name="icon">
-  <melser-radio value="home" label="🏠 Inicio"></melser-radio>
-  <melser-radio value="user" label="👤 Usuario"></melser-radio>
-  <melser-radio value="settings" label="⚙️ Configuración"></melser-radio>
-  <melser-radio value="help" label="❓ Ayuda"></melser-radio>
+  <option value="home" label="🏠 Inicio"></option>
+  <option value="user" label="👤 Usuario"></option>
+  <option value="settings" label="⚙️ Configuración"></option>
+  <option value="help" label="❓ Ayuda"></option>
 </melser-radio-group>
 ```
 
@@ -516,8 +516,8 @@ radio.value = 'mi-valor';
 <melser-radio-group 
   required
   label="Campo obligatorio">
-  <melser-radio value="op1" label="Opción 1"></melser-radio>
-  <melser-radio value="op2" label="Opción 2"></melser-radio>
+  <option value="op1" label="Opción 1"></option>
+  <option value="op2" label="Opción 2"></option>
 </melser-radio-group>
 ```
 
@@ -550,7 +550,7 @@ melser-radio-group[orientation="horizontal"] {
   gap: 1rem;
 }
 
-melser-radio-group[orientation="horizontal"] melser-radio {
+melser-radio-group[orientation="horizontal"] option {
   display: flex;
   align-items: center;
 }
@@ -560,7 +560,7 @@ melser-radio-group[orientation="horizontal"] melser-radio {
 
 ```html
 <!-- Agregar aria-label para casos específicos -->
-<melser-radio 
+<option 
   aria-label="Seleccionar plan premium"
   value="premium"
   label="Premium">

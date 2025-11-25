@@ -135,9 +135,9 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
     label="Publicar inmediatamente">
   </melser-checkbox>
   
-  <melser-button type="submit" variant="primary">
+  <button  type="submit" variant="primary">
     Publicar Artículo
-  </melser-button>
+  </button >
 </form>
 ```
 
@@ -187,9 +187,9 @@ if (form) {
     </melser-checkbox>
   </div>
   
-  <melser-button type="submit" variant="primary" id="form-submit">
+  <button  type="submit" variant="primary" id="form-submit">
     Publicar Artículo
-  </melser-button>
+  </button >
 </form>
 
 ## Ejemplos Avanzados

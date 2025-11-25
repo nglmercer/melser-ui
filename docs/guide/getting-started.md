@@ -54,9 +54,9 @@ Una vez importados, puedes usar los componentes directamente en tu HTML:
   </melser-text-input>
   
   <!-- Usar componente button -->
-  <melser-button variant="primary">
+  <button  variant="primary">
     Guardar
-  </melser-button>
+  </button >
 </body>
 </html>
 ```
@@ -69,7 +69,7 @@ Los componentes usan nombres de tags con prefijo para evitar conflictos:
 
 - ✅ `melser-checkbox` - Válido
 - ✅ `melser-text-input` - Válido  
-- ✅ `melser-button` - Válido
+- ✅ `button ` - Válido
 - ✅ `melser-color-picker` - Válido
 - ❌ `checkbox` - Podría conflitar
 - ❌ `button` - Elemento nativo HTML
