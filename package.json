@@ -17,8 +17,8 @@
     "dev": "vite",
     "type-check": "tsc --noEmit",
     "build:lib": "tsup",
-    "build:web": "npm run type-check && vite build",
-    "build": "npm run build:lib && npm run build:web",
+    "build:web": "bun run type-check && vite build",
+    "build": "bun run build:lib && bun run build:web",
     "preview": "vite preview"
   },
   "dependencies": {
