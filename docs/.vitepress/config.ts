@@ -118,5 +118,6 @@ export default defineConfig({
       label: 'En esta página',
       level: 'deep'
     }
-  }
+  },
+  base: '/melser-ui/'
 })

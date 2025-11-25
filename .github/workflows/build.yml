@@ -1,44 +1,66 @@
-name: Build Melser UI
+name: Deploy Melser UI Docs
 
 on:
   push:
     branches: [ "main", "master" ]
   pull_request:
     branches: [ "main", "master" ]
+  # Permite ejecutarlo manualmente desde la pestaña Actions
+  workflow_dispatch:
+
+# Permisos necesarios para desplegar en GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Configuración de concurrencia: cancela builds anteriores si hay uno nuevo
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Setup Bun
-      uses: oven-sh/setup-bun@v2
-      with:
-        bun-version: latest
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
-    - name: Install dependencies
-      run: bun install
+      - name: Install dependencies
+        run: bun install
 
-    - name: Type Check
-      run: bun run type-check
+      - name: Type Check
+        run: bun run type-check
 
-    - name: Build Library (tsup)
-      run: bun run build:lib
+      # Construimos la librería para asegurar que no hay errores de compilación
+      - name: Build Library (tsup)
+        run: bun run build:lib
 
-    - name: Build Demo Web (Vite)
-      run: bun run build:web
+      # Construimos la documentación (VitePress)
+      # Esto generará los archivos estáticos en docs/.vitepress/dist
+      - name: Build Docs (VitePress)
+        run: bun run build:docs
 
-    # Optional: Upload artifacts if you want to inspect the build
-    - name: Upload Library Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: melser-ui-lib
-        path: dist/
+      # Subimos el artefacto de Pages (Específico para la documentación)
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Esta es la ruta por defecto donde VitePress saca el build
+          path: docs/.vitepress/dist
 
-    - name: Upload Web Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: melser-ui-web
-        path: dist-web/
+  # Trabajo de despliegue (solo se ejecuta en push a main/master)
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
