@@ -1,0 +1,49 @@
+:root {
+    /* Core Colors */
+    --melser-primary-h: 262;
+    --melser-primary-s: 80%;
+    --melser-primary-l: 50%;
+    --melser-primary: hsl(var(--melser-primary-h), var(--melser-primary-s), var(--melser-primary-l));
+
+    --melser-error: #d32f2f;
+    --melser-success: #2e7d32;
+    --melser-warning: #ed6c02;
+
+    /* Light Theme Defaults */
+    --melser-bg: #ffffff;
+    --melser-surface: #f5f5f5;
+    --melser-text: #1a1a1a;
+    --melser-text-secondary: #666666;
+    --melser-border: #cccccc;
+    --melser-input-bg: #ffffff;
+
+    /* Dimensions */
+    --melser-radius: 4px;
+    --melser-spacing: 1rem;
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] {
+    --melser-bg: #121212;
+    --melser-surface: #1e1e1e;
+    --melser-text: #e0e0e0;
+    --melser-text-secondary: #a0a0a0;
+    --melser-border: #404040;
+    --melser-input-bg: #2d2d2d;
+
+    /* Adjust primary for dark mode visibility if needed */
+    --melser-primary-l: 65%;
+}
+
+/* Auto-detect system preference if no override is present */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --melser-bg: #121212;
+        --melser-surface: #1e1e1e;
+        --melser-text: #e0e0e0;
+        --melser-text-secondary: #a0a0a0;
+        --melser-border: #404040;
+        --melser-input-bg: #2d2d2d;
+        --melser-primary-l: 65%;
+    }
+}

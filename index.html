@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Melser UI Demo</title>
+  <script type="module" src="/src/index.ts"></script>
+  <style>
+    /* Import Theme Variables */
+    @import url('./src/styles/theme.css');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: var(--melser-bg);
+      color: var(--melser-text);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: var(--melser-text);
+    }
+
+    .card {
+      background: var(--melser-surface);
+      padding: 2rem;
+      border-radius: var(--melser-radius);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+      border: 1px solid var(--melser-border);
+    }
+
+    .btn {
+      background: var(--melser-primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--melser-radius);
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 1rem;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    pre {
+      background: var(--melser-input-bg);
+      padding: 1rem;
+      border-radius: var(--melser-radius);
+      overflow-x: auto;
+      border: 1px solid var(--melser-border);
+      color: var(--melser-text);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="theme-toggle">
+    <melser-switch id="theme-switch" label="Dark Mode"></melser-switch>
+  </div>
+
+  <h1>Melser UI Components</h1>
+
+  <div class="card">
+    <h2>Comprehensive Form Demo</h2>
+    <form id="demo-form" onsubmit="event.preventDefault();">
+      <div class="grid">
+        <melser-text-input name="username" label="Username" placeholder="Enter username" required></melser-text-input>
+
+        <melser-text-input name="age" label="Age" type="number" placeholder="Enter age"></melser-text-input>
+      </div>
+
+      <melser-textarea name="bio" label="Biography" placeholder="Tell us about yourself..." rows="3"></melser-textarea>
+
+      <melser-tags-input name="skills" label="Skills (Type and press Enter)"
+        placeholder="e.g. JavaScript, Design"></melser-tags-input>
+
+      <melser-file-upload name="avatar" label="Profile Picture" accept="image/*"></melser-file-upload>
+
+      <div class="grid">
+        <melser-password-input name="password" label="Password" placeholder="Enter password"
+          required></melser-password-input>
+        <melser-number-input name="experience" label="Years of Experience" min="0" max="50" step="1"
+          value="2"></melser-number-input>
+      </div>
+
+      <div class="grid">
+        <melser-date-picker name="birthdate" label="Date of Birth" required></melser-date-picker>
+        <melser-time-picker name="preferred-time" label="Preferred Contact Time"></melser-time-picker>
+      </div>
+
+      <div class="grid">
+        <melser-select name="role" label="Role" required></melser-select>
+
+        <melser-multi-select name="interests" label="Interests"></melser-multi-select>
+      </div>
+
+      <melser-radio-group name="notification" label="Notification Preference" required></melser-radio-group>
+
+      <melser-range name="satisfaction" label="Satisfaction Level" min="0" max="10" value="5"></melser-range>
+
+      <div class="grid">
+        <melser-switch name="newsletter" label="Subscribe to newsletter"></melser-switch>
+
+        <melser-checkbox name="terms" label="I agree to the terms" required></melser-checkbox>
+      </div>
+
+      <!-- New Components -->
+      <h3 style="margin-top: 2rem; border-top: 1px solid var(--melser-border); padding-top: 1rem;">
+        Advanced Inputs
+      </h3>
+
+      <div class="grid">
+        <melser-otp-input name="otp" label="Verification Code (OTP)" length="6"></melser-otp-input>
+        <melser-color-picker name="themeColor" label="Theme Color" value="#6366f1"></melser-color-picker>
+      </div>
+
+      <div class="grid">
+        <melser-combobox name="country" label="Country (Combobox)" placeholder="Type to search..."></melser-combobox>
+        <melser-rating name="rating" label="Product Rating" max="5"></melser-rating>
+      </div>
+
+      <melser-dual-range name="priceRange" label="Price Range" min="0" max="1000"
+        value="[100, 500]"></melser-dual-range>
+
+      <!-- Custom Tag Name Demo -->
+      <h3 style="margin-top: 2rem; border-top: 1px solid var(--melser-border); padding-top: 1rem;">
+        Custom Tag Name Demo
+      </h3>
+      <p style="font-size: 0.9rem; color: var(--melser-text-secondary);">
+        This is a &lt;custom-brand-switch&gt; registered dynamically:
+      </p>
+      <custom-brand-switch name="custom-feature" label="Enable Custom Feature"></custom-brand-switch>
+
+      <!-- Validation Warning Demo -->
+      <h3
+        style="margin-top: 2rem; border-top: 1px solid var(--melser-border); padding-top: 1rem; color: var(--melser-warning);">
+        Type Validation Demo (Check Console)
+      </h3>
+      <p style="font-size: 0.9rem; color: var(--melser-text-secondary);">
+        The following components have invalid values to trigger warnings:
+      </p>
+
+      <!-- Range expects number, receiving "invalid" -> NaN -->
+      <melser-range name="invalid-range" label="Invalid Range (Value='text')"
+        value="text-instead-of-number"></melser-range>
+
+      <!-- Switch expects boolean, we'll force a string via JS below -->
+      <melser-switch id="invalid-switch" name="invalid-switch" label="Invalid Switch (Value='yes')"></melser-switch>
+
+      <button class="btn" id="submit-btn">Get Data & Validate</button>
+    </form>
+
+    <h3>Result (Zod-ready structure):</h3>
+    <pre id="result">No data yet...</pre>
+  </div>
+
+  <script type="module">
+    import { registerComponent, MelserSwitch } from '/src/index.ts';
+
+    // DEMO: Register a component with a custom tag name
+    registerComponent('custom-brand-switch', MelserSwitch);
+
+    // DEMO: Force invalid type to trigger warning
+    setTimeout(() => {
+      const invalidSwitch = document.getElementById('invalid-switch');
+      if (invalidSwitch) {
+        // @ts-ignore - Forcing invalid type for demo
+        invalidSwitch.value = "not-a-boolean";
+      }
+    }, 500);
+  </script>
+
+  <script>
+    // Theme Switching Logic
+    const themeSwitch = document.getElementById('theme-switch');
+
+    // Check system preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      themeSwitch.value = true;
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    themeSwitch.addEventListener('melser-change', (e) => {
+      const isDark = e.detail.value;
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    });
+
+    // Populate options
+    const roleSelect = document.querySelector('melser-select[name="role"]');
+    roleSelect.options = [
+      { label: 'Admin', value: 'admin' },
+      { label: 'User', value: 'user' },
+      { label: 'Guest', value: 'guest' }
+    ];
+
+    const interestsSelect = document.querySelector('melser-multi-select');
+    interestsSelect.options = [
+      { label: 'Coding', value: 'coding' },
+      { label: 'Design', value: 'design' },
+      { label: 'Music', value: 'music' },
+      { label: 'Gaming', value: 'gaming' }
+    ];
+
+    const radioGroup = document.querySelector('melser-radio-group');
+    radioGroup.options = [
+      { label: 'Email', value: 'email' },
+      { label: 'SMS', value: 'sms' },
+      { label: 'Push', value: 'push' }
+    ];
+
+    const countryCombobox = document.querySelector('melser-combobox');
+    countryCombobox.options = [
+      { label: 'United States', value: 'us' },
+      { label: 'United Kingdom', value: 'uk' },
+      { label: 'Canada', value: 'ca' },
+      { label: 'Australia', value: 'au' },
+      { label: 'Germany', value: 'de' },
+      { label: 'France', value: 'fr' },
+      { label: 'Japan', value: 'jp' },
+      { label: 'Brazil', value: 'br' }
+    ];
+
+    // Handle submit
+    document.getElementById('submit-btn').addEventListener('click', () => {
+      // Select all Melser components AND the custom one
+      const inputs = document.querySelectorAll(
+        'melser-text-input, melser-select, melser-checkbox, melser-range, melser-multi-select, melser-radio-group, melser-textarea, melser-switch, melser-file-upload, melser-tags-input, melser-date-picker, melser-time-picker, melser-number-input, melser-password-input, melser-otp-input, melser-combobox, melser-color-picker, melser-rating, melser-dual-range, melser-rich-text, custom-brand-switch'
+      );
+
+      const data = Array.from(inputs).map(input => input.getData());
+
+      // Example of how this maps to Zod schemas
+      const schemaDescription = data.map(field => {
+        let zodType = `z.${field.dataType}()`;
+        if (field.dataType === 'array') zodType = `z.array(z.string())`;
+        if (field.dataType === 'object') zodType = `z.instanceof(File)`; // Special case for file
+        return `${field.name}: ${zodType}`;
+      });
+
+      const output = {
+        formData: data,
+        zodSchemaHint: schemaDescription
+      };
+
+      document.getElementById('result').textContent = JSON.stringify(output, null, 2);
+    });
+  </script>
+</body>
+
+</html>
