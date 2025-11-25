@@ -90,4 +90,4 @@ const input = document.querySelector('melser-text-input') as MelserTextInput;
 
 - [Instalación detallada](./installation)
 - [Visión general de componentes](../components/overview)
-- [Personalización del tema](../guide/theming)
+- [Personalización del tema](./aliases)

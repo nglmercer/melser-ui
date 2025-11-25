@@ -191,10 +191,10 @@ button  {
 }
 ```
 
-Consulta la [guía de personalización](../guide/theming) para más detalles.
+Consulta la [guía de aliases](../guide/aliases) para más detalles sobre configuración.
 
 ## Próximos Pasos
 
-- [Instalación detallada](./installation)
-- [Personalizar el tema](../guide/theming)
+- [Instalación detallada](../guide/installation)
+- [Personalizar el tema](../guide/aliases)
 - [Guías específicas de componentes](./checkbox)

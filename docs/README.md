@@ -72,7 +72,7 @@ npm run preview:docs
 
 ### URLs de Acceso
 
-- **Desarrollo**: http://localhost:5173 (puerto por defecto)
+- **Desarrollo**: Ejecutar `npm run dev:docs` para iniciar el servidor local
 - **Producción**: Después de `npm run build:docs`, usar `npm run preview:docs`
 
 ## 📋 Verificaciones Realizadas
