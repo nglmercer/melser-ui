@@ -21,9 +21,9 @@ export class MelserRange extends MelserBaseInput<number> {
   render() {
     return html`
       <div class="input-wrapper">
-        ${this.label ? html`<label for="range">${this.label}: ${this.value}</label>` : ''}
+        ${this.label ? html`<label for="${this.inputId}">${this.label}: ${this.value}</label>` : ''}
         <input
-          id="range"
+          id="${this.inputId}"
           type="range"
           .min="${this.min}"
           .max="${this.max}"

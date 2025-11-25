@@ -20,9 +20,9 @@ export class MelserTimePicker extends MelserBaseInput<string> {
     render() {
         return html`
       <div class="input-wrapper">
-        ${this.label ? html`<label for="time-input">${this.label}</label>` : ''}
+        ${this.label ? html`<label for="${this.inputId}">${this.label}</label>` : ''}
         <input
-          id="time-input"
+          id="${this.inputId}"
           type="time"
           .value="${this.value}"
           .min="${this.min}"

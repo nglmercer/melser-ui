@@ -27,9 +27,9 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
   render() {
     return html`
       <div class="input-wrapper">
-        ${this.label ? html`<label for="multi-select">${this.label}</label>` : ''}
+        ${this.label ? html`<label for="${this.inputId}">${this.label}</label>` : ''}
         <select
-          id="multi-select"
+          id="${this.inputId}"
           multiple
           ?disabled="${this.disabled}"
           ?required="${this.required}"

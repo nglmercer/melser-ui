@@ -77,12 +77,12 @@ export class MelserSelect extends MelserBaseInput<string> {
   render() {
     return html`
       <div class="input-wrapper">
-        ${this.label ? html`<label for="select">${this.label}</label>` : ''}
+        ${this.label ? html`<label for="${this.inputId}">${this.label}</label>` : ''}
         
         <slot style="display: none;" @slotchange="${this.syncOptions}"></slot>
 
         <select
-          id="select"
+          id="${this.inputId}"
           .value="${this.value}"
           ?disabled="${this.disabled}"
           ?required="${this.required}"

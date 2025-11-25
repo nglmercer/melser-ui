@@ -59,7 +59,7 @@ export class MelserNumberInput extends MelserBaseInput<number> {
   render() {
     return html`
       <div class="input-wrapper">
-        ${this.label ? html`<label for="number-input">${this.label}</label>` : ''}
+        ${this.label ? html`<label for="${this.inputId}">${this.label}</label>` : ''}
         
         <div class="number-control">
           <button 
@@ -72,7 +72,7 @@ export class MelserNumberInput extends MelserBaseInput<number> {
           >−</button>
           
           <input
-            id="number-input"
+            id="${this.inputId}"
             type="number"
             .value="${this.value}"
             .min="${this.min}"

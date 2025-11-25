@@ -203,7 +203,7 @@
       document.documentElement.setAttribute('data-theme', 'dark');
     }
 
-    themeSwitch.addEventListener('melser-change', (e) => {
+    themeSwitch.addEventListener('ui:change', (e) => {
       const isDark = e.detail.value;
       document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
     });

@@ -9,13 +9,14 @@ export abstract class MelserBaseInput<T = any> extends LitElement {
   @property({ type: Boolean }) disabled = false;
   @property({ type: String }) errorMessage = '';
   @property({ type: Boolean }) debug = false;
-  // Abstract value property that implementing classes must handle
-  abstract value: T;
 
-  // Define the data type for Zod compatibility
+  // CAMBIO: Ahora es una propiedad pública para permitir "reutilizar" un ID externo via HTML
+  // Se usa attribute: 'input-id' para que en HTML se escriba <etiqueta input-id="mi-id">
+  @property({ type: String, attribute: 'input-id' }) inputId = '';
+
+  abstract value: T;
   abstract readonly dataType: MelserDataType;
 
-  // Method to get standardized data
   getData(): InputData<T> {
     return {
       name: this.name,
@@ -26,7 +27,17 @@ export abstract class MelserBaseInput<T = any> extends LitElement {
     };
   }
 
-  // Basic validation (can be overridden)
+  override connectedCallback() {
+    super.connectedCallback();
+    if (!this.inputId) {
+      if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+         this.inputId = `melser-${crypto.randomUUID()}`;
+      } else {
+         this.inputId = `melser-input-${Math.random().toString(36).substring(2, 9)}`;
+      }
+    }
+  }
+
   checkValidity(): boolean {
     if (this.required && (this.value === null || this.value === undefined || this.value === '')) {
       return false;
@@ -42,21 +53,16 @@ export abstract class MelserBaseInput<T = any> extends LitElement {
   }
 
   private validateValueType() {
-    // Skip validation if value is null/undefined (unless required, but that's handled by checkValidity)
     if (this.value === null || this.value === undefined) return;
 
     let isValidType = true;
     const actualType = typeof this.value;
-
-    // Debug log to verify validation is running (can be removed later)
-    // console.log(`Validating ${this.tagName}:`, { value: this.value, type: actualType, expected: this.dataType });
 
     switch (this.dataType) {
       case 'string':
         isValidType = actualType === 'string';
         break;
       case 'number':
-        // Check for NaN specifically for number types
         isValidType = actualType === 'number' && !isNaN(this.value as any);
         break;
       case 'boolean':
@@ -84,7 +90,7 @@ export abstract class MelserBaseInput<T = any> extends LitElement {
   }
 
   protected dispatchChange() {
-    this.dispatchEvent(new CustomEvent('melser-change', {
+    this.dispatchEvent(new CustomEvent('ui:change', {
       detail: this.getData(),
       bubbles: true,
       composed: true
@@ -117,7 +123,6 @@ export abstract class MelserBaseInput<T = any> extends LitElement {
       min-height: 1.2em;
     }
     
-    /* Base styles for text-like inputs */
     input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), 
     select, 
     textarea {

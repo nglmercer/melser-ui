@@ -5,7 +5,14 @@ export default defineConfig({
   title: 'Melser UI',
   description: 'Una colección de componentes web elegantes construidos con Lit',
   lang: 'es-ES',
-  
+  vue: {
+    template: {
+      compilerOptions: {
+        // Le dice a Vue que cualquier etiqueta que empiece con "melser-" es un Custom Element
+        isCustomElement: (tag) => tag.startsWith('melser-')
+      }
+    }
+  },
   // Integración de la configuración de Vite (Alias) dentro de VitePress
   vite: {
     resolve: {

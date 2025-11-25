@@ -20,10 +20,10 @@ export class MelserDatePicker extends MelserBaseInput<string> {
   render() {
     return html`
       <div class="input-wrapper">
-        ${this.label ? html`<label for="date-input">${this.label}</label>` : ''}
+        ${this.label ? html`<label for="${this.inputId}">${this.label}</label>` : ''}
         <div class="date-container">
           <input
-            id="date-input"
+            id="${this.inputId}"
             type="date"
             .value="${this.value}"
             .min="${this.min}"

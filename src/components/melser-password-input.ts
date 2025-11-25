@@ -29,11 +29,11 @@ export class MelserPasswordInput extends MelserBaseInput<string> {
   render() {
     return html`
       <div class="input-wrapper">
-        ${this.label ? html`<label for="password-input">${this.label}</label>` : ''}
+        ${this.label ? html`<label for="${this.inputId}">${this.label}</label>` : ''}
         
         <div class="password-container">
           <input
-            id="password-input"
+            id="${this.inputId}"
             .type="${this.showPassword ? 'text' : 'password'}"
             .value="${this.value}"
             .placeholder="${this.placeholder}"

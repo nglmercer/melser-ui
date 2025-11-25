@@ -20,9 +20,9 @@ export class MelserTextarea extends MelserBaseInput<string> {
     render() {
         return html`
       <div class="input-wrapper">
-        ${this.label ? html`<label for="input">${this.label}</label>` : ''}
+        ${this.label ? html`<label for="${this.inputId}">${this.label}</label>` : ''}
         <textarea
-          id="input"
+          id="${this.inputId}"
           .value="${this.value}"
           .placeholder="${this.placeholder}"
           .rows="${this.rows}"

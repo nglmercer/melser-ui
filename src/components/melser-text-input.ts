@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
@@ -20,9 +20,9 @@ export class MelserTextInput extends MelserBaseInput<string> {
   render() {
     return html`
       <div class="input-wrapper">
-        ${this.label ? html`<label for="input">${this.label}</label>` : ''}
+        ${this.label ? html`<label for="${this.inputId}">${this.label}</label>` : ''}
         <input
-          id="input"
+          id="${this.inputId}"
           .type="${this.type}"
           .value="${this.value}"
           .placeholder="${this.placeholder}"
