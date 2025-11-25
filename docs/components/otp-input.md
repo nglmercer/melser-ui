@@ -185,14 +185,11 @@ if (form) {
   <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
     <button  type="submit" variant="primary" id="form-submit">
       Verificar
-    </button >
-    
-    <button  type="button" variant="secondary" id="resend-btn">
-      Reenviar código
-    </button >
+    </button >    
   </div>
 </form>
 
+    
 ## Ejemplos Avanzados
 
 ### Verificación con Temporizador
@@ -207,11 +204,11 @@ if (form) {
     label="Código temporal">
   </melser-otp-input>
   
-  <div id="timer-display" style="margin-top: 1rem; padding: 0.5rem; background: #f3f4f6; border-radius: 4px; text-align: center;">
+  <div id="timer-display" style="margin-top: 1rem; padding: 0.5rem; border-radius: 4px; text-align: center;">
     Tiempo restante: <span id="countdown">2:00</span>
   </div>
   
-  <div id="expired-message" style="margin-top: 1rem; padding: 0.5rem; background: #fef2f2; border-radius: 4px; color: #dc2626; display: none;">
+  <div id="expired-message" style="margin-top: 1rem; padding: 0.5rem; border-radius: 4px; color: #dc2626; display: none;">
     ⏰ El código ha expirado. Por favor solicita uno nuevo.
   </div>
 </div>
@@ -228,10 +225,6 @@ if (form) {
     allowed-chars="[A-F0-9]"
     hint="Solo letras A-F y números 0-9">
   </melser-otp-input>
-  
-  <div id="validation-result" style="margin-top: 1rem; padding: 0.5rem; background: #f3f4f6; border-radius: 4px;">
-    Esperando código...
-  </div>
 </div>
 
 ## Personalización con CSS

@@ -271,31 +271,31 @@ if (form) {
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>📁 Ejemplo de Subida de Archivos</h4>
     
-    <melser-file-upload 
-      label="Selecciona una imagen"
-      name="demoImage"
-      accept="image/*"
-      max-files="1"
-      max-size="3MB"
-      show-preview
-      id="form-image">
-    </melser-file-upload>
+  <melser-file-upload 
+    label="Selecciona una imagen"
+    name="demoImage"
+    accept="image/*"
+    max-files="1"
+    max-size="3MB"
+    show-preview
+    id="form-image">
+  </melser-file-upload>
   </div>
   
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>📎 Múltiples Archivos (Drag & Drop)</h4>
     
-    <melser-file-upload 
-      label="Arrastra archivos aquí"
-      name="demoFiles"
-      accept="*/*"
-      multiple
-      max-files="5"
-      max-size="10MB"
-      drag-drop
-      show-preview
-      id="form-files">
-    </melser-file-upload>
+  <melser-file-upload 
+    label="Arrastra archivos aquí"
+    name="demoFiles"
+    accept="*/*"
+    multiple
+    max-files="5"
+    max-size="10MB"
+    drag-drop
+    show-preview
+    id="form-files">
+  </melser-file-upload>
   </div>
   
   <button  type="submit" variant="primary" id="form-submit">

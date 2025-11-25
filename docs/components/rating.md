@@ -291,56 +291,56 @@ if (form) {
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>🌟 Califica tu Experiencia</h4>
     
-    <melser-rating 
-      label="Experiencia general *"
-      name="generalExp"
-      required
-      max="5"
-      allow-half
-      show-value
-      color="#f59e0b"
-      id="form-general">
-    </melser-rating>
-    
-    <melser-rating 
-      label="Facilidad de uso"
-      name="easeOfUse"
-      max="5"
-      allow-half
-      show-value
-      color="#10b981"
-      id="form-ease">
-    </melser-rating>
-    
-    <melser-rating 
-      label="Diseño visual"
-      name="design"
-      max="5"
-      allow-half
-      show-value
-      color="#3b82f6"
-      id="form-design">
-    </melser-rating>
-    
-    <melser-rating 
-      label="Funcionalidad"
-      name="functionality"
-      max="5"
-      allow-half
-      show-value
-      color="#8b5cf6"
-      id="form-functionality">
-    </melser-rating>
-    
-    <melser-rating 
-      label="Soporte técnico"
-      name="support"
-      max="5"
-      allow-half
-      show-value
-      color="#ef4444"
-      id="form-support">
-    </melser-rating>
+  <melser-rating 
+    label="Experiencia general *"
+    name="generalExp"
+    required
+    max="5"
+    allow-half
+    show-value
+    color="#f59e0b"
+    id="form-general">
+  </melser-rating>
+  
+  <melser-rating 
+    label="Facilidad de uso"
+    name="easeOfUse"
+    max="5"
+    allow-half
+    show-value
+    color="#10b981"
+    id="form-ease">
+  </melser-rating>
+  
+  <melser-rating 
+    label="Diseño visual"
+    name="design"
+    max="5"
+    allow-half
+    show-value
+    color="#3b82f6"
+    id="form-design">
+  </melser-rating>
+  
+  <melser-rating 
+    label="Funcionalidad"
+    name="functionality"
+    max="5"
+    allow-half
+    show-value
+    color="#8b5cf6"
+    id="form-functionality">
+  </melser-rating>
+  
+  <melser-rating 
+    label="Soporte técnico"
+    name="support"
+    max="5"
+    allow-half
+    show-value
+    color="#ef4444"
+    id="form-support">
+  </melser-rating>
   </div>
   
   <div id="rating-summary" style="margin-bottom: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">

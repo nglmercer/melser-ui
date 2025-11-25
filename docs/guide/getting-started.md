@@ -53,10 +53,6 @@ Una vez importados, puedes usar los componentes directamente en tu HTML:
     placeholder="Escribe tu nombre">
   </melser-text-input>
   
-  <!-- Usar componente button -->
-  <button  variant="primary">
-    Guardar
-  </button >
 </body>
 </html>
 ```
@@ -69,10 +65,8 @@ Los componentes usan nombres de tags con prefijo para evitar conflictos:
 
 - ✅ `melser-checkbox` - Válido
 - ✅ `melser-text-input` - Válido  
-- ✅ `button ` - Válido
 - ✅ `melser-color-picker` - Válido
-- ❌ `checkbox` - Podría conflitar
-- ❌ `button` - Elemento nativo HTML
+- ❌ `checkbox` - Podría conflitar // no te deja utilizar sin un - por defecto asi que no hay problemas
 
 ### TypeScript y Imports
 

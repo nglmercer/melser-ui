@@ -314,38 +314,38 @@ if (form) {
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>🎨 Selector de Colores</h4>
     
-    <melser-color-picker 
-      label="Color principal"
-      name="mainColor"
-      value="#3b82f6"
-      palette="primary"
-      id="form-main">
-    </melser-color-picker>
-    
-    <melser-color-picker 
-      label="Color secundario"
-      name="secondaryColor"
-      value="#10b981"
-      palette="success"
-      id="form-secondary">
-    </melser-color-picker>
-    
-    <melser-color-picker 
-      label="Color con transparencia"
-      name="overlayColor"
-      value="#8b5cf6"
-      show-alpha
-      format="rgba"
-      id="form-overlay">
-    </melser-color-picker>
-    
-    <melser-color-picker 
-      label="Color de estado"
-      name="statusColor"
-      value="#f59e0b"
-      palette="warning"
-      id="form-status">
-    </melser-color-picker>
+  <melser-color-picker 
+    label="Color principal"
+    name="mainColor"
+    value="#3b82f6"
+    palette="primary"
+    id="form-main">
+  </melser-color-picker>
+  
+  <melser-color-picker 
+    label="Color secundario"
+    name="secondaryColor"
+    value="#10b981"
+    palette="success"
+    id="form-secondary">
+  </melser-color-picker>
+  
+  <melser-color-picker 
+    label="Color con transparencia"
+    name="overlayColor"
+    value="#8b5cf6"
+    show-alpha
+    format="rgba"
+    id="form-overlay">
+  </melser-color-picker>
+  
+  <melser-color-picker 
+    label="Color de estado"
+    name="statusColor"
+    value="#f59e0b"
+    palette="warning"
+    id="form-status">
+  </melser-color-picker>
   </div>
   
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">

@@ -309,47 +309,47 @@ if (form) {
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>⏰ Configuración de Horarios</h4>
     
-    <melser-time-picker 
-      label="Hora de inicio *"
-      name="startTime"
-      required
-      value="09:00"
-      placeholder="Hora de inicio"
-      format="12h"
-      id="form-start">
-    </melser-time-picker>
-    
-    <melser-time-picker 
-      label="Hora de fin *"
-      name="endTime"
-      required
-      value="17:00"
-      placeholder="Hora de fin"
-      format="12h"
-      min="09:00"
-      id="form-end">
-    </melser-time-picker>
-    
-    <melser-time-picker 
-      label="Tiempo de descanso"
-      name="breakTime"
-      value="01:00"
-      step="1800"
-      placeholder="Duración del descanso"
-      format="12h"
-      id="form-break">
-    </melser-time-picker>
-    
-    <melser-time-picker 
-      label="Recordatorio automático"
-      name="reminder"
-      value="15:00"
-      step="300"
-      placeholder="Cuándo recordar"
-      format="24h"
-      show-seconds
-      id="form-reminder">
-    </melser-time-picker>
+  <melser-time-picker 
+    label="Hora de inicio *"
+    name="startTime"
+    required
+    value="09:00"
+    placeholder="Hora de inicio"
+    format="12h"
+    id="form-start">
+  </melser-time-picker>
+  
+  <melser-time-picker 
+    label="Hora de fin *"
+    name="endTime"
+    required
+    value="17:00"
+    placeholder="Hora de fin"
+    format="12h"
+    min="09:00"
+    id="form-end">
+  </melser-time-picker>
+  
+  <melser-time-picker 
+    label="Tiempo de descanso"
+    name="breakTime"
+    value="01:00"
+    step="1800"
+    placeholder="Duración del descanso"
+    format="12h"
+    id="form-break">
+  </melser-time-picker>
+  
+  <melser-time-picker 
+    label="Recordatorio automático"
+    name="reminder"
+    value="15:00"
+    step="300"
+    placeholder="Cuándo recordar"
+    format="24h"
+    show-seconds
+    id="form-reminder">
+  </melser-time-picker>
   </div>
   
   <button  type="submit" variant="primary" id="form-submit">

@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
@@ -10,50 +10,164 @@ export class MelserNumberInput extends MelserBaseInput<number> {
   @property({ type: Number }) max = Number.MAX_SAFE_INTEGER;
   @property({ type: Number }) step = 1;
 
+  @query('input') inputElement!: HTMLInputElement;
+
   readonly dataType: MelserDataType = 'number';
 
+  /**
+   * Calculates how many decimal places are in the step
+   * to ensure we format the number correctly.
+   * e.g. step 0.01 => returns 2
+   */
+  private get precision(): number {
+    if (!isFinite(this.step) || this.step === 0) return 0;
+    let e = 1;
+    let p = 0;
+    while (Math.round(this.step * e) / e !== this.step) {
+      e *= 10;
+      p++;
+    }
+    return p;
+  }
+
+  /**
+   * Safe math helper that respects the current step precision
+   */
+  private safeMath(operation: 'add' | 'sub'): number {
+    const precisionFactor = Math.pow(10, this.precision);
+    const current = isNaN(this.value) ? 0 : this.value;
+    
+    const v = Math.round(current * precisionFactor);
+    const s = Math.round(this.step * precisionFactor);
+
+    const result = operation === 'add' ? v + s : v - s;
+    return result / precisionFactor;
+  }
+
+  /**
+   * Validates a number against min, max, and step.
+   * Returns the "corrected" number.
+   */
+  private validateAndSnap(val: number): number {
+    if (isNaN(val)) return this.min > 0 ? this.min : 0;
+
+    // 1. Clamp Min/Max
+    let safeVal = Math.max(this.min, Math.min(this.max, val));
+
+    // 2. Snap to Step
+    // Formula: round(value / step) * step
+    // We use a precision factor to avoid 0.3000004 floating point errors
+    if (this.step > 0) {
+      const precisionFactor = Math.pow(10, this.precision);
+      const stepInt = Math.round(this.step * precisionFactor);
+      const valInt = Math.round(safeVal * precisionFactor);
+      
+      // Find nearest multiple
+      const remainder = valInt % stepInt;
+      let snappedInt = valInt;
+
+      if (remainder !== 0) {
+        if (remainder >= stepInt / 2) {
+          snappedInt = valInt + (stepInt - remainder);
+        } else {
+          snappedInt = valInt - remainder;
+        }
+      }
+      
+      safeVal = snappedInt / precisionFactor;
+    }
+
+    return safeVal;
+  }
+
+  /**
+   * Live Typing Handler.
+   * We parse the input but DO NOT force validation formatting here.
+   * This allows the user to type "1." or "0.0" without the cursor jumping.
+   */
   handleInput(e: Event) {
     const input = e.target as HTMLInputElement;
-    // Previene NaN si el usuario borra todo el input
-    const val = input.value === '' ? 0 : parseFloat(input.value);
+    const rawValue = input.value;
 
+    // Handle empty state
+    if (rawValue === '') {
+      return;
+    }
+
+    const val = parseFloat(rawValue);
+
+    // Only update internal state if it's a valid number
     if (!isNaN(val)) {
       this.value = val;
       this.dispatchChange();
     }
   }
 
-  // Helper para evitar errores de punto flotante (ej: 0.1 + 0.2 = 0.300000004)
-  private safeMath(operation: 'add' | 'sub'): number {
-    const current = this.value || 0;
-    // Multiplicamos por un factor para operar con enteros y luego dividir
-    // Esto es básico, si necesitas precisión financiera usa librerías como decimal.js
-    const precision = 100000;
-    const v = Math.round(current * precision);
-    const s = Math.round(this.step * precision);
+  /**
+   * Blur/Enter Handler.
+   * STRICT Validation happens here. We force the value to be valid
+   * and update the input text to match.
+   */
+  handleChange(e: Event) {
+    const input = e.target as HTMLInputElement;
+    
+    // If empty on blur, decide behavior (reset to min, 0, or leave empty)
+    if (input.value === '') {
+      return; 
+    }
 
-    const result = operation === 'add' ? v + s : v - s;
-    return result / precision;
+    let val = parseFloat(input.value);
+
+    // Run strict validation logic
+    const validatedVal = this.validateAndSnap(val);
+
+    // Update internal state
+    this.value = validatedVal;
+    
+    // Format the visual input to the correct decimal places
+    // This fixes visual issues like "10" showing as "10.000000001"
+    const displayValue = this.precision > 0 
+      ? validatedVal.toFixed(this.precision) 
+      : validatedVal.toString();
+
+    if (this.inputElement) {
+      this.inputElement.value = displayValue;
+    }
+
+    this.dispatchChange();
   }
 
   increment() {
     if (this.disabled) return;
-    const newValue = this.safeMath('add');
-
-    if (newValue <= this.max) {
-      this.value = newValue;
-      this.dispatchChange();
+    const rawNewValue = this.safeMath('add');
+    const validValue = this.validateAndSnap(rawNewValue);
+    
+    this.value = validValue;
+    
+    // Update input display immediately for buttons
+    if (this.inputElement) {
+        this.inputElement.value = this.precision > 0 
+            ? validValue.toFixed(this.precision) 
+            : validValue.toString();
     }
+    
+    this.dispatchChange();
   }
 
   decrement() {
     if (this.disabled) return;
-    const newValue = this.safeMath('sub');
+    const rawNewValue = this.safeMath('sub');
+    const validValue = this.validateAndSnap(rawNewValue);
+    
+    this.value = validValue;
 
-    if (newValue >= this.min) {
-      this.value = newValue;
-      this.dispatchChange();
+    if (this.inputElement) {
+        this.inputElement.value = this.precision > 0 
+            ? validValue.toFixed(this.precision) 
+            : validValue.toString();
     }
+
+    this.dispatchChange();
   }
 
   render() {
@@ -74,16 +188,16 @@ export class MelserNumberInput extends MelserBaseInput<number> {
           <input
             id="${this.inputId}"
             type="number"
-            .value="${this.value}"
             .min="${this.min}"
             .max="${this.max}"
             .step="${this.step}"
+            .value="${this.value}" 
             ?disabled="${this.disabled}"
             ?required="${this.required}"
             @input="${this.handleInput}"
+            @change="${this.handleChange}" 
             part="input"
           />
-          
           <button 
             type="button" 
             class="stepper-btn" 
@@ -101,42 +215,35 @@ export class MelserNumberInput extends MelserBaseInput<number> {
   static styles = [
     MelserBaseInput.styles,
     css`
-      /* 1. Hacemos que el componente ocupe todo el espacio disponible */
       :host {
         display: block;
         width: 100%;
         box-sizing: border-box;
       }
-
       .input-wrapper {
         width: 100%;
         display: flex;
         flex-direction: column;
       }
-
       .number-control {
         display: flex;
-        align-items: stretch; /* Asegura que botones e input tengan misma altura */
+        align-items: stretch;
         border: 1px solid var(--melser-border);
         border-radius: var(--melser-radius);
         background-color: var(--melser-input-bg);
-        width: 100%; /* Ocupa el ancho del wrapper */
+        width: 100%;
         overflow: hidden;
         transition: border-color 0.2s, box-shadow 0.2s;
-        height: 40px; /* Opcional: fija altura para consistencia */
+        height: 40px;
       }
-
       .number-control:focus-within {
         border-color: var(--melser-primary);
         box-shadow: 0 0 0 2px hsla(var(--melser-primary-h), var(--melser-primary-s), var(--melser-primary-l), 0.2);
       }
-
       input[type="number"] {
-        /* 2. Hacemos que el input crezca para ocupar el espacio entre botones */
         flex: 1;
-        width: 0; /* Truco de flexbox para evitar desbordamientos */
+        width: 0;
         min-width: 0;
-        
         border: none;
         border-radius: 0;
         text-align: center;
@@ -146,25 +253,23 @@ export class MelserNumberInput extends MelserBaseInput<number> {
         height: 100%;
         color: var(--melser-text);
         font-size: 1rem;
-        padding: 0; /* Remover padding para centrar mejor verticalmente */
+        padding: 0;
       }
-      
       input[type="number"]:focus {
-        outline: none; /* El foco lo maneja el contenedor padre */
+        outline: none;
       }
-
+      /* Hide native spinners */
       input[type="number"]::-webkit-outer-spin-button,
       input[type="number"]::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
       }
-
       .stepper-btn {
         background: var(--melser-surface);
         border: none;
         color: var(--melser-text);
-        width: 40px; /* Ancho fijo para botones */
-        flex-shrink: 0; /* Evita que los botones se aplasten */
+        width: 40px;
+        flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -173,13 +278,11 @@ export class MelserNumberInput extends MelserBaseInput<number> {
         transition: background-color 0.2s;
         margin: 0;
         padding: 0;
-        height: auto; /* Toma la altura del padre (flex stretch) */
+        height: auto;
       }
-
       .stepper-btn:hover:not(:disabled) {
         background-color: var(--melser-border);
       }
-
       .stepper-btn:disabled {
         opacity: 0.5;
         cursor: not-allowed;

@@ -1,11 +1,37 @@
-import { html, css } from 'lit';
+import { html, css,type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
 @customElement('melser-dual-range')
 export class MelserDualRange extends MelserBaseInput<number[]> {
-  @property({ type: Array }) value = [0, 100];
+  // FIX: Added custom converter to handle "30,70" string format commonly used in HTML
+  @property({
+    converter: {
+      fromAttribute: (value: string | null) => {
+        if (!value) return null;
+
+        // 1. Try JSON (Standard Lit format: "[30, 70]")
+        if (value.trim().startsWith('[')) {
+          try {
+            return JSON.parse(value);
+          } catch {
+            // Ignore JSON error and try simple format
+          }
+        }
+
+        // 2. Try comma-separated (HTML friendly format: "30, 70")
+        const parts = value.split(',').map((v) => parseFloat(v.trim()));
+        if (parts.length >= 2 && !parts.some(isNaN)) {
+          return parts;
+        }
+
+        return null;
+      },
+    },
+  })
+  value = [0, 100];
+
   @property({ type: Number }) min = 0;
   @property({ type: Number }) max = 100;
   @property({ type: Number }) step = 1;
@@ -13,6 +39,21 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
   @state() private _activeThumb: number | null = null;
 
   readonly dataType: MelserDataType = 'array';
+
+  /**
+   * Lifecycle method called before the component updates.
+   * We use this to ensure 'value' is never null or invalid before rendering.
+   */
+  willUpdate(changedProperties: PropertyValues) {
+    super.willUpdate(changedProperties);
+
+    // FIX: Guard against null, undefined, or invalid array structures.
+    // This ensures that even if the consumer sets .value = null,
+    // the component self-corrects to a valid state [min, max].
+    if (!Array.isArray(this.value) || this.value.length < 2) {
+      this.value = [this.min, this.max];
+    }
+  }
 
   handleInput(index: number, e: Event) {
     const input = e.target as HTMLInputElement;
@@ -26,13 +67,16 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
     // habrá sido corregido por updateValue, pero el input visual del navegador 
     // puede seguir en la posición incorrecta si Lit no detectó un cambio de estado.
     // Forzamos manualmente que el input coincida con el estado real.
-    if (parseFloat(input.value) !== this.value[index]) {
+    // Nota: Agregamos chequeo de this.value[index] por seguridad, aunque willUpdate ya lo garantiza.
+    if (this.value && this.value[index] !== undefined && parseFloat(input.value) !== this.value[index]) {
       input.value = String(this.value[index]);
     }
   }
 
   updateValue(index: number, val: number) {
-    const newValues = [...this.value];
+    // Safety check just in case updateValue is called before first render/validation
+    const currentValues = Array.isArray(this.value) ? this.value : [this.min, this.max];
+    const newValues = [...currentValues];
 
     // 1. Clamping global (Min/Max del componente)
     let clampedVal = Math.max(this.min, Math.min(this.max, val));
@@ -75,9 +119,12 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
     // Ajustar al step inmediatamente para calcular distancia real
     rawValue = Math.round(rawValue / this.step) * this.step;
 
+    // Asegurar que value es válido antes de acceder
+    const currentValues = Array.isArray(this.value) && this.value.length >= 2 ? this.value : [this.min, this.max];
+
     // Encontrar la manija más cercana
-    const dist0 = Math.abs(this.value[0] - rawValue);
-    const dist1 = Math.abs(this.value[1] - rawValue);
+    const dist0 = Math.abs(currentValues[0] - rawValue);
+    const dist1 = Math.abs(currentValues[1] - rawValue);
 
     let targetIndex = 0;
 
@@ -86,7 +133,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
       targetIndex = 1;
     } else if (dist1 === dist0) {
       // Si están a la misma distancia, movemos el que nos permita ir en esa dirección
-      if (rawValue > this.value[1]) targetIndex = 1;
+      if (rawValue > currentValues[1]) targetIndex = 1;
       else targetIndex = 0;
     }
 
@@ -97,14 +144,25 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
     if (inputs[targetIndex]) {
       inputs[targetIndex].focus();
       // También forzamos el valor visual en el click por seguridad
-      inputs[targetIndex].value = String(this.value[targetIndex]);
+      // Verificación de nulidad en targetIndex
+      if (this.value && this.value[targetIndex] !== undefined) {
+         inputs[targetIndex].value = String(this.value[targetIndex]);
+      }
     }
   }
 
   render() {
+    // Safety Fallback for Render: Ensure we have numbers to calculate percentages
+    // (Even with willUpdate, this is defensive coding for the template)
+    const val0 = (this.value && typeof this.value[0] === 'number') ? this.value[0] : this.min;
+    const val1 = (this.value && typeof this.value[1] === 'number') ? this.value[1] : this.max;
+
     const range = this.max - this.min;
-    const leftPercent = ((this.value[0] - this.min) / range) * 100;
-    const rightPercent = ((this.value[1] - this.min) / range) * 100;
+    // Evitar división por cero
+    const safeRange = range === 0 ? 1 : range;
+    
+    const leftPercent = ((val0 - this.min) / safeRange) * 100;
+    const rightPercent = ((val1 - this.min) / safeRange) * 100;
 
     return html`
       <div class="input-wrapper">
@@ -114,10 +172,10 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
           <div class="track-fill" style="left: ${leftPercent}%; width: ${rightPercent - leftPercent}%"></div>
           
           <div class="tooltip" style="left: ${leftPercent}%; transform: translateX(-50%) ${this._activeThumb === 0 ? 'scale(1)' : ''}">
-            ${this.value[0]}
+            ${val0}
           </div>
           <div class="tooltip" style="left: ${rightPercent}%; transform: translateX(-50%) ${this._activeThumb === 1 ? 'scale(1)' : ''}">
-            ${this.value[1]}
+            ${val1}
           </div>
 
           <input
@@ -126,7 +184,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
             .min="${this.min}"
             .max="${this.max}"
             .step="${this.step}"
-            .value="${this.value[0]}"
+            .value="${val0}"
             @input="${(e: Event) => this.handleInput(0, e)}"
             @focus="${() => this._activeThumb = 0}"
             @blur="${() => this._activeThumb = null}"
@@ -139,7 +197,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
             .min="${this.min}"
             .max="${this.max}"
             .step="${this.step}"
-            .value="${this.value[1]}"
+            .value="${val1}"
             @input="${(e: Event) => this.handleInput(1, e)}"
             @focus="${() => this._activeThumb = 1}"
             @blur="${() => this._activeThumb = null}"

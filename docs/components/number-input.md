@@ -49,7 +49,7 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
   placeholder="0.00"
   step="0.01"
   min="0"
-  max="999.99">
+  max="2.00">
 </melser-number-input>
 
 <melser-number-input 

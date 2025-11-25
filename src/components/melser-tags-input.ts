@@ -53,18 +53,18 @@ export class MelserTagsInput extends MelserBaseInput<string[]> {
         ${this.label ? html`<label>${this.label}</label>` : ''}
         
         <div class="tags-container" @click="${() => this.shadowRoot?.querySelector('input')?.focus()}">
-          ${this.value.map((tag, index) => html`
+          ${this.value ? this.value.map((tag, index) => html`
             <span class="tag">
               ${tag}
               <button type="button" class="remove-btn" @click="${(e: Event) => { e.stopPropagation(); this.removeTag(index); }}">×</button>
             </span>
-          `)}
+          `) : ''}
           
           <input
             type="text"
             .value="${this.inputValue}"
             ?disabled="${this.disabled}"
-            placeholder="${this.value.length === 0 ? 'Type and press Enter...' : ''}"
+            placeholder="${this.value && this.value.length === 0 ? 'Type and press Enter...' : ''}"
             @input="${this.handleInput}"
             @keydown="${this.handleKeyDown}"
             @blur="${this.addTag}"

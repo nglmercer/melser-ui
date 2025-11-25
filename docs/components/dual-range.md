@@ -219,7 +219,7 @@ if (form) {
     show-values>
   </melser-dual-range>
   
-  <div id="date-result" style="margin-top: 1rem; padding: 0.5rem; background: #f3f4f6; border-radius: 4px;">
+  <div id="date-result" style="margin-top: 1rem; padding: 0.5rem; border-radius: 4px;">
     Rango seleccionado: Día 5 al Día 20
   </div>
 </div>

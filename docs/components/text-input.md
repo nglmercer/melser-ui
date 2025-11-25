@@ -317,54 +317,6 @@ melser-text-input {
 
 ## Accesibilidad
 
-
-### Ejemplos de Personalización
-
-<style>
-  .custom-input {
-    --melser-input-focus-border: #10b981;
-    --melser-input-error-border: #f59e0b;
-    --melser-input-border-radius: 12px;
-  }
-  
-  .large-input {
-    --melser-input-height: 48px;
-    --melser-input-font-size: 16px;
-    --melser-input-padding: 12px 16px;
-  }
-  
-  .dark-theme-input {
-    --melser-input-border: 1px solid #374151;
-    --melser-input-focus-border: #8b5cf6;
-    --melser-input-background: #1f2937;
-    --melser-input-color: #f9fafb;
-  }
-</style>
-
-<div class="custom-input" style="margin-bottom: 1rem;">
-  <melser-text-input 
-    label="Input personalizado (verde)"
-    placeholder="Estilos personalizados">
-  </melser-text-input>
-</div>
-
-<div class="large-input" style="margin-bottom: 1rem;">
-  <melser-text-input 
-    label="Input grande"
-    placeholder="Más cómodo de usar">
-  </melser-text-input>
-</div>
-
-<div class="dark-theme-input">
-  <melser-text-input 
-    label="Tema oscuro"
-    placeholder="Para modo oscuro"
-    value="Texto en tema oscuro">
-  </melser-text-input>
-</div>
-
-## Accesibilidad
-
 El componente MelserTextInput incluye:
 
 - **Labels asociados**: Relación semántica entre label e input

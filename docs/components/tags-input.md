@@ -229,11 +229,11 @@ if (form) {
     min-length="2">
   </melser-tags-input>
   
-  <div id="tag-counter" style="margin-top: 1rem; padding: 0.5rem; background: #f3f4f6; border-radius: 4px; text-align: center;">
+  <div id="tag-counter" style="margin-top: 1rem; padding: 0.5rem; border-radius: 4px; text-align: center;">
     Etiquetas: <span id="current-count">0</span> / 5
   </div>
   
-  <div id="tag-list" style="margin-top: 1rem; padding: 0.5rem; background: #fffbeb; border-radius: 4px;">
+  <div id="tag-list" style="margin-top: 1rem; padding: 0.5rem; border-radius: 4px;">
     <strong>Etiquetas actuales:</strong>
     <div id="current-tags">Ninguna</div>
   </div>
