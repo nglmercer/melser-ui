@@ -300,25 +300,25 @@ melser-text-input {
   </melser-text-input>
 </div>
 
-      console.log('Datos del formulario:', { name, email, phone, website });
-      alert('✅ Formulario enviado correctamente!');
-    });
-  }
-</script>
+<div class="large-input" style="margin-bottom: 1rem;">
+  <melser-text-input 
+    label="Input grande"
+    placeholder="Más cómodo de usar">
+  </melser-text-input>
+</div>
 
-## Personalización con CSS
+<div class="dark-theme-input">
+  <melser-text-input 
+    label="Tema oscuro"
+    placeholder="Para modo oscuro"
+    value="Texto en tema oscuro">
+  </melser-text-input>
+</div>
 
-### Variables CSS
+## Accesibilidad
 
-```css
-melser-text-input {
-  --melser-input-width: 100%;
-  --melser-input-height: 40px;
-  --melser-input-padding: 8px 12px;
-  --melser-input-border: 1px solid #d1d5db;
-  --melser-input-border-radius: 6px;
-  --melser-input-focus-border: #3b82f6;
-  --melser-input-error-border: #ef4444;
+El componente MelserTextInput incluye:
+
   --melser-input-font-size: 14px;
   --melser-input-background: #ffffff;
   --melser-input-disabled-bg: #f9fafb;
