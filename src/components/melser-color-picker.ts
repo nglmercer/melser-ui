@@ -1,12 +1,12 @@
 import { html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
 @customElement('melser-color-picker')
 export class MelserColorPicker extends MelserBaseInput<string> {
   @property({ type: String, reflect: true }) override value = '#000000';
-  
+  @query('input[type="color"]') inputElement!: HTMLInputElement;
   readonly dataType: MelserDataType = 'string';
   private readonly hexRegex = /^#[0-9A-F]{6}$/i;
 

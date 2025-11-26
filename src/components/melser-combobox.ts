@@ -321,7 +321,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
       :host { display: block; width: 100%; position: relative; }
       .combobox-container { position: relative; width: 100%; }
 
-      input { padding-right: 2.5rem; }
+      input { padding-right: 2.5rem; width: 100%; }
 
       .chevron {
         position: absolute; right: 0.75rem; top: 50%;
@@ -362,7 +362,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
         display: flex; justify-content: space-between; align-items: center;
       }
 
-      .option-item.highlighted { background-color: var(--melser-hover-bg, #f3f4f6); }
+      .option-item.highlighted { background-color: var(--melser-input-bg, #ccc); }
       .option-item.selected { color: var(--melser-primary, #007bff); font-weight: 600; background-color: var(--melser-primary-light, #e6f0ff); }
       .option-item.selected.highlighted { background-color: var(--melser-primary-light-hover, #d0e1fd); }
       .no-results { padding: 0.75rem; color: #888; text-align: center; font-style: italic; }

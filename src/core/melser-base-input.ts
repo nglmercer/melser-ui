@@ -125,7 +125,23 @@ export abstract class MelserBaseInput<T = unknown> extends LitElement {
       /* Remove default browser outline to replace with custom accessible one */
       outline: none; 
     }
+    option {
+      padding: var(--_input-padding);
+      background-color: var(--_input-bg);
+      color: var(--melser-input-text, var(--melser-text));
+      cursor: pointer;
+    }
 
+    option:hover,
+    option:focus {
+      background-color: var(--_input-bg);
+      color: var(--melser-primary, #005fcc);
+    }
+
+    option:checked {
+      background-color: var(--melser-primary, #005fcc);
+      color: var(--_input-bg);
+    }
     /* ACCESSIBILITY: Visible Focus Styles */
     input:focus-visible, 
     select:focus-visible, 

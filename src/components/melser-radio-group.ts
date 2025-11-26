@@ -172,7 +172,7 @@ export class MelserRadioGroup extends MelserBaseInput<string> {
       }
 
       .radio-label:hover {
-        background-color: var(--melser-hover-bg, #f9fafb);
+        background-color: var(--_input-bg-hover, #f9fafb);
       }
 
       .radio-label.disabled {
