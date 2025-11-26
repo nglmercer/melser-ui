@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state,query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType, SelectOption } from '../types/index';
 
@@ -13,7 +13,7 @@ interface InternalOption extends SelectOption {
 export class MelserRadioGroup extends MelserBaseInput<string> {
   @property({ type: String }) value = '';
   @property({ type: Array }) options: InternalOption[] = [];
-
+  @query('input') inputElement!: HTMLInputElement;
   @state() private _renderedOptions: InternalOption[] = [];
 
   readonly dataType: MelserDataType = 'string';

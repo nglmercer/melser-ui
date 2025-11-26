@@ -19,7 +19,8 @@ export class MelserOtpInput extends MelserBaseInput<string> {
     @state() private _selectionEnd: number | null = 0;
     @state() private _isFocused = false;
 
-    @query('.ghost-input') private _inputEl!: HTMLInputElement;
+    @query('.ghost-input') protected inputElement!: HTMLInputElement;
+
 
     readonly dataType: MelserDataType = 'string';
 
@@ -60,9 +61,9 @@ export class MelserOtpInput extends MelserBaseInput<string> {
     handleFocus() {
         this._isFocused = true;
         // Sincronizar al recibir foco (por tabulación, etc)
-        if (this._inputEl) {
-            this._selectionStart = this._inputEl.selectionStart;
-            this._selectionEnd = this._inputEl.selectionEnd;
+        if (this.inputElement) {
+            this._selectionStart = this.inputElement.selectionStart;
+            this._selectionEnd = this.inputElement.selectionEnd;
         }
     }
     handleDoubleClick(e: MouseEvent) {
@@ -71,7 +72,7 @@ export class MelserOtpInput extends MelserBaseInput<string> {
         e.preventDefault();
 
         // 2. CORRECCIÓN: Select All Robusto
-        this._inputEl.select();
+        this.inputElement.select();
 
         // Forzamos la actualización del estado inmediatamente
         this._selectionStart = 0;
@@ -90,8 +91,8 @@ export class MelserOtpInput extends MelserBaseInput<string> {
         e.stopPropagation(); // Evita que suba al contenedor padre
 
         // Solo hacer focus si NO lo tiene ya. Esto evita el conflicto de reinicio.
-        if (document.activeElement !== this._inputEl) {
-            this._inputEl.focus();
+        if (document.activeElement !== this.inputElement) {
+            this.inputElement.focus();
         }
 
         // Calcular posición
@@ -103,7 +104,7 @@ export class MelserOtpInput extends MelserBaseInput<string> {
         // Para UX de OTP "reemplazo", seleccionar el caracter (tu lógica original) está bien,
         // PERO debemos asegurarnos de que esto actualice el estado.
 
-        this._inputEl.setSelectionRange(targetPos, targetPos + 1);
+        this.inputElement.setSelectionRange(targetPos, targetPos + 1);
 
         // Actualizar estado manual para reflejo instantáneo en UI
         this._selectionStart = targetPos;

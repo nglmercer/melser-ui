@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state,query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
@@ -8,6 +8,7 @@ export class MelserFileUpload extends MelserBaseInput<File | null> {
     @property({ type: String }) accept = '';
     @state() fileName = '';
     @state() isDragging = false;
+    @query('input') inputElement!: HTMLInputElement;
 
     // We store the File object, but for getData we might want to return the file or null
     // Note: File objects are not directly serializable to JSON

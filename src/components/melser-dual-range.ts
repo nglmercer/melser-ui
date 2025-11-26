@@ -1,5 +1,5 @@
 import { html, css,type PropertyValues } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state,query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
@@ -39,6 +39,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
   @state() private _activeThumb: number | null = null;
 
   readonly dataType: MelserDataType = 'array';
+  @query('input') inputElement!: HTMLInputElement;
 
   /**
    * Lifecycle method called before the component updates.

@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property,query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType, SelectOption } from '../types/index';
 
@@ -7,6 +7,7 @@ import type { MelserDataType, SelectOption } from '../types/index';
 export class MelserMultiSelect extends MelserBaseInput<string[]> {
   @property({ type: Array }) value: string[] = [];
   @property({ type: Array }) options: SelectOption[] = [];
+  @query('input') inputElement!: HTMLInputElement;
 
   readonly dataType: MelserDataType = 'array';
 

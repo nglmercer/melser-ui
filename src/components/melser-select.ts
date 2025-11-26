@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state,query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType, SelectOption } from '../types/index';
 
@@ -11,7 +11,7 @@ interface InternalOption extends SelectOption {
 @customElement('melser-select')
 export class MelserSelect extends MelserBaseInput<string> {
   @property({ type: String }) value = '';
-  
+  @query('select') inputElement!: HTMLSelectElement;
   // Mantenemos la propiedad por si quieren pasar datos vía JS
   @property({ type: Array }) options: InternalOption[] = [];
 

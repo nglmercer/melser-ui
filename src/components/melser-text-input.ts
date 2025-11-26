@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property,query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
@@ -8,6 +8,8 @@ export class MelserTextInput extends MelserBaseInput<string> {
   @property({ type: String }) value = '';
   @property({ type: String }) placeholder = '';
   @property({ type: String }) type = 'text'; // text, password, email, etc.
+
+  @query('input') inputElement!: HTMLInputElement;
 
   readonly dataType: MelserDataType = 'string';
 

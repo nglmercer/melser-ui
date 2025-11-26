@@ -1,12 +1,12 @@
 import { html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property,query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
 @customElement('melser-switch')
 export class MelserSwitch extends MelserBaseInput<boolean> {
   @property({ type: Boolean }) value = false;
-
+  @query('input') inputElement!: HTMLInputElement;
   readonly dataType: MelserDataType = 'boolean';
 
   handleChange(e: Event) {

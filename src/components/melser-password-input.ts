@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state,query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
@@ -11,7 +11,7 @@ const eyeOffIcon = html`<svg xmlns="http://www.w3.org/2000/svg" width="20" heigh
 export class MelserPasswordInput extends MelserBaseInput<string> {
   @property({ type: String }) value = '';
   @property({ type: String }) placeholder = '';
-
+  @query('input') inputElement!: HTMLInputElement;
   @state() private showPassword = false;
 
   readonly dataType: MelserDataType = 'string';

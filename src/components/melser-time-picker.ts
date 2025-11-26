@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property,query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
@@ -8,7 +8,7 @@ export class MelserTimePicker extends MelserBaseInput<string> {
     @property({ type: String }) value = '';
     @property({ type: String }) min = '';
     @property({ type: String }) max = '';
-
+    @query('input') inputElement!: HTMLInputElement;
     readonly dataType: MelserDataType = 'string';
 
     handleInput(e: Event) {

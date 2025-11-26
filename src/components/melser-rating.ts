@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state,query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
@@ -22,6 +22,7 @@ export class MelserRating extends MelserBaseInput<number> {
     @state() private _hoverValue: number | null = null;
 
     readonly dataType: MelserDataType = 'number';
+    @query('input') inputElement!: HTMLInputElement;
 
     /**
      * Calculates the width percentage for the "filled" version of a specific star.

@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state,query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
@@ -7,7 +7,7 @@ import type { MelserDataType } from '../types/index';
 export class MelserTagsInput extends MelserBaseInput<string[]> {
     @property({ type: Array }) value: string[] = [];
     @state() inputValue = '';
-
+    @query('input') inputElement!: HTMLInputElement;
     readonly dataType: MelserDataType = 'array';
 
     handleInput(e: Event) {

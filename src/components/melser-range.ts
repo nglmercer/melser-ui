@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property,query } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
@@ -9,7 +9,7 @@ export class MelserRange extends MelserBaseInput<number> {
   @property({ type: Number }) min = 0;
   @property({ type: Number }) max = 100;
   @property({ type: Number }) step = 1;
-
+  @query('input') inputElement!: HTMLInputElement;
   readonly dataType: MelserDataType = 'number';
 
   handleInput(e: Event) {
