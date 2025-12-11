@@ -1,4 +1,4 @@
-export { MelserTextInput } from './components/melser-text-input';
+export { MelserTextInput } from './components/base-input';
 export { MelserSelect } from './components/melser-select';
 export { MelserCheckbox } from './components/melser-checkbox';
 export { MelserRange } from './components/melser-range';
@@ -22,3 +22,7 @@ export type { InputData, MelserDataType, SelectOption } from './types/index';
 
 // Export registration utilities
 export { registerComponent, registerWithPrefix } from './utils/registration';
+
+// Export Theme utilities
+export { setTheme, Var } from './theme/tokens';
+export { ThemeManager } from './theme/theme-manager';

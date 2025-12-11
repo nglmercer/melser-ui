@@ -48,12 +48,12 @@ Todos los componentes siguen el mismo patrón de uso:
 <melser-checkbox label="Opción simple"></melser-checkbox>
 
 <!-- Con propiedades -->
-<melser-text-input 
+<base-input 
   label="Nombre de usuario" 
   placeholder="Ingresa tu usuario"
   required
   minlength="3">
-</melser-text-input>
+</base-input>
 
 <!-- Con eventos -->
 <button  
@@ -119,13 +119,13 @@ Aquí puedes probar algunos componentes en tiempo real:
 
 ```html
 <form id="demo-form">
-  <melser-text-input 
+  <base-input 
     label="Email" 
     type="email" 
     placeholder="tu@email.com"
     id="email-input"
     required>
-  </melser-text-input>
+  </base-input>
   
   <melser-password-input 
     label="Contraseña" 
@@ -151,7 +151,7 @@ Aquí puedes probar algunos componentes en tiempo real:
 
 ### Demo de Componentes en Acción
 
-<melser-text-input id="demo-name" label="Nombre" placeholder="Tu nombre aquí"></melser-text-input>
+<base-input id="demo-name" label="Nombre" placeholder="Tu nombre aquí"></base-input>
 
 <melser-select id="demo-select" label="Selecciona una opción">
   <option value="opcion1">Opción 1</option>

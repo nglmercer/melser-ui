@@ -28,14 +28,30 @@ export function flattenTokens(
 
             if (isDTCGToken) {
                 // It's a token object { $value: "#fff", $type: "color" }
-                flattened[`--${prefix}-${newPath}`] = String(value.$value);
+                let valStr = String(value.$value);
+                // Resolve aliases: {palette.blue.700} -> var(--melser-palette-blue-700)
+                if (valStr.includes('{')) {
+                    valStr = valStr.replace(/\{([^}]+)\}/g, (_, aliasPath) => {
+                        const varName = `--${prefix}-${aliasPath.replace(/\./g, '-')}`;
+                        return `var(${varName})`;
+                    });
+                }
+                flattened[`--${prefix}-${newPath}`] = valStr;
             } else if (isGroup) {
                 // It's a nested group, recurse deeper
                 const nested = flattenTokens(value, prefix, newPath);
                 flattened = { ...flattened, ...nested };
             } else {
                 // It's a direct primitive value
-                flattened[`--${prefix}-${newPath}`] = String(value);
+                let valStr = String(value);
+                // Resolve aliases for direct values too, just in case
+                if (valStr.includes('{')) {
+                    valStr = valStr.replace(/\{([^}]+)\}/g, (_, aliasPath) => {
+                        const varName = `--${prefix}-${aliasPath.replace(/\./g, '-')}`;
+                        return `var(${varName})`;
+                    });
+                }
+                flattened[`--${prefix}-${newPath}`] = valStr;
             }
         }
     }

@@ -106,12 +106,12 @@ Un componente de entrada de código OTP (One-Time Password) para verificación d
 <form id="verification-form">
   <h3>Verificación de Dos Factores</h3>
   
-  <melser-text-input 
+  <base-input 
     label="Correo electrónico"
     type="email"
     value="usuario@ejemplo.com"
     disabled>
-  </melser-text-input>
+  </base-input>
   
   <melser-otp-input 
     name="otpCode"
@@ -155,12 +155,12 @@ if (form) {
 
 <form id="otp-form">
   <div style="margin-bottom: 1.5rem;">
-    <melser-text-input 
+    <base-input 
       label="Correo electrónico"
       type="email"
       value="usuario@ejemplo.com"
       disabled>
-    </melser-text-input>
+    </base-input>
   </div>
   
   <div style="margin-bottom: 1.5rem;">

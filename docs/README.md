@@ -90,7 +90,7 @@ npm run preview:docs
 - ✅ Eventos se disparan apropiadamente
 
 ### ✅ Tags HTML Válidos
-- ✅ **Tags con prefijo**: `melser-checkbox`, `melser-text-input`, etc.
+- ✅ **Tags con prefijo**: `melser-checkbox`, `base-input`, etc.
 - ✅ **Sin conflictos**: Los nombres evitan conflictos con HTML nativo
 - ✅ **Custom Elements**: Funcionan correctamente en el navegador
 - ✅ **Shadow DOM**: Aislamiento de estilos incluido
@@ -119,11 +119,11 @@ import { registerComponents } from '@/utils/registration';
   required>
 </melser-checkbox>
 
-<melser-text-input 
+<base-input 
   label="Email"
   type="email"
   placeholder="tu@email.com">
-</melser-text-input>
+</base-input>
 ```
 
 ### Propiedades y Eventos

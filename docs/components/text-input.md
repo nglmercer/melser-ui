@@ -9,42 +9,42 @@ Un componente de entrada de texto avanzado y personalizable con validación, ico
 ## Ejemplo Básico
 
 ```html
-<melser-text-input 
+<base-input 
   label="Nombre completo" 
   placeholder="Escribe tu nombre">
-</melser-text-input>
+</base-input>
 ```
 
 ## Demo Interactiva
 
-<melser-text-input 
+<base-input 
   id="demo-basic" 
   label="Campo de texto básico" 
   placeholder="Escribe algo...">
-</melser-text-input>
+</base-input>
 
-<melser-text-input 
+<base-input 
   id="demo-required" 
   label="Campo requerido *" 
   placeholder="Este campo es obligatorio"
   required>
-</melser-text-input>
+</base-input>
 
-<melser-text-input 
+<base-input 
   id="demo-disabled" 
   label="Campo deshabilitado" 
   placeholder="No puedes escribir aquí"
   disabled
   value="Valor predefinido">
-</melser-text-input>
+</base-input>
 
-<melser-text-input 
+<base-input 
   id="demo-password" 
   label="Contraseña" 
   type="password" 
   placeholder="Mínimo 8 caracteres"
   minlength="8">
-</melser-text-input>
+</base-input>
 
 ## Propiedades
 
@@ -83,36 +83,36 @@ Un componente de entrada de texto avanzado y personalizable con validación, ico
 ### Input con Validación de Email
 
 ```html
-<melser-text-input 
+<base-input 
   label="Correo electrónico"
   type="email"
   placeholder="tu@email.com"
   required
   pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
   hint="Ingresa un email válido">
-</melser-text-input>
+</base-input>
 ```
 
 ### Input con Contador de Caracteres
 
 ```html
-<melser-text-input 
+<base-input 
   label="Bio"
   placeholder="Cuéntanos sobre ti..."
   maxlength="200"
   hint="Máximo 200 caracteres">
-</melser-text-input>
+</base-input>
 ```
 
 ### Input con Autocompletado
 
 ```html
-<melser-text-input 
+<base-input 
   label="País"
   placeholder="Selecciona un país"
   autocomplete="country"
   datalist="countries">
-</melser-text-input>
+</base-input>
 
 <datalist id="countries">
   <option value="España">
@@ -126,14 +126,14 @@ Un componente de entrada de texto avanzado y personalizable con validación, ico
 ### Input con Estados
 
 ```html
-<melser-text-input 
+<base-input 
   label="Usuario"
   placeholder="3-20 caracteres"
   minlength="3"
   maxlength="20"
   pattern="[a-zA-Z0-9_]+"
   error="Solo letras, números y guiones bajos">
-</melser-text-input>
+</base-input>
 ```
 
 ## Integración con Formularios
@@ -142,36 +142,36 @@ Un componente de entrada de texto avanzado y personalizable con validación, ico
 
 ```html
 <form id="registration-form">
-  <melser-text-input 
+  <base-input 
     label="Nombre completo *"
     name="fullName"
     required
     minlength="2"
     placeholder="Juan Pérez">
-  </melser-text-input>
+  </base-input>
   
-  <melser-text-input 
+  <base-input 
     label="Correo electrónico *"
     type="email"
     name="email"
     required
     placeholder="juan@email.com">
-  </melser-text-input>
+  </base-input>
   
-  <melser-text-input 
+  <base-input 
     label="Teléfono"
     type="tel"
     name="phone"
     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
     placeholder="123-456-7890">
-  </melser-text-input>
+  </base-input>
   
-  <melser-text-input 
+  <base-input 
     label="Sitio web"
     type="url"
     name="website"
     placeholder="https://miweb.com">
-  </melser-text-input>
+  </base-input>
   
   <button  type="submit" variant="primary">
     Registrarse
@@ -205,45 +205,45 @@ if (form) {
 
 <form id="text-input-form">
   <div style="margin-bottom: 1rem;">
-    <melser-text-input 
+    <base-input 
       label="Nombre completo *"
       name="fullName"
       required
       minlength="2"
       placeholder="Juan Pérez"
       id="form-name">
-    </melser-text-input>
+    </base-input>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-text-input 
+    <base-input 
       label="Correo electrónico *"
       type="email"
       name="email"
       required
       placeholder="juan@email.com"
       id="form-email">
-    </melser-text-input>
+    </base-input>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-text-input 
+    <base-input 
       label="Teléfono"
       type="tel"
       name="phone"
       placeholder="123-456-7890"
       id="form-phone">
-    </melser-text-input>
+    </base-input>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-text-input 
+    <base-input 
       label="Sitio web"
       type="url"
       name="website"
       placeholder="https://miweb.com"
       id="form-website">
-    </melser-text-input>
+    </base-input>
   </div>
   
   <button  type="submit" variant="primary" id="form-submit">
@@ -256,7 +256,7 @@ if (form) {
 ### Variables CSS
 
 ```css
-melser-text-input {
+base-input {
   --melser-input-width: 100%;
   --melser-input-height: 40px;
   --melser-input-padding: 8px 12px;
@@ -294,25 +294,25 @@ melser-text-input {
 </style>
 
 <div class="custom-input" style="margin-bottom: 1rem;">
-  <melser-text-input 
+  <base-input 
     label="Input personalizado (verde)"
     placeholder="Estilos personalizados">
-  </melser-text-input>
+  </base-input>
 </div>
 
 <div class="large-input" style="margin-bottom: 1rem;">
-  <melser-text-input 
+  <base-input 
     label="Input grande"
     placeholder="Más cómodo de usar">
-  </melser-text-input>
+  </base-input>
 </div>
 
 <div class="dark-theme-input">
-  <melser-text-input 
+  <base-input 
     label="Tema oscuro"
     placeholder="Para modo oscuro"
     value="Texto en tema oscuro">
-  </melser-text-input>
+  </base-input>
 </div>
 
 ## Accesibilidad
@@ -341,7 +341,7 @@ El componente MelserTextInput incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import 'melser-ui/components/melser-text-input.js';
+import 'melser-ui/components/base-input.js';
 
 // Verificar que no esté deshabilitado
 console.log(input.disabled); // Debe ser false
@@ -351,30 +351,30 @@ console.log(input.disabled); // Debe ser false
 
 ```html
 <!-- Asegúrate de usar los atributos correctos -->
-<melser-text-input 
+<base-input 
   required
   minlength="3"
   maxlength="50"
   pattern="[A-Za-z ]+"
   error="Solo letras y espacios">
-</melser-text-input>
+</base-input>
 ```
 
 ### Problemas de accesibilidad
 
 ```html
 <!-- Para campos complejos, usa aria-label -->
-<melser-text-input 
+<base-input 
   aria-label="Código de verificación de 6 dígitos"
   maxlength="6"
   pattern="[0-9]{6}">
-</melser-text-input>
+</base-input>
 ```
 
 ### Estados de foco no visibles
 
 ```css
 /* Personaliza el indicador de foco */
-melser-text-input:focus-within {
+base-input:focus-within {
   box-shadow: 0 0 0 2px #3b82f6;
 }

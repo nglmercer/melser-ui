@@ -108,11 +108,11 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
 <form id="article-form">
   <h3>Publicar Artículo</h3>
   
-  <melser-text-input 
+  <base-input 
     label="Título del artículo"
     name="title"
     required>
-  </melser-text-input>
+  </base-input>
   
   <melser-textarea 
     label="Contenido del artículo"
@@ -160,12 +160,12 @@ if (form) {
 
 <form id="tags-form">
   <div style="margin-bottom: 1.5rem;">
-    <melser-text-input 
+    <base-input 
       label="Título del artículo"
       name="title"
       id="form-title"
       required>
-    </melser-text-input>
+    </base-input>
   </div>
   
   <div style="margin-bottom: 1.5rem;">

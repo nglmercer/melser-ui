@@ -36,7 +36,7 @@ import type { MelserComponent } from '@/types';
 
 // ✅ Importaciones específicas de componentes
 import { MelserCheckbox } from '@/components/melser-checkbox';
-import { MelserTextInput } from '@/components/melser-text-input';
+import { MelserTextInput } from '@/components/base-input';
 import { MelserButton } from '@/components/button ';
 
 // ✅ Importación de estilos
@@ -69,7 +69,7 @@ import { registerComponents } from '@/utils/registration';
 import type { MelserFormData } from '@/types';
 
 // ✅ Importar otros componentes
-import '@/components/melser-text-input';
+import '@/components/base-input';
 import '@/components/melser-checkbox';
 import '@/components/button ';
 
@@ -87,12 +87,12 @@ export class MelserForm extends LitElement {
   render() {
     return html`
       <form @submit=${this.handleSubmit}>
-        <melser-text-input
+        <base-input
           name="email"
           label="Email"
           @input=${this.handleInput}
           required>
-        </melser-text-input>
+        </base-input>
 
         <melser-checkbox
           name="terms"

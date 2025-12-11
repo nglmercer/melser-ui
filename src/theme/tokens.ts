@@ -28,9 +28,9 @@ export const tokens = {
         }
     },
 
-    // Tier 2: Semantic / System
+    // Tier 2: Semantic / System (Defaulting to Light)
     color: {
-        primary: { $value: '{palette.blue.700}' }, // Maps to --melser-color-primary
+        primary: { $value: '{palette.blue.700}' },
         primaryLighter: { $value: '{palette.blue.50}' },
         error: { $value: '{palette.red.600}' },
 
@@ -102,7 +102,6 @@ export const tokens = {
     },
 
     // Tier 3: Component Specific (Optional, or can be composed in component)
-    // The Prompt suggests defining specific component tokens here too.
     input: {
         bg: { $value: '{color.bg.default}' },
         border: { $value: '{color.border.default}' },
@@ -110,6 +109,57 @@ export const tokens = {
     }
 };
 
+// Define explicit overrides for Dark Mode
+export const schemes = {
+    light: tokens, // Default
+    dark: {
+        ...tokens,
+        color: {
+            ...tokens.color,
+            bg: {
+                default: { $value: '{palette.neutral.900}' },
+                hover: { $value: '{palette.neutral.800}' },
+                disabled: { $value: '{palette.neutral.800}' },
+            },
+            surface: {
+                primary: { $value: '{palette.neutral.900}' },
+                variant: { $value: '{palette.neutral.800}' },
+            },
+            text: {
+                primary: { $value: '{palette.neutral.50}' },
+                secondary: { $value: '{palette.neutral.400}' },
+                disabled: { $value: '{palette.neutral.600}' },
+                placeholder: { $value: '{palette.neutral.500}' },
+                inverse: { $value: '{palette.neutral.900}' },
+            },
+            border: {
+                default: { $value: '{palette.neutral.700}' },
+                hover: { $value: '{palette.neutral.500}' },
+                focus: { $value: '{color.primary}' }, // Keep primary
+                error: { $value: '{color.error}' },
+                disabled: { $value: '{palette.neutral.700}' },
+            }
+        }
+    }
+};
+
 // Export the generated Accessor Object
 export const Var = createTokenAccessors(tokens, 'melser');
 export const flattenedTokens = flattenTokens(tokens, 'melser');
+
+// Automatically inject tokens into the document root
+import { ThemeManager } from './theme-manager';
+if (typeof window !== 'undefined') {
+    ThemeManager.setVariables(flattenedTokens);
+}
+
+// Allow switching themes at runtime
+export function setTheme(mode: 'light' | 'dark') {
+    const scheme = schemes[mode];
+    if (scheme) {
+        const flattened = flattenTokens(scheme, 'melser');
+        ThemeManager.setVariables(flattened);
+    } else {
+        console.warn(`[Melser UI] Theme '${mode}' not found.`);
+    }
+}

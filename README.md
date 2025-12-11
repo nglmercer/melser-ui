@@ -31,12 +31,12 @@ import { registerComponent, MelserSwitch } from 'melser-ui';
 Úsalos en tu HTML:
 
 ```html
-<melser-text-input
+<base-input
   name="username"
   label="Nombre de Usuario"
   placeholder="Escribe tu nombre..."
   required
-></melser-text-input>
+></base-input>
 
 <melser-switch
   name="notifications"
@@ -48,7 +48,7 @@ import { registerComponent, MelserSwitch } from 'melser-ui';
 
 | Componente | Etiqueta HTML | Descripción | Tipo de Dato (`dataType`) |
 |------------|---------------|-------------|---------------------------|
-| **Text Input** | `<melser-text-input>` | Campo de texto simple (text, email, password, number). | `string` |
+| **Text Input** | `<base-input>` | Campo de texto simple (text, email, password, number). | `string` |
 | **Textarea** | `<melser-textarea>` | Campo de texto multilínea redimensionable. | `string` |
 | **Select** | `<melser-select>` | Lista desplegable nativa estilizada. | `string` |
 | **Multi Select** | `<melser-multi-select>` | Selección múltiple nativa. | `array` (`string[]`) |
@@ -74,7 +74,7 @@ Todos los componentes heredan de `MelserBaseInput` y comparten estas propiedades
 Todos los componentes exponen un método `getData()` que devuelve una estructura estandarizada:
 
 ```typescript
-const input = document.querySelector('melser-text-input');
+const input = document.querySelector('base-input');
 console.log(input.getData());
 
 // Salida:
@@ -82,7 +82,7 @@ console.log(input.getData());
   name: "username",
   value: "mi_usuario",
   isValid: true,
-  componentType: "melser-text-input",
+  componentType: "base-input",
   dataType: "string" // Útil para validación dinámica
 }
 ```

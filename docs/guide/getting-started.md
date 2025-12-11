@@ -48,10 +48,10 @@ Una vez importados, puedes usar los componentes directamente en tu HTML:
   </melser-checkbox>
   
   <!-- Usar componente text input -->
-  <melser-text-input 
+  <base-input 
     label="Nombre" 
     placeholder="Escribe tu nombre">
-  </melser-text-input>
+  </base-input>
   
 </body>
 </html>
@@ -64,7 +64,7 @@ Una vez importados, puedes usar los componentes directamente en tu HTML:
 Los componentes usan nombres de tags con prefijo para evitar conflictos:
 
 - ✅ `melser-checkbox` - Válido
-- ✅ `melser-text-input` - Válido  
+- ✅ `base-input` - Válido  
 - ✅ `melser-color-picker` - Válido
 - ❌ `checkbox` - Podría conflitar // no te deja utilizar sin un - por defecto asi que no hay problemas
 
@@ -76,7 +76,7 @@ import type { MelserCheckbox, MelserTextInput } from 'melser-ui/types';
 
 // Usar con tipado
 const checkbox = document.querySelector('melser-checkbox') as MelserCheckbox;
-const input = document.querySelector('melser-text-input') as MelserTextInput;
+const input = document.querySelector('base-input') as MelserTextInput;
 ```
 
 

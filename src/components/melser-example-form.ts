@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { ZodFormController } from '../utils/form-controller';
 
 // Import component classes directly
-import { MelserTextInput } from './melser-text-input';
+import { MelserTextInput } from './base-input';
 import { MelserNumberInput } from './melser-number-input';
 import { MelserCheckbox } from './melser-checkbox';
 

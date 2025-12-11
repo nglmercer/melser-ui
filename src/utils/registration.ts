@@ -18,7 +18,7 @@ export function registerComponent(tagName: string, componentClass: typeof LitEle
         customElements.define(tagName, componentClass);
     } catch (e) {
         // If registration fails because class is already registered, subclass it
-        // This allows creating aliases like <my-input> for <melser-text-input>
+        // This allows creating aliases like <my-input> for <base-input>
         if (e instanceof DOMException && e.name === 'NotSupportedError') {
             class AliasedComponent extends componentClass { }
             customElements.define(tagName, AliasedComponent);

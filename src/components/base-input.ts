@@ -4,7 +4,7 @@ import { MelserBaseInput, InputVar } from '../core/melser-base-input';
 import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
-@customElement('melser-text-input')
+@customElement('base-input')
 export class MelserTextInput extends MelserBaseInput<string> {
   @property({ type: String }) value = '';
   @property({ type: String }) placeholder = '';

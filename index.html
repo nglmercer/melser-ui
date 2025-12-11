@@ -87,9 +87,9 @@
     <h2>Comprehensive Form Demo</h2>
     <form id="demo-form" onsubmit="event.preventDefault();">
       <div class="grid">
-        <melser-text-input name="username" label="Username" placeholder="Enter username" required></melser-text-input>
+        <base-input name="username" label="Username" placeholder="Enter username" required></base-input>
 
-        <melser-text-input name="age" label="Age" type="number" placeholder="Enter age"></melser-text-input>
+        <base-input name="age" label="Age" type="number" placeholder="Enter age"></base-input>
       </div>
 
       <melser-textarea name="bio" label="Biography" placeholder="Tell us about yourself..." rows="3"></melser-textarea>
@@ -178,7 +178,7 @@
   </div>
 
   <script type="module">
-    import { registerComponent, MelserSwitch } from '/src/index.ts';
+    import { registerComponent, MelserSwitch, setTheme } from '/src/index.ts';
     import { z } from 'zod';
     import { zodToJsonSchema } from "zod-to-json-schema";
 
@@ -197,7 +197,7 @@
     // Handle submit
     document.getElementById('submit-btn').addEventListener('click', () => {
       const inputs = document.querySelectorAll(
-        `melser-text-input, melser-select, melser-checkbox, melser-range, 
+        `base-input, melser-select, melser-checkbox, melser-range, 
          melser-multi-select, melser-radio-group, melser-textarea, melser-switch, 
          melser-file-upload, melser-tags-input, melser-date-picker, melser-time-picker, 
          melser-number-input, melser-password-input, melser-otp-input, melser-combobox, 
@@ -291,9 +291,6 @@
 
       document.getElementById('result').textContent = JSON.stringify(output, null, 2);
     });
-  </script>
-
-  <script>
     // Theme Switching Logic
     const themeSwitch = document.getElementById('theme-switch');
 
@@ -301,12 +298,17 @@
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       themeSwitch.value = true;
       document.documentElement.setAttribute('data-theme', 'dark');
+      setTheme('dark');
     }
 
     themeSwitch.addEventListener('ui:change', (e) => {
       const isDark = e.detail.value;
       document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      setTheme(isDark ? 'dark' : 'light');
     });
+  </script>
+
+  <script>
 
     // Populate options
     // Use requestAnimationFrame to ensure Custom Elements are upgraded
