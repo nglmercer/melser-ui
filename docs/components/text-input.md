@@ -291,6 +291,13 @@ base-input {
   </base-input>
 </div>
 
+<h3>Colores</h3>
+<div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1rem;">
+  <base-input label="Success Input" color="success" placeholder="Correcto" value="Valor válido"></base-input>
+  <base-input label="Warning Input" color="warning" placeholder="Advertencia" value="Valor sospechoso"></base-input>
+  <base-input label="Danger Input" color="danger" placeholder="Error" value="Valor inválido"></base-input>
+</div>
+
 ## Accesibilidad
 
 El componente MelserTextInput incluye:

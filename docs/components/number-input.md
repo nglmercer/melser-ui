@@ -341,6 +341,13 @@ me-number-input {
   </me-number-input>
 </div>
 
+<h3>Colores</h3>
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+  <me-number-input label="Success" color="success" value="100"></me-number-input>
+  <me-number-input label="Warning" color="warning" value="50"></me-number-input>
+  <me-number-input label="Danger" color="danger" value="0"></me-number-input>
+</div>
+
 ## Características Avanzadas
 
 ### Formateo Automático

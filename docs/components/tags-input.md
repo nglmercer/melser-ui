@@ -35,27 +35,35 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
   label="Etiquetas deshabilitadas">
 </me-tags-input>
 
+<h3>Colores</h3>
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+  <me-tags-input label="Success" color="success" value="tag1, tag2"></me-tags-input>
+  <me-tags-input label="Warning" color="warning" value="tag3, tag4"></me-tags-input>
+  <me-tags-input label="Danger" color="danger" value="tag5, tag6"></me-tags-input>
+</div>
+
 ## Propiedades
 
-| Propiedad           | Tipo      | Valor por Defecto      | Descripción                              |
-| ------------------- | --------- | ---------------------- | ---------------------------------------- |
-| `value`             | `string`  | `''`                   | Etiquetas actuales (separadas por comas) |
-| `placeholder`       | `string`  | `'Agrega etiqueta...'` | Texto del marcador                       |
-| `disabled`          | `boolean` | `false`                | Deshabilita la interacción               |
-| `readonly`          | `boolean` | `false`                | Solo lectura                             |
-| `name`              | `string`  | `''`                   | Nombre para formularios                  |
-| `label`             | `string`  | `''`                   | Etiqueta visible del componente          |
-| `maxTags`           | `number`  | `undefined`            | Número máximo de etiquetas               |
-| `minLength`         | `number`  | `1`                    | Longitud mínima de etiqueta              |
-| `maxLength`         | `number`  | `50`                   | Longitud máxima de etiqueta              |
-| `allowDuplicates`   | `boolean` | `false`                | Permite etiquetas duplicadas             |
-| `delimiter`         | `string`  | `','`                  | Delimitador para valores                 |
-| `removeOnBackspace` | `boolean` | `true`                 | Elimina última etiqueta con backspace    |
+| Propiedad           | Tipo                                              | Valor por Defecto      | Descripción                              |
+| :------------------ | :------------------------------------------------ | :--------------------- | :--------------------------------------- |
+| `value`             | `string`                                          | `''`                   | Etiquetas actuales (separadas por comas) |
+| `placeholder`       | `string`                                          | `'Agrega etiqueta...'` | Texto del marcador                       |
+| `disabled`          | `boolean`                                         | `false`                | Deshabilita la interacción               |
+| `readonly`          | `boolean`                                         | `false`                | Solo lectura                             |
+| `name`              | `string`                                          | `''`                   | Nombre para formularios                  |
+| `label`             | `string`                                          | `''`                   | Etiqueta visible del componente          |
+| `maxTags`           | `number`                                          | `undefined`            | Número máximo de etiquetas               |
+| `minLength`         | `number`                                          | `1`                    | Longitud mínima de etiqueta              |
+| `maxLength`         | `number`                                          | `50`                   | Longitud máxima de etiqueta              |
+| `allowDuplicates`   | `boolean`                                         | `false`                | Permite etiquetas duplicadas             |
+| `delimiter`         | `string`                                          | `','`                  | Delimitador para valores                 |
+| `removeOnBackspace` | `boolean`                                         | `true`                 | Elimina última etiqueta con backspace    |
+| `color`             | `'primary' \| 'success' \| 'warning' \| 'danger'` | `'primary'`            | Esquema de color del estado.             |
 
 ## Eventos
 
 | Evento       | Descripción                         |
-| ------------ | ----------------------------------- |
+| :----------- | :---------------------------------- |
 | `change`     | Se dispara al cambiar las etiquetas |
 | `tag-add`    | Se dispara al agregar una etiqueta  |
 | `tag-remove` | Se dispara al eliminar una etiqueta |
@@ -89,7 +97,7 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
 </me-tags-input>
 ```
 
-###Etiquetas con Validación
+### Etiquetas con Validación
 
 ```html
 <me-tags-input
@@ -109,11 +117,6 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
 <form id="article-form">
   <h3>Publicar Artículo</h3>
 
-  <base-input label="Título del artículo" name="title" required> </base-input>
-
-  <me-textarea label="Contenido del artículo" name="content" rows="6" required>
-  </me-textarea>
-
   <me-tags-input
     name="tags"
     placeholder="Etiquetas del artículo..."
@@ -124,25 +127,16 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
   >
   </me-tags-input>
 
-  <me-checkbox name="published" label="Publicar inmediatamente"> </me-checkbox>
-
-  <button type="submit" variant="primary">Publicar Artículo</button>
+  <button type="submit">Publicar Artículo</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById("article-form");
-if (form) {
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-
-    console.log("Artículo publicado:", data);
-    alert("¡Artículo publicado correctamente!");
-  });
-}
+document.getElementById("article-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  console.log("Tags:", formData.get("tags"));
+});
 ```
 
 ## Demo del Formulario
@@ -166,12 +160,6 @@ if (form) {
     </me-tags-input>
   </div>
   
-  <div style="margin-bottom: 1.5rem;">
-    <me-checkbox 
-      name="published"
-      label="Publicar inmediatamente">
-    </me-checkbox>
-  </div>
 </me-playground-form>
 
 ## Personalización con CSS
@@ -256,75 +244,3 @@ El componente MelserTagsInput incluye:
 - **Focus visible**: Indicador claro de foco
 - **High contrast**: Compatible con modo de alto contraste
 - **ARIA attributes**: Roles y estados apropiados
-
-## Mejores Prácticas
-
-1. **Usa límites apropiados** para el número de etiquetas
-2. **Valida longitud** de etiquetas para evitar abusos
-3. **Proporciona sugerencias** cuando sea posible
-4. **Permite eliminación fácil** de etiquetas
-5. **Muestra contador** cuando hay límite máximo
-6. **Considera autocompletado** para mejor UX
-7. **Usa descriptores claros** para el propósito
-
-## Troubleshooting
-
-### Las etiquetas no se agregan
-
-```javascript
-// Verificar que el componente esté importado
-import "melser-ui/components/me-tags-input.js";
-
-// Verificar que no esté deshabilitado o solo lectura
-console.log(tagsInput.disabled); // Debe ser false
-console.log(tagsInput.readonly); // Debe ser false
-```
-
-### Problemas con etiquetas duplicadas
-
-```javascript
-// Por defecto no permite duplicados, habilita si es necesario
-<me-tags-input
-  allow-duplicates
-  placeholder="Permitir duplicados"
-></me-tags-input>
-```
-
-### El valor no se envía en el formulario
-
-```html
-<!-- Asegúrate de incluir el atributo name -->
-<me-tags-input name="articleTags" placeholder="Etiquetas del artículo">
-</me-tags-input>
-
-// Recuperar valor en formulario const formData = new FormData(form); const tags
-= formData.get('articleTags'); // "tag1, tag2, tag3" // Convertir a array const
-tagsArray = tags.split(',').map(tag => tag.trim());
-```
-
-### Problemas de accesibilidad
-
-```html
-<!-- Usa aria-label para casos complejos -->
-<me-tags-input
-  aria-label="Etiquetas para categorizar el artículo, separadas por comas"
-  placeholder="Etiquetas del artículo"
->
-</me-tags-input>
-```
-
-### Validación personalizada
-
-```javascript
-const tagsInput = document.getElementById("my-tags");
-
-tagsInput.addEventListener("tag-add", (e) => {
-  const tag = e.detail.tag;
-
-  // Validación personalizada
-  if (tag.includes("palabra-prohibida")) {
-    e.preventDefault();
-    alert("Esta etiqueta no está permitida");
-  }
-});
-```

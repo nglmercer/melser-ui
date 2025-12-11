@@ -1,129 +1,15 @@
 ---
-ColorPicker component
+title: MelserColorPicker
 ---
 
 # MelserColorPicker
 
 **MelserColorPicker** es un componente de entrada diseñado para la selección de colores hexadecimales. Combina un selector de color visual nativo (`input type="color"`) con un campo de texto para la entrada manual de códigos HEX.
 
-Hereda todas las funcionalidades base de `MelserBaseInput` (validación requerida, etiquetas, variantes de diseño).
-
-### Ejemplo Básico
+## Ejemplo Básico
 
 ```html
 <me-color-picker label="Color de Fondo" value="#3b82f6"> </me-color-picker>
-```
-
----
-
-## Propiedades (API)
-
-### Específicas del Componente
-
-| Propiedad | Tipo     | Valor por Defecto | Descripción                                        |
-| :-------- | :------- | :---------------- | :------------------------------------------------- |
-| `value`   | `string` | `'#000000'`       | El valor del color en formato HEX (ej: `#FF0000`). |
-
-### Heredadas de MelserBaseInput
-
-| Propiedad / Atributo | Tipo                                   | Default         | Descripción                      |
-| :------------------- | :------------------------------------- | :-------------- | :------------------------------- |
-| `label`              | `string`                               | `''`            | Etiqueta visible del campo.      |
-| `name`               | `string`                               | `''`            | Identificador para formularios.  |
-| `variant`            | `'outlined' \| 'filled' \| 'standard'` | `'outlined'`    | Estilo visual del input.         |
-| `size`               | `'small' \| 'medium' \| 'large'`       | `'medium'`      | Tamaño del componente.           |
-| `required`           | `boolean`                              | `false`         | Marca el campo como obligatorio. |
-| `disabled`           | `boolean`                              | `false`         | Deshabilita la interacción.      |
-| `errorMessage`       | `string`                               | `''`            | Mensaje de error a mostrar.      |
-| `input-id`           | `string`                               | _auto-generado_ | ID para el input interno.        |
-
----
-
-## Eventos
-
-| Evento      | Detalle (`e.detail`) | Descripción                                                                                |
-| :---------- | :------------------- | :----------------------------------------------------------------------------------------- |
-| `ui:change` | `InputData<string>`  | Se dispara cuando el usuario cambia el color (visual o texto) y el valor es un HEX válido. |
-
-### Estructura de `InputData`
-
-```typescript
-{
-  name: string; // Nombre del componente
-  value: string; // Valor HEX actual (ej: "#FF0000")
-  isValid: boolean; // Si cumple con la validación 'required'
-  componentType: string; // 'me-color-picker'
-  dataType: string; // 'string'
-}
-```
-
----
-
-## Ejemplos de Uso
-
-### 1. Variantes de Diseño
-
-El componente soporta los estilos definidos en la clase base.
-
-```html
-<me-color-picker
-  label="Outlined"
-  variant="outlined"
-  value="#7c3aed"
-></me-color-picker>
-
-<me-color-picker
-  label="Filled"
-  variant="filled"
-  value="#db2777"
-></me-color-picker>
-
-<me-color-picker
-  label="Standard"
-  variant="standard"
-  value="#059669"
-></me-color-picker>
-```
-
-### 2. Tamaños
-
-Controla el tamaño del padding y la tipografía.
-
-```html
-<me-color-picker label="Pequeño" size="small"></me-color-picker>
-<me-color-picker label="Normal" size="medium"></me-color-picker>
-<me-color-picker label="Grande" size="large"></me-color-picker>
-```
-
-### 3. Validación y Errores
-
-El componente valida automáticamente que el texto ingresado sea un HEX válido de 6 dígitos. Si el input es `required` y está vacío, `isValid` será falso en el evento.
-
-```html
-<me-color-picker
-  label="Color Obligatorio"
-  required
-  error-message="Este campo es requerido"
-  value=""
->
-</me-color-picker>
-```
-
-### 4. Capturar el cambio de valor (JavaScript)
-
-```javascript
-const picker = document.querySelector("me-color-picker");
-
-picker.addEventListener("ui:change", (e) => {
-  const { value, isValid } = e.detail;
-  console.log("Nuevo color:", value);
-  console.log("Es válido:", isValid);
-
-  // Ejemplo: cambiar el fondo del body
-  if (isValid) {
-    document.body.style.backgroundColor = value;
-  }
-});
 ```
 
 ## Demo Interactivo
@@ -136,14 +22,14 @@ picker.addEventListener("ui:change", (e) => {
 
 <me-color-picker 
   id="demo-sizesm" 
-  label="small_size" 
+  label="Pequeño" 
   value="#3b82f6"
   size="small">
 </me-color-picker>
 
 <me-color-picker 
   id="demo-size-lg" 
-  label="large_size" 
+  label="Grande" 
   value="#3b82f6"
   size="large">
 </me-color-picker>
@@ -154,6 +40,103 @@ picker.addEventListener("ui:change", (e) => {
   value="#ef4444"
   disabled>
 </me-color-picker>
+
+<h3>Colores (Estados)</h3>
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+  <me-color-picker label="Success" color="success" value="#10b981"></me-color-picker>
+  <me-color-picker label="Warning" color="warning" value="#f59e0b"></me-color-picker>
+  <me-color-picker label="Danger" color="danger" value="#ef4444"></me-color-picker>
+</div>
+
+## Propiedades
+
+| Propiedad      | Tipo                                              | Valor por Defecto | Descripción                                        |
+| :------------- | :------------------------------------------------ | :---------------- | :------------------------------------------------- |
+| `value`        | `string`                                          | `'#000000'`       | El valor del color en formato HEX (ej: `#FF0000`). |
+| `label`        | `string`                                          | `''`              | Etiqueta visible del campo.                        |
+| `name`         | `string`                                          | `''`              | Identificador para formularios.                    |
+| `variant`      | `'outlined' \| 'filled' \| 'standard'`            | `'outlined'`      | Estilo visual del input.                           |
+| `size`         | `'small' \| 'medium' \| 'large'`                  | `'medium'`        | Tamaño del componente.                             |
+| `color`        | `'primary' \| 'success' \| 'warning' \| 'danger'` | `'primary'`       | Esquema de color del estado.                       |
+| `required`     | `boolean`                                         | `false`           | Marca el campo como obligatorio.                   |
+| `disabled`     | `boolean`                                         | `false`           | Deshabilita la interacción.                        |
+| `errorMessage` | `string`                                          | `''`              | Mensaje de error a mostrar.                        |
+
+## Eventos
+
+| Evento      | Descripción                                                                                |
+| :---------- | :----------------------------------------------------------------------------------------- |
+| `ui:change` | Se dispara cuando el usuario cambia el color (visual o texto) y el valor es un HEX válido. |
+| `input`     | Se dispara en cada cambio de texto.                                                        |
+| `change`    | Se dispara al confirmar el cambio.                                                         |
+
+## Ejemplos de Uso
+
+### Variantes de Diseño
+
+```html
+<div style="display: flex; gap: 1rem;">
+  <me-color-picker
+    label="Outlined"
+    variant="outlined"
+    value="#7c3aed"
+  ></me-color-picker>
+  <me-color-picker
+    label="Filled"
+    variant="filled"
+    value="#db2777"
+  ></me-color-picker>
+  <me-color-picker
+    label="Standard"
+    variant="standard"
+    value="#059669"
+  ></me-color-picker>
+</div>
+```
+
+### Escuchar Cambios en JS
+
+```javascript
+const picker = document.querySelector("me-color-picker");
+
+picker.addEventListener("ui:change", (e) => {
+  const { value, isValid } = e.detail;
+  console.log("Nuevo color seleccionado:", value);
+  document.body.style.setProperty("--main-bg-color", value);
+});
+```
+
+## Integración con Formularios
+
+### Formulario de Personalización
+
+```html
+<form id="theme-form">
+  <me-color-picker
+    label="Color Principal *"
+    name="primary"
+    required
+    value="#3b82f6"
+    error-message="Debes seleccionar un color principal"
+  ></me-color-picker>
+
+  <me-color-picker
+    label="Color Secundario"
+    name="secondary"
+    value="#10b981"
+  ></me-color-picker>
+
+  <button type="submit">Guardar Tema</button>
+</form>
+```
+
+```javascript
+document.getElementById("theme-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  console.log(Object.fromEntries(formData));
+});
+```
 
 ## Demo del Formulario
 
@@ -176,36 +159,30 @@ picker.addEventListener("ui:change", (e) => {
   </div>
 </me-playground-form>
 
----
+## Personalización con CSS
 
-## Estilizado (CSS Variables)
-
-Puedes personalizar la apariencia utilizando las siguientes variables CSS heredadas:
+### Variables CSS
 
 ```css
 me-color-picker {
   /* Generales */
   --me-font-family: "Roboto", sans-serif;
-  --me-spacing: 1.5rem; /* Margen inferior */
 
   /* Colores */
-  --me-primary: #3b82f6; /* Color de foco */
-  --me-error: #ef4444; /* Color de error */
-  --me-text: #1f2937; /* Color del texto */
+  --me-primary: #3b82f6;
+  --me-error: #ef4444;
+  --me-text: #1f2937;
   --me-label-color: #374151;
-  --me-border: #d1d5db; /* Color del borde */
-  --me-bg: #ffffff; /* Fondo del input */
-  --me-surface: #f3f4f6; /* Fondo para variante 'filled' */
+  --me-border: #d1d5db;
+  --me-bg: #ffffff;
 
   /* Dimensiones */
-  --me-radius: 0.5rem; /* Radio de borde */
+  --me-radius: 0.5rem;
 }
 ```
 
----
+## Accesibilidad
 
-## Notas de Comportamiento
-
-- **Entrada de Texto:** El campo de texto acepta valores hexadecimales. Si el usuario olvida escribir el `#`, el componente lo agrega automáticamente.
-- **Sincronización:** El selector visual (`input type="color"`) y el campo de texto se mantienen sincronizados. Si escribes un HEX válido, el selector de color se actualiza.
-- **Validación HEX:** El componente solo acepta formato hexadecimal de 6 dígitos (ej: `#AABBCC`). El regex interno es `/^#[0-9A-F]{6}$/i`.
+- **Sincronización dual**: El input de texto y el selector de color se mantienen sincronizados para usuarios de teclado y ratón.
+- **Labels**: Siempre incluye un label asociado.
+- **Validación visual**: Los errores se muestran claramente y se anuncian via ARIA.

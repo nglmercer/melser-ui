@@ -65,7 +65,7 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
 ## Propiedades
 
 | Propiedad        | Tipo      | Valor por Defecto | Descripción                                          |
-| ---------------- | --------- | ----------------- | ---------------------------------------------------- |
+| :--------------- | :-------- | :---------------- | :--------------------------------------------------- |
 | `checked`        | `boolean` | `false`           | Estado activo/inactivo                               |
 | `disabled`       | `boolean` | `false`           | Deshabilita la interacción                           |
 | `size`           | `string`  | `'md'`            | Tamaño del switch (sm, md, lg)                       |
@@ -81,7 +81,7 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
 ## Eventos
 
 | Evento   | Descripción                       |
-| -------- | --------------------------------- |
+| :------- | :-------------------------------- |
 | `change` | Se dispara al cambiar el estado   |
 | `focus`  | Se dispara al obtener el foco     |
 | `blur`   | Se dispara al perder el foco      |
@@ -95,7 +95,7 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
 <me-switch label="Activar modo oscuro" checked> </me-switch>
 ```
 
-### Switch con Validación
+### Switch con Validació
 
 ```html
 <me-switch
@@ -123,24 +123,6 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
   color="success"
 >
 </me-switch>
-```
-
-### Switch de Configuración de Notificaciones
-
-```html
-<div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px;">
-  <h4>Configuración de Notificaciones</h4>
-
-  <me-switch label="Notificaciones por email" name="emailNotifications" checked>
-  </me-switch>
-
-  <me-switch label="Notificaciones push" name="pushNotifications"> </me-switch>
-
-  <me-switch label="Notificaciones SMS" name="smsNotifications"> </me-switch>
-
-  <me-switch label="Notificaciones de marketing" name="marketingNotifications">
-  </me-switch>
-</div>
 ```
 
 ## Integración con Formularios
@@ -171,70 +153,16 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
     </me-switch>
   </div>
 
-  <div
-    style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;"
-  >
-    <h4>🎨 Apariencia</h4>
-
-    <me-switch label="Modo oscuro" name="darkMode"> </me-switch>
-
-    <me-switch label="Animaciones" name="animations" checked> </me-switch>
-
-    <me-switch label="Alto contraste" name="highContrast"> </me-switch>
-  </div>
-
-  <div
-    style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;"
-  >
-    <h4>🔒 Privacidad</h4>
-
-    <me-switch label="Perfil público" name="publicProfile"> </me-switch>
-
-    <me-switch label="Mostrar estado en línea" name="showOnlineStatus" checked>
-    </me-switch>
-
-    <me-switch label="Permitir mensajes de desconocidos" name="allowMessages">
-    </me-switch>
-  </div>
-
-  <button type="submit" variant="primary">Guardar Configuración</button>
+  <button type="submit">Guardar Configuración</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById("settings-form");
-if (form) {
-  // Manejar cambios de switches
-  const switches = form.querySelectorAll("me-switch");
-  switches.forEach((switchEl) => {
-    switchEl.addEventListener("change", (e) => {
-      console.log(`${switchEl.label}:`, e.target.checked);
-
-      // Manejar casos especiales
-      if (switchEl.name === "darkMode" && e.target.checked) {
-        console.log("🌙 Aplicando tema oscuro...");
-        // Aquí aplicarías el tema oscuro
-      } else if (switchEl.name === "publicProfile" && !e.target.checked) {
-        console.log("🔒 Ocultando perfil público...");
-      }
-    });
-  });
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const settings = Object.fromEntries(formData);
-
-    // Convertir valores a booleanos
-    Object.keys(settings).forEach((key) => {
-      settings[key] = settings[key] === "on";
-    });
-
-    console.log("Configuración guardada:", settings);
-    alert("¡Configuración guardada exitosamente!");
-  });
-}
+document.getElementById("settings-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  // Procesar configuración
+});
 ```
 
 ## Demo del Formulario
@@ -370,11 +298,7 @@ switches.forEach((switchEl) => {
   switchEl.addEventListener("change", (e) => {
     // Manejar dependencias entre switches
     if (switchEl.name === "premium" && e.target.checked) {
-      // Si premium se activa, activar otras características
       enablePremiumFeatures();
-    } else if (switchEl.name === "premium" && !e.target.checked) {
-      // Si premium se desactiva, desactivar características premium
-      disablePremiumFeatures();
     }
   });
 });
@@ -387,166 +311,17 @@ const asyncSwitch = document.querySelector("me-switch[loading]");
 if (asyncSwitch) {
   asyncSwitch.addEventListener("change", async (e) => {
     const isChecked = e.target.checked;
-
-    try {
-      // Mostrar estado de carga
-      asyncSwitch.setAttribute("loading", "");
-      asyncSwitch.disabled = true;
-
-      // Simular llamada API
-      const response = await fetch("/api/toggle-feature", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ enabled: isChecked }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error en el servidor");
-      }
-
-      console.log("✅ Configuración guardada exitosamente");
-    } catch (error) {
-      console.error("❌ Error:", error);
-
-      // Revertir el cambio en caso de error
-      asyncSwitch.checked = !isChecked;
-      alert("Error al guardar la configuración. Inténtalo de nuevo.");
-    } finally {
-      // Remover estado de carga
-      asyncSwitch.removeAttribute("loading");
-      asyncSwitch.disabled = false;
-    }
-  });
-}
-```
-
-### Switch Condicional
-
-```html
-<me-switch
-  id="parent-switch"
-  label="Activar funciones avanzadas"
-  name="advanced"
->
-</me-switch>
-
-<me-switch
-  id="child-switch"
-  label="Función específica"
-  name="specificFunction"
-  disabled
->
-</me-switch>
-```
-
-```javascript
-const parentSwitch = document.getElementById("parent-switch");
-const childSwitch = document.getElementById("child-switch");
-
-if (parentSwitch && childSwitch) {
-  parentSwitch.addEventListener("change", (e) => {
-    childSwitch.disabled = !e.target.checked;
-
-    if (!e.target.checked) {
-      childSwitch.checked = false;
-    }
+    asyncSwitch.setAttribute("loading", "");
+    // Simular API
+    setTimeout(() => asyncSwitch.removeAttribute("loading"), 1000);
   });
 }
 ```
 
 ## Accesibilidad
 
-El componente MelserSwitch incluye:
-
 - **Navegación por teclado**: Tab, Space, Enter funcionan
 - **Anuncios de screen readers**: Cambios de estado anunciados
 - **ARIA attributes**: role="switch", aria-checked, aria-disabled
 - **Focus management**: Indicador visual claro
 - **Estados accesibles**: Disabled y loading correctamente anunciados
-
-## Mejores Prácticas
-
-1. **Usa labels descriptivos** para clarificar la función
-2. **Incluye feedback visual** inmediato al cambiar
-3. **Maneja estados de loading** para operaciones asíncronas
-4. **Agrupa switches relacionados** en secciones lógicas
-5. **Proporciona valores por defecto** sensatos
-6. **Considera animaciones** para transiciones suaves
-7. **Usa colores apropiados** para diferentes estados
-
-## Troubleshooting
-
-### Switch no responde a clicks
-
-```javascript
-// Verificar que no esté deshabilitado
-console.log(switchEl.disabled); // Debe ser false
-
-// Verificar que esté correctamente importado
-import "melser-ui/components/me-switch.js";
-```
-
-### Animaciones no funcionan
-
-```css
-/* Verificar que las transiciones estén configuradas */
-me-switch {
-  --me-switch-transition: all 0.2s ease;
-}
-```
-
-### Tamaño no cambia
-
-```html
-<!-- Verificar que size esté configurado correctamente -->
-<me-switch size="lg" label="Switch grande"></me-switch>
-```
-
-### Color no cambia
-
-```html
-<!-- Verificar que color esté en la lista de colores válidos -->
-<me-switch color="success" label="Switch verde"></me-switch>
-```
-
-### Estados de loading
-
-```javascript
-// Programar estados de carga
-switchEl.setAttribute("loading", "");
-switchEl.disabled = true;
-
-// Cuando termine la operación
-switchEl.removeAttribute("loading");
-switchEl.disabled = false;
-```
-
-### Focus no visible
-
-```css
-/* Personalizar indicador de foco */
-me-switch:focus {
-  box-shadow: var(--me-switch-focus-ring);
-}
-```
-
-### Problemas de accesibilidad
-
-```html
-<!-- Agregar aria-label para casos específicos -->
-<me-switch
-  aria-label="Activar notificaciones push"
-  label="Notificaciones"
-></me-switch>
-```
-
-### Valores no se envían en formularios
-
-```html
-<!-- Asegurar que tenga name y value apropiados -->
-<me-switch
-  name="featureEnabled"
-  value="true"
-  label="Función activada"
-></me-switch>
-```

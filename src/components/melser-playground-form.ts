@@ -119,6 +119,7 @@ export class MelserPlaygroundForm extends LitElement {
     private _initialized = false;
 
     @state() private _theme: 'light' | 'dark' = 'light';
+    @state() private _colorScheme: 'primary' | 'success' | 'warning' | 'danger' = 'primary';
 
     constructor() {
         super();
@@ -174,6 +175,10 @@ export class MelserPlaygroundForm extends LitElement {
                 this.syncInitialValues();
                 this.syncErrors();
             }
+        }
+
+        if (changedProperties.has('_colorScheme')) {
+            this.syncColors();
         }
 
         if (this._initialized) {
@@ -233,12 +238,19 @@ export class MelserPlaygroundForm extends LitElement {
 
         if (isValid) {
             console.log('✅ Playground Form Valid:', this.form.data);
+            
+            // Visual feedback: Change color scheme to warning (as requested)
+            this._colorScheme = 'warning';
+            this.syncColors();
+
             this.dispatchEvent(new CustomEvent('playground:submit', {
                 detail: { data: this.form.data, isValid },
                 bubbles: true
             }));
         } else {
             console.warn('❌ Playground Form Invalid:', this.form.errors);
+            // Optional: revert to danger or primary on error?
+            // this._colorScheme = 'danger'; 
         }
     }
 
@@ -318,6 +330,26 @@ export class MelserPlaygroundForm extends LitElement {
         });
     }
 
+    syncColors() {
+
+        // Recursive function to find and update nested components if needed, 
+        // but finding direct named inputs or iterating everything is safer.
+        // We'll traverse the light DOM of the playground.
+        const traverse = (element: Element) => {
+            if ('color' in element) {
+                (element as any).color = this._colorScheme;
+            }
+            Array.from(element.children).forEach(child => traverse(child));
+        };
+        
+        Array.from(this.children).forEach(child => traverse(child));
+    }
+
+    handleColorChange(e: Event) {
+        const select = e.target as HTMLSelectElement;
+        this._colorScheme = select.value as any;
+    }
+
     render() {
         return html`
       <div class="playground-layout">
@@ -341,6 +373,13 @@ export class MelserPlaygroundForm extends LitElement {
             <div class="debug-header">
                <span>Live State</span>
                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <select class="color-select" @change=${this.handleColorChange} .value=${this._colorScheme}>
+                        <option value="primary">Primary</option>
+                        <option value="success">Success</option>
+                        <option value="warning">Warning</option>
+                        <option value="danger">Danger</option>
+                    </select>
+
                     <span class="badge ${this.form.isValid ? 'valid' : 'invalid'}">
                         ${this.form.isValid ? 'Valid' : 'Invalid'}
                     </span>
@@ -555,6 +594,16 @@ export class MelserPlaygroundForm extends LitElement {
         background: ${Var.color.bg.hover};
         color: ${Var.color.text.primary};
         border-color: ${Var.color.text.secondary};
+    }
+
+    .color-select {
+        padding: 0.25rem 0.5rem;
+        border-radius: ${Var.radius.default};
+        border: 1px solid ${Var.color.border.default};
+        background: transparent;
+        color: ${Var.color.text.secondary};
+        font-size: 0.8rem;
+        cursor: pointer;
     }
   `;
 }

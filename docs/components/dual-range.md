@@ -251,6 +251,13 @@ me-dual-range {
   </me-dual-range>
 </div>
 
+<h3>Colores</h3>
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+  <me-dual-range label="Success" color="success" min="0" max="100" value="20,80"></me-dual-range>
+  <me-dual-range label="Warning" color="warning" min="0" max="100" value="30,70"></me-dual-range>
+  <me-dual-range label="Danger" color="danger" min="0" max="100" value="40,60"></me-dual-range>
+</div>
+
 ## Accesibilidad
 
 El componente MelserDualRange incluye:

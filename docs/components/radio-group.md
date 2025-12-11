@@ -61,6 +61,24 @@ Un componente de grupo de radio buttons accesible y personalizable con orientaci
   <option value="tal vez" label="Tal vez"></option>
 </me-radio-group>
 
+<div style="margin: 1rem 0; display: flex; flex-direction: column; gap: 1rem;">
+  <h4>Colores</h4>
+  <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+    <me-radio-group label="Success" color="success" name="color-success" value="1" orientation="horizontal">
+      <option value="1" label="Opción 1"></option>
+      <option value="2" label="Opción 2"></option>
+    </me-radio-group>
+    <me-radio-group label="Warning" color="warning" name="color-warning" value="1" orientation="horizontal">
+      <option value="1" label="Opción 1"></option>
+      <option value="2" label="Opción 2"></option>
+    </me-radio-group>
+    <me-radio-group label="Danger" color="danger" name="color-danger" value="1" orientation="horizontal">
+      <option value="1" label="Opción 1"></option>
+      <option value="2" label="Opción 2"></option>
+    </me-radio-group>
+  </div>
+</div>
+
 <me-radio-group 
   id="demo-required" 
   label="Campo requerido *" 

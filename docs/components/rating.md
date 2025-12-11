@@ -1,8 +1,6 @@
-Aqui tienes la documentación actualizada en formato Markdown para reflejar exactamente la implementación del componente `MelserRating` que acabamos de crear (usando `precision`, SVGs, y variables CSS en lugar de props de estilo).
-
 ---
-
-## title: MelserRating
+title: MelserRating
+---
 
 # MelserRating
 
@@ -17,41 +15,38 @@ Un componente de calificación con estrellas basado en SVG, con soporte para pre
 ## Demo Interactivo
 
 <me-rating
-label="Calificación estándar"
-max="5">
+  id="demo-basic"
+  label="Calificación estándar"
+  max="5">
 </me-rating>
 
 <me-rating
-label="Con medios puntos"
-max="5"
-precision="0.5">
+  id="demo-precision"
+  label="Con medios puntos"
+  max="5"
+  precision="0.5">
 </me-rating>
 
 <me-rating
-label="Precisión exacta"
-max="10"
-value="7.3"
-precision="0.1">
+  id="demo-exact"
+  label="Precisión exacta"
+  max="10"
+  value="7.3"
+  precision="0.1">
 </me-rating>
 
 <me-rating
-label="Deshabilitado"
-max="5"
-value="3.5"
-disabled>
+  id="demo-disabled"
+  label="Deshabilitado"
+  max="5"
+  value="3.5"
+  disabled>
 </me-rating>
-
-<div style="margin: 1rem 0; display: flex; gap: 1rem; align-items: center;">
-<me-rating style="--star-size: 1rem;" label="Pequeño">
-</me-rating>
-<me-rating style="--star-size: 2rem;" label="Grande">
-</me-rating>
-</div>
 
 ## Propiedades
 
 | Propiedad   | Tipo      | Valor por Defecto | Descripción                                       |
-| ----------- | --------- | ----------------- | ------------------------------------------------- |
+| :---------- | :-------- | :---------------- | :------------------------------------------------ |
 | `value`     | `number`  | `0`               | Valor numérico actual de la calificación.         |
 | `max`       | `number`  | `5`               | Número total de estrellas a mostrar.              |
 | `min`       | `number`  | `0`               | Valor mínimo permitido.                           |
@@ -63,10 +58,8 @@ disabled>
 
 ## Eventos
 
-El componente hereda la funcionalidad de `MelserBaseInput`.
-
 | Evento   | Descripción                                                           |
-| -------- | --------------------------------------------------------------------- |
+| :------- | :-------------------------------------------------------------------- |
 | `change` | Se dispara cuando el usuario hace clic y confirma una calificación.   |
 | `input`  | Se dispara durante la interacción (opcional, dependiendo de la base). |
 
@@ -97,12 +90,10 @@ Para casos científicos o promedios exactos (ej. 8.7), usa una precisión más f
 
 ## Personalización con CSS
 
-El componente ya no usa props para estilos (`size`, `color`), sino que aprovecha Variables CSS nativas para mayor flexibilidad.
-
 ### Variables Disponibles
 
 | Variable              | Valor por Defecto           | Descripción                                    |
-| --------------------- | --------------------------- | ---------------------------------------------- |
+| :-------------------- | :-------------------------- | :--------------------------------------------- |
 | `--star-size`         | `1.5rem`                    | Tamaño (ancho y alto) de cada estrella.        |
 | `--star-color-filled` | `#fbbf24`                   | Color de la estrella activa (amarillo/dorado). |
 | `--star-color-empty`  | `var(--me-border, #e5e7eb)` | Color de fondo de la estrella inactiva.        |
@@ -131,11 +122,10 @@ El componente ya no usa props para estilos (`size`, `color`), sino que aprovecha
 
 ## Integración con Formularios
 
-El componente funciona nativamente dentro de formularios gracias a `MelserBaseInput`.
-
 ```html
 <me-playground-form
   id="rating-playground"
+  schema-name="rating"
   title="Encuesta de Feedback"
   description="Valoración del servicio."
 >
@@ -157,36 +147,3 @@ El componente funciona nativamente dentro de formularios gracias a `MelserBaseIn
 - Soporta navegación básica.
 - Utiliza SVGs escalables que no dependen de fuentes externas.
 - El área de clic es el contenedor de la estrella completa, mejorando la usabilidad en dispositivos táctiles.
-
-## Troubleshooting
-
-### No puedo seleccionar decimales (ej. 4.5)
-
-Verifica que la propiedad `precision` esté configurada correctamente. Por defecto es `1` (enteros).
-
-```html
-<me-rating max="5"></me-rating>
-
-<me-rating max="5" precision="0.5"></me-rating>
-```
-
-### El tamaño no cambia con `width` o `height` en el host
-
-Debes usar la variable CSS `--star-size`.
-
-```css
-/* Correcto */
-me-rating {
-  --star-size: 30px;
-}
-```
-
-### El valor reportado tiene muchos decimales (ej. 4.1000002)
-
-El componente maneja internamente el redondeo visual, pero el valor crudo puede tener imperfecciones de punto flotante. El componente incluye una corrección interna (`toFixed(2)`), pero si persiste, puedes redondearlo al recibir el evento:
-
-```javascript
-element.addEventListener("change", (e) => {
-  const cleanValue = parseFloat(e.target.value.toFixed(1));
-});
-```

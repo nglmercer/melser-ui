@@ -35,26 +35,34 @@ Un componente de entrada de código OTP (One-Time Password) para verificación d
   value="123456">
 </me-otp-input>
 
+<h3>Colores</h3>
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+  <me-otp-input length="4" label="Success" color="success" value="1234"></me-otp-input>
+  <me-otp-input length="4" label="Warning" color="warning" value="5678"></me-otp-input>
+  <me-otp-input length="4" label="Danger" color="danger" value="9012"></me-otp-input>
+</div>
+
 ## Propiedades
 
-| Propiedad       | Tipo      | Valor por Defecto | Descripción                     |
-| --------------- | --------- | ----------------- | ------------------------------- |
-| `length`        | `number`  | `6`               | Número de dígitos del código    |
-| `value`         | `string`  | `''`              | Valor actual del OTP            |
-| `disabled`      | `boolean` | `false`           | Deshabilita la interacción      |
-| `readonly`      | `boolean` | `false`           | Solo lectura                    |
-| `name`          | `string`  | `''`              | Nombre para formularios         |
-| `label`         | `string`  | `''`              | Etiqueta visible del componente |
-| `placeholder`   | `string`  | `'•'`             | Carácter de marcador            |
-| `numericOnly`   | `boolean` | `false`           | Solo permite números            |
-| `autoFocus`     | `boolean` | `true`            | Enfoque automático al cargar    |
-| `caseSensitive` | `boolean` | `false`           | Distingue mayúsculas/minúsculas |
-| `allowedChars`  | `string`  | `''`              | Caracteres permitidos (regex)   |
+| Propiedad       | Tipo                                              | Valor por Defecto | Descripción                     |
+| :-------------- | :------------------------------------------------ | :---------------- | :------------------------------ |
+| `length`        | `number`                                          | `6`               | Número de dígitos del código    |
+| `value`         | `string`                                          | `''`              | Valor actual del OTP            |
+| `disabled`      | `boolean`                                         | `false`           | Deshabilita la interacción      |
+| `readonly`      | `boolean`                                         | `false`           | Solo lectura                    |
+| `name`          | `string`                                          | `''`              | Nombre para formularios         |
+| `label`         | `string`                                          | `''`              | Etiqueta visible del componente |
+| `placeholder`   | `string`                                          | `'•'`             | Carácter de marcador            |
+| `numericOnly`   | `boolean`                                         | `false`           | Solo permite números            |
+| `autoFocus`     | `boolean`                                         | `true`            | Enfoque automático al cargar    |
+| `caseSensitive` | `boolean`                                         | `false`           | Distingue mayúsculas/minúsculas |
+| `allowedChars`  | `string`                                          | `''`              | Caracteres permitidos (regex)   |
+| `color`         | `'primary' \| 'success' \| 'warning' \| 'danger'` | `'primary'`       | Esquema de color del estado.    |
 
 ## Eventos
 
 | Evento     | Descripción                             |
-| ---------- | --------------------------------------- |
+| :--------- | :-------------------------------------- |
 | `input`    | Se dispara al cambiar el valor          |
 | `complete` | Se dispara cuando se completa el código |
 | `paste`    | Se dispara al pegar contenido           |
@@ -106,14 +114,6 @@ Un componente de entrada de código OTP (One-Time Password) para verificación d
 <form id="verification-form">
   <h3>Verificación de Dos Factores</h3>
 
-  <base-input
-    label="Correo electrónico"
-    type="email"
-    value="usuario@ejemplo.com"
-    disabled
-  >
-  </base-input>
-
   <me-otp-input
     name="otpCode"
     length="6"
@@ -123,28 +123,16 @@ Un componente de entrada de código OTP (One-Time Password) para verificación d
   >
   </me-otp-input>
 
-  <me-checkbox name="rememberDevice" label="Recordar dispositivo por 30 días">
-  </me-checkbox>
-
-  <button type="submit" variant="primary">Verificar</button>
-
-  <button type="button" variant="secondary">Reenviar código</button>
+  <button type="submit">Verificar</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById("verification-form");
-if (form) {
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-
-    console.log("Datos de verificación:", data);
-    alert("¡Verificación completada!");
-  });
-}
+document.getElementById("verification-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  console.log("OTP:", formData.get("otpCode"));
+});
 ```
 
 ## Demo del Formulario
@@ -167,13 +155,6 @@ if (form) {
       label="Código de verificación"
       hint="Hemos enviado un código a tu correo">
     </me-otp-input>
-  </div>
-  
-  <div style="margin-bottom: 1.5rem;">
-    <me-checkbox 
-      name="rememberDevice"
-      label="Recordar dispositivo por 30 días">
-    </me-checkbox>
   </div>
 </me-playground-form>
 
@@ -204,8 +185,6 @@ me-otp-input {
     --me-otp-input-height: 60px;
     --me-otp-input-font-size: 24px;
     --me-otp-input-border-radius: 12px;
-    --me-otp-input-focus-border: #10b981;
-    --me-otp-input-border: 2px solid #10b981;
   }
   
   .compact-otp {
@@ -227,7 +206,7 @@ me-otp-input {
 <div class="custom-otp" style="margin-bottom: 1rem;">
   <me-otp-input 
     length="6"
-    label="OTP personalizado (grande, verde)">
+    label="OTP personalizado (grande)">
   </me-otp-input>
 </div>
 
@@ -247,75 +226,8 @@ me-otp-input {
 
 ## Accesibilidad
 
-El componente MelserOtpInput incluye:
-
 - **Navegación por teclado**: Tab entre campos, flechas, backspace
 - **Screen reader support**: Anuncia posición y valor
 - **Focus visible**: Indicador claro de foco
 - **Auto-enfoque**: Salta al siguiente campo automáticamente
 - **High contrast**: Compatible con modo de alto contraste
-
-## Mejores Prácticas
-
-1. **Usa longitud apropiada** para el tipo de código (4-8 dígitos)
-2. **Proporciona instrucciones claras** sobre el código esperado
-3. **Implementa reenvío de código** con temporizador
-4. **Valida en tiempo real** pero sin ser intrusivo
-5. **Maneja la expiración** de códigos temporales
-6. **Usa `numeric-only`** para códigos numéricos
-7. **Considera el auto-enfoque** para mejor UX
-
-## Troubleshooting
-
-### El OTP no responde a eventos
-
-```javascript
-// Verificar que el componente esté importado
-import "melser-ui/components/me-otp-input.js";
-
-// Verificar que no esté deshabilitado
-console.log(otpInput.disabled); // Debe ser false
-```
-
-### No salta automáticamente al siguiente campo
-
-```javascript
-// Asegúrate que auto-focus esté habilitado
-<me-otp-input length="6" auto-focus label="Código"></me-otp-input>
-
-// El componente manejará el enfoque automáticamente
-```
-
-### Problemas con caracteres especiales
-
-```javascript
-// Usa allowed-chars para personalizar caracteres permitidos
-<me-otp-input
-  length="4"
-  allowed-chars="[A-F0-9]"
-  label="Código hexadecimal"
-></me-otp-input>
-```
-
-### El valor no se envía en el formulario
-
-```html
-<!-- Asegúrate de incluir el atributo name -->
-<me-otp-input name="verificationCode" length="6" label="Código de verificación">
-</me-otp-input>
-
-// Recuperar valor en formulario const formData = new FormData(form); const code
-= formData.get('verificationCode');
-```
-
-### Problemas de accesibilidad
-
-```html
-<!-- Usa aria-label para casos complejos -->
-<me-otp-input
-  aria-label="Código de verificación de 6 dígitos para autenticación de dos factores"
-  length="6"
-  label="Código de verificación"
->
-</me-otp-input>
-```

@@ -87,6 +87,19 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   <option value="uy">Uruguay</option>
 </me-select>
 
+<h3>Colores</h3>
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+  <me-select label="Success" color="success" value="1" placeholder="Success">
+    <option value="1">Opción 1</option>
+  </me-select>
+  <me-select label="Warning" color="warning" value="1" placeholder="Warning">
+    <option value="1">Opción 1</option>
+  </me-select>
+  <me-select label="Danger" color="danger" value="1" placeholder="Danger">
+    <option value="1">Opción 1</option>
+  </me-select>
+</div>
+
 ## Propiedades
 
 | Propiedad     | Tipo      | Valor por Defecto | Descripción                    |

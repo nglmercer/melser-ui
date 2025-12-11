@@ -25,6 +25,14 @@ export const tokens = {
         },
         red: {
             600: '#d32f2f', // Error
+        },
+        green: {
+            500: '#10b981',
+            600: '#059669',
+        },
+        amber: {
+            500: '#f59e0b',
+            600: '#d97706',
         }
     },
 
@@ -32,6 +40,9 @@ export const tokens = {
     color: {
         primary: { $value: '{palette.blue.700}' },
         primaryLighter: { $value: '{palette.blue.50}' },
+        success: { $value: '{palette.green.600}' },
+        warning: { $value: '{palette.amber.500}' },
+        danger: { $value: '{palette.red.600}' },
         error: { $value: '{palette.red.600}' },
 
         bg: {

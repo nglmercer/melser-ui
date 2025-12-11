@@ -268,6 +268,13 @@ me-textarea {
   </me-textarea>
 </div>
 
+<h3>Colores</h3>
+<div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1rem;">
+  <me-textarea label="Success Textarea" color="success" placeholder="Correcto" value="Contenido válido"></me-textarea>
+  <me-textarea label="Warning Textarea" color="warning" placeholder="Advertencia" value="Contenido a revisar"></me-textarea>
+  <me-textarea label="Danger Textarea" color="danger" placeholder="Error" value="Contenido inválido"></me-textarea>
+</div>
+
 ## Características Avanzadas
 
 ### Auto-resize Dinámico

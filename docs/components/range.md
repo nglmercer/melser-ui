@@ -206,6 +206,13 @@ me-range {
   </me-range>
 </div>
 
+<h3>Colores</h3>
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+  <me-range label="Success" color="success" min="0" max="100" value="70"></me-range>
+  <me-range label="Warning" color="warning" min="0" max="100" value="50"></me-range>
+  <me-range label="Danger" color="danger" min="0" max="100" value="30"></me-range>
+</div>
+
 ## Accesibilidad
 
 El componente MelserRange incluye:

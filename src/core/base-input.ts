@@ -146,6 +146,7 @@ export abstract class MelserBaseInput<T = unknown> extends DynamicStyleMixin(Lit
   @property({ type: String, attribute: 'input-id' }) inputId = '';
   @property({ type: String, reflect: true }) variant: 'outlined' | 'filled' | 'standard' = 'outlined';
   @property({ type: String, reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
+  @property({ type: String, reflect: true }) color: 'primary' | 'success' | 'warning' | 'danger' = 'primary';
 
   abstract value: T;
   abstract readonly dataType: MelserDataType;
@@ -400,5 +401,34 @@ export abstract class MelserBaseInput<T = unknown> extends DynamicStyleMixin(Lit
       font-size: ${InputVar['error-font-size']};
       margin-top: ${InputVar['error-margin-top']};
     }
+
+    /* Color Variants */
+    :host([color="success"]) {
+      --base-input-control-bg-checked: ${Var.color.success};
+      --base-input-control-border-color-checked: ${Var.color.success};
+      --base-input-focus-ring-color: ${Var.color.success};
+      --base-input-option-bg-checked: ${Var.color.success};
+      --base-input-option-color-hover: ${Var.color.success};
+      --base-input-icon-color: ${Var.color.success};
+    }
+
+    :host([color="warning"]) {
+      --base-input-control-bg-checked: ${Var.color.warning};
+      --base-input-control-border-color-checked: ${Var.color.warning};
+      --base-input-focus-ring-color: ${Var.color.warning};
+      --base-input-option-bg-checked: ${Var.color.warning};
+      --base-input-option-color-hover: ${Var.color.warning};
+      --base-input-icon-color: ${Var.color.warning};
+    }
+
+    :host([color="danger"]) {
+      --base-input-control-bg-checked: ${Var.color.danger};
+      --base-input-control-border-color-checked: ${Var.color.danger};
+      --base-input-focus-ring-color: ${Var.color.danger};
+      --base-input-option-bg-checked: ${Var.color.danger};
+      --base-input-option-color-hover: ${Var.color.danger};
+      --base-input-icon-color: ${Var.color.danger};
+    }
+
   `];
 }

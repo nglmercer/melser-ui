@@ -28,6 +28,14 @@ Un componente de selección binaria (checkbox) altamente personalizable, accesib
 <me-checkbox id="demo-error" label="Con error de validación" required errorMessage="Debes marcar esta casilla"></me-checkbox>
 </div>
 
+<h3>Colores</h3>
+<div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+  <me-checkbox label="Primary" color="primary" checked></me-checkbox>
+  <me-checkbox label="Success" color="success" checked></me-checkbox>
+  <me-checkbox label="Warning" color="warning" checked></me-checkbox>
+  <me-checkbox label="Danger" color="danger" checked></me-checkbox>
+</div>
+
 ## API del Componente
 
 ### Propiedades

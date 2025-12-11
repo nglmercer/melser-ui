@@ -13,26 +13,66 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
 </me-password-input>
 ```
 
+## Demo Interactivo
+
+<me-password-input 
+  id="demo-basic" 
+  label="Contraseña" 
+  placeholder="Ingresa tu contraseña">
+</me-password-input>
+
+<me-password-input 
+  id="demo-strength" 
+  label="Con medidor de fortaleza" 
+  placeholder="Escribe para probar"
+  strength-meter
+  minlength="8">
+</me-password-input>
+
+<me-password-input 
+  id="demo-visible" 
+  label="Visible por defecto" 
+  placeholder="Contraseña visible"
+  show-password
+  value="visible123">
+</me-password-input>
+
+<me-password-input 
+  id="demo-disabled" 
+  label="Deshabilitado" 
+  placeholder="No editable"
+  disabled
+  value="secret123">
+</me-password-input>
+
+<h3>Colores</h3>
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+  <me-password-input label="Success" color="success" value="Password123" strength-meter></me-password-input>
+  <me-password-input label="Warning" color="warning" value="weak" strength-meter></me-password-input>
+  <me-password-input label="Danger" color="danger" value="bad" strength-meter></me-password-input>
+</div>
+
 ## Propiedades
 
-| Propiedad         | Tipo      | Valor por Defecto                            | Descripción                         |
-| ----------------- | --------- | -------------------------------------------- | ----------------------------------- |
-| `show-toggle`     | `boolean` | `true`                                       | Muestra/oculta botón de visibilidad |
-| `strength-meter`  | `boolean` | `false`                                      | Muestra medidor de fortaleza        |
-| `minlength`       | `number`  | `undefined`                                  | Longitud mínima requerida           |
-| `maxlength`       | `number`  | `undefined`                                  | Longitud máxima permitida           |
-| `show-password`   | `boolean` | `false`                                      | Estado inicial de visibilidad       |
-| `strength-levels` | `array`   | `['débil', 'media', 'fuerte', 'muy fuerte']` | Niveles de fortaleza                |
-| `label`           | `string`  | `''`                                         | Etiqueta visible del campo          |
-| `placeholder`     | `string`  | `''`                                         | Texto de marcador de posición       |
-| `value`           | `string`  | `''`                                         | Valor del campo                     |
-| `disabled`        | `boolean` | `false`                                      | Deshabilita la interacción          |
-| `required`        | `boolean` | `false`                                      | Campo requerido en formularios      |
+| Propiedad         | Tipo                                              | Valor por Defecto                            | Descripción                         |
+| :---------------- | :------------------------------------------------ | :------------------------------------------- | :---------------------------------- |
+| `show-toggle`     | `boolean`                                         | `true`                                       | Muestra/oculta botón de visibilidad |
+| `strength-meter`  | `boolean`                                         | `false`                                      | Muestra medidor de fortaleza        |
+| `minlength`       | `number`                                          | `undefined`                                  | Longitud mínima requerida           |
+| `maxlength`       | `number`                                          | `undefined`                                  | Longitud máxima permitida           |
+| `show-password`   | `boolean`                                         | `false`                                      | Estado inicial de visibilidad       |
+| `strength-levels` | `array`                                           | `['débil', 'media', 'fuerte', 'muy fuerte']` | Niveles de fortaleza                |
+| `label`           | `string`                                          | `''`                                         | Etiqueta visible del campo          |
+| `placeholder`     | `string`                                          | `''`                                         | Texto de marcador de posición       |
+| `value`           | `string`                                          | `''`                                         | Valor del campo                     |
+| `color`           | `'primary' \| 'success' \| 'warning' \| 'danger'` | `'primary'`                                  | Esquema de color del estado.        |
+| `disabled`        | `boolean`                                         | `false`                                      | Deshabilita la interacción          |
+| `required`        | `boolean`                                         | `false`                                      | Campo requerido en formularios      |
 
 ## Eventos
 
 | Evento              | Descripción                          |
-| ------------------- | ------------------------------------ |
+| :------------------ | :----------------------------------- |
 | `input`             | Se dispara al cambiar el valor       |
 | `change`            | Se dispara al confirmar el cambio    |
 | `toggle-visibility` | Se dispara al cambiar la visibilidad |
@@ -57,6 +97,23 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
 >
 </me-password-input>
 ```
+
+### Contraseña con Requisitos Específicos
+
+```html
+<me-password-input
+  label="Contraseña segura *"
+  required
+  minlength="12"
+  strength-meter
+  placeholder="Al menos 12 caracteres"
+  pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}"
+  error="La contraseña debe tener al menos 12 caracteres, incluyendo mayúsculas, números y símbolos"
+>
+</me-password-input>
+```
+
+## Integración con Formularios
 
 ### Formulario de Registro
 
@@ -83,53 +140,19 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
   >
   </me-password-input>
 
-  <button type="submit" variant="primary">Registrarse</button>
+  <button type="submit">Registrarse</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById("register-form");
-if (form) {
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const password = form.querySelector('[name="password"]')?.value || "";
-    const confirmPassword =
-      form.querySelector('[name="confirmPassword"]')?.value || "";
-
-    if (password !== confirmPassword) {
-      alert("Las contraseñas no coinciden");
-      return;
-    }
-
-    if (password.length < 8) {
-      alert("La contraseña debe tener al menos 8 caracteres");
-      return;
-    }
-
-    alert("¡Registro exitoso!");
-  });
-}
+document.getElementById("register-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  // Validar coincidencia de contraseñas aquí
+});
 ```
 
-### Contraseña con Requisitos Específicos
-
-```html
-<me-password-input
-  label="Contraseña segura *"
-  required
-  minlength="12"
-  strength-meter
-  placeholder="Al menos 12 caracteres, mayúsculas, números y símbolos"
-  pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}"
-  error="La contraseña debe tener al menos 12 caracteres, incluyendo mayúsculas, números y símbolos"
->
-</me-password-input>
-```
-
-## Integración con Formularios
-
-### Formulario de Inicio de Sesión
+## Demo del Formulario
 
 <me-playground-form id="password-playground" schema-name="password-input" title="Cambio de Contraseña" description="Validación de fortaleza y coincidencia.">
   <div style="margin-bottom: 1rem;">
@@ -150,17 +173,6 @@ if (form) {
       strength-meter
       show-toggle
       placeholder="Nueva contraseña">
-    </me-password-input>
-  </div>
-  
-  <div style="margin-bottom: 1rem;">
-    <me-password-input 
-      label="Confirmar nueva contraseña *"
-      name="confirmPassword"
-      required
-      minlength="8"
-      show-toggle
-      placeholder="Repite la nueva contraseña">
     </me-password-input>
   </div>
 </me-playground-form>
@@ -187,17 +199,9 @@ me-password-input {
   .custom-password {
     --me-password-strength-weak: #dc2626;
     --me-password-strength-medium: #ea580c;
-    --me-password-strength-strong: #16a34a;
-    --me-password-strength-very-strong: #15803d;
-  }
-  
-  .dark-password {
-    --me-password-toggle-color: #9ca3af;
-    --me-password-toggle-hover-color: #d1d5db;
   }
   
   .minimal-password {
-    --me-password-toggle-size: 16px;
     --me-password-meter-height: 2px;
   }
 </style>
@@ -208,14 +212,6 @@ me-password-input {
     placeholder="Colores de fortaleza personalizados"
     strength-meter
     value="ContraseñaFuerte123!">
-  </me-password-input>
-</div>
-
-<div class="dark-password" style="margin-bottom: 1rem;">
-  <me-password-input 
-    label="Tema oscuro"
-    placeholder="Para interfaces oscuras"
-    value="DarkMode123">
   </me-password-input>
 </div>
 
@@ -256,89 +252,9 @@ if (passwordInput) {
 }
 ```
 
-### Requisitos Específicos
-
-```html
-<me-password-input
-  label="Contraseña corporativa"
-  strength-meter
-  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$"
-  hint="Debe incluir: mayúsculas, minúsculas, números, símbolos, mínimo 12 caracteres"
-  strength-levels="['Muy Débil', 'Débil', 'Aceptable', 'Fuerte', 'Excelente']"
-></me-password-input>
-```
-
 ## Accesibilidad
 
-El componente MelserPasswordInput incluye:
-
-- **Toggle accesible**: Botón con aria-label apropiado
-- **Medidor de fortaleza**: Anunciado por screen readers
-- **Validación semántica**: Mensajes de error accesibles
-- **Navegación por teclado**: Tab y Enter funcionan correctamente
-- **Estados de focus**: Indicador visual claro
-
-## Mejores Prácticas
-
-1. **Usa medidores de fortaleza** para guiar al usuario
-2. **Establece requisitos mínimos** claros
-3. **Proporciona feedback visual** inmediato
-4. **Incluye toggle de visibilidad** por defecto
-5. **Valida en tiempo real** pero no intrusivo
-6. **Permite copiar contraseña** cuando sea apropiado
-7. **Considera requisitos de seguridad** específicos
-
-## Troubleshooting
-
-### Medidor de fortaleza no funciona
-
-```javascript
-// Asegúrate de que el atributo esté presente
-passwordInput.setAttribute("strength-meter", "");
-
-// O verificar la propiedad
-console.log(passwordInput.strengthMeter); // Debe ser true
-```
-
-### Toggle de visibilidad no aparece
-
-```html
-<!-- Verifica que show-toggle esté habilitado -->
-<me-password-input
-  show-toggle
-  label="Contraseña con toggle"
-></me-password-input>
-```
-
-### Validación de fortaleza no coincide
-
-```javascript
-// Personalizar los criterios de fortaleza
-passwordInput.strengthLevels = [
-  "Muy Débil",
-  "Débil",
-  "Media",
-  "Fuerte",
-  "Perfecta",
-];
-```
-
-### Problemas con screen readers
-
-```html
-<!-- Agregar aria-label para mayor claridad -->
-<me-password-input
-  aria-label="Campo de contraseña con medidor de fortaleza"
-  strength-meter
-></me-password-input>
-```
-
-### Focus no visible
-
-```css
-/* Personalizar el indicador de foco */
-me-password-input:focus-within {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  border-color: #3b82f6;
-}
-```
+- **Toggle accesible**: Botón con aria-label apropiado.
+- **Medidor de fortaleza**: Anunciado por screen readers.
+- **Validación semántica**: Mensajes de error accesibles.
+- **Navegación por teclado**: Tab y Enter funcionan correctamente.
