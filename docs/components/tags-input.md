@@ -180,53 +180,6 @@ if (form) {
   </div>
 </melser-playground-form>
 
-## Ejemplos Avanzados
-
-### Autocompletado de Etiquetas
-
-<div style="padding: 1rem; border: 1px solid #e5e7eb; border-radius: 8px;">
-  <h4>Tags con Sugerencias</h4>
-  
-  <melser-tags-input 
-    id="autocomplete-tags"
-    placeholder="Tecnologías web..."
-    label="Tecnologías">
-  </melser-tags-input>
-  
-  <div id="suggestions" style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-    <small>Sugerencias:</small>
-    <span class="suggestion-tag" data-tag="JavaScript">JavaScript</span>
-    <span class="suggestion-tag" data-tag="TypeScript">TypeScript</span>
-    <span class="suggestion-tag" data-tag="React">React</span>
-    <span class="suggestion-tag" data-tag="Vue">Vue</span>
-    <span class="suggestion-tag" data-tag="Angular">Angular</span>
-    <span class="suggestion-tag" data-tag="Node.js">Node.js</span>
-  </div>
-</div>
-
-### Contador de Etiquetas
-
-<div style="padding: 1rem; border: 1px solid #e5e7eb; border-radius: 8px;">
-  <h4>Tags con Contador y Límite</h4>
-  
-  <melser-tags-input 
-    id="counter-tags"
-    placeholder="Habilidades (máximo 5)"
-    label="Habilidades"
-    max-tags="5"
-    min-length="2">
-  </melser-tags-input>
-  
-  <div id="tag-counter" style="margin-top: 1rem; padding: 0.5rem; border-radius: 4px; text-align: center;">
-    Etiquetas: <span id="current-count">0</span> / 5
-  </div>
-  
-  <div id="tag-list" style="margin-top: 1rem; padding: 0.5rem; border-radius: 4px;">
-    <strong>Etiquetas actuales:</strong>
-    <div id="current-tags">Ninguna</div>
-  </div>
-</div>
-
 ## Personalización con CSS
 
 ### Variables CSS

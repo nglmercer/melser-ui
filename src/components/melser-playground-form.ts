@@ -40,6 +40,20 @@ export const schemas: Record<string, z.ZodSchema> = {
         music: z.boolean().default(true),
         vibration: z.boolean().default(false),
         gameNotifications: z.boolean().default(true)
+    }),
+    'password-input': z.object({
+        currentPassword: z.string().min(1, "La contraseña actual es requerida"),
+        newPassword: z.string().min(8, "La nueva contraseña debe tener al menos 8 caracteres"),
+        confirmPassword: z.string().min(1, "Confirma la contraseña")
+    }).refine((data) => data.newPassword === data.confirmPassword, {
+        message: "Las contraseñas no coinciden",
+        path: ["confirmPassword"],
+    }),
+    'number-input': z.object({
+        age: z.number().min(18, "Debes ser mayor de 18 años").max(100, "Edad máxima 100").optional(),
+        price: z.number().min(0, "El precio no puede ser negativo").optional(),
+        quantity: z.number().min(1, "Mínimo 1 unidad").max(50, "Máximo 50 unidades").optional(),
+        discount: z.number().min(0, "Mínimo 0%").max(50, "Máximo 50%").optional()
     })
 };
 

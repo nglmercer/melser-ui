@@ -134,7 +134,7 @@ if (form) {
 
 ### Formulario de Inicio de Sesión
 
-<melser-playground-form id="password-playground" title="Cambio de Contraseña" description="Validación de fortaleza y coincidencia.">
+<melser-playground-form id="password-playground" schema-name="password-input" title="Cambio de Contraseña" description="Validación de fortaleza y coincidencia.">
   <div style="margin-bottom: 1rem;">
     <melser-password-input 
       label="Contraseña actual *"

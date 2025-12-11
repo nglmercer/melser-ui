@@ -180,43 +180,6 @@ if (form) {
   </div>
 </melser-playground-form>
 
-## Ejemplos Avanzados
-
-### Verificación con Temporizador
-
-<div style="padding: 1rem; border: 1px solid #e5e7eb; border-radius: 8px;">
-  <h4>Verificación con Expiración</h4>
-  
-  <melser-otp-input 
-    id="timer-otp"
-    length="6"
-    numeric-only
-    label="Código temporal">
-  </melser-otp-input>
-  
-  <div id="timer-display" style="margin-top: 1rem; padding: 0.5rem; border-radius: 4px; text-align: center;">
-    Tiempo restante: <span id="countdown">2:00</span>
-  </div>
-  
-  <div id="expired-message" style="margin-top: 1rem; padding: 0.5rem; border-radius: 4px; color: #dc2626; display: none;">
-    ⏰ El código ha expirado. Por favor solicita uno nuevo.
-  </div>
-</div>
-
-### Validación con Patrón Personalizado
-
-<div style="padding: 1rem; border: 1px solid #e5e7eb; border-radius: 8px;">
-  <h4>Código con Patrón Personalizado</h4>
-  
-  <melser-otp-input 
-    id="pattern-otp"
-    length="4"
-    label="Código de seguridad"
-    allowed-chars="[A-F0-9]"
-    hint="Solo letras A-F y números 0-9">
-  </melser-otp-input>
-</div>
-
 ## Personalización con CSS
 
 ### Variables CSS

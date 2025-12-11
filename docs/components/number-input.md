@@ -231,7 +231,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="number-input-playground" title="Cálculo de Productos" description="Calculadora de precios con validación en tiempo real.">
+<melser-playground-form id="number-input-playground" schema-name="number-input" title="Cálculo de Productos" description="Calculadora de precios con validación en tiempo real.">
   <div style="margin-bottom: 1rem;">
     <melser-number-input 
       label="Edad *"

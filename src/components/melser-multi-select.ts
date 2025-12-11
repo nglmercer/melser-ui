@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { MelserBaseInput } from '../core/melser-base-input';
 import { Var } from '../theme/tokens';
 import type { MelserDataType, SelectOption } from '../types/index';
@@ -26,10 +26,49 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
     return true;
   }
 
+  @state() private _renderedOptions: SelectOption[] = [];
+
+  override firstUpdated() {
+    this.syncOptions();
+  }
+
+  private syncOptions() {
+    if (this.options && this.options.length > 0) {
+      this._renderedOptions = [...this.options];
+      return;
+    }
+
+    const newOptions: SelectOption[] = [];
+    const children = Array.from(this.children);
+    const initialSelectedValues: string[] = [];
+
+    children.forEach(child => {
+      if (child.tagName.toLowerCase() === 'option') {
+        const opt = child as HTMLOptionElement;
+        newOptions.push({
+          label: opt.textContent || '',
+          value: opt.value
+        });
+        
+        if (opt.hasAttribute('selected')) {
+          initialSelectedValues.push(opt.value);
+        }
+      }
+    });
+
+    this._renderedOptions = newOptions;
+
+    // Only set initial value from attributes if no value is currently present
+    if (initialSelectedValues.length > 0 && this.value.length === 0) {
+      this.value = initialSelectedValues;
+    }
+  }
+
   render() {
     return html`
       <div class="input-wrapper">
         ${this.label ? html`<label for="${this.inputId}">${this.label}</label>` : ''}
+        <slot style="display: none;" @slotchange="${this.syncOptions}"></slot>
         <select
           id="${this.inputId}"
           multiple
@@ -38,7 +77,7 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
           @change="${this.handleChange}"
           part="select"
         >
-          ${this.options.map(opt => html`
+          ${this._renderedOptions.map(opt => html`
             <option 
               value="${opt.value}" 
               ?selected="${this.value.includes(opt.value)}"

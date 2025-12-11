@@ -190,52 +190,6 @@ if (form) {
   </div>
 </melser-playground-form>
 
-## Ejemplos Avanzados
-
-### Selector de Rango de Fechas
-
-<div style="padding: 1rem; border: 1px solid #e5e7eb; border-radius: 8px;">
-  <h4>Selector de Rango de Fechas (Días del mes)</h4>
-  
-  <melser-dual-range 
-    id="date-range"
-    min="1" 
-    max="31" 
-    value="5,20"
-    step="1"
-    label="Días del mes"
-    show-values>
-  </melser-dual-range>
-  
-  <div id="date-result" style="margin-top: 1rem; padding: 0.5rem; border-radius: 4px;">
-    Rango seleccionado: Día 5 al Día 20
-  </div>
-</div>
-
-### Control de Volumen Estéreo
-
-<div style="padding: 1rem; border: 1px solid #e5e7eb; border-radius: 8px;">
-  <h4>Control de Volumen Estéreo</h4>
-  
-  <melser-dual-range 
-    id="volume-range"
-    min="0" 
-    max="100" 
-    value="30,70"
-    step="1"
-    label="Balance Izquierdo - Derecho">
-  </melser-dual-range>
-  
-  <div id="volume-bars" style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: flex-end; height: 60px;">
-    <div id="left-bar" style="width: 30px; background: #3b82f6; transition: height 0.3s; border-radius: 2px;"></div>
-    <div id="right-bar" style="width: 30px; background: #3b82f6; transition: height 0.3s; border-radius: 2px;"></div>
-  </div>
-  
-  <div id="volume-info" style="margin-top: 0.5rem; text-align: center; font-size: 14px;">
-    Izquierdo: 30% | Derecho: 70%
-  </div>
-</div>
-
 ## Personalización con CSS
 
 ### Variables CSS
