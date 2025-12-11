@@ -9,7 +9,7 @@ Melser UI es una colección de componentes web modernos construidos con Lit. Est
 ## Instalación
 
 ```bash
-npm install me-ui
+npm install melser-ui
 ```
 
 ## Uso Básico
@@ -20,10 +20,10 @@ Puedes importar componentes individuales o toda la librería:
 
 ```typescript
 // Importar componente específico
-import "me-ui/components/me-checkbox.js";
+import "melser-ui/components/me-checkbox.js";
 
 // Importar toda la librería
-import "me-ui";
+import "melser-ui";
 ```
 
 ### Usar en HTML
@@ -65,7 +65,7 @@ Los componentes usan nombres de tags con prefijo para evitar conflictos:
 
 ```typescript
 // Tipado correcto
-import type { MelserCheckbox, MelserTextInput } from "me-ui/types";
+import type { MelserCheckbox, MelserTextInput } from "melser-ui/types";
 
 // Usar con tipado
 const checkbox = document.querySelector("me-checkbox") as MelserCheckbox;

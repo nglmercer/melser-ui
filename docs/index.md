@@ -11,7 +11,7 @@ hero:
       link: /guide/getting-started
     - theme: alt
       text: Ver en GitHub
-      link: https://github.com/me-ui
+      link: https://github.com/melser-ui
 
 features:
   - icon: ⚡

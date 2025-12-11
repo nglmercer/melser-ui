@@ -317,7 +317,7 @@ El componente MelserTextInput incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "me-ui/components/base-input.js";
+import "melser-ui/components/base-input.js";
 
 // Verificar que no esté deshabilitado
 console.log(input.disabled); // Debe ser false

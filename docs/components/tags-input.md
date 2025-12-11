@@ -273,7 +273,7 @@ El componente MelserTagsInput incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "me-ui/components/me-tags-input.js";
+import "melser-ui/components/me-tags-input.js";
 
 // Verificar que no esté deshabilitado o solo lectura
 console.log(tagsInput.disabled); // Debe ser false

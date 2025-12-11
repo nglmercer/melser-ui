@@ -565,7 +565,7 @@ El componente MelserTimePicker incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "me-ui/components/me-time-picker.js";
+import "melser-ui/components/me-time-picker.js";
 
 // Verificar que no esté deshabilitado
 console.log(picker.disabled); // Debe ser false

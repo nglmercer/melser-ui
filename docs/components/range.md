@@ -229,7 +229,7 @@ El componente MelserRange incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "me-ui/components/me-range.js";
+import "melser-ui/components/me-range.js";
 
 // Verificar que no esté deshabilitado
 console.log(range.disabled); // Debe ser false

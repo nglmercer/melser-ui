@@ -16,7 +16,7 @@ Instead of hardcoding colors, use the `Var` object exported from the library. Th
 
 ```typescript
 import { css, LitElement } from "lit";
-import { Var } from "me-ui"; // or relative path
+import { Var } from "melser-ui"; // or relative path
 
 export class MyComponent extends LitElement {
   static styles = css`
@@ -46,7 +46,7 @@ base-input {
 You can switch the global theme dynamically using `setTheme`:
 
 ```typescript
-import { setTheme } from "me-ui";
+import { setTheme } from "melser-ui";
 
 // Switch to Dark Mode
 setTheme("dark");

@@ -483,7 +483,7 @@ El componente MelserSwitch incluye:
 console.log(switchEl.disabled); // Debe ser false
 
 // Verificar que esté correctamente importado
-import "me-ui/components/me-switch.js";
+import "melser-ui/components/me-switch.js";
 ```
 
 ### Animaciones no funcionan

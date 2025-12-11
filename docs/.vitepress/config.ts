@@ -109,11 +109,11 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/nglmercer/me-ui' }
+      { icon: 'github', link: 'https://github.com/nglmercer/melser-ui' }
     ],
 
     editLink: {
-      pattern: 'https://github.com/nglmercer/me-ui/edit/main/docs/:path',
+      pattern: 'https://github.com/nglmercer/melser-ui/edit/main/docs/:path',
       text: 'Editar esta página en GitHub'
     },
 
@@ -127,5 +127,5 @@ export default defineConfig({
       level: 'deep'
     }
   },
-  base: '/me-ui/'
+  base: '/melser-ui/'
 })

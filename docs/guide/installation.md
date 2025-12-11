@@ -18,16 +18,16 @@ Esta guía cubre todas las formas de instalar y configurar Melser UI en tu proye
 
 ```bash
 # Instalar la librería completa
-npm install me-ui
+npm install melser-ui
 
 # O instalar componentes individuales
-npm install me-ui components
+npm install melser-ui components
 ```
 
 ### Yarn
 
 ```bash
-yarn add me-ui
+yarn add melser-ui
 ```
 
 ### CDN
@@ -37,12 +37,12 @@ También puedes usar Melser UI directamente desde un CDN:
 ```html
 <!-- Usar ESM.sh -->
 <script type="module">
-  import "https://esm.sh/me-ui";
+  import "https://esm.sh/melser-ui";
 </script>
 
 <!-- O usar Skypack -->
 <script type="module">
-  import "https://cdn.skypack.dev/me-ui";
+  import "https://cdn.skypack.dev/melser-ui";
 </script>
 ```
 
@@ -60,7 +60,7 @@ export default defineConfig({
     target: "es2019", // Necesario para Custom Elements
   },
   optimizeDeps: {
-    include: ["me-ui"],
+    include: ["melser-ui"],
   },
 });
 ```
@@ -93,18 +93,18 @@ module.exports = {
 
 ```typescript
 // Importa todos los componentes
-import "me-ui";
+import "melser-ui";
 
 // O importar tipos
-import type { MelserComponent } from "me-ui/types";
+import type { MelserComponent } from "melser-ui/types";
 ```
 
 ### Importación Individual
 
 ```typescript
 // Importar componentes específicos
-import "me-ui/components/me-checkbox.js";
-import "me-ui/components/base-input.js";
+import "melser-ui/components/me-checkbox.js";
+import "melser-ui/components/base-input.js";
 
 // Esto es más eficiente si solo usas algunos componentes
 ```
@@ -117,10 +117,10 @@ import {
   MelserCheckbox,
   MelserTextInput,
   MelserButton,
-} from "me-ui/components";
+} from "melser-ui/components";
 
 // Registrar manualmente si es necesario
-import { registerComponents } from "me-ui/utils/registration";
+import { registerComponents } from "melser-ui/utils/registration";
 
 registerComponents({
   "me-checkbox": MelserCheckbox,
@@ -171,7 +171,7 @@ declare namespace JSX {
     "preview": "vite preview"
   },
   "dependencies": {
-    "me-ui": "^1.0.0"
+    "melser-ui": "^1.0.0"
   },
   "devDependencies": {
     "vite": "^5.0.0",
@@ -197,7 +197,7 @@ declare namespace JSX {
     </div>
 
     <script type="module">
-      import "me-ui";
+      import "melser-ui";
 
       const submitBtn = document.getElementById("submit");
       const checkbox = document.getElementById("accept");
@@ -227,7 +227,7 @@ declare namespace JSX {
 
 ```javascript
 // Verifica que los componentes estén importados correctamente
-import "me-ui/components/me-checkbox.js";
+import "melser-ui/components/me-checkbox.js";
 
 // Y que el custom element esté disponible
 console.log(customElements.get("me-checkbox")); // Debe existir
@@ -237,10 +237,10 @@ console.log(customElements.get("me-checkbox")); // Debe existir
 
 ```css
 /* Asegúrate de incluir los estilos base */
-@import "me-ui/styles/theme.css";
+@import "melser-ui/styles/theme.css";
 
 /* O importa estilos específicos */
-@import "me-ui/styles/components/checkbox.css";
+@import "melser-ui/styles/components/checkbox.css";
 ```
 
 ## Verificación de la Instalación

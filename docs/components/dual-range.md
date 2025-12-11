@@ -275,7 +275,7 @@ El componente MelserDualRange incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "me-ui/components/me-dual-range.js";
+import "melser-ui/components/me-dual-range.js";
 
 // Verificar que no esté deshabilitado
 console.log(dualRange.disabled); // Debe ser false

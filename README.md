@@ -13,7 +13,7 @@ Una librería de componentes web moderna, ligera y altamente personalizable cons
 ## Instalación
 
 ```bash
-npm install me-ui
+npm install melser-ui
 ```
 
 ## Uso Básico
@@ -22,10 +22,10 @@ Importa la librería completa o componentes individuales:
 
 ```javascript
 // Importar todo (registra los componentes automáticamente)
-import "me-ui";
+import "melser-ui";
 
 // O importar utilidades específicas
-import { registerComponent, MelserSwitch } from "me-ui";
+import { registerComponent, MelserSwitch } from "melser-ui";
 ```
 
 Úsalos en tu HTML:
@@ -122,14 +122,14 @@ La librería detecta automáticamente `prefers-color-scheme: dark`. Para forzar 
 Si necesitas usar nombres de etiqueta diferentes (por ejemplo, para evitar conflictos o usar tu propia marca), usa las utilidades exportadas:
 
 ```typescript
-import { registerComponent, registerWithPrefix, MelserButton } from "me-ui";
+import { registerComponent, registerWithPrefix, MelserButton } from "melser-ui";
 
 // 1. Registrar un componente individual con otro nombre
 registerComponent("mi-boton", MelserButton);
 
 // 2. Registrar múltiples componentes con un prefijo
 // Esto creará <app-text-input>, <app-select>, etc.
-import * as Components from "me-ui";
+import * as Components from "melser-ui";
 registerWithPrefix("app", Components);
 ```
 

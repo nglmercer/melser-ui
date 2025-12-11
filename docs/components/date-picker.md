@@ -520,7 +520,7 @@ El componente MelserDatePicker incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "me-ui/components/me-date-picker.js";
+import "melser-ui/components/me-date-picker.js";
 
 // Verificar que no esté deshabilitado
 console.log(picker.disabled); // Debe ser false

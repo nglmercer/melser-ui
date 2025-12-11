@@ -518,7 +518,7 @@ El componente MelserFileUpload incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "me-ui/components/me-file-upload.js";
+import "melser-ui/components/me-file-upload.js";
 
 // Verificar que no esté deshabilitado
 console.log(upload.disabled); // Debe ser false

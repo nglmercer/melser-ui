@@ -271,7 +271,7 @@ El componente MelserOtpInput incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "me-ui/components/me-otp-input.js";
+import "melser-ui/components/me-otp-input.js";
 
 // Verificar que no esté deshabilitado
 console.log(otpInput.disabled); // Debe ser false
