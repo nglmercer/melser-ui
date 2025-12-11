@@ -9,36 +9,36 @@ Un componente de rango doble (dual slider) para selección de rangos de valores 
 ## Ejemplo Básico
 
 ```html
-<melser-dual-range min="0" max="100" value="30,70"> </melser-dual-range>
+<me-dual-range min="0" max="100" value="30,70"> </me-dual-range>
 ```
 
 ## Demo Interactivo
 
-<melser-dual-range 
+<me-dual-range 
   id="demo-basic" 
   min="0" 
   max="100" 
   value="30,70"
   label="Rango doble básico">
-</melser-dual-range>
+</me-dual-range>
 
-<melser-dual-range 
+<me-dual-range 
   id="demo-steps" 
   min="0" 
   max="50" 
   value="10,40"
   step="5"
   label="Rango doble con pasos">
-</melser-dual-range>
+</me-dual-range>
 
-<melser-dual-range 
+<me-dual-range 
   id="demo-disabled" 
   min="0" 
   max="100" 
   value="25,75"
   disabled
   label="Rango doble deshabilitado">
-</melser-dual-range>
+</me-dual-range>
 
 ## Propiedades
 
@@ -68,34 +68,28 @@ Un componente de rango doble (dual slider) para selección de rangos de valores 
 ### Rango de Precio
 
 ```html
-<melser-dual-range
+<me-dual-range
   min="100"
   max="1000"
   value="250,750"
   step="50"
   label="Rango de precios ($)"
 >
-</melser-dual-range>
+</me-dual-range>
 ```
 
 ### Rango de Edad
 
 ```html
-<melser-dual-range min="18" max="65" value="25,45" label="Rango de edad">
-</melser-dual-range>
+<me-dual-range min="18" max="65" value="25,45" label="Rango de edad">
+</me-dual-range>
 ```
 
 ### Rango de Horario
 
 ```html
-<melser-dual-range
-  min="0"
-  max="24"
-  value="9,17"
-  step="0.5"
-  label="Horario laboral"
->
-</melser-dual-range>
+<me-dual-range min="0" max="24" value="9,17" step="0.5" label="Horario laboral">
+</me-dual-range>
 ```
 
 ## Integración con Formularios
@@ -106,7 +100,7 @@ Un componente de rango doble (dual slider) para selección de rangos de valores 
 <form id="filters-form">
   <h3>Filtros de Búsqueda</h3>
 
-  <melser-dual-range
+  <me-dual-range
     name="priceRange"
     min="0"
     max="5000"
@@ -114,18 +108,18 @@ Un componente de rango doble (dual slider) para selección de rangos de valores 
     step="100"
     label="Rango de precios ($)"
   >
-  </melser-dual-range>
+  </me-dual-range>
 
-  <melser-dual-range
+  <me-dual-range
     name="sizeRange"
     min="10"
     max="500"
     value="50,200"
     label="Tamaño (m²)"
   >
-  </melser-dual-range>
+  </me-dual-range>
 
-  <melser-dual-range
+  <me-dual-range
     name="distanceRange"
     min="0"
     max="100"
@@ -133,7 +127,7 @@ Un componente de rango doble (dual slider) para selección de rangos de valores 
     step="5"
     label="Distancia (km)"
   >
-  </melser-dual-range>
+  </me-dual-range>
 
   <button type="submit" variant="primary">Aplicar Filtros</button>
 </form>
@@ -156,55 +150,55 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="dual-range-playground" schema-name="dual-range" title="Filtros de Búsqueda" description="Rangos de precio y tamaño.">
+<me-playground-form id="dual-range-playground" schema-name="dual-range" title="Filtros de Búsqueda" description="Rangos de precio y tamaño.">
   <div style="margin-bottom: 1.5rem;">
-    <melser-dual-range 
+    <me-dual-range 
       name="priceRange"
       min="0" 
       max="5000" 
       value="500,2500"
       step="100"
       label="Rango de precios ($)">
-    </melser-dual-range>
+    </me-dual-range>
   </div>
   
   <div style="margin-bottom: 1.5rem;">
-    <melser-dual-range 
+    <me-dual-range 
       name="sizeRange"
       min="10" 
       max="500" 
       value="50,200"
       label="Tamaño (m²)">
-    </melser-dual-range>
+    </me-dual-range>
   </div>
   
   <div style="margin-bottom: 1.5rem;">
-    <melser-dual-range 
+    <me-dual-range 
       name="distanceRange"
       min="0" 
       max="100" 
       value="0,25"
       step="5"
       label="Distancia (km)">
-    </melser-dual-range>
+    </me-dual-range>
   </div>
-</melser-playground-form>
+</me-playground-form>
 
 ## Personalización con CSS
 
 ### Variables CSS
 
 ```css
-melser-dual-range {
-  --melser-dual-range-height: 6px;
-  --melser-dual-range-bg: #e5e7eb;
-  --melser-dual-range-fill: #3b82f6;
-  --melser-dual-range-thumb: #ffffff;
-  --melser-dual-range-thumb-border: #3b82f6;
-  --melser-dual-range-thumb-size: 20px;
-  --melser-dual-range-focus-color: #2563eb;
-  --melser-dual-range-disabled-bg: #f3f4f6;
-  --melser-dual-range-disabled-thumb: #d1d5db;
+me-dual-range {
+  --me-dual-range-height: 6px;
+  --me-dual-range-bg: #e5e7eb;
+  --me-dual-range-fill: #3b82f6;
+  --me-dual-range-thumb: #ffffff;
+  --me-dual-range-thumb-border: #3b82f6;
+  --me-dual-range-thumb-size: 20px;
+  --me-dual-range-focus-color: #2563eb;
+  --me-dual-range-disabled-bg: #f3f4f6;
+  --me-dual-range-disabled-thumb: #d1d5db;
 }
 ```
 
@@ -212,49 +206,49 @@ melser-dual-range {
 
 <style>
   .custom-dual-range {
-    --melser-dual-range-fill: #10b981;
-    --melser-dual-range-thumb-border: #10b981;
-    --melser-dual-range-focus-color: #059669;
+    --me-dual-range-fill: #10b981;
+    --me-dual-range-thumb-border: #10b981;
+    --me-dual-range-focus-color: #059669;
   }
   
   .large-dual-range {
-    --melser-dual-range-height: 8px;
-    --melser-dual-range-thumb-size: 24px;
+    --me-dual-range-height: 8px;
+    --me-dual-range-thumb-size: 24px;
   }
   
   .dark-theme-dual-range {
-    --melser-dual-range-bg: #374151;
-    --melser-dual-range-fill: #8b5cf6;
-    --melser-dual-range-thumb-border: #8b5cf6;
-    --melser-dual-range-focus-color: #7c3aed;
+    --me-dual-range-bg: #374151;
+    --me-dual-range-fill: #8b5cf6;
+    --me-dual-range-thumb-border: #8b5cf6;
+    --me-dual-range-focus-color: #7c3aed;
   }
 </style>
 
 <div class="custom-dual-range" style="margin-bottom: 1rem;">
-  <melser-dual-range 
+  <me-dual-range 
     min="0" 
     max="100" 
     value="25,75"
     label="Rango doble personalizado (verde)">
-  </melser-dual-range>
+  </me-dual-range>
 </div>
 
 <div class="large-dual-range" style="margin-bottom: 1rem;">
-  <melser-dual-range 
+  <me-dual-range 
     min="0" 
     max="100" 
     value="40,60"
     label="Rango doble grande">
-  </melser-dual-range>
+  </me-dual-range>
 </div>
 
 <div class="dark-theme-dual-range">
-  <melser-dual-range 
+  <me-dual-range 
     min="0" 
     max="100" 
     value="20,80"
     label="Rango doble tema oscuro (púrpura)">
-  </melser-dual-range>
+  </me-dual-range>
 </div>
 
 ## Accesibilidad
@@ -281,7 +275,7 @@ El componente MelserDualRange incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "melser-ui/components/melser-dual-range.js";
+import "me-ui/components/me-dual-range.js";
 
 // Verificar que no esté deshabilitado
 console.log(dualRange.disabled); // Debe ser false
@@ -302,8 +296,8 @@ dualRange.value = "70,30"; // Incorrecto: max > min
 
 ```html
 <!-- Asegúrate de incluir el atributo name -->
-<melser-dual-range name="priceRange" min="0" max="1000" value="250,750">
-</melser-dual-range>
+<me-dual-range name="priceRange" min="0" max="1000" value="250,750">
+</me-dual-range>
 
 // Recuperar valor en formulario const formData = new FormData(form); const
 priceRange = formData.get('priceRange'); // "250,750" // Procesar los valores
@@ -314,11 +308,11 @@ const [minPrice, maxPrice] = priceRange.split(',').map(Number);
 
 ```html
 <!-- Para rangos complejos, usa aria-label -->
-<melser-dual-range
+<me-dual-range
   aria-label="Rango de precios mínimo y máximo"
   min="0"
   max="5000"
   value="1000,3000"
 >
-</melser-dual-range>
+</me-dual-range>
 ```

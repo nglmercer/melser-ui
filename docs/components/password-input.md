@@ -9,11 +9,8 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
 ## Ejemplo Básico
 
 ```html
-<melser-password-input
-  label="Contraseña"
-  placeholder="Crea una contraseña segura"
->
-</melser-password-input>
+<me-password-input label="Contraseña" placeholder="Crea una contraseña segura">
+</me-password-input>
 ```
 
 ## Propiedades
@@ -48,7 +45,7 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
 ### Contraseña con Validación de Fortaleza
 
 ```html
-<melser-password-input
+<me-password-input
   label="Nueva contraseña *"
   placeholder="Mínimo 8 caracteres"
   minlength="8"
@@ -58,14 +55,14 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
   required
   hint="Debe incluir mayúsculas, números y símbolos"
 >
-</melser-password-input>
+</me-password-input>
 ```
 
 ### Formulario de Registro
 
 ```html
 <form id="register-form">
-  <melser-password-input
+  <me-password-input
     label="Contraseña *"
     name="password"
     required
@@ -74,9 +71,9 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
     show-toggle
     placeholder="Crea una contraseña segura"
   >
-  </melser-password-input>
+  </me-password-input>
 
-  <melser-password-input
+  <me-password-input
     label="Confirmar contraseña *"
     name="confirmPassword"
     required
@@ -84,7 +81,7 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
     show-toggle
     placeholder="Repite tu contraseña"
   >
-  </melser-password-input>
+  </me-password-input>
 
   <button type="submit" variant="primary">Registrarse</button>
 </form>
@@ -118,7 +115,7 @@ if (form) {
 ### Contraseña con Requisitos Específicos
 
 ```html
-<melser-password-input
+<me-password-input
   label="Contraseña segura *"
   required
   minlength="12"
@@ -127,25 +124,25 @@ if (form) {
   pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}"
   error="La contraseña debe tener al menos 12 caracteres, incluyendo mayúsculas, números y símbolos"
 >
-</melser-password-input>
+</me-password-input>
 ```
 
 ## Integración con Formularios
 
 ### Formulario de Inicio de Sesión
 
-<melser-playground-form id="password-playground" schema-name="password-input" title="Cambio de Contraseña" description="Validación de fortaleza y coincidencia.">
+<me-playground-form id="password-playground" schema-name="password-input" title="Cambio de Contraseña" description="Validación de fortaleza y coincidencia.">
   <div style="margin-bottom: 1rem;">
-    <melser-password-input 
+    <me-password-input 
       label="Contraseña actual *"
       name="currentPassword"
       required
       placeholder="Tu contraseña actual">
-    </melser-password-input>
+    </me-password-input>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-password-input 
+    <me-password-input 
       label="Nueva contraseña *"
       name="newPassword"
       required
@@ -153,34 +150,34 @@ if (form) {
       strength-meter
       show-toggle
       placeholder="Nueva contraseña">
-    </melser-password-input>
+    </me-password-input>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-password-input 
+    <me-password-input 
       label="Confirmar nueva contraseña *"
       name="confirmPassword"
       required
       minlength="8"
       show-toggle
       placeholder="Repite la nueva contraseña">
-    </melser-password-input>
+    </me-password-input>
   </div>
-</melser-playground-form>
+</me-playground-form>
 
 ## Personalización con CSS
 
 ### Variables CSS
 
 ```css
-melser-password-input {
-  --melser-password-toggle-size: 20px;
-  --melser-password-strength-weak: #ef4444;
-  --melser-password-strength-medium: #f59e0b;
-  --melser-password-strength-strong: #10b981;
-  --melser-password-strength-very-strong: #059669;
-  --melser-password-meter-height: 4px;
-  --melser-password-meter-radius: 2px;
+me-password-input {
+  --me-password-toggle-size: 20px;
+  --me-password-strength-weak: #ef4444;
+  --me-password-strength-medium: #f59e0b;
+  --me-password-strength-strong: #10b981;
+  --me-password-strength-very-strong: #059669;
+  --me-password-meter-height: 4px;
+  --me-password-meter-radius: 2px;
 }
 ```
 
@@ -188,46 +185,46 @@ melser-password-input {
 
 <style>
   .custom-password {
-    --melser-password-strength-weak: #dc2626;
-    --melser-password-strength-medium: #ea580c;
-    --melser-password-strength-strong: #16a34a;
-    --melser-password-strength-very-strong: #15803d;
+    --me-password-strength-weak: #dc2626;
+    --me-password-strength-medium: #ea580c;
+    --me-password-strength-strong: #16a34a;
+    --me-password-strength-very-strong: #15803d;
   }
   
   .dark-password {
-    --melser-password-toggle-color: #9ca3af;
-    --melser-password-toggle-hover-color: #d1d5db;
+    --me-password-toggle-color: #9ca3af;
+    --me-password-toggle-hover-color: #d1d5db;
   }
   
   .minimal-password {
-    --melser-password-toggle-size: 16px;
-    --melser-password-meter-height: 2px;
+    --me-password-toggle-size: 16px;
+    --me-password-meter-height: 2px;
   }
 </style>
 
 <div class="custom-password" style="margin-bottom: 1rem;">
-  <melser-password-input 
+  <me-password-input 
     label="Contraseña personalizada"
     placeholder="Colores de fortaleza personalizados"
     strength-meter
     value="ContraseñaFuerte123!">
-  </melser-password-input>
+  </me-password-input>
 </div>
 
 <div class="dark-password" style="margin-bottom: 1rem;">
-  <melser-password-input 
+  <me-password-input 
     label="Tema oscuro"
     placeholder="Para interfaces oscuras"
     value="DarkMode123">
-  </melser-password-input>
+  </me-password-input>
 </div>
 
 <div class="minimal-password">
-  <melser-password-input 
+  <me-password-input 
     label="Estilo minimalista"
     placeholder="Más discreto"
     value="Mini123">
-  </melser-password-input>
+  </me-password-input>
 </div>
 
 ## Características Avanzadas
@@ -235,7 +232,7 @@ melser-password-input {
 ### Validación de Fortaleza Personalizada
 
 ```javascript
-const passwordInput = document.querySelector("melser-password-input");
+const passwordInput = document.querySelector("me-password-input");
 if (passwordInput) {
   passwordInput.addEventListener("strength-change", (e) => {
     const { strength, score } = e.detail;
@@ -262,13 +259,13 @@ if (passwordInput) {
 ### Requisitos Específicos
 
 ```html
-<melser-password-input
+<me-password-input
   label="Contraseña corporativa"
   strength-meter
   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$"
   hint="Debe incluir: mayúsculas, minúsculas, números, símbolos, mínimo 12 caracteres"
   strength-levels="['Muy Débil', 'Débil', 'Aceptable', 'Fuerte', 'Excelente']"
-></melser-password-input>
+></me-password-input>
 ```
 
 ## Accesibilidad
@@ -307,10 +304,10 @@ console.log(passwordInput.strengthMeter); // Debe ser true
 
 ```html
 <!-- Verifica que show-toggle esté habilitado -->
-<melser-password-input
+<me-password-input
   show-toggle
   label="Contraseña con toggle"
-></melser-password-input>
+></me-password-input>
 ```
 
 ### Validación de fortaleza no coincide
@@ -330,17 +327,17 @@ passwordInput.strengthLevels = [
 
 ```html
 <!-- Agregar aria-label para mayor claridad -->
-<melser-password-input
+<me-password-input
   aria-label="Campo de contraseña con medidor de fortaleza"
   strength-meter
-></melser-password-input>
+></me-password-input>
 ```
 
 ### Focus no visible
 
 ```css
 /* Personalizar el indicador de foco */
-melser-password-input:focus-within {
+me-password-input:focus-within {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   border-color: #3b82f6;
 }

@@ -13,7 +13,7 @@ Una librería de componentes web moderna, ligera y altamente personalizable cons
 ## Instalación
 
 ```bash
-npm install melser-ui
+npm install me-ui
 ```
 
 ## Uso Básico
@@ -22,10 +22,10 @@ Importa la librería completa o componentes individuales:
 
 ```javascript
 // Importar todo (registra los componentes automáticamente)
-import 'melser-ui';
+import "me-ui";
 
 // O importar utilidades específicas
-import { registerComponent, MelserSwitch } from 'melser-ui';
+import { registerComponent, MelserSwitch } from "me-ui";
 ```
 
 Úsalos en tu HTML:
@@ -38,26 +38,23 @@ import { registerComponent, MelserSwitch } from 'melser-ui';
   required
 ></base-input>
 
-<melser-switch
-  name="notifications"
-  label="Activar Notificaciones"
-></melser-switch>
+<me-switch name="notifications" label="Activar Notificaciones"></me-switch>
 ```
 
 ## Componentes Disponibles
 
-| Componente | Etiqueta HTML | Descripción | Tipo de Dato (`dataType`) |
-|------------|---------------|-------------|---------------------------|
-| **Text Input** | `<base-input>` | Campo de texto simple (text, email, password, number). | `string` |
-| **Textarea** | `<melser-textarea>` | Campo de texto multilínea redimensionable. | `string` |
-| **Select** | `<melser-select>` | Lista desplegable nativa estilizada. | `string` |
-| **Multi Select** | `<melser-multi-select>` | Selección múltiple nativa. | `array` (`string[]`) |
-| **Checkbox** | `<melser-checkbox>` | Casilla de verificación con estilos personalizados. | `boolean` |
-| **Radio Group** | `<melser-radio-group>` | Grupo de botones de radio. | `string` |
-| **Switch** | `<melser-switch>` | Interruptor estilo toggle. | `boolean` |
-| **Range** | `<melser-range>` | Deslizador de rango numérico. | `number` |
-| **File Upload** | `<melser-file-upload>` | Zona de carga de archivos con Drag & Drop. | `object` (`File` o `null`) |
-| **Tags Input** | `<melser-tags-input>` | Entrada de etiquetas (chips) con soporte para borrar. | `array` (`string[]`) |
+| Componente       | Etiqueta HTML       | Descripción                                            | Tipo de Dato (`dataType`)  |
+| ---------------- | ------------------- | ------------------------------------------------------ | -------------------------- |
+| **Text Input**   | `<base-input>`      | Campo de texto simple (text, email, password, number). | `string`                   |
+| **Textarea**     | `<me-textarea>`     | Campo de texto multilínea redimensionable.             | `string`                   |
+| **Select**       | `<me-select>`       | Lista desplegable nativa estilizada.                   | `string`                   |
+| **Multi Select** | `<me-multi-select>` | Selección múltiple nativa.                             | `array` (`string[]`)       |
+| **Checkbox**     | `<me-checkbox>`     | Casilla de verificación con estilos personalizados.    | `boolean`                  |
+| **Radio Group**  | `<me-radio-group>`  | Grupo de botones de radio.                             | `string`                   |
+| **Switch**       | `<me-switch>`       | Interruptor estilo toggle.                             | `boolean`                  |
+| **Range**        | `<me-range>`        | Deslizador de rango numérico.                          | `number`                   |
+| **File Upload**  | `<me-file-upload>`  | Zona de carga de archivos con Drag & Drop.             | `object` (`File` o `null`) |
+| **Tags Input**   | `<me-tags-input>`   | Entrada de etiquetas (chips) con soporte para borrar.  | `array` (`string[]`)       |
 
 ### Propiedades Comunes
 
@@ -96,17 +93,17 @@ Melser UI usa variables CSS. Puedes sobrescribirlas globalmente en `:root` o en 
 ```css
 :root {
   /* Color Primario (HSL) */
-  --melser-primary-h: 262;
-  --melser-primary-s: 80%;
-  --melser-primary-l: 50%; /* Color principal */
-  
+  --me-primary-h: 262;
+  --me-primary-s: 80%;
+  --me-primary-l: 50%; /* Color principal */
+
   /* Estados */
-  --melser-error: #d32f2f;
-  --melser-success: #2e7d32;
+  --me-error: #d32f2f;
+  --me-success: #2e7d32;
 
   /* UI */
-  --melser-radius: 8px; /* Bordes redondeados */
-  --melser-font-family: 'Inter', sans-serif;
+  --me-radius: 8px; /* Bordes redondeados */
+  --me-font-family: "Inter", sans-serif;
 }
 ```
 
@@ -125,15 +122,15 @@ La librería detecta automáticamente `prefers-color-scheme: dark`. Para forzar 
 Si necesitas usar nombres de etiqueta diferentes (por ejemplo, para evitar conflictos o usar tu propia marca), usa las utilidades exportadas:
 
 ```typescript
-import { registerComponent, registerWithPrefix, MelserButton } from 'melser-ui';
+import { registerComponent, registerWithPrefix, MelserButton } from "me-ui";
 
 // 1. Registrar un componente individual con otro nombre
-registerComponent('mi-boton', MelserButton);
+registerComponent("mi-boton", MelserButton);
 
 // 2. Registrar múltiples componentes con un prefijo
 // Esto creará <app-text-input>, <app-select>, etc.
-import * as Components from 'melser-ui';
-registerWithPrefix('app', Components);
+import * as Components from "me-ui";
+registerWithPrefix("app", Components);
 ```
 
 ## Desarrollo

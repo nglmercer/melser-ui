@@ -9,20 +9,17 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
 ## Ejemplo Básico
 
 ```html
-<melser-combobox
-  label="Selecciona un país"
-  placeholder="Escribe para buscar..."
->
+<me-combobox label="Selecciona un país" placeholder="Escribe para buscar...">
   <option value="es">España</option>
   <option value="mx">México</option>
   <option value="ar">Argentina</option>
   <option value="co">Colombia</option>
-</melser-combobox>
+</me-combobox>
 ```
 
 ## Demo Interactivo
 
-<melser-combobox 
+<me-combobox 
   id="demo-basic" 
   label="País básico" 
   placeholder="Escribe para buscar...">
@@ -35,9 +32,9 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
   <option value="cl">Chile</option>
   <option value="uy">Uruguay</option>
   <option value="ec">Ecuador</option>
-</melser-combobox>
+</me-combobox>
 
-<melser-combobox 
+<me-combobox 
   id="demo-async" 
   label="Con datos dinámicos" 
   placeholder="Busca una ciudad..."
@@ -45,9 +42,9 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
   min-length="2">
 
   <!-- Opciones se cargarán dinámicamente -->
-</melser-combobox>
+</me-combobox>
 
-<melser-combobox 
+<me-combobox 
   id="demo-groups" 
   label="Con grupos" 
   placeholder="Selecciona una ciudad">
@@ -67,9 +64,9 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
     <option value="cordoba">Córdoba</option>
     <option value="rosario">Rosario</option>
   </optgroup>
-</melser-combobox>
+</me-combobox>
 
-<melser-combobox 
+<me-combobox 
   id="demo-highlight" 
   label="Con resaltado" 
   placeholder="Busca frameworks..."
@@ -83,9 +80,9 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
   <option value="nguniversal">Angular Universal</option>
   <option value="svelte">Svelte</option>
   <option value="sveltekit">SvelteKit</option>
-</melser-combobox>
+</me-combobox>
 
-<melser-combobox 
+<me-combobox 
   id="demo-free-text" 
   label="Permite texto libre" 
   placeholder="Escribe o selecciona..."
@@ -95,7 +92,7 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
   <option value="backend">Backend Developer</option>
   <option value="fullstack">Fullstack Developer</option>
   <option value="mobile">Mobile Developer</option>
-</melser-combobox>
+</me-combobox>
 
 ## Propiedades
 
@@ -134,7 +131,7 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
 ### Combobox con Carga Asíncrona
 
 ```html
-<melser-combobox
+<me-combobox
   label="Buscar usuario"
   placeholder="Escribe el nombre..."
   async-data
@@ -142,11 +139,11 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
   max-results="20"
 >
   <!-- Las opciones se cargan dinámicamente -->
-</melser-combobox>
+</me-combobox>
 ```
 
 ```javascript
-const combobox = document.querySelector("melser-combobox[async-data]");
+const combobox = document.querySelector("me-combobox[async-data]");
 if (combobox) {
   combobox.addEventListener("search", async (e) => {
     const term = e.detail.term;
@@ -183,7 +180,7 @@ if (combobox) {
 ### Combobox con Resaltado de Coincidencias
 
 ```html
-<melser-combobox
+<me-combobox
   label="Buscar producto"
   placeholder="Nombre del producto..."
   highlight-matches
@@ -196,13 +193,13 @@ if (combobox) {
   <option value="mouse-wireless">Mouse Wireless</option>
   <option value="keyboard-mechanical">Teclado Mecánico</option>
   <option value="monitor-4k">Monitor 4K HDR</option>
-</melser-combobox>
+</me-combobox>
 ```
 
 ### Combobox con Validación
 
 ```html
-<melser-combobox
+<me-combobox
   label="Email de contacto"
   placeholder="Buscar contacto..."
   async-data
@@ -212,13 +209,13 @@ if (combobox) {
   hint="Escribe para buscar un contacto existente"
 >
   <!-- Opciones dinámicas -->
-</melser-combobox>
+</me-combobox>
 ```
 
 ### Combobox con Texto Libre
 
 ```html
-<melser-combobox
+<me-combobox
   label="Categoría personalizada"
   placeholder="Selecciona o crea una categoría..."
   allow-free-text
@@ -228,7 +225,7 @@ if (combobox) {
   <option value="salud">Salud</option>
   <option value="educacion">Educación</option>
   <option value="deportes">Deportes</option>
-</melser-combobox>
+</me-combobox>
 ```
 
 ## Integración con Formularios
@@ -237,7 +234,7 @@ if (combobox) {
 
 ```html
 <form id="message-form">
-  <melser-combobox
+  <me-combobox
     label="Destinatario *"
     name="recipient"
     required
@@ -247,9 +244,9 @@ if (combobox) {
     error="Selecciona un destinatario válido"
   >
     <!-- Se cargará dinámicamente -->
-  </melser-combobox>
+  </me-combobox>
 
-  <melser-combobox
+  <me-combobox
     label="Asunto"
     name="subject"
     allow-free-text
@@ -260,7 +257,7 @@ if (combobox) {
     <option value="feedback">Feedback</option>
     <option value="consulta">Consulta General</option>
     <option value="bug">Reporte de Error</option>
-  </melser-combobox>
+  </me-combobox>
 
   <button type="submit" variant="primary">Enviar Mensaje</button>
 </form>
@@ -332,9 +329,9 @@ function debounce(func, wait) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="combobox-playground" title="Encuesta de Desarrollo" description="Ejemplo de autocompletado y validación.">
+<me-playground-form id="combobox-playground" title="Encuesta de Desarrollo" description="Ejemplo de autocompletado y validación.">
   <div style="margin-bottom: 1rem;">
-    <melser-combobox 
+    <me-combobox 
       label="Lenguaje de programación"
       name="language"
       placeholder="Busca un lenguaje..."
@@ -353,11 +350,11 @@ function debounce(func, wait) {
       <option value="ruby">Ruby</option>
       <option value="swift">Swift</option>
       <option value="kotlin">Kotlin</option>
-    </melser-combobox>
+    </me-combobox>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-combobox 
+    <me-combobox 
       label="Proyecto (permite texto libre)"
       name="project"
       allow-free-text
@@ -369,11 +366,11 @@ function debounce(func, wait) {
       <option value="api">API/REST</option>
       <option value="cli">Herramienta CLI</option>
       <option value="library">Librería</option>
-    </melser-combobox>
+    </me-combobox>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-combobox 
+    <me-combobox 
       label="Framework favorito"
       name="framework"
       placeholder="Busca tu framework..."
@@ -399,25 +396,25 @@ function debounce(func, wait) {
         <option value="sveltekit">SvelteKit</option>
         <option value="remix">Remix</option>
       </optgroup>
-    </melser-combobox>
+    </me-combobox>
   </div>
-</melser-playground-form>
+</me-playground-form>
 
 ## Personalización con CSS
 
 ### Variables CSS
 
 ```css
-melser-combobox {
-  --melser-combobox-dropdown-bg: #ffffff;
-  --melser-combobox-dropdown-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --melser-combobox-option-hover-bg: #f3f4f6;
-  --melser-combobox-option-selected-bg: #3b82f6;
-  --melser-combobox-option-selected-color: #ffffff;
-  --melser-combobox-highlight-bg: #fef3c7;
-  --melser-combobox-highlight-color: #92400e;
-  --melser-combobox-loading-color: #6b7280;
-  --melser-combobox-no-results-color: #9ca3af;
+me-combobox {
+  --me-combobox-dropdown-bg: #ffffff;
+  --me-combobox-dropdown-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --me-combobox-option-hover-bg: #f3f4f6;
+  --me-combobox-option-selected-bg: #3b82f6;
+  --me-combobox-option-selected-color: #ffffff;
+  --me-combobox-highlight-bg: #fef3c7;
+  --me-combobox-highlight-color: #92400e;
+  --me-combobox-loading-color: #6b7280;
+  --me-combobox-no-results-color: #9ca3af;
 }
 ```
 
@@ -425,27 +422,27 @@ melser-combobox {
 
 <style>
   .custom-combobox {
-    --melser-combobox-option-selected-bg: #10b981;
-    --melser-combobox-highlight-bg: #d1fae5;
-    --melser-combobox-highlight-color: #065f46;
+    --me-combobox-option-selected-bg: #10b981;
+    --me-combobox-highlight-bg: #d1fae5;
+    --me-combobox-highlight-color: #065f46;
   }
   
   .minimal-combobox {
-    --melser-combobox-option-hover-bg: #f9fafb;
-    --melser-combobox-dropdown-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --me-combobox-option-hover-bg: #f9fafb;
+    --me-combobox-dropdown-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
   
   .dark-combobox {
-    --melser-combobox-dropdown-bg: #1f2937;
-    --melser-combobox-option-hover-bg: #374151;
-    --melser-combobox-option-selected-bg: #8b5cf6;
-    --melser-combobox-highlight-bg: #7c3aed;
-    --melser-combobox-highlight-color: #f3e8ff;
+    --me-combobox-dropdown-bg: #1f2937;
+    --me-combobox-option-hover-bg: #374151;
+    --me-combobox-option-selected-bg: #8b5cf6;
+    --me-combobox-highlight-bg: #7c3aed;
+    --me-combobox-highlight-color: #f3e8ff;
   }
 </style>
 
 <div class="custom-combobox" style="margin-bottom: 1rem;">
-  <melser-combobox 
+  <me-combobox 
     label="Combobox personalizado"
     placeholder="Verde personalizado"
     highlight-matches
@@ -453,22 +450,22 @@ melser-combobox {
     <option value="react">React</option>
     <option value="vue">Vue.js</option>
     <option value="angular">Angular</option>
-  </melser-combobox>
+  </me-combobox>
 </div>
 
 <div class="minimal-combobox" style="margin-bottom: 1rem;">
-  <melser-combobox 
+  <me-combobox 
     label="Estilo minimalista"
     placeholder="Sombras sutiles"
     value="minimal">
     <option value="minimal">Diseño Minimal</option>
     <option value="clean">Clean Design</option>
     <option value="simple">Simple UI</option>
-  </melser-combobox>
+  </me-combobox>
 </div>
 
 <div class="dark-combobox">
-  <melser-combobox 
+  <me-combobox 
     label="Tema oscuro"
     placeholder="Para interfaces oscuras"
     value="dark"
@@ -476,7 +473,7 @@ melser-combobox {
     <option value="dark">Dark Mode</option>
     <option value="night">Night Theme</option>
     <option value="black">Black Theme</option>
-  </melser-combobox>
+  </me-combobox>
 </div>
 
 ## Características Avanzadas
@@ -484,7 +481,7 @@ melser-combobox {
 ### Configuración de Búsqueda Personalizada
 
 ```javascript
-const combobox = document.querySelector("melser-combobox");
+const combobox = document.querySelector("me-combobox");
 if (combobox) {
   // Configurar búsqueda personalizada
   combobox.searchOptions = {
@@ -502,7 +499,7 @@ if (combobox) {
 ### Manejo de Datos Asíncronos
 
 ```javascript
-const combobox = document.querySelector("melser-combobox[async-data]");
+const combobox = document.querySelector("me-combobox[async-data]");
 if (combobox) {
   combobox.addEventListener("search", async (e) => {
     const { term } = e.detail;
@@ -612,14 +609,14 @@ combobox.addEventListener("async-error", (e) => {
 
 ```html
 <!-- Asegurar que highlight-matches esté habilitado -->
-<melser-combobox highlight-matches label="Con resaltado"></melser-combobox>
+<me-combobox highlight-matches label="Con resaltado"></me-combobox>
 ```
 
 ### Texto libre no funciona
 
 ```html
 <!-- Verificar que allow-free-text esté habilitado -->
-<melser-combobox allow-free-text label="Con texto libre"></melser-combobox>
+<me-combobox allow-free-text label="Con texto libre"></me-combobox>
 ```
 
 ### Problemas de rendimiento
@@ -639,7 +636,7 @@ combobox.searchOptions = {
 
 ```css
 /* Personalizar indicador de foco */
-melser-combobox:focus-within {
+me-combobox:focus-within {
   box-shadow: 0 0 0 2px #3b82f6;
   border-color: #3b82f6;
 }

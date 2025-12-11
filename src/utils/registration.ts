@@ -48,7 +48,7 @@ export function registerWithPrefix(prefix: string, components: Record<string, ty
 
         // Remove existing prefix if present in the key to avoid double prefixing
         // e.g. if key is "MelserTextInput", we might want just "text-input"
-        const cleanName = kebabName.replace(/^melser-/, '');
+        const cleanName = kebabName.replace(/^me-/, '');
 
         const tagName = `${prefix}-${cleanName}`;
         registerComponent(tagName, clazz);

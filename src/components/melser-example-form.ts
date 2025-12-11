@@ -23,17 +23,17 @@ const initialData = {
   terms: false
 };
 
-@customElement('melser-example-form')
+@customElement('me-example-form')
 export class MelserExampleForm extends LitElement {
 
   render() {
     return html`
       <div class="wrapper">
-        <melser-playground-form 
+        <me-playground-form 
             .schema=${userSchema} 
             .defaultData=${initialData}
             title="Registration Form Example"
-            description="This example uses the <melser-playground-form> wrapper to automatically handle Zod validation and state."
+            description="This example uses the <me-playground-form> wrapper to automatically handle Zod validation and state."
         >
             <!-- Declarative Inputs -->
             <base-input 
@@ -43,14 +43,14 @@ export class MelserExampleForm extends LitElement {
                 required
             ></base-input>
             
-            <melser-number-input 
+            <me-number-input 
                 name="age" 
                 label="Age" 
                 placeholder="18"
                 min="18" 
                 max="100"
                 required
-            ></melser-number-input>
+            ></me-number-input>
             
             <base-input 
                 name="email" 
@@ -60,10 +60,10 @@ export class MelserExampleForm extends LitElement {
                 required
             ></base-input>
 
-            <melser-checkbox 
+            <me-checkbox 
                 name="terms" 
                 label="I accept the terms and conditions"
-            ></melser-checkbox>
+            ></me-checkbox>
 
             <!-- Optional: We can add an explicit submit button here if we want custom styling, 
                  or rely on the playground's 'Validate & Submit' button -->
@@ -80,7 +80,7 @@ export class MelserExampleForm extends LitElement {
                 </button>
             </div>
 
-        </melser-playground-form>
+        </me-playground-form>
       </div>
     `;
   }

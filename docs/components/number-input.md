@@ -9,29 +9,29 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
 ## Ejemplo Básico
 
 ```html
-<melser-number-input label="Cantidad" placeholder="Ingresa un número">
-</melser-number-input>
+<me-number-input label="Cantidad" placeholder="Ingresa un número">
+</me-number-input>
 ```
 
 ## Demo Interactivo
 
-<melser-number-input 
+<me-number-input 
   id="demo-basic" 
   label="Número básico" 
   placeholder="0"
   value="0">
-</melser-number-input>
+</me-number-input>
 
-<melser-number-input 
+<me-number-input 
   id="demo-range" 
   label="Con rango (1-100)" 
   placeholder="50"
   min="1"
   max="100"
   value="50">
-</melser-number-input>
+</me-number-input>
 
-<melser-number-input 
+<me-number-input 
   id="demo-steps" 
   label="Con pasos (0.5)" 
   placeholder="0"
@@ -39,32 +39,32 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
   max="10"
   step="0.5"
   value="2.5">
-</melser-number-input>
+</me-number-input>
 
-<melser-number-input 
+<me-number-input 
   id="demo-decimals" 
   label="Decimal (máx 2)" 
   placeholder="0.00"
   step="0.01"
   min="0"
   max="2.00">
-</melser-number-input>
+</me-number-input>
 
-<melser-number-input 
+<me-number-input 
   id="demo-disabled" 
   label="Deshabilitado" 
   value="100"
   disabled>
-</melser-number-input>
+</me-number-input>
 
-<melser-number-input 
+<me-number-input 
   id="demo-negative" 
   label="Números negativos" 
   min="-50"
   max="50"
   step="5"
   value="-10">
-</melser-number-input>
+</me-number-input>
 
 ## Propiedades
 
@@ -101,20 +101,20 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
 ### Input con Rango Específico
 
 ```html
-<melser-number-input
+<me-number-input
   label="Edad (años)"
   min="18"
   max="100"
   placeholder="25"
   hint="Solo personas mayores de 18 años"
 >
-</melser-number-input>
+</me-number-input>
 ```
 
 ### Input con Pasos Personalizados
 
 ```html
-<melser-number-input
+<me-number-input
   label="Porcentaje (%)"
   min="0"
   max="100"
@@ -123,13 +123,13 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
   show-controls
   format-on-blur
 >
-</melser-number-input>
+</me-number-input>
 ```
 
 ### Input Decimal Preciso
 
 ```html
-<melser-number-input
+<me-number-input
   label="Precio (€)"
   min="0"
   step="0.01"
@@ -138,13 +138,13 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
   locale="es-ES"
   hint="Precisión hasta 2 decimales"
 >
-</melser-number-input>
+</me-number-input>
 ```
 
 ### Input de Cantidad para Carrito
 
 ```html
-<melser-number-input
+<me-number-input
   label="Cantidad"
   min="1"
   max="99"
@@ -153,7 +153,7 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
   show-controls
   class="cart-quantity"
 >
-</melser-number-input>
+</me-number-input>
 ```
 
 ## Integración con Formularios
@@ -162,7 +162,7 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
 
 ```html
 <form id="product-form">
-  <melser-number-input
+  <me-number-input
     label="Precio (€) *"
     name="price"
     type="number"
@@ -172,9 +172,9 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
     required
     placeholder="0.00"
   >
-  </melser-number-input>
+  </me-number-input>
 
-  <melser-number-input
+  <me-number-input
     label="Stock disponible *"
     name="stock"
     min="0"
@@ -182,9 +182,9 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
     required
     value="0"
   >
-  </melser-number-input>
+  </me-number-input>
 
-  <melser-number-input
+  <me-number-input
     label="Descuento (%)"
     name="discount"
     min="0"
@@ -192,7 +192,7 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
     step="5"
     value="0"
   >
-  </melser-number-input>
+  </me-number-input>
 
   <button type="submit" variant="primary">Guardar Producto</button>
 </form>
@@ -231,20 +231,20 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="number-input-playground" schema-name="number-input" title="Cálculo de Productos" description="Calculadora de precios con validación en tiempo real.">
+<me-playground-form id="number-input-playground" schema-name="number-input" title="Cálculo de Productos" description="Calculadora de precios con validación en tiempo real.">
   <div style="margin-bottom: 1rem;">
-    <melser-number-input 
+    <me-number-input 
       label="Edad *"
       name="age"
       min="18"
       max="100"
       required
       placeholder="25">
-    </melser-number-input>
+    </me-number-input>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-number-input 
+    <me-number-input 
       label="Precio (€) *"
       name="price"
       min="0"
@@ -252,45 +252,45 @@ if (form) {
       precision="2"
       required
       placeholder="0.00">
-    </melser-number-input>
+    </me-number-input>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-number-input 
+    <me-number-input 
       label="Cantidad"
       name="quantity"
       min="1"
       max="50"
       value="1">
-    </melser-number-input>
+    </me-number-input>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-number-input 
+    <me-number-input 
       label="Descuento (%)"
       name="discount"
       min="0"
       max="50"
       step="5"
       value="0">
-    </melser-number-input>
+    </me-number-input>
   </div>
-</melser-playground-form>
+</me-playground-form>
 
 ## Personalización con CSS
 
 ### Variables CSS
 
 ```css
-melser-number-input {
-  --melser-number-input-width: 120px;
-  --melser-number-input-height: 40px;
-  --melser-number-input-padding: 8px 40px 8px 12px;
-  --melser-number-controls-width: 32px;
-  --melser-number-controls-bg: #f8f9fa;
-  --melser-number-controls-hover-bg: #e9ecef;
-  --melser-number-controls-border: #d1d5db;
-  --melser-number-controls-border-radius: 0 6px 6px 0;
+me-number-input {
+  --me-number-input-width: 120px;
+  --me-number-input-height: 40px;
+  --me-number-input-padding: 8px 40px 8px 12px;
+  --me-number-controls-width: 32px;
+  --me-number-controls-bg: #f8f9fa;
+  --me-number-controls-hover-bg: #e9ecef;
+  --me-number-controls-border: #d1d5db;
+  --me-number-controls-border-radius: 0 6px 6px 0;
 }
 ```
 
@@ -298,47 +298,47 @@ melser-number-input {
 
 <style>
   .custom-number {
-    --melser-number-controls-bg: #dbeafe;
-    --melser-number-controls-hover-bg: #bfdbfe;
-    --melser-number-controls-border: #3b82f6;
+    --me-number-controls-bg: #dbeafe;
+    --me-number-controls-hover-bg: #bfdbfe;
+    --me-number-controls-border: #3b82f6;
   }
   
   .compact-number {
-    --melser-number-input-width: 80px;
-    --melser-number-input-height: 32px;
-    --melser-number-controls-width: 24px;
+    --me-number-input-width: 80px;
+    --me-number-input-height: 32px;
+    --me-number-controls-width: 24px;
   }
   
   .dark-number {
-    --melser-number-controls-bg: #374151;
-    --melser-number-controls-hover-bg: #4b5563;
-    --melser-number-controls-border: #6b7280;
-    --melser-number-input-bg: #1f2937;
-    --melser-number-input-color: #f9fafb;
+    --me-number-controls-bg: #374151;
+    --me-number-controls-hover-bg: #4b5563;
+    --me-number-controls-border: #6b7280;
+    --me-number-input-bg: #1f2937;
+    --me-number-input-color: #f9fafb;
   }
 </style>
 
 <div class="custom-number" style="margin-bottom: 1rem;">
-  <melser-number-input 
+  <me-number-input 
     label="Input personalizado"
     value="50">
-  </melser-number-input>
+  </me-number-input>
 </div>
 
 <div class="compact-number" style="margin-bottom: 1rem;">
-  <melser-number-input 
+  <me-number-input 
     label="Input compacto"
     min="0"
     max="10"
     value="5">
-  </melser-number-input>
+  </me-number-input>
 </div>
 
 <div class="dark-number">
-  <melser-number-input 
+  <me-number-input 
     label="Tema oscuro"
     value="42">
-  </melser-number-input>
+  </me-number-input>
 </div>
 
 ## Características Avanzadas
@@ -346,7 +346,7 @@ melser-number-input {
 ### Formateo Automático
 
 ```javascript
-const numberInput = document.querySelector("melser-number-input");
+const numberInput = document.querySelector("me-number-input");
 if (numberInput) {
   numberInput.formatOnBlur = true;
   numberInput.locale = "es-ES";
@@ -361,7 +361,7 @@ if (numberInput) {
 ### Validación Personalizada
 
 ```javascript
-const numberInput = document.querySelector("melser-number-input");
+const numberInput = document.querySelector("me-number-input");
 if (numberInput) {
   numberInput.addEventListener("invalid", (e) => {
     const value = parseFloat(e.target.value);
@@ -382,13 +382,13 @@ if (numberInput) {
 ### Controles de Teclado
 
 ```html
-<melser-number-input
+<me-number-input
   label="Navegación por teclado"
   placeholder="Usa flechas arriba/abajo"
   min="0"
   max="100"
   step="1"
-></melser-number-input>
+></me-number-input>
 ```
 
 **Controles disponibles:**
@@ -426,7 +426,7 @@ El componente MelserNumberInput incluye:
 
 ```html
 <!-- Verificar que show-controls esté habilitado -->
-<melser-number-input show-controls label="Con controles"></melser-number-input>
+<me-number-input show-controls label="Con controles"></me-number-input>
 ```
 
 ### Valor no se actualiza
@@ -441,25 +441,25 @@ numberInput.value = 42; // Correcto
 
 ```html
 <!-- Asegurar que los atributos estén configurados -->
-<melser-number-input min="0" max="100" step="1" required></melser-number-input>
+<me-number-input min="0" max="100" step="1" required></me-number-input>
 ```
 
 ### Problemas de accesibilidad
 
 ```html
 <!-- Agregar etiquetas descriptivas -->
-<melser-number-input
+<me-number-input
   aria-label="Cantidad de productos (mínimo 1, máximo 99)"
   min="1"
   max="99"
-></melser-number-input>
+></me-number-input>
 ```
 
 ### Focus no visible
 
 ```css
 /* Personalizar indicador de foco */
-melser-number-input:focus-within {
+me-number-input:focus-within {
   box-shadow: 0 0 0 2px #3b82f6;
   border-color: #3b82f6;
 }

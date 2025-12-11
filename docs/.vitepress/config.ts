@@ -8,8 +8,8 @@ export default defineConfig({
   vue: {
     template: {
       compilerOptions: {
-        // Le dice a Vue que cualquier etiqueta que empiece con "melser-" es un Custom Element
-        isCustomElement: (tag) => tag.startsWith('melser-') || tag.startsWith('base-')
+        // Le dice a Vue que cualquier etiqueta que empiece con "me-" es un Custom Element
+        isCustomElement: (tag) => tag.startsWith('me-') || tag.startsWith('base-')
       }
     }
   },
@@ -109,11 +109,11 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/nglmercer/melser-ui' }
+      { icon: 'github', link: 'https://github.com/nglmercer/me-ui' }
     ],
 
     editLink: {
-      pattern: 'https://github.com/nglmercer/melser-ui/edit/main/docs/:path',
+      pattern: 'https://github.com/nglmercer/me-ui/edit/main/docs/:path',
       text: 'Editar esta página en GitHub'
     },
 
@@ -127,5 +127,5 @@ export default defineConfig({
       level: 'deep'
     }
   },
-  base: '/melser-ui/'
+  base: '/me-ui/'
 })

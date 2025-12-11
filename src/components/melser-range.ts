@@ -1,10 +1,10 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { MelserBaseInput } from '../core/base-input';
 import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
-@customElement('melser-range')
+@customElement('me-range')
 export class MelserRange extends MelserBaseInput<number> {
   @property({ type: Number }) value = 0;
   @property({ type: Number }) min = 0;

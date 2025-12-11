@@ -15,8 +15,8 @@ Melser UI uses a powerful "Design-as-Data" token system that allows for type-saf
 Instead of hardcoding colors, use the `Var` object exported from the library. This ensures your component automatically adapts to theme changes.
 
 ```typescript
-import { css, LitElement } from 'lit';
-import { Var } from 'melser-ui'; // or relative path
+import { css, LitElement } from "lit";
+import { Var } from "me-ui"; // or relative path
 
 export class MyComponent extends LitElement {
   static styles = css`
@@ -37,7 +37,7 @@ For maximum flexibility, `MelserBaseInput` and other core components generate th
 ```css
 /* Override only base-input's background locally */
 base-input {
-  --base-input-bg: red; 
+  --base-input-bg: red;
 }
 ```
 
@@ -46,13 +46,13 @@ base-input {
 You can switch the global theme dynamically using `setTheme`:
 
 ```typescript
-import { setTheme } from 'melser-ui';
+import { setTheme } from "me-ui";
 
 // Switch to Dark Mode
-setTheme('dark');
+setTheme("dark");
 
 // Switch to Light Mode
-setTheme('light');
+setTheme("light");
 ```
 
 This works by injecting the correct CSS Variable values for the selected scheme into the document root.

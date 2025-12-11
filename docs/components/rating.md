@@ -11,41 +11,41 @@ Un componente de calificación con estrellas basado en SVG, con soporte para pre
 ## Ejemplo Básico
 
 ```html
-<melser-rating label="Califica este servicio" max="5"> </melser-rating>
+<me-rating label="Califica este servicio" max="5"> </me-rating>
 ```
 
 ## Demo Interactivo
 
-<melser-rating
+<me-rating
 label="Calificación estándar"
 max="5">
-</melser-rating>
+</me-rating>
 
-<melser-rating
+<me-rating
 label="Con medios puntos"
 max="5"
 precision="0.5">
-</melser-rating>
+</me-rating>
 
-<melser-rating
+<me-rating
 label="Precisión exacta"
 max="10"
 value="7.3"
 precision="0.1">
-</melser-rating>
+</me-rating>
 
-<melser-rating
+<me-rating
 label="Deshabilitado"
 max="5"
 value="3.5"
 disabled>
-</melser-rating>
+</me-rating>
 
 <div style="margin: 1rem 0; display: flex; gap: 1rem; align-items: center;">
-<melser-rating style="--star-size: 1rem;" label="Pequeño">
-</melser-rating>
-<melser-rating style="--star-size: 2rem;" label="Grande">
-</melser-rating>
+<me-rating style="--star-size: 1rem;" label="Pequeño">
+</me-rating>
+<me-rating style="--star-size: 2rem;" label="Grande">
+</me-rating>
 </div>
 
 ## Propiedades
@@ -77,13 +77,13 @@ El componente hereda la funcionalidad de `MelserBaseInput`.
 Para permitir seleccionar valores como 3.5 o 4.5, establece la propiedad `precision` en `0.5`.
 
 ```html
-<melser-rating
+<me-rating
   label="Calidad del servicio"
   name="serviceQuality"
   max="5"
   precision="0.5"
 >
-</melser-rating>
+</me-rating>
 ```
 
 ### Escala de 1 a 10 con Precisión Decimal
@@ -91,8 +91,8 @@ Para permitir seleccionar valores como 3.5 o 4.5, establece la propiedad `precis
 Para casos científicos o promedios exactos (ej. 8.7), usa una precisión más fina.
 
 ```html
-<melser-rating label="Puntuación Exacta" max="10" precision="0.1" value="8.7">
-</melser-rating>
+<me-rating label="Puntuación Exacta" max="10" precision="0.1" value="8.7">
+</me-rating>
 ```
 
 ## Personalización con CSS
@@ -101,11 +101,11 @@ El componente ya no usa props para estilos (`size`, `color`), sino que aprovecha
 
 ### Variables Disponibles
 
-| Variable              | Valor por Defecto               | Descripción                                    |
-| --------------------- | ------------------------------- | ---------------------------------------------- |
-| `--star-size`         | `1.5rem`                        | Tamaño (ancho y alto) de cada estrella.        |
-| `--star-color-filled` | `#fbbf24`                       | Color de la estrella activa (amarillo/dorado). |
-| `--star-color-empty`  | `var(--melser-border, #e5e7eb)` | Color de fondo de la estrella inactiva.        |
+| Variable              | Valor por Defecto           | Descripción                                    |
+| --------------------- | --------------------------- | ---------------------------------------------- |
+| `--star-size`         | `1.5rem`                    | Tamaño (ancho y alto) de cada estrella.        |
+| `--star-color-filled` | `#fbbf24`                   | Color de la estrella activa (amarillo/dorado). |
+| `--star-color-empty`  | `var(--me-border, #e5e7eb)` | Color de fondo de la estrella inactiva.        |
 
 ### Ejemplos de Estilos
 
@@ -125,8 +125,8 @@ El componente ya no usa props para estilos (`size`, `color`), sino que aprovecha
 ```
 
 ```html
-<melser-rating class="rating-success" label="Éxito"></melser-rating>
-<melser-rating class="rating-dark" label="Tema Oscuro"></melser-rating>
+<me-rating class="rating-success" label="Éxito"></me-rating>
+<me-rating class="rating-dark" label="Tema Oscuro"></me-rating>
 ```
 
 ## Integración con Formularios
@@ -134,22 +134,22 @@ El componente ya no usa props para estilos (`size`, `color`), sino que aprovecha
 El componente funciona nativamente dentro de formularios gracias a `MelserBaseInput`.
 
 ```html
-<melser-playground-form
+<me-playground-form
   id="rating-playground"
   title="Encuesta de Feedback"
   description="Valoración del servicio."
 >
   <div style="margin-bottom: 1rem;">
-    <melser-rating
+    <me-rating
       label="Experiencia General"
       name="rating"
       required
       max="5"
       precision="0.5"
     >
-    </melser-rating>
+    </me-rating>
   </div>
-</melser-playground-form>
+</me-playground-form>
 ```
 
 ## Accesibilidad
@@ -165,9 +165,9 @@ El componente funciona nativamente dentro de formularios gracias a `MelserBaseIn
 Verifica que la propiedad `precision` esté configurada correctamente. Por defecto es `1` (enteros).
 
 ```html
-<melser-rating max="5"></melser-rating>
+<me-rating max="5"></me-rating>
 
-<melser-rating max="5" precision="0.5"></melser-rating>
+<me-rating max="5" precision="0.5"></me-rating>
 ```
 
 ### El tamaño no cambia con `width` o `height` en el host
@@ -176,7 +176,7 @@ Debes usar la variable CSS `--star-size`.
 
 ```css
 /* Correcto */
-melser-rating {
+me-rating {
   --star-size: 30px;
 }
 ```

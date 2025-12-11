@@ -164,7 +164,7 @@ export abstract class MelserBaseInput<T = unknown> extends DynamicStyleMixin(Lit
   override connectedCallback(): void {
     super.connectedCallback();
     if (!this.inputId) {
-      this.inputId = `melser-${crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2, 9)}`;
+      this.inputId = `me-${crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2, 9)}`;
     }
   }
   override focus(options?: FocusOptions) {

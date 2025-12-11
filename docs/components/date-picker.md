@@ -9,60 +9,60 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
 ## Ejemplo Básico
 
 ```html
-<melser-date-picker label="Selecciona una fecha" placeholder="dd/mm/yyyy">
-</melser-date-picker>
+<me-date-picker label="Selecciona una fecha" placeholder="dd/mm/yyyy">
+</me-date-picker>
 ```
 
 ## Demo Interactivo
 
-<melser-date-picker 
+<me-date-picker 
   id="demo-basic" 
   label="Fecha básica" 
   placeholder="Selecciona una fecha">
-</melser-date-picker>
+</me-date-picker>
 
-<melser-date-picker 
+<me-date-picker 
   id="demo-min-max" 
   label="Con rango (2020-2030)" 
   min="2020-01-01"
   max="2030-12-31"
   placeholder="Entre 2020 y 2030">
-</melser-date-picker>
+</me-date-picker>
 
-<melser-date-picker 
+<me-date-picker 
   id="demo-value" 
   label="Con fecha inicial" 
   value="2024-01-15"
   placeholder="Fecha predefinida">
-</melser-date-picker>
+</me-date-picker>
 
-<melser-date-picker 
+<me-date-picker 
   id="demo-disabled" 
   label="Deshabilitado" 
   value="2024-01-01"
   disabled>
-</melser-date-picker>
+</me-date-picker>
 
-<melser-date-picker 
+<me-date-picker 
   id="demo-range" 
   label="Selector de rango" 
   mode="range"
   placeholder="Selecciona un rango">
-</melser-date-picker>
+</me-date-picker>
 
-<melser-date-picker 
+<me-date-picker 
   id="demo-locale" 
   label="Fecha en español" 
   locale="es"
   placeholder="Selecciona una fecha">
-</melser-date-picker>
+</me-date-picker>
 
-<melser-date-picker 
+<me-date-picker 
   id="demo-years" 
   label="Solo años" 
   view="year"
   placeholder="Selecciona un año">
-</melser-date-picker>
+</me-date-picker>
 
 ## Propiedades
 
@@ -100,20 +100,20 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
 ### Selector de Fecha Simple
 
 ```html
-<melser-date-picker
+<me-date-picker
   label="Fecha de nacimiento"
   name="birthDate"
   required
   max="today"
   placeholder="Selecciona tu fecha de nacimiento"
 >
-</melser-date-picker>
+</me-date-picker>
 ```
 
 ### Selector de Rango de Fechas
 
 ```html
-<melser-date-picker
+<me-date-picker
   label="Período de viaje"
   name="travelPeriod"
   mode="range"
@@ -121,13 +121,13 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
   show-clear
   hint="Selecciona las fechas de inicio y fin de tu viaje"
 >
-</melser-date-picker>
+</me-date-picker>
 ```
 
 ### Selector con Restricciones
 
 ```html
-<melser-date-picker
+<me-date-picker
   label="Fecha de cita médica"
   name="appointmentDate"
   required
@@ -137,26 +137,26 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
   first-day-of-week="1"
   placeholder="Selecciona una fecha futura"
 >
-</melser-date-picker>
+</me-date-picker>
 ```
 
 ### Selector de Múltiples Fechas
 
 ```html
-<melser-date-picker
+<me-date-picker
   label="Fechas de disponibilidad"
   name="availableDates"
   mode="multiple"
   show-today
   placeholder="Selecciona múltiples fechas"
 >
-</melser-date-picker>
+</me-date-picker>
 ```
 
 ### Selector de Solo Años
 
 ```html
-<melser-date-picker
+<me-date-picker
   label="Año de graduación"
   name="graduationYear"
   view="year"
@@ -164,7 +164,7 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
   max="2030"
   placeholder="Selecciona un año"
 >
-</melser-date-picker>
+</me-date-picker>
 ```
 
 ## Integración con Formularios
@@ -178,7 +178,7 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
   >
     <h4>🗓️ Fechas de Reserva</h4>
 
-    <melser-date-picker
+    <me-date-picker
       label="Fecha de check-in *"
       name="checkIn"
       required
@@ -186,18 +186,18 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
       placeholder="Fecha de llegada"
       id="form-checkin"
     >
-    </melser-date-picker>
+    </me-date-picker>
 
-    <melser-date-picker
+    <me-date-picker
       label="Fecha de check-out *"
       name="checkOut"
       required
       placeholder="Fecha de salida"
       id="form-checkout"
     >
-    </melser-date-picker>
+    </me-date-picker>
 
-    <melser-date-picker
+    <me-date-picker
       label="Fechas de preferencia (opcional)"
       name="preferences"
       mode="multiple"
@@ -205,7 +205,7 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
       show-clear
       id="form-preferences"
     >
-    </melser-date-picker>
+    </me-date-picker>
   </div>
 
   <div
@@ -213,14 +213,14 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
   >
     <h4>👤 Información Personal</h4>
 
-    <melser-date-picker
+    <me-date-picker
       label="Fecha de nacimiento"
       name="birthDate"
       max="today"
       placeholder="Para verificar mayoría de edad"
       id="form-birthdate"
     >
-    </melser-date-picker>
+    </me-date-picker>
   </div>
 
   <button type="submit" variant="primary">Buscar Disponibilidad</button>
@@ -310,65 +310,65 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="date-picker-playground" schema-name="date-picker" title="Planificación de Evento" description="Gestión de fechas con rangos y validación.">
+<me-playground-form id="date-picker-playground" schema-name="date-picker" title="Planificación de Evento" description="Gestión de fechas con rangos y validación.">
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
   <h4>📅 Planificación de Evento</h4>
   
-  <melser-date-picker 
+  <me-date-picker 
     label="Fecha del evento *"
     name="eventDate"
     required
     min="today"
     placeholder="Selecciona la fecha"
     locale="es">
-  </melser-date-picker>
+  </me-date-picker>
   
-  <melser-date-picker 
+  <me-date-picker 
     label="Rango de inscripción"
     name="enrollmentRange"
     mode="range"
     placeholder="Desde - Hasta"
     show-clear>
-  </melser-date-picker>
+  </me-date-picker>
   
-  <melser-date-picker 
+  <me-date-picker 
     label="Fechas de descanso"
     name="breakDates"
     mode="multiple"
     placeholder="Selecciona fechas"
     show-clear>
-  </melser-date-picker>
+  </me-date-picker>
   
-  <melser-date-picker 
+  <me-date-picker 
     label="Año de creación"
     name="creationYear"
     view="year"
     min="2020"
     max="2030"
     placeholder="Selecciona un año">
-  </melser-date-picker>
+  </me-date-picker>
 </div>
-</melser-playground-form>
+</me-playground-form>
 
 ## Personalización con CSS
 
 ### Variables CSS
 
 ```css
-melser-date-picker {
-  --melser-date-picker-width: 100%;
-  --melser-date-picker-height: 40px;
-  --melser-date-picker-padding: 8px 12px;
-  --melser-date-picker-border: 1px solid #d1d5db;
-  --melser-date-picker-border-radius: 6px;
-  --melser-date-picker-focus-border: #3b82f6;
-  --melser-date-picker-calendar-bg: #ffffff;
-  --melser-date-picker-calendar-border: #e5e7eb;
-  --melser-date-picker-day-hover-bg: #f3f4f6;
-  --melser-date-picker-day-selected-bg: #3b82f6;
-  --melser-date-picker-day-selected-color: #ffffff;
-  --melser-date-picker-today-border: #3b82f6;
-  --melser-date-picker-disabled-color: #9ca3af;
+me-date-picker {
+  --me-date-picker-width: 100%;
+  --me-date-picker-height: 40px;
+  --me-date-picker-padding: 8px 12px;
+  --me-date-picker-border: 1px solid #d1d5db;
+  --me-date-picker-border-radius: 6px;
+  --me-date-picker-focus-border: #3b82f6;
+  --me-date-picker-calendar-bg: #ffffff;
+  --me-date-picker-calendar-border: #e5e7eb;
+  --me-date-picker-day-hover-bg: #f3f4f6;
+  --me-date-picker-day-selected-bg: #3b82f6;
+  --me-date-picker-day-selected-color: #ffffff;
+  --me-date-picker-today-border: #3b82f6;
+  --me-date-picker-disabled-color: #9ca3af;
 }
 ```
 
@@ -376,50 +376,50 @@ melser-date-picker {
 
 <style>
   .custom-date-picker {
-    --melser-date-picker-focus-border: #10b981;
-    --melser-date-picker-day-selected-bg: #10b981;
-    --melser-date-picker-today-border: #10b981;
+    --me-date-picker-focus-border: #10b981;
+    --me-date-picker-day-selected-bg: #10b981;
+    --me-date-picker-today-border: #10b981;
   }
   
   .compact-date-picker {
-    --melser-date-picker-height: 32px;
-    --melser-date-picker-padding: 4px 8px;
-    --melser-date-picker-border-radius: 4px;
+    --me-date-picker-height: 32px;
+    --me-date-picker-padding: 4px 8px;
+    --me-date-picker-border-radius: 4px;
   }
   
   .dark-date-picker {
-    --melser-date-picker-border: 1px solid #374151;
-    --melser-date-picker-focus-border: #8b5cf6;
-    --melser-date-picker-calendar-bg: #1f2937;
-    --melser-date-picker-calendar-border: #374151;
-    --melser-date-picker-day-hover-bg: #374151;
-    --melser-date-picker-day-selected-bg: #8b5cf6;
-    --melser-date-picker-day-selected-color: #f9fafb;
+    --me-date-picker-border: 1px solid #374151;
+    --me-date-picker-focus-border: #8b5cf6;
+    --me-date-picker-calendar-bg: #1f2937;
+    --me-date-picker-calendar-border: #374151;
+    --me-date-picker-day-hover-bg: #374151;
+    --me-date-picker-day-selected-bg: #8b5cf6;
+    --me-date-picker-day-selected-color: #f9fafb;
   }
 </style>
 
 <div class="custom-date-picker" style="margin-bottom: 1rem;">
-  <melser-date-picker 
+  <me-date-picker 
     label="Date picker personalizado"
     value="2024-01-15"
     placeholder="Verde personalizado">
-  </melser-date-picker>
+  </me-date-picker>
 </div>
 
 <div class="compact-date-picker" style="margin-bottom: 1rem;">
-  <melser-date-picker 
+  <me-date-picker 
     label="Date picker compacto"
     value="2024-01-01"
     placeholder="Más pequeño">
-  </melser-date-picker>
+  </me-date-picker>
 </div>
 
 <div class="dark-date-picker">
-  <melser-date-picker 
+  <me-date-picker 
     label="Date picker tema oscuro"
     value="2024-01-01"
     placeholder="Para interfaces oscuras">
-  </melser-date-picker>
+  </me-date-picker>
 </div>
 
 ## Características Avanzadas
@@ -427,7 +427,7 @@ melser-date-picker {
 ### Configuración de Localización
 
 ```javascript
-const picker = document.querySelector("melser-date-picker");
+const picker = document.querySelector("me-date-picker");
 if (picker) {
   // Configurar localización en español
   picker.locale = "es";
@@ -446,7 +446,7 @@ if (picker) {
 ### Validación Personalizada de Fechas
 
 ```javascript
-const picker = document.querySelector("melser-date-picker");
+const picker = document.querySelector("me-date-picker");
 if (picker) {
   picker.addEventListener("change", (e) => {
     const selectedDate = new Date(e.target.value);
@@ -470,7 +470,7 @@ if (picker) {
 ### Fechas Deshabilitadas Dinámicamente
 
 ```javascript
-const picker = document.querySelector("melser-date-picker");
+const picker = document.querySelector("me-date-picker");
 if (picker) {
   // Función para verificar si una fecha está deshabilitada
   function isDateDisabled(date) {
@@ -520,7 +520,7 @@ El componente MelserDatePicker incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "melser-ui/components/melser-date-picker.js";
+import "me-ui/components/me-date-picker.js";
 
 // Verificar que no esté deshabilitado
 console.log(picker.disabled); // Debe ser false
@@ -530,11 +530,7 @@ console.log(picker.disabled); // Debe ser false
 
 ```html
 <!-- Configurar límites apropiados -->
-<melser-date-picker
-  min="2024-01-01"
-  max="2024-12-31"
-  required
-></melser-date-picker>
+<me-date-picker min="2024-01-01" max="2024-12-31" required></me-date-picker>
 ```
 
 ### Localización no funciona
@@ -556,14 +552,14 @@ picker.format = "DD/MM/YYYY"; // o 'MM/DD/YYYY', etc.
 
 ```html
 <!-- Verificar que mode="range" esté configurado -->
-<melser-date-picker mode="range" label="Selector de rango"></melser-date-picker>
+<me-date-picker mode="range" label="Selector de rango"></me-date-picker>
 ```
 
 ### Focus no visible
 
 ```css
 /* Personalizar indicador de foco */
-melser-date-picker:focus-within {
+me-date-picker:focus-within {
   box-shadow: 0 0 0 2px #3b82f6;
   border-color: #3b82f6;
 }
@@ -573,10 +569,10 @@ melser-date-picker:focus-within {
 
 ```html
 <!-- Agregar descripción para casos específicos -->
-<melser-date-picker
+<me-date-picker
   aria-label="Selecciona tu fecha de nacimiento"
   placeholder="DD/MM/AAAA"
-></melser-date-picker>
+></me-date-picker>
 ```
 
 ### Fechas deshabilitadas no se muestran

@@ -17,7 +17,7 @@ export { MelserCombobox } from './components/melser-combobox';
 export { MelserColorPicker } from './components/melser-color-picker';
 export { MelserRating } from './components/melser-rating';
 export { MelserDualRange } from './components/melser-dual-range';
-export { MelserBaseInput } from './core/melser-base-input';
+export { MelserBaseInput } from './core/base-input';
 export type { InputData, MelserDataType, SelectOption } from './types/index';
 
 // Export registration utilities

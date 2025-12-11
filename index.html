@@ -16,32 +16,32 @@
       padding: 2rem;
       max-width: 800px;
       margin: 0 auto;
-      background-color: var(--melser-bg);
-      color: var(--melser-text);
+      background-color: var(--me-bg);
+      color: var(--me-text);
       transition: background-color 0.3s, color 0.3s;
     }
 
     h1,
     h2,
     h3 {
-      color: var(--melser-text);
+      color: var(--me-text);
     }
 
     .card {
-      background: var(--melser-surface);
+      background: var(--me-surface);
       padding: 2rem;
-      border-radius: var(--melser-radius);
+      border-radius: var(--me-radius);
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       margin-bottom: 2rem;
-      border: 1px solid var(--melser-border);
+      border: 1px solid var(--me-border);
     }
 
     .btn {
-      background: var(--melser-primary);
+      background: var(--me-primary);
       color: white;
       border: none;
       padding: 0.75rem 1.5rem;
-      border-radius: var(--melser-radius);
+      border-radius: var(--me-radius);
       cursor: pointer;
       font-size: 1rem;
       margin-top: 1rem;
@@ -53,12 +53,12 @@
     }
 
     pre {
-      background: var(--melser-input-bg);
+      background: var(--me-input-bg);
       padding: 1rem;
-      border-radius: var(--melser-radius);
+      border-radius: var(--me-radius);
       overflow-x: auto;
-      border: 1px solid var(--melser-border);
-      color: var(--melser-text);
+      border: 1px solid var(--me-border);
+      color: var(--me-text);
     }
 
     .grid {
@@ -78,7 +78,7 @@
 
 <body>
   <div class="theme-toggle">
-    <melser-switch id="theme-switch" label="Dark Mode"></melser-switch>
+    <me-switch id="theme-switch" label="Dark Mode"></me-switch>
   </div>
 
   <h1>Melser UI Components</h1>
@@ -92,83 +92,83 @@
         <base-input name="age" label="Age" type="number" placeholder="Enter age"></base-input>
       </div>
 
-      <melser-textarea name="bio" label="Biography" placeholder="Tell us about yourself..." rows="3"></melser-textarea>
+      <me-textarea name="bio" label="Biography" placeholder="Tell us about yourself..." rows="3"></me-textarea>
 
-      <melser-tags-input name="skills" label="Skills (Type and press Enter)"
-        placeholder="e.g. JavaScript, Design"></melser-tags-input>
+      <me-tags-input name="skills" label="Skills (Type and press Enter)"
+        placeholder="e.g. JavaScript, Design"></me-tags-input>
 
-      <melser-file-upload name="avatar" label="Profile Picture" accept="image/*"></melser-file-upload>
+      <me-file-upload name="avatar" label="Profile Picture" accept="image/*"></me-file-upload>
 
       <div class="grid">
-        <melser-password-input name="password" label="Password" placeholder="Enter password"
-          required></melser-password-input>
-        <melser-number-input name="experience" label="Years of Experience" min="0" max="50" step="1"
-          value="2"></melser-number-input>
+        <me-password-input name="password" label="Password" placeholder="Enter password"
+          required></me-password-input>
+        <me-number-input name="experience" label="Years of Experience" min="0" max="50" step="1"
+          value="2"></me-number-input>
       </div>
 
       <div class="grid">
-        <melser-date-picker name="birthdate" label="Date of Birth" required></melser-date-picker>
-        <melser-time-picker name="preferred-time" label="Preferred Contact Time"></melser-time-picker>
+        <me-date-picker name="birthdate" label="Date of Birth" required></me-date-picker>
+        <me-time-picker name="preferred-time" label="Preferred Contact Time"></me-time-picker>
       </div>
 
       <div class="grid">
-        <melser-select name="role" label="Role" required></melser-select>
+        <me-select name="role" label="Role" required></me-select>
 
-        <melser-multi-select name="interests" label="Interests"></melser-multi-select>
+        <me-multi-select name="interests" label="Interests"></me-multi-select>
       </div>
 
-      <melser-radio-group name="notification" label="Notification Preference" required></melser-radio-group>
+      <me-radio-group name="notification" label="Notification Preference" required></me-radio-group>
 
-      <melser-range name="satisfaction" label="Satisfaction Level" min="0" max="10" value="5"></melser-range>
+      <me-range name="satisfaction" label="Satisfaction Level" min="0" max="10" value="5"></me-range>
 
       <div class="grid">
-        <melser-switch name="newsletter" label="Subscribe to newsletter"></melser-switch>
+        <me-switch name="newsletter" label="Subscribe to newsletter"></me-switch>
 
-        <melser-checkbox name="terms" label="I agree to the terms" required></melser-checkbox>
+        <me-checkbox name="terms" label="I agree to the terms" required></me-checkbox>
       </div>
 
       <!-- New Components -->
-      <h3 style="margin-top: 2rem; border-top: 1px solid var(--melser-border); padding-top: 1rem;">
+      <h3 style="margin-top: 2rem; border-top: 1px solid var(--me-border); padding-top: 1rem;">
         Advanced Inputs
       </h3>
 
       <div class="grid">
-        <melser-otp-input name="otp" label="Verification Code (OTP)" length="6"></melser-otp-input>
-        <melser-color-picker name="themeColor" label="Theme Color" value="#6366f1"></melser-color-picker>
+        <me-otp-input name="otp" label="Verification Code (OTP)" length="6"></me-otp-input>
+        <me-color-picker name="themeColor" label="Theme Color" value="#6366f1"></me-color-picker>
       </div>
 
       <div class="grid">
-        <melser-combobox name="country" label="Country (Combobox)" placeholder="Type to search..."></melser-combobox>
-        <melser-rating name="rating" label="Product Rating" max="5"></melser-rating>
+        <me-combobox name="country" label="Country (Combobox)" placeholder="Type to search..."></me-combobox>
+        <me-rating name="rating" label="Product Rating" max="5"></me-rating>
       </div>
 
-      <melser-dual-range name="priceRange" label="Price Range" min="0" max="1000"
-        value="[100, 500]"></melser-dual-range>
+      <me-dual-range name="priceRange" label="Price Range" min="0" max="1000"
+        value="[100, 500]"></me-dual-range>
 
       <!-- Custom Tag Name Demo -->
-      <h3 style="margin-top: 2rem; border-top: 1px solid var(--melser-border); padding-top: 1rem;">
+      <h3 style="margin-top: 2rem; border-top: 1px solid var(--me-border); padding-top: 1rem;">
         Custom Tag Name Demo
       </h3>
-      <p style="font-size: 0.9rem; color: var(--melser-text-secondary);">
+      <p style="font-size: 0.9rem; color: var(--me-text-secondary);">
         This is a &lt;custom-brand-switch&gt; registered dynamically:
       </p>
       <custom-brand-switch name="custom-feature" label="Enable Custom Feature"></custom-brand-switch>
 
       <!-- Validation Warning Demo -->
       <h3
-        style="margin-top: 2rem; border-top: 1px solid var(--melser-border); padding-top: 1rem; color: var(--melser-warning);">
+        style="margin-top: 2rem; border-top: 1px solid var(--me-border); padding-top: 1rem; color: var(--me-warning);">
         Type Validation Demo (Check Console)
       </h3>
-      <p style="font-size: 0.9rem; color: var(--melser-text-secondary);">
+      <p style="font-size: 0.9rem; color: var(--me-text-secondary);">
         The following components have invalid values to trigger warnings:
       </p>
 
       <!-- Range expects number, receiving "invalid" -> NaN -->
-      <melser-range name="invalid-range" label="Invalid Range (Value='text')"
-        value="text-instead-of-number"></melser-range>
+      <me-range name="invalid-range" label="Invalid Range (Value='text')"
+        value="text-instead-of-number"></me-range>
 
       <!-- Switch expects boolean, we'll force a string via JS below -->
-      <melser-switch id="invalid-switch" name="invalid-switch" label="Invalid Switch (Value='yes')"></melser-switch>
+      <me-switch id="invalid-switch" name="invalid-switch" label="Invalid Switch (Value='yes')"></me-switch>
 
       <button class="btn" id="submit-btn" type="button">Get Data & Validate</button>
     </form>
@@ -197,11 +197,11 @@
     // Handle submit
     document.getElementById('submit-btn').addEventListener('click', () => {
       const inputs = document.querySelectorAll(
-        `base-input, melser-select, melser-checkbox, melser-range, 
-         melser-multi-select, melser-radio-group, melser-textarea, melser-switch, 
-         melser-file-upload, melser-tags-input, melser-date-picker, melser-time-picker, 
-         melser-number-input, melser-password-input, melser-otp-input, melser-combobox, 
-         melser-color-picker, melser-rating, melser-dual-range, custom-brand-switch`
+        `base-input, me-select, me-checkbox, me-range, 
+         me-multi-select, me-radio-group, me-textarea, me-switch, 
+         me-file-upload, me-tags-input, me-date-picker, me-time-picker, 
+         me-number-input, me-password-input, me-otp-input, me-combobox, 
+         me-color-picker, me-rating, me-dual-range, custom-brand-switch`
       );
 
       // 1. Extract raw data object { fieldName: value }
@@ -230,22 +230,22 @@
 
         // Determine base validator
         switch (tagName) {
-          case 'melser-number-input':
-          case 'melser-range':
-          case 'melser-rating':
+          case 'me-number-input':
+          case 'me-range':
+          case 'me-rating':
             validator = z.coerce.number();
             break;
-          case 'melser-checkbox':
-          case 'melser-switch':
+          case 'me-checkbox':
+          case 'me-switch':
           case 'custom-brand-switch':
             validator = z.boolean();
             break;
-          case 'melser-multi-select':
-          case 'melser-tags-input':
-          case 'melser-dual-range': // Dual range returns array [min, max]
+          case 'me-multi-select':
+          case 'me-tags-input':
+          case 'me-dual-range': // Dual range returns array [min, max]
             validator = z.array(z.any());
             break;
-          case 'melser-date-picker':
+          case 'me-date-picker':
             // value is typically string or Date object depending on implementation
             validator = z.string().or(z.date());
             break;
@@ -313,7 +313,7 @@
     // Populate options
     // Use requestAnimationFrame to ensure Custom Elements are upgraded
     requestAnimationFrame(() => {
-      const roleSelect = document.querySelector('melser-select[name="role"]');
+      const roleSelect = document.querySelector('me-select[name="role"]');
       if (roleSelect) {
         roleSelect.options = [
           { label: 'Admin', value: 'admin' },
@@ -322,7 +322,7 @@
         ];
       }
 
-      const interestsSelect = document.querySelector('melser-multi-select');
+      const interestsSelect = document.querySelector('me-multi-select');
       if (interestsSelect) {
         interestsSelect.options = [
           { label: 'Coding', value: 'coding' },
@@ -332,7 +332,7 @@
         ];
       }
 
-      const radioGroup = document.querySelector('melser-radio-group');
+      const radioGroup = document.querySelector('me-radio-group');
       if (radioGroup) {
         radioGroup.options = [
           { label: 'Email', value: 'email' },
@@ -341,7 +341,7 @@
         ];
       }
 
-      const countryCombobox = document.querySelector('melser-combobox');
+      const countryCombobox = document.querySelector('me-combobox');
       if (countryCombobox) {
         countryCombobox.options = [
           { label: 'United States', value: 'us' },

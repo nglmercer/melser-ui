@@ -9,58 +9,58 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
 ## Ejemplo Básico
 
 ```html
-<melser-switch label="Activar notificaciones" checked> </melser-switch>
+<me-switch label="Activar notificaciones" checked> </me-switch>
 ```
 
 ## Demo Interactivo
 
-<melser-switch
+<me-switch
   id="demo-basic"
   label="Switch básico">
-</melser-switch>
+</me-switch>
 
-<melser-switch
+<me-switch
   id="demo-checked"
   label="Switch activado por defecto"
   checked>
-</melser-switch>
+</me-switch>
 
-<melser-switch
+<me-switch
   id="demo-disabled"
   label="Switch deshabilitado"
   disabled
   checked>
-</melser-switch>
+</me-switch>
 
-<melser-switch
+<me-switch
   id="demo-sizes"
   label="Tamaños diferentes">
-</melser-switch>
+</me-switch>
 
 <div style="margin: 1rem 0; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-  <melser-switch size="sm" label="Pequeño"></melser-switch>
-  <melser-switch size="md" label="Mediano"></melser-switch>
-  <melser-switch size="lg" label="Grande"></melser-switch>
+  <me-switch size="sm" label="Pequeño"></me-switch>
+  <me-switch size="md" label="Mediano"></me-switch>
+  <me-switch size="lg" label="Grande"></me-switch>
 </div>
 
-<melser-switch
+<me-switch
   id="demo-colors"
   label="Diferentes colores">
-</melser-switch>
+</me-switch>
 
 <div style="margin: 1rem 0; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-  <melser-switch color="primary" label="Primario" checked></melser-switch>
-  <melser-switch color="success" label="Éxito" checked></melser-switch>
-  <melser-switch color="warning" label="Advertencia" checked></melser-switch>
-  <melser-switch color="danger" label="Peligro" checked></melser-switch>
+  <me-switch color="primary" label="Primario" checked></me-switch>
+  <me-switch color="success" label="Éxito" checked></me-switch>
+  <me-switch color="warning" label="Advertencia" checked></me-switch>
+  <me-switch color="danger" label="Peligro" checked></me-switch>
 </div>
 
-<melser-switch
+<me-switch
   id="demo-text"
   label="Con texto personalizado"
   checked-text="ON"
   unchecked-text="OFF">
-</melser-switch>
+</me-switch>
 
 ## Propiedades
 
@@ -92,38 +92,37 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
 ### Switch Básico de Configuración
 
 ```html
-<melser-switch label="Activar modo oscuro" checked> </melser-switch>
+<me-switch label="Activar modo oscuro" checked> </me-switch>
 ```
 
 ### Switch con Validación
 
 ```html
-<melser-switch
+<me-switch
   label="Acepto los términos de servicio *"
   name="acceptTerms"
   required
   error="Debes aceptar los términos para continuar"
 >
-</melser-switch>
+</me-switch>
 ```
 
 ### Switch con Estados de Carga
 
 ```html
-<melser-switch label="Sincronizar con la nube" loading disabled>
-</melser-switch>
+<me-switch label="Sincronizar con la nube" loading disabled> </me-switch>
 ```
 
 ### Switch con Textos Personalizados
 
 ```html
-<melser-switch
+<me-switch
   label="Estado del servidor"
   checked-text="ACTIVO"
   unchecked-text="INACTIVO"
   color="success"
 >
-</melser-switch>
+</me-switch>
 ```
 
 ### Switch de Configuración de Notificaciones
@@ -132,24 +131,15 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
 <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px;">
   <h4>Configuración de Notificaciones</h4>
 
-  <melser-switch
-    label="Notificaciones por email"
-    name="emailNotifications"
-    checked
-  >
-  </melser-switch>
+  <me-switch label="Notificaciones por email" name="emailNotifications" checked>
+  </me-switch>
 
-  <melser-switch label="Notificaciones push" name="pushNotifications">
-  </melser-switch>
+  <me-switch label="Notificaciones push" name="pushNotifications"> </me-switch>
 
-  <melser-switch label="Notificaciones SMS" name="smsNotifications">
-  </melser-switch>
+  <me-switch label="Notificaciones SMS" name="smsNotifications"> </me-switch>
 
-  <melser-switch
-    label="Notificaciones de marketing"
-    name="marketingNotifications"
-  >
-  </melser-switch>
+  <me-switch label="Notificaciones de marketing" name="marketingNotifications">
+  </me-switch>
 </div>
 ```
 
@@ -164,21 +154,21 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
   >
     <h4>🔔 Preferencias de Notificaciones</h4>
 
-    <melser-switch
+    <me-switch
       label="Notificaciones por email"
       name="emailNotifications"
       checked
     >
-    </melser-switch>
+    </me-switch>
 
-    <melser-switch label="Notificaciones push" name="pushNotifications" checked>
-    </melser-switch>
+    <me-switch label="Notificaciones push" name="pushNotifications" checked>
+    </me-switch>
 
-    <melser-switch
+    <me-switch
       label="Notificaciones de marketing"
       name="marketingNotifications"
     >
-    </melser-switch>
+    </me-switch>
   </div>
 
   <div
@@ -186,12 +176,11 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
   >
     <h4>🎨 Apariencia</h4>
 
-    <melser-switch label="Modo oscuro" name="darkMode"> </melser-switch>
+    <me-switch label="Modo oscuro" name="darkMode"> </me-switch>
 
-    <melser-switch label="Animaciones" name="animations" checked>
-    </melser-switch>
+    <me-switch label="Animaciones" name="animations" checked> </me-switch>
 
-    <melser-switch label="Alto contraste" name="highContrast"> </melser-switch>
+    <me-switch label="Alto contraste" name="highContrast"> </me-switch>
   </div>
 
   <div
@@ -199,20 +188,13 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
   >
     <h4>🔒 Privacidad</h4>
 
-    <melser-switch label="Perfil público" name="publicProfile"> </melser-switch>
+    <me-switch label="Perfil público" name="publicProfile"> </me-switch>
 
-    <melser-switch
-      label="Mostrar estado en línea"
-      name="showOnlineStatus"
-      checked
-    >
-    </melser-switch>
+    <me-switch label="Mostrar estado en línea" name="showOnlineStatus" checked>
+    </me-switch>
 
-    <melser-switch
-      label="Permitir mensajes de desconocidos"
-      name="allowMessages"
-    >
-    </melser-switch>
+    <me-switch label="Permitir mensajes de desconocidos" name="allowMessages">
+    </me-switch>
   </div>
 
   <button type="submit" variant="primary">Guardar Configuración</button>
@@ -223,7 +205,7 @@ Un componente switch/toggle moderno y accesible para activar/desactivar opciones
 const form = document.getElementById("settings-form");
 if (form) {
   // Manejar cambios de switches
-  const switches = form.querySelectorAll("melser-switch");
+  const switches = form.querySelectorAll("me-switch");
   switches.forEach((switchEl) => {
     switchEl.addEventListener("change", (e) => {
       console.log(`${switchEl.label}:`, e.target.checked);
@@ -257,76 +239,76 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="switch-playground" schema-name="switch" title="Configuración" description="Ejemplo de configuración con switches y validación Zod.">
+<me-playground-form id="switch-playground" schema-name="switch" title="Configuración" description="Ejemplo de configuración con switches y validación Zod.">
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>⚡ Configuración Rápida</h4>
 
-<melser-switch
+<me-switch
     label="Activar características premium"
     name="premium">
-</melser-switch>
+</me-switch>
 
-<melser-switch
+<me-switch
     label="Modo desarrollo"
     name="dev">
-</melser-switch>
+</me-switch>
 
-<melser-switch
+<me-switch
     label="Guardar automáticamente"
     name="autosave"
     checked>
-</melser-switch>
+</me-switch>
 
   </div>
   
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>🎮 Opciones de Juego</h4>
 
-<melser-switch
+<me-switch
     label="Sonido activado"
     name="sound"
     checked
     color="success">
-</melser-switch>
+</me-switch>
 
-<melser-switch
+<me-switch
     label="Música de fondo"
     name="music"
     checked
     color="primary">
-</melser-switch>
+</me-switch>
 
-<melser-switch
+<me-switch
     label="Vibración"
     name="vibration"
     color="warning">
-</melser-switch>
+</me-switch>
 
-<melser-switch
+<me-switch
     label="Notificaciones de juego"
     name="gameNotifications"
     checked
     color="primary">
-</melser-switch>
+</me-switch>
 
   </div>
-</melser-playground-form>
+</me-playground-form>
 
 ## Personalización con CSS
 
 ### Variables CSS
 
 ```css
-melser-switch {
-  --melser-switch-width: 44px;
-  --melser-switch-height: 24px;
-  --melser-switch-thumb-size: 20px;
-  --melser-switch-bg-off: #e5e7eb;
-  --melser-switch-bg-on: #3b82f6;
-  --melser-switch-thumb-bg: #ffffff;
-  --melser-switch-border-radius: 12px;
-  --melser-switch-transition: all 0.2s ease;
-  --melser-switch-focus-ring: 0 0 0 2px rgba(59, 130, 246, 0.5);
+me-switch {
+  --me-switch-width: 44px;
+  --me-switch-height: 24px;
+  --me-switch-thumb-size: 20px;
+  --me-switch-bg-off: #e5e7eb;
+  --me-switch-bg-on: #3b82f6;
+  --me-switch-thumb-bg: #ffffff;
+  --me-switch-border-radius: 12px;
+  --me-switch-transition: all 0.2s ease;
+  --me-switch-focus-ring: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 ```
 
@@ -334,48 +316,48 @@ melser-switch {
 
 <style>
   .custom-switch-sizes {
-    --melser-switch-width-sm: 32px;
-    --melser-switch-height-sm: 18px;
-    --melser-switch-thumb-size-sm: 14px;
+    --me-switch-width-sm: 32px;
+    --me-switch-height-sm: 18px;
+    --me-switch-thumb-size-sm: 14px;
 
-    --melser-switch-width-lg: 60px;
-    --melser-switch-height-lg: 32px;
-    --melser-switch-thumb-size-lg: 28px;
+    --me-switch-width-lg: 60px;
+    --me-switch-height-lg: 32px;
+    --me-switch-thumb-size-lg: 28px;
   }
   
   .dark-theme-switch {
-    --melser-switch-bg-off: #374151;
-    --melser-switch-bg-on: #8b5cf6;
-    --melser-switch-thumb-bg: #f9fafb;
+    --me-switch-bg-off: #374151;
+    --me-switch-bg-on: #8b5cf6;
+    --me-switch-thumb-bg: #f9fafb;
   }
   
   .minimal-switch {
-    --melser-switch-transition: all 0.1s ease;
-    --melser-switch-border-radius: 2px;
+    --me-switch-transition: all 0.1s ease;
+    --me-switch-border-radius: 2px;
   }
 </style>
 
 <div class="custom-switch-sizes" style="margin-bottom: 1rem;">
   <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-    <melser-switch size="sm" label="Pequeño personalizado"></melser-switch>
-    <melser-switch size="md" label="Mediano normal"></melser-switch>
-    <melser-switch size="lg" label="Grande personalizado"></melser-switch>
+    <me-switch size="sm" label="Pequeño personalizado"></me-switch>
+    <me-switch size="md" label="Mediano normal"></me-switch>
+    <me-switch size="lg" label="Grande personalizado"></me-switch>
   </div>
 </div>
 
 <div class="dark-theme-switch" style="margin-bottom: 1rem;">
-  <melser-switch
+  <me-switch
     label="Switch tema oscuro"
     checked
     color="primary">
-  </melser-switch>
+  </me-switch>
 </div>
 
 <div class="minimal-switch">
-  <melser-switch
+  <me-switch
     label="Switch minimalista"
     checked>
-  </melser-switch>
+  </me-switch>
 </div>
 
 ## Características Avanzadas
@@ -383,7 +365,7 @@ melser-switch {
 ### Switches Interconectados
 
 ```javascript
-const switches = document.querySelectorAll("melser-switch");
+const switches = document.querySelectorAll("me-switch");
 switches.forEach((switchEl) => {
   switchEl.addEventListener("change", (e) => {
     // Manejar dependencias entre switches
@@ -401,7 +383,7 @@ switches.forEach((switchEl) => {
 ### Switch con Estados Asíncronos
 
 ```javascript
-const asyncSwitch = document.querySelector("melser-switch[loading]");
+const asyncSwitch = document.querySelector("me-switch[loading]");
 if (asyncSwitch) {
   asyncSwitch.addEventListener("change", async (e) => {
     const isChecked = e.target.checked;
@@ -441,20 +423,20 @@ if (asyncSwitch) {
 ### Switch Condicional
 
 ```html
-<melser-switch
+<me-switch
   id="parent-switch"
   label="Activar funciones avanzadas"
   name="advanced"
 >
-</melser-switch>
+</me-switch>
 
-<melser-switch
+<me-switch
   id="child-switch"
   label="Función específica"
   name="specificFunction"
   disabled
 >
-</melser-switch>
+</me-switch>
 ```
 
 ```javascript
@@ -501,15 +483,15 @@ El componente MelserSwitch incluye:
 console.log(switchEl.disabled); // Debe ser false
 
 // Verificar que esté correctamente importado
-import "melser-ui/components/melser-switch.js";
+import "me-ui/components/me-switch.js";
 ```
 
 ### Animaciones no funcionan
 
 ```css
 /* Verificar que las transiciones estén configuradas */
-melser-switch {
-  --melser-switch-transition: all 0.2s ease;
+me-switch {
+  --me-switch-transition: all 0.2s ease;
 }
 ```
 
@@ -517,14 +499,14 @@ melser-switch {
 
 ```html
 <!-- Verificar que size esté configurado correctamente -->
-<melser-switch size="lg" label="Switch grande"></melser-switch>
+<me-switch size="lg" label="Switch grande"></me-switch>
 ```
 
 ### Color no cambia
 
 ```html
 <!-- Verificar que color esté en la lista de colores válidos -->
-<melser-switch color="success" label="Switch verde"></melser-switch>
+<me-switch color="success" label="Switch verde"></me-switch>
 ```
 
 ### Estados de loading
@@ -543,8 +525,8 @@ switchEl.disabled = false;
 
 ```css
 /* Personalizar indicador de foco */
-melser-switch:focus {
-  box-shadow: var(--melser-switch-focus-ring);
+me-switch:focus {
+  box-shadow: var(--me-switch-focus-ring);
 }
 ```
 
@@ -552,19 +534,19 @@ melser-switch:focus {
 
 ```html
 <!-- Agregar aria-label para casos específicos -->
-<melser-switch
+<me-switch
   aria-label="Activar notificaciones push"
   label="Notificaciones"
-></melser-switch>
+></me-switch>
 ```
 
 ### Valores no se envían en formularios
 
 ```html
 <!-- Asegurar que tenga name y value apropiados -->
-<melser-switch
+<me-switch
   name="featureEnabled"
   value="true"
   label="Función activada"
-></melser-switch>
+></me-switch>
 ```

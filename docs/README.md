@@ -7,11 +7,13 @@ Esta documentación ha sido implementada usando **VitePress** con soporte para M
 ### Características Implementadas
 
 1. **VitePress Configurado** ✅
+
    - Configuración completa en `docs/.vitepress/config.ts`
    - Navegación, sidebar, y temas configurados
    - Soporte para español (es-ES)
 
 2. **Estructura de Documentación** ✅
+
    - Página principal con hero section
    - Guía de inicio rápido
    - Documentación de instalación detallada
@@ -19,18 +21,20 @@ Esta documentación ha sido implementada usando **VitePress** con soporte para M
    - Documentación específica del componente Checkbox
 
 3. **Aliases @/ Configurados** ✅
+
    - Configurados en `vite.config.ts` principal
    - Actualizados en `tsconfig.json` para TypeScript
    - Documentación específica sobre el uso de aliases
 
 4. **Ejemplos Interactivos** ✅
+
    - Demos de componentes en vivo
    - Formularios funcionales
    - Casos de uso reales
    - Personalización con CSS
 
 5. **Compatibilidad de Tags y Propiedades** ✅
-   - Tags con prefijo `melser-*` para evitar conflictos
+   - Tags con prefijo `me-*` para evitar conflictos
    - Propiedades typed para TypeScript
    - Eventos bien definidos
    - Accesibilidad incluida
@@ -78,24 +82,28 @@ npm run preview:docs
 ## 📋 Verificaciones Realizadas
 
 ### ✅ Marcado (Markdown)
+
 - ✅ Sintaxis Markdown estándar funciona correctamente
 - ✅ Tablas, listas, y código de bloque
 - ✅ Frontmatter para metadatos
 - ✅ Enlaces y navegación
 
 ### ✅ Compatibilidad de Propiedades
+
 - ✅ Propiedades HTML estándar: `id`, `class`, `style`, `data-*`
 - ✅ Propiedades de componentes: `checked`, `disabled`, `label`, etc.
 - ✅ Atributos booleanos funcionan correctamente
 - ✅ Eventos se disparan apropiadamente
 
 ### ✅ Tags HTML Válidos
-- ✅ **Tags con prefijo**: `melser-checkbox`, `base-input`, etc.
+
+- ✅ **Tags con prefijo**: `me-checkbox`, `base-input`, etc.
 - ✅ **Sin conflictos**: Los nombres evitan conflictos con HTML nativo
 - ✅ **Custom Elements**: Funcionan correctamente en el navegador
 - ✅ **Shadow DOM**: Aislamiento de estilos incluido
 
 ### ✅ Imports/Exports
+
 - ✅ **Aliases configurados**: `@/components`, `@/core`, etc.
 - ✅ **TypeScript support**: Tipado completo en `tsconfig.json`
 - ✅ **ES Modules**: Import/export modernos
@@ -104,46 +112,43 @@ npm run preview:docs
 ## 🎯 Ejemplos de Uso en la Documentación
 
 ### Import con Alias (Código)
+
 ```typescript
 // ✅ Usando alias @/ (funciona en el proyecto principal)
-import { MelserCheckbox } from '@/components/melser-checkbox';
-import { registerComponents } from '@/utils/registration';
+import { MelserCheckbox } from "@/components/me-checkbox";
+import { registerComponents } from "@/utils/registration";
 ```
 
 ### Uso de Componentes
+
 ```html
 <!-- ✅ Tags válidos -->
-<melser-checkbox 
-  label="Acepto los términos"
-  checked
-  required>
-</melser-checkbox>
+<me-checkbox label="Acepto los términos" checked required> </me-checkbox>
 
-<base-input 
-  label="Email"
-  type="email"
-  placeholder="tu@email.com">
-</base-input>
+<base-input label="Email" type="email" placeholder="tu@email.com"> </base-input>
 ```
 
 ### Propiedades y Eventos
+
 ```javascript
 // ✅ Tipado correcto
-const checkbox = document.querySelector('melser-checkbox');
-checkbox?.addEventListener('change', (event) => {
-  console.log('Checked:', event.target.checked);
+const checkbox = document.querySelector("me-checkbox");
+checkbox?.addEventListener("change", (event) => {
+  console.log("Checked:", event.target.checked);
 });
 ```
 
 ## 🔧 Configuración Técnica
 
 ### VitePress Config
+
 - Tema personalizado con navegación en español
 - Sidebar automático basado en estructura de archivos
 - Búsqueda habilitada (si se configura)
 - Hot reload durante desarrollo
 
 ### Alias Configuration
+
 ```typescript
 // vite.config.ts
 resolve: {
@@ -159,6 +164,7 @@ resolve: {
 ```
 
 ### TypeScript Config
+
 ```json
 // tsconfig.json
 {
@@ -176,7 +182,7 @@ resolve: {
 
 1. **Diseño Responsivo**: Funciona en desktop y móvil
 2. **Navegación Intuitiva**: Sidebar y navegación superior
-3. **Búsqueda**: Preparada para búsqueda (requiere配置 adicional)
+3. **Búsqueda**: Preparada para búsqueda (requiere 配置 adicional)
 4. **Tema Claro**: Diseño moderno y limpio
 5. **Código Resaltado**: Syntax highlighting para múltiples lenguajes
 
@@ -193,12 +199,15 @@ Para completar la documentación:
 ## 🔍 Troubleshooting
 
 ### Error de Importaciones
+
 Si ves errores de importación, las demos en la documentación usan JavaScript vanilla sin importaciones para funcionar correctamente.
 
 ### Alias no funcionan en VitePress
+
 Los alias `@/` están configurados para el proyecto principal. En VitePress, se usan rutas relativas simples para asegurar compatibilidad.
 
 ### Componentes no se renderizan
+
 Asegúrate de que los componentes estén correctamente registrados y que no haya conflictos de nombres de tags.
 
 ---
@@ -206,8 +215,9 @@ Asegúrate de que los componentes estén correctamente registrados y que no haya
 **¡VitePress está funcionando correctamente!** 🎉
 
 La documentación está lista para usar y demuestra:
+
 - ✅ Markdown funcional
-- ✅ Componentes web compatibles  
+- ✅ Componentes web compatibles
 - ✅ Alias @/ configurados
 - ✅ Tags HTML válidos
 - ✅ Imports/Exports correctos

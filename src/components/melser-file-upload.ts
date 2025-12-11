@@ -1,10 +1,10 @@
 import { html, css } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { MelserBaseInput, InputVar } from '../core/base-input';
 import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
-@customElement('melser-file-upload')
+@customElement('me-file-upload')
 export class MelserFileUpload extends MelserBaseInput<File | null> {
   @property({ type: String }) accept = '';
   @state() fileName = '';

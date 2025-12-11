@@ -30,50 +30,50 @@ resolve: {
 
 ```typescript
 // ✅ Usando alias @/ - Recomendado
-import { MelserBaseInput } from '@/core/melser-base-input';
-import { registerComponents } from '@/utils/registration';
-import type { MelserComponent } from '@/types';
+import { MelserBaseInput } from "@/core/base-input";
+import { registerComponents } from "@/utils/registration";
+import type { MelserComponent } from "@/types";
 
 // ✅ Importaciones específicas de componentes
-import { MelserCheckbox } from '@/components/melser-checkbox';
-import { MelserTextInput } from '@/components/base-input';
-import { MelserButton } from '@/components/button ';
+import { MelserCheckbox } from "@/components/me-checkbox";
+import { MelserTextInput } from "@/components/base-input";
+import { MelserButton } from "@/components/button ";
 
 // ✅ Importación de estilos
-import '@/styles/theme.css';
-import '@/components/melser-checkbox.css';
+import "@/styles/theme.css";
+import "@/components/me-checkbox.css";
 ```
 
 ### Rutas Relativas (Evitar) ❌
 
 ```typescript
 // ❌ Rutas relativas - Pueden causar problemas
-import { MelserBaseInput } from '../core/melser-base-input';
-import { registerComponents } from '../../utils/registration';
-import type { MelserComponent } from '../types';
+import { MelserBaseInput } from "../core/base-input";
+import { registerComponents } from "../../utils/registration";
+import type { MelserComponent } from "../types";
 
 // ❌ Rutas muy anidadas
-import { MelserCheckbox } from '../../../src/components/melser-checkbox';
+import { MelserCheckbox } from "../../../src/components/me-checkbox";
 ```
 
 ## Ejemplo de Uso en Componentes
 
-### Archivo: `src/components/melser-form.ts`
+### Archivo: `src/components/me-form.ts`
 
 ```typescript
 // ✅ Importaciones con alias
-import { LitElement, html, css } from 'lit';
-import { customElement } from 'lit/decorators.js';
-import { MelserBaseInput } from '@/core/melser-base-input';
-import { registerComponents } from '@/utils/registration';
-import type { MelserFormData } from '@/types';
+import { LitElement, html, css } from "lit";
+import { customElement } from "lit/decorators.js";
+import { MelserBaseInput } from "@/core/base-input";
+import { registerComponents } from "@/utils/registration";
+import type { MelserFormData } from "@/types";
 
 // ✅ Importar otros componentes
-import '@/components/base-input';
-import '@/components/melser-checkbox';
-import '@/components/button ';
+import "@/components/base-input";
+import "@/components/me-checkbox";
+import "@/components/button ";
 
-@customElement('melser-form')
+@customElement("me-form")
 export class MelserForm extends LitElement {
   // ✅ Usar tipos con alias
   private formData: MelserFormData = {};
@@ -91,36 +91,38 @@ export class MelserForm extends LitElement {
           name="email"
           label="Email"
           @input=${this.handleInput}
-          required>
+          required
+        >
         </base-input>
 
-        <melser-checkbox
+        <me-checkbox
           name="terms"
           label="Acepto los términos"
           @change=${this.handleInput}
-          required>
-        </melser-checkbox>
+          required
+        >
+        </me-checkbox>
 
-        <button  type="submit" variant="primary">
-          Enviar
-        </button >
+        <button type="submit" variant="primary">Enviar</button>
       </form>
     `;
   }
 
   private async handleSubmit(event: Event) {
     event.preventDefault();
-    
+
     // ✅ Usar utility con alias
     const isValid = await this.validateForm();
-    
+
     if (isValid) {
       // ✅ Emitir evento personalizado
-      this.dispatchEvent(new CustomEvent('form-submit', {
-        detail: this.formData,
-        bubbles: true,
-        composed: true
-      }));
+      this.dispatchEvent(
+        new CustomEvent("form-submit", {
+          detail: this.formData,
+          bubbles: true,
+          composed: true,
+        })
+      );
     }
   }
 
@@ -161,26 +163,26 @@ export const helpers: HelperConfig = {
 
   formatPhone(phone: string): string {
     // Remover caracteres no numéricos
-    const cleaned = phone.replace(/\D/g, '');
-    
+    const cleaned = phone.replace(/\D/g, "");
+
     // Aplicar formato (XXX) XXX-XXXX
     const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
     if (match) {
       return `(${match[1]}) ${match[2]}-${match[3]}`;
     }
-    
+
     return phone;
   },
 
   sanitizeInput(input: string): string {
-    return input.trim().replace(/[<>]/g, '');
-  }
+    return input.trim().replace(/[<>]/g, "");
+  },
 };
 ```
 
 ## Ventajas de Usar Alias @/
 
-1. **Rutas más limpias**: `@/components/melser-checkbox` vs `../../../src/components/melser-checkbox`
+1. **Rutas más limpias**: `@/components/me-checkbox` vs `../../../src/components/me-checkbox`
 2. **Menos errores**: No tienes que contar niveles de directorio
 3. **Refactoring más fácil**: Si mueves archivos, solo cambias la configuración
 4. **Mejor IntelliSense**: Los IDEs pueden resolver mejor los alias

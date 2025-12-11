@@ -7,7 +7,7 @@ import { css, CSSResult } from 'lit';
  * @param obj - The nested token object source.
  * @param prefix - The system prefix (e.g., 'melser') to avoid global namespace collisions.
  * @param currentPath - Used for recursion to track the key hierarchy.
- * @returns An object where keys are CSS variable names (e.g., --melser-color-primary) and values are the token values.
+ * @returns An object where keys are CSS variable names (e.g., --me-color-primary) and values are the token values.
  */
 export function flattenTokens(
     obj: Record<string, any>,
@@ -29,7 +29,7 @@ export function flattenTokens(
             if (isDTCGToken) {
                 // It's a token object { $value: "#fff", $type: "color" }
                 let valStr = String(value.$value);
-                // Resolve aliases: {palette.blue.700} -> var(--melser-palette-blue-700)
+                // Resolve aliases: {palette.blue.700} -> var(--me-palette-blue-700)
                 if (valStr.includes('{')) {
                     valStr = valStr.replace(/\{([^}]+)\}/g, (_, aliasPath) => {
                         const varName = `--${prefix}-${aliasPath.replace(/\./g, '-')}`;
@@ -92,7 +92,7 @@ export function createTokenAccessors<T extends object>(
             // It's a leaf. Return the CSS variable reference.
             // Note: We use unsafeCSS here safely because the input is controlled by our token system.
             // However, Lit recommends just returning the string in a css`` template.
-            // The output is: css`var(--melser-color-primary)`
+            // The output is: css`var(--me-color-primary)`
             const varName = `--${prefix}-${newPath}`;
             // We implement a custom toString so it can be interpolated
             // accessors[key] = css`var(${css([varName] as any)})`; 

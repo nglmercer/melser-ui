@@ -9,7 +9,7 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
 ## Ejemplo Básico
 
 ```html
-<melser-multi-select
+<me-multi-select
   label="Selecciona múltiples opciones"
   placeholder="Elige las opciones que necesites"
 >
@@ -18,12 +18,12 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
   <option value="react">React</option>
   <option value="vue">Vue.js</option>
   <option value="angular">Angular</option>
-</melser-multi-select>
+</me-multi-select>
 ```
 
 ## Demo Interactivo
 
-<melser-multi-select 
+<me-multi-select 
   id="demo-basic" 
   label="Tecnologías básicas" 
   placeholder="Selecciona tecnologías">
@@ -35,9 +35,9 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
   <option value="angular">Angular</option>
   <option value="node">Node.js</option>
   <option value="python">Python</option>
-</melser-multi-select>
+</me-multi-select>
 
-<melser-multi-select 
+<me-multi-select 
   id="demo-selected" 
   label="Con valores iniciales" 
   placeholder="Selecciona frameworks"
@@ -48,9 +48,9 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
   <option value="react">React</option>
   <option value="vue">Vue.js</option>
   <option value="angular">Angular</option>
-</melser-multi-select>
+</me-multi-select>
 
-<melser-multi-select 
+<me-multi-select 
   id="demo-search" 
   label="Con búsqueda" 
   placeholder="Busca una tecnología..."
@@ -68,9 +68,9 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
   <option value="csharp">C#</option>
   <option value="php">PHP</option>
   <option value="ruby">Ruby</option>
-</melser-multi-select>
+</me-multi-select>
 
-<melser-multi-select 
+<me-multi-select 
   id="demo-limits" 
   label="Con límites" 
   placeholder="Máximo 3 elementos"
@@ -83,9 +83,9 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
   <option value="mobile">Mobile</option>
   <option value="devops">DevOps</option>
   <option value="uiux">UI/UX</option>
-</melser-multi-select>
+</me-multi-select>
 
-<melser-multi-select 
+<me-multi-select 
   id="demo-disabled" 
   label="Deshabilitado" 
   value="react,vue"
@@ -95,7 +95,7 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
   <option value="typescript">TypeScript</option>
   <option value="react">React</option>
   <option value="vue">Vue.js</option>
-</melser-multi-select>
+</me-multi-select>
 
 ## Propiedades
 
@@ -132,7 +132,7 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
 ### MultiSelect con Búsqueda y Límites
 
 ```html
-<melser-multi-select
+<me-multi-select
   label="Habilidades técnicas *"
   name="skills"
   required
@@ -150,13 +150,13 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
   <option value="python">Python</option>
   <option value="java">Java</option>
   <option value="csharp">C#</option>
-</melser-multi-select>
+</me-multi-select>
 ```
 
 ### MultiSelect con Validación
 
 ```html
-<melser-multi-select
+<me-multi-select
   label="Intereses (mínimo 2, máximo 5)"
   name="interests"
   min-selections="2"
@@ -173,13 +173,13 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
   <option value="cooking">Cocina</option>
   <option value="gaming">Juegos</option>
   <option value="art">Arte</option>
-</melser-multi-select>
+</me-multi-select>
 ```
 
 ### MultiSelect Agrupado
 
 ```html
-<melser-multi-select
+<me-multi-select
   label="Tecnologías por categoría"
   searchable
   placeholder="Selecciona tecnologías"
@@ -202,7 +202,7 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
     <option value="postgresql">PostgreSQL</option>
     <option value="mongodb">MongoDB</option>
   </optgroup>
-</melser-multi-select>
+</me-multi-select>
 ```
 
 ## Integración con Formularios
@@ -211,7 +211,7 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
 
 ```html
 <form id="profile-form">
-  <melser-multi-select
+  <me-multi-select
     label="Tecnologías que manejas *"
     name="technologies"
     required
@@ -233,16 +233,16 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
       <option value="angular">Angular</option>
       <option value="node">Node.js</option>
     </optgroup>
-  </melser-multi-select>
+  </me-multi-select>
 
-  <melser-multi-select label="Idiomas que hablas" name="languages" show-counter>
+  <me-multi-select label="Idiomas que hablas" name="languages" show-counter>
     <option value="spanish">Español (Nativo)</option>
     <option value="english">Inglés</option>
     <option value="french">Francés</option>
     <option value="german">Alemán</option>
     <option value="italian">Italiano</option>
     <option value="portuguese">Portugués</option>
-  </melser-multi-select>
+  </me-multi-select>
 
   <button type="submit" variant="primary">Guardar Perfil</button>
 </form>
@@ -294,9 +294,9 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="multi-select-playground" schema-name="multi-select" title="Selección de Habilidades" description="Selecciona tus tecnologías favoritas.">
+<me-playground-form id="multi-select-playground" schema-name="multi-select" title="Selección de Habilidades" description="Selecciona tus tecnologías favoritas.">
   <div style="margin-bottom: 1rem;">
-    <melser-multi-select 
+    <me-multi-select 
       label="Hobbies (mín 2, máx 4) *"
       name="hobbies"
       required
@@ -313,11 +313,11 @@ if (form) {
       <option value="gaming">🎮 Juegos</option>
       <option value="art">🎨 Arte</option>
       <option value="photography">📸 Fotografía</option>
-    </melser-multi-select>
+    </me-multi-select>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-multi-select 
+    <me-multi-select 
       label="Materias favoritas"
       name="subjects"
       searchable
@@ -336,24 +336,24 @@ if (form) {
         <option value="philosophy">🤔 Filosofía</option>
         <option value="languages">🗣️ Idiomas</option>
       </optgroup>
-    </melser-multi-select>
+    </me-multi-select>
   </div>
-</melser-playground-form>
+</me-playground-form>
 
 ## Personalización con CSS
 
 ### Variables CSS
 
 ```css
-melser-multi-select {
-  --melser-multi-select-chip-bg: #e5e7eb;
-  --melser-multi-select-chip-color: #374151;
-  --melser-multi-select-chip-hover-bg: #d1d5db;
-  --melser-multi-select-chip-remove-color: #6b7280;
-  --melser-multi-select-dropdown-bg: #ffffff;
-  --melser-multi-select-counter-color: #6b7280;
-  --melser-multi-select-counter-font-size: 12px;
-  --melser-multi-select-max-indicator-color: #f59e0b;
+me-multi-select {
+  --me-multi-select-chip-bg: #e5e7eb;
+  --me-multi-select-chip-color: #374151;
+  --me-multi-select-chip-hover-bg: #d1d5db;
+  --me-multi-select-chip-remove-color: #6b7280;
+  --me-multi-select-dropdown-bg: #ffffff;
+  --me-multi-select-counter-color: #6b7280;
+  --me-multi-select-counter-font-size: 12px;
+  --me-multi-select-max-indicator-color: #f59e0b;
 }
 ```
 
@@ -361,57 +361,57 @@ melser-multi-select {
 
 <style>
   .custom-multi-select {
-    --melser-multi-select-chip-bg: #dbeafe;
-    --melser-multi-select-chip-color: #1e40af;
-    --melser-multi-select-chip-hover-bg: #bfdbfe;
+    --me-multi-select-chip-bg: #dbeafe;
+    --me-multi-select-chip-color: #1e40af;
+    --me-multi-select-chip-hover-bg: #bfdbfe;
   }
   
   .minimal-multi-select {
-    --melser-multi-select-chip-bg: transparent;
-    --melser-multi-select-chip-color: #6b7280;
-    --melser-multi-select-chip-hover-bg: #f3f4f6;
-    --melser-multi-select-chip-border: 1px solid #d1d5db;
+    --me-multi-select-chip-bg: transparent;
+    --me-multi-select-chip-color: #6b7280;
+    --me-multi-select-chip-hover-bg: #f3f4f6;
+    --me-multi-select-chip-border: 1px solid #d1d5db;
   }
   
   .dark-multi-select {
-    --melser-multi-select-chip-bg: #374151;
-    --melser-multi-select-chip-color: #f9fafb;
-    --melser-multi-select-chip-hover-bg: #4b5563;
-    --melser-multi-select-dropdown-bg: #1f2937;
+    --me-multi-select-chip-bg: #374151;
+    --me-multi-select-chip-color: #f9fafb;
+    --me-multi-select-chip-hover-bg: #4b5563;
+    --me-multi-select-dropdown-bg: #1f2937;
   }
 </style>
 
 <div class="custom-multi-select" style="margin-bottom: 1rem;">
-  <melser-multi-select 
+  <me-multi-select 
     label="Multi-select personalizado"
     value="react,vue"
     placeholder="Con chips azules">
     <option value="react">React</option>
     <option value="vue">Vue.js</option>
     <option value="angular">Angular</option>
-  </melser-multi-select>
+  </me-multi-select>
 </div>
 
 <div class="minimal-multi-select" style="margin-bottom: 1rem;">
-  <melser-multi-select 
+  <me-multi-select 
     label="Estilo minimalista"
     value="js,ts"
     placeholder="Chips con borde">
     <option value="js">JavaScript</option>
     <option value="ts">TypeScript</option>
     <option value="python">Python</option>
-  </melser-multi-select>
+  </me-multi-select>
 </div>
 
 <div class="dark-multi-select">
-  <melser-multi-select 
+  <me-multi-select 
     label="Tema oscuro"
     value="dark,night"
     placeholder="Para interfaces oscuras">
     <option value="dark">Dark Mode</option>
     <option value="night">Night Theme</option>
     <option value="black">Black Theme</option>
-  </melser-multi-select>
+  </me-multi-select>
 </div>
 
 ## Características Avanzadas
@@ -419,7 +419,7 @@ melser-multi-select {
 ### Operaciones Masivas
 
 ```javascript
-const multiSelect = document.querySelector("melser-multi-select");
+const multiSelect = document.querySelector("me-multi-select");
 if (multiSelect) {
   // Seleccionar todas las opciones
   multiSelect.selectAll();
@@ -438,7 +438,7 @@ if (multiSelect) {
 ### Filtrado Programático
 
 ```javascript
-const multiSelect = document.querySelector("melser-multi-select");
+const multiSelect = document.querySelector("me-multi-select");
 if (multiSelect) {
   // Filtrar opciones programáticamente
   multiSelect.filterOptions((option) => {
@@ -453,7 +453,7 @@ if (multiSelect) {
 ### Validación Personalizada
 
 ```javascript
-const multiSelect = document.querySelector("melser-multi-select");
+const multiSelect = document.querySelector("me-multi-select");
 if (multiSelect) {
   multiSelect.addEventListener("change", (e) => {
     const selectedValues = e.target.value.split(",");
@@ -504,43 +504,39 @@ multiSelect.dispatchEvent(new Event("change"));
 
 ```html
 <!-- Asegurar que searchable esté habilitado -->
-<melser-multi-select searchable label="Con búsqueda"></melser-multi-select>
+<me-multi-select searchable label="Con búsqueda"></me-multi-select>
 ```
 
 ### Límites no se respetan
 
 ```html
 <!-- Configurar límites apropiados -->
-<melser-multi-select
+<me-multi-select
   max-selections="5"
   min-selections="2"
   show-counter
-></melser-multi-select>
+></me-multi-select>
 ```
 
 ### Validación no funciona
 
 ```html
 <!-- Usar required junto con min-selections -->
-<melser-multi-select
+<me-multi-select
   required
   min-selections="1"
   placeholder="Selecciona al menos una opción"
-></melser-multi-select>
+></me-multi-select>
 ```
 
 ### Problemas de accesibilidad
 
 ```html
 <!-- Agregar descripción para casos complejos -->
-<melser-multi-select
-  aria-describedby="skills-help"
-  searchable
-  max-selections="5"
->
+<me-multi-select aria-describedby="skills-help" searchable max-selections="5">
   <div id="skills-help">
     Puedes seleccionar hasta 5 habilidades técnicas
-  </div></melser-multi-select
+  </div></me-multi-select
 >
 ```
 
@@ -548,7 +544,7 @@ multiSelect.dispatchEvent(new Event("change"));
 
 ```css
 /* Personalizar indicador de foco */
-melser-multi-select:focus-within {
+me-multi-select:focus-within {
   box-shadow: 0 0 0 2px #3b82f6;
   border-color: #3b82f6;
 }

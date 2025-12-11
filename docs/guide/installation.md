@@ -8,7 +8,7 @@ Esta guía cubre todas las formas de instalar y configurar Melser UI en tu proye
 
 ## Requisitos Previos
 
-- Node.js 16+ 
+- Node.js 16+
 - Un proyecto moderno que soporte ES modules
 - Navegador con soporte para Custom Elements y Shadow DOM
 
@@ -18,16 +18,16 @@ Esta guía cubre todas las formas de instalar y configurar Melser UI en tu proye
 
 ```bash
 # Instalar la librería completa
-npm install melser-ui
+npm install me-ui
 
 # O instalar componentes individuales
-npm install melser-ui components
+npm install me-ui components
 ```
 
 ### Yarn
 
 ```bash
-yarn add melser-ui
+yarn add me-ui
 ```
 
 ### CDN
@@ -37,12 +37,12 @@ También puedes usar Melser UI directamente desde un CDN:
 ```html
 <!-- Usar ESM.sh -->
 <script type="module">
-  import 'https://esm.sh/melser-ui';
+  import "https://esm.sh/me-ui";
 </script>
 
 <!-- O usar Skypack -->
 <script type="module">
-  import 'https://cdn.skypack.dev/melser-ui';
+  import "https://cdn.skypack.dev/me-ui";
 </script>
 ```
 
@@ -53,14 +53,14 @@ También puedes usar Melser UI directamente desde un CDN:
 Si usas Vite, asegúrate de que tu `vite.config.ts` esté configurado correctamente:
 
 ```typescript
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
 
 export default defineConfig({
   build: {
-    target: 'es2019', // Necesario para Custom Elements
+    target: "es2019", // Necesario para Custom Elements
   },
   optimizeDeps: {
-    include: ['melser-ui'],
+    include: ["me-ui"],
   },
 });
 ```
@@ -76,9 +76,9 @@ module.exports = {
       {
         test: /\.js$/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env'],
+            presets: ["@babel/preset-env"],
           },
         },
       },
@@ -93,18 +93,18 @@ module.exports = {
 
 ```typescript
 // Importa todos los componentes
-import 'melser-ui';
+import "me-ui";
 
 // O importar tipos
-import type { MelserComponent } from 'melser-ui/types';
+import type { MelserComponent } from "me-ui/types";
 ```
 
 ### Importación Individual
 
 ```typescript
 // Importar componentes específicos
-import 'melser-ui/components/melser-checkbox.js';
-import 'melser-ui/components/base-input.js';
+import "me-ui/components/me-checkbox.js";
+import "me-ui/components/base-input.js";
 
 // Esto es más eficiente si solo usas algunos componentes
 ```
@@ -116,15 +116,15 @@ import 'melser-ui/components/base-input.js';
 import {
   MelserCheckbox,
   MelserTextInput,
-  MelserButton
-} from 'melser-ui/components';
+  MelserButton,
+} from "me-ui/components";
 
 // Registrar manualmente si es necesario
-import { registerComponents } from 'melser-ui/utils/registration';
+import { registerComponents } from "me-ui/utils/registration";
 
 registerComponents({
-  'melser-checkbox': MelserCheckbox,
-  'base-input': MelserTextInput
+  "me-checkbox": MelserCheckbox,
+  "base-input": MelserTextInput,
 });
 ```
 
@@ -150,8 +150,8 @@ registerComponents({
 // src/global.d.ts
 declare namespace JSX {
   interface IntrinsicElements {
-    'melser-checkbox': any;
-    'base-input': any;
+    "me-checkbox": any;
+    "base-input": any;
     // Agregar otros componentes aquí
   }
 }
@@ -171,7 +171,7 @@ declare namespace JSX {
     "preview": "vite preview"
   },
   "dependencies": {
-    "melser-ui": "^1.0.0"
+    "me-ui": "^1.0.0"
   },
   "devDependencies": {
     "vite": "^5.0.0",
@@ -185,32 +185,32 @@ declare namespace JSX {
 ```html
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi App con Melser UI</title>
-</head>
-<body>
-  <div id="app">
-    <melser-checkbox id="accept" label="Acepto los términos"></melser-checkbox>
-    <button  id="submit" variant="primary">Enviar</button >
-  </div>
-  
-  <script type="module">
-    import 'melser-ui';
-    
-    const submitBtn = document.getElementById('submit');
-    const checkbox = document.getElementById('accept');
-    
-    submitBtn?.addEventListener('click', () => {
-      if (checkbox?.checked) {
-        alert('¡Formulario enviado!');
-      } else {
-        alert('Por favor acepta los términos');
-      }
-    });
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi App con Melser UI</title>
+  </head>
+  <body>
+    <div id="app">
+      <me-checkbox id="accept" label="Acepto los términos"></me-checkbox>
+      <button id="submit" variant="primary">Enviar</button>
+    </div>
+
+    <script type="module">
+      import "me-ui";
+
+      const submitBtn = document.getElementById("submit");
+      const checkbox = document.getElementById("accept");
+
+      submitBtn?.addEventListener("click", () => {
+        if (checkbox?.checked) {
+          alert("¡Formulario enviado!");
+        } else {
+          alert("Por favor acepta los términos");
+        }
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -227,20 +227,20 @@ declare namespace JSX {
 
 ```javascript
 // Verifica que los componentes estén importados correctamente
-import 'melser-ui/components/melser-checkbox.js';
+import "me-ui/components/me-checkbox.js";
 
 // Y que el custom element esté disponible
-console.log(customElements.get('melser-checkbox')); // Debe existir
+console.log(customElements.get("me-checkbox")); // Debe existir
 ```
 
 ### Estilos no se aplican
 
 ```css
 /* Asegúrate de incluir los estilos base */
-@import 'melser-ui/styles/theme.css';
+@import "me-ui/styles/theme.css";
 
 /* O importa estilos específicos */
-@import 'melser-ui/styles/components/checkbox.css';
+@import "me-ui/styles/components/checkbox.css";
 ```
 
 ## Verificación de la Instalación
@@ -249,7 +249,7 @@ Para verificar que todo esté funcionando:
 
 ```javascript
 // En la consola del navegador
-console.log('Melser UI loaded:', !!window.customElements.get('melser-checkbox'));
+console.log("Melser UI loaded:", !!window.customElements.get("me-checkbox"));
 ```
 
 Si todo está correcto, deberías ver `true` en la consola.

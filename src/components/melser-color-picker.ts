@@ -1,10 +1,10 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { MelserBaseInput, InputVar } from '../core/base-input';
 import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
-@customElement('melser-color-picker')
+@customElement('me-color-picker')
 export class MelserColorPicker extends MelserBaseInput<string> {
   @property({ type: String, reflect: true }) override value = '#000000';
   @query('input[type="color"]') inputElement!: HTMLInputElement;

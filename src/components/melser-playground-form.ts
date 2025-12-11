@@ -105,7 +105,7 @@ export const schemas: Record<string, z.ZodSchema> = {
  * A generic playground form wrapper that handles Zod validation and state management automatically.
  * Useful for documentation examples.
  */
-@customElement('melser-playground-form')
+@customElement('me-playground-form')
 export class MelserPlaygroundForm extends LitElement {
     @property({ attribute: 'schema-name' }) schemaName = '';
     @property({ attribute: false }) schema: z.ZodSchema = playgroundSchema;

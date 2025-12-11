@@ -1,6 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { MelserBaseInput } from '../core/base-input';
 import { Var } from '../theme/tokens';
 import type { MelserDataType, SelectOption } from '../types/index';
 
@@ -8,7 +8,7 @@ interface InternalOption extends SelectOption {
   group?: string;
 }
 
-@customElement('melser-multi-select')
+@customElement('me-multi-select')
 export class MelserMultiSelect extends MelserBaseInput<string[]> {
   @property({ 
     type: Array,

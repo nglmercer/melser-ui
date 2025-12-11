@@ -9,31 +9,31 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
 ## Ejemplo Básico
 
 ```html
-<melser-tags-input placeholder="Agrega etiquetas..." label="Etiquetas">
-</melser-tags-input>
+<me-tags-input placeholder="Agrega etiquetas..." label="Etiquetas">
+</me-tags-input>
 ```
 
 ## Demo Interactivo
 
-<melser-tags-input 
+<me-tags-input 
   id="demo-basic" 
   placeholder="Escribe y presiona Enter"
   label="Etiquetas básicas">
-</melser-tags-input>
+</me-tags-input>
 
-<melser-tags-input 
+<me-tags-input 
   id="demo-readonly" 
   value="JavaScript, React, Vue"
   readonly
   label="Etiquetas de solo lectura">
-</melser-tags-input>
+</me-tags-input>
 
-<melser-tags-input 
+<me-tags-input 
   id="demo-disabled" 
   value="HTML, CSS, JavaScript"
   disabled
   label="Etiquetas deshabilitadas">
-</melser-tags-input>
+</me-tags-input>
 
 ## Propiedades
 
@@ -68,37 +68,37 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
 ### Entrada de Habilidades
 
 ```html
-<melser-tags-input
+<me-tags-input
   placeholder="Agrega tus habilidades..."
   label="Habilidades técnicas"
   max-tags="10"
   min-length="2"
 >
-</melser-tags-input>
+</me-tags-input>
 ```
 
 ### Categorías de Producto
 
 ```html
-<melser-tags-input
+<me-tags-input
   placeholder="Categorías del producto"
   label="Categorías"
   max-tags="5"
   allow-duplicates="false"
 >
-</melser-tags-input>
+</me-tags-input>
 ```
 
 ###Etiquetas con Validación
 
 ```html
-<melser-tags-input
+<me-tags-input
   placeholder="Etiquetas (mínimo 3 caracteres)"
   label="Etiquetas con validación"
   min-length="3"
   max-length="20"
 >
-</melser-tags-input>
+</me-tags-input>
 ```
 
 ## Integración con Formularios
@@ -111,15 +111,10 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
 
   <base-input label="Título del artículo" name="title" required> </base-input>
 
-  <melser-textarea
-    label="Contenido del artículo"
-    name="content"
-    rows="6"
-    required
-  >
-  </melser-textarea>
+  <me-textarea label="Contenido del artículo" name="content" rows="6" required>
+  </me-textarea>
 
-  <melser-tags-input
+  <me-tags-input
     name="tags"
     placeholder="Etiquetas del artículo..."
     label="Etiquetas"
@@ -127,10 +122,9 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
     min-length="2"
     required
   >
-  </melser-tags-input>
+  </me-tags-input>
 
-  <melser-checkbox name="published" label="Publicar inmediatamente">
-  </melser-checkbox>
+  <me-checkbox name="published" label="Publicar inmediatamente"> </me-checkbox>
 
   <button type="submit" variant="primary">Publicar Artículo</button>
 </form>
@@ -153,7 +147,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="tags-playground" schema-name="tags-input" title="Publicar Artículo" description="Etiquetado y validación de contenido.">
+<me-playground-form id="tags-playground" schema-name="tags-input" title="Publicar Artículo" description="Etiquetado y validación de contenido.">
   <div style="margin-bottom: 1.5rem;">
     <base-input 
       label="Título del artículo"
@@ -163,45 +157,45 @@ if (form) {
   </div>
   
   <div style="margin-bottom: 1.5rem;">
-    <melser-tags-input 
+    <me-tags-input 
       name="tags"
       placeholder="Etiquetas del artículo..."
       label="Etiquetas"
       max-tags="8"
       min-length="2">
-    </melser-tags-input>
+    </me-tags-input>
   </div>
   
   <div style="margin-bottom: 1.5rem;">
-    <melser-checkbox 
+    <me-checkbox 
       name="published"
       label="Publicar inmediatamente">
-    </melser-checkbox>
+    </me-checkbox>
   </div>
-</melser-playground-form>
+</me-playground-form>
 
 ## Personalización con CSS
 
 ### Variables CSS
 
 ```css
-melser-tags-input {
-  --melser-tags-input-bg: #ffffff;
-  --melser-tags-input-border: 1px solid #d1d5db;
-  --melser-tags-input-border-radius: 8px;
-  --melser-tags-input-padding: 8px 12px;
-  --melser-tags-input-font-size: 14px;
-  --melser-tag-bg: #3b82f6;
-  --melser-tag-color: #ffffff;
-  --melser-tag-border-radius: 16px;
-  --melser-tag-padding: 4px 8px;
-  --melser-tag-margin: 4px;
-  --melser-tag-remove-bg: #1e40af;
-  --melser-tag-remove-hover: #1e3a8a;
-  --melser-input-placeholder-color: #9ca3af;
-  --melser-input-focus-border: #3b82f6;
-  --melser-disabled-bg: #f9fafb;
-  --melser-disabled-color: #6b7280;
+me-tags-input {
+  --me-tags-input-bg: #ffffff;
+  --me-tags-input-border: 1px solid #d1d5db;
+  --me-tags-input-border-radius: 8px;
+  --me-tags-input-padding: 8px 12px;
+  --me-tags-input-font-size: 14px;
+  --me-tag-bg: #3b82f6;
+  --me-tag-color: #ffffff;
+  --me-tag-border-radius: 16px;
+  --me-tag-padding: 4px 8px;
+  --me-tag-margin: 4px;
+  --me-tag-remove-bg: #1e40af;
+  --me-tag-remove-hover: #1e3a8a;
+  --me-input-placeholder-color: #9ca3af;
+  --me-input-focus-border: #3b82f6;
+  --me-disabled-bg: #f9fafb;
+  --me-disabled-color: #6b7280;
 }
 ```
 
@@ -209,48 +203,48 @@ melser-tags-input {
 
 <style>
   .custom-tags {
-    --melser-tag-bg: #10b981;
-    --melser-tag-color: #ffffff;
-    --melser-tag-remove-bg: #059669;
-    --melser-tag-remove-hover: #047857;
-    --melser-input-focus-border: #10b981;
+    --me-tag-bg: #10b981;
+    --me-tag-color: #ffffff;
+    --me-tag-remove-bg: #059669;
+    --me-tag-remove-hover: #047857;
+    --me-input-focus-border: #10b981;
   }
   
   .rounded-tags {
-    --melser-tags-input-border-radius: 20px;
-    --melser-tag-border-radius: 20px;
-    --melser-tag-padding: 6px 12px;
+    --me-tags-input-border-radius: 20px;
+    --me-tag-border-radius: 20px;
+    --me-tag-padding: 6px 12px;
   }
   
   .dark-theme-tags {
-    --melser-tags-input-bg: #1f2937;
-    --melser-tags-input-border: #4b5563;
-    --melser-tag-bg: #8b5cf6;
-    --melser-tag-color: #ffffff;
-    --melser-input-placeholder-color: #9ca3af;
-    --melser-input-focus-border: #8b5cf6;
+    --me-tags-input-bg: #1f2937;
+    --me-tags-input-border: #4b5563;
+    --me-tag-bg: #8b5cf6;
+    --me-tag-color: #ffffff;
+    --me-input-placeholder-color: #9ca3af;
+    --me-input-focus-border: #8b5cf6;
   }
 </style>
 
 <div class="custom-tags" style="margin-bottom: 1rem;">
-  <melser-tags-input 
+  <me-tags-input 
     placeholder="Etiquetas personalizadas (verde)"
     label="Tags personalizados">
-  </melser-tags-input>
+  </me-tags-input>
 </div>
 
 <div class="rounded-tags" style="margin-bottom: 1rem;">
-  <melser-tags-input 
+  <me-tags-input 
     placeholder="Etiquetas redondeadas"
     label="Tags redondeados">
-  </melser-tags-input>
+  </me-tags-input>
 </div>
 
 <div class="dark-theme-tags">
-  <melser-tags-input 
+  <me-tags-input 
     placeholder="Etiquetas tema oscuro (púrpura)"
     label="Tags tema oscuro">
-  </melser-tags-input>
+  </me-tags-input>
 </div>
 
 ## Accesibilidad
@@ -279,7 +273,7 @@ El componente MelserTagsInput incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "melser-ui/components/melser-tags-input.js";
+import "me-ui/components/me-tags-input.js";
 
 // Verificar que no esté deshabilitado o solo lectura
 console.log(tagsInput.disabled); // Debe ser false
@@ -290,18 +284,18 @@ console.log(tagsInput.readonly); // Debe ser false
 
 ```javascript
 // Por defecto no permite duplicados, habilita si es necesario
-<melser-tags-input
+<me-tags-input
   allow-duplicates
   placeholder="Permitir duplicados"
-></melser-tags-input>
+></me-tags-input>
 ```
 
 ### El valor no se envía en el formulario
 
 ```html
 <!-- Asegúrate de incluir el atributo name -->
-<melser-tags-input name="articleTags" placeholder="Etiquetas del artículo">
-</melser-tags-input>
+<me-tags-input name="articleTags" placeholder="Etiquetas del artículo">
+</me-tags-input>
 
 // Recuperar valor en formulario const formData = new FormData(form); const tags
 = formData.get('articleTags'); // "tag1, tag2, tag3" // Convertir a array const
@@ -312,11 +306,11 @@ tagsArray = tags.split(',').map(tag => tag.trim());
 
 ```html
 <!-- Usa aria-label para casos complejos -->
-<melser-tags-input
+<me-tags-input
   aria-label="Etiquetas para categorizar el artículo, separadas por comas"
   placeholder="Etiquetas del artículo"
 >
-</melser-tags-input>
+</me-tags-input>
 ```
 
 ### Validación personalizada

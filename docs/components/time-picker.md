@@ -9,68 +9,68 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
 ## Ejemplo Básico
 
 ```html
-<melser-time-picker label="Selecciona una hora" placeholder="HH:MM">
-</melser-time-picker>
+<me-time-picker label="Selecciona una hora" placeholder="HH:MM">
+</me-time-picker>
 ```
 
 ## Demo Interactivo
 
-<melser-time-picker 
+<me-time-picker 
   id="demo-basic" 
   label="Hora básica" 
   placeholder="Selecciona una hora">
-</melser-time-picker>
+</me-time-picker>
 
-<melser-time-picker 
+<me-time-picker 
   id="demo-12h" 
   label="Formato 12 horas" 
   format="12h"
   placeholder="12:00 PM">
-</melser-time-picker>
+</me-time-picker>
 
-<melser-time-picker 
+<me-time-picker 
   id="demo-24h" 
   label="Formato 24 horas" 
   format="24h"
   placeholder="14:30">
-</melser-time-picker>
+</me-time-picker>
 
-<melser-time-picker 
+<me-time-picker 
   id="demo-steps" 
   label="Intervalos de 15 min" 
   step="900"
   placeholder="Intervalos de 15 minutos">
-</melser-time-picker>
+</me-time-picker>
 
-<melser-time-picker 
+<me-time-picker 
   id="demo-min-max" 
   label="Horario laboral (9-17)" 
   min="09:00"
   max="17:00"
   placeholder="Entre 9:00 AM y 5:00 PM">
-</melser-time-picker>
+</me-time-picker>
 
-<melser-time-picker 
+<me-time-picker 
   id="demo-value" 
   label="Con hora inicial" 
   value="14:30"
   placeholder="Hora predefinida">
-</melser-time-picker>
+</me-time-picker>
 
-<melser-time-picker 
+<me-time-picker 
   id="demo-disabled" 
   label="Deshabilitado" 
   value="09:00"
   disabled>
-</melser-time-picker>
+</me-time-picker>
 
-<melser-time-picker 
+<me-time-picker 
   id="demo-seconds" 
   label="Con segundos" 
   show-seconds
   step="1"
   placeholder="HH:MM:SS">
-</melser-time-picker>
+</me-time-picker>
 
 ## Propiedades
 
@@ -102,19 +102,19 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
 ### Selector de Hora Simple
 
 ```html
-<melser-time-picker
+<me-time-picker
   label="Hora de la cita"
   name="appointmentTime"
   required
   placeholder="Selecciona la hora"
 >
-</melser-time-picker>
+</me-time-picker>
 ```
 
 ### Selector con Restricciones de Horario
 
 ```html
-<melser-time-picker
+<me-time-picker
   label="Hora de entrega"
   name="deliveryTime"
   min="08:00"
@@ -123,13 +123,13 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
   placeholder="Entre 8:00 AM y 10:00 PM"
   hint="Entregas disponibles cada 30 minutos"
 >
-</melser-time-picker>
+</me-time-picker>
 ```
 
 ### Selector de Horario de Trabajo
 
 ```html
-<melser-time-picker
+<me-time-picker
   label="Hora de inicio *"
   name="workStart"
   required
@@ -139,13 +139,13 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
   placeholder="Hora de inicio (6:00 AM - 12:00 PM)"
   format="12h"
 >
-</melser-time-picker>
+</me-time-picker>
 ```
 
 ### Selector con Formato 12h
 
 ```html
-<melser-time-picker
+<me-time-picker
   label="Hora de la reunión"
   name="meetingTime"
   format="12h"
@@ -153,7 +153,7 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
   step="300"
   placeholder="Ej: 2:30:45 PM"
 >
-</melser-time-picker>
+</me-time-picker>
 ```
 
 ## Integración con Formularios
@@ -167,7 +167,7 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
   >
     <h4>🗓️ Programación de Cita</h4>
 
-    <melser-date-picker
+    <me-date-picker
       label="Fecha de la cita *"
       name="date"
       required
@@ -175,9 +175,9 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
       placeholder="Selecciona la fecha"
       id="form-date"
     >
-    </melser-date-picker>
+    </me-date-picker>
 
-    <melser-time-picker
+    <me-time-picker
       label="Hora de la cita *"
       name="time"
       required
@@ -188,9 +188,9 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
       format="12h"
       id="form-time"
     >
-    </melser-time-picker>
+    </me-time-picker>
 
-    <melser-time-picker
+    <me-time-picker
       label="Duración estimada"
       name="duration"
       value="01:00"
@@ -199,7 +199,7 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
       format="12h"
       id="form-duration"
     >
-    </melser-time-picker>
+    </me-time-picker>
   </div>
 
   <div
@@ -207,23 +207,23 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
   >
     <h4>⏰ Recordatorios</h4>
 
-    <melser-time-picker
+    <me-time-picker
       label="Recordatorio 1"
       name="reminder1"
       placeholder="1 hora antes"
       format="12h"
       id="form-reminder1"
     >
-    </melser-time-picker>
+    </me-time-picker>
 
-    <melser-time-picker
+    <me-time-picker
       label="Recordatorio 2"
       name="reminder2"
       placeholder="24 horas antes"
       format="12h"
       id="form-reminder2"
     >
-    </melser-time-picker>
+    </me-time-picker>
   </div>
 
   <button type="submit" variant="primary">Agendar Cita</button>
@@ -321,64 +321,64 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="time-picker-playground" schema-name="time-picker" title="Configuración de Horarios" description="Definición de turnos y recordatorios.">
+<me-playground-form id="time-picker-playground" schema-name="time-picker" title="Configuración de Horarios" description="Definición de turnos y recordatorios.">
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
   <h4>⏰ Configuración de Horarios</h4>
     
-  <melser-time-picker 
+  <me-time-picker 
     label="Hora de inicio *"
     name="startTime"
     required
     placeholder="Hora de inicio"
     format="12h">
-  </melser-time-picker>
+  </me-time-picker>
   
-  <melser-time-picker 
+  <me-time-picker 
     label="Hora de fin *"
     name="endTime"
     required
     placeholder="Hora de fin"
     format="12h"
     min="09:00">
-  </melser-time-picker>
+  </me-time-picker>
   
-  <melser-time-picker 
+  <me-time-picker 
     label="Tiempo de descanso"
     name="breakTime"
     step="1800"
     placeholder="Duración del descanso"
     format="12h">
-  </melser-time-picker>
+  </me-time-picker>
   
-  <melser-time-picker 
+  <me-time-picker 
     label="Recordatorio automático"
     name="reminder"
     step="300"
     placeholder="Cuándo recordar"
     format="24h"
     show-seconds>
-  </melser-time-picker>
+  </me-time-picker>
   </div>
-</melser-playground-form>
+</me-playground-form>
 
 ## Personalización con CSS
 
 ### Variables CSS
 
 ```css
-melser-time-picker {
-  --melser-time-picker-width: 100%;
-  --melser-time-picker-height: 40px;
-  --melser-time-picker-padding: 8px 12px;
-  --melser-time-picker-border: 1px solid #d1d5db;
-  --melser-time-picker-border-radius: 6px;
-  --melser-time-picker-focus-border: #3b82f6;
-  --melser-time-picker-calendar-bg: #ffffff;
-  --melser-time-picker-calendar-border: #e5e7eb;
-  --melser-time-picker-hour-hover-bg: #f3f4f6;
-  --melser-time-picker-hour-selected-bg: #3b82f6;
-  --melser-time-picker-hour-selected-color: #ffffff;
-  --melser-time-picker-disabled-color: #9ca3af;
+me-time-picker {
+  --me-time-picker-width: 100%;
+  --me-time-picker-height: 40px;
+  --me-time-picker-padding: 8px 12px;
+  --me-time-picker-border: 1px solid #d1d5db;
+  --me-time-picker-border-radius: 6px;
+  --me-time-picker-focus-border: #3b82f6;
+  --me-time-picker-calendar-bg: #ffffff;
+  --me-time-picker-calendar-border: #e5e7eb;
+  --me-time-picker-hour-hover-bg: #f3f4f6;
+  --me-time-picker-hour-selected-bg: #3b82f6;
+  --me-time-picker-hour-selected-color: #ffffff;
+  --me-time-picker-disabled-color: #9ca3af;
 }
 ```
 
@@ -386,50 +386,50 @@ melser-time-picker {
 
 <style>
   .custom-time-picker {
-    --melser-time-picker-focus-border: #10b981;
-    --melser-time-picker-hour-selected-bg: #10b981;
+    --me-time-picker-focus-border: #10b981;
+    --me-time-picker-hour-selected-bg: #10b981;
   }
   
   .compact-time-picker {
-    --melser-time-picker-height: 32px;
-    --melser-time-picker-padding: 4px 8px;
-    --melser-time-picker-border-radius: 4px;
+    --me-time-picker-height: 32px;
+    --me-time-picker-padding: 4px 8px;
+    --me-time-picker-border-radius: 4px;
   }
   
   .dark-time-picker {
-    --melser-time-picker-border: 1px solid #374151;
-    --melser-time-picker-focus-border: #8b5cf6;
-    --melser-time-picker-calendar-bg: #1f2937;
-    --melser-time-picker-calendar-border: #374151;
-    --melser-time-picker-hour-hover-bg: #374151;
-    --melser-time-picker-hour-selected-bg: #8b5cf6;
-    --melser-time-picker-hour-selected-color: #f9fafb;
+    --me-time-picker-border: 1px solid #374151;
+    --me-time-picker-focus-border: #8b5cf6;
+    --me-time-picker-calendar-bg: #1f2937;
+    --me-time-picker-calendar-border: #374151;
+    --me-time-picker-hour-hover-bg: #374151;
+    --me-time-picker-hour-selected-bg: #8b5cf6;
+    --me-time-picker-hour-selected-color: #f9fafb;
   }
 </style>
 
 <div class="custom-time-picker" style="margin-bottom: 1rem;">
-  <melser-time-picker 
+  <me-time-picker 
     label="Time picker personalizado"
     value="14:30"
     placeholder="Verde personalizado">
-  </melser-time-picker>
+  </me-time-picker>
 </div>
 
 <div class="compact-time-picker" style="margin-bottom: 1rem;">
-  <melser-time-picker 
+  <me-time-picker 
     label="Time picker compacto"
     value="09:00"
     placeholder="Más pequeño">
-  </melser-time-picker>
+  </me-time-picker>
 </div>
 
 <div class="dark-time-picker">
-  <melser-time-picker 
+  <me-time-picker 
     label="Time picker tema oscuro"
     value="15:45"
     show-seconds
     placeholder="Para interfaces oscuras">
-  </melser-time-picker>
+  </me-time-picker>
 </div>
 
 ## Características Avanzadas
@@ -437,7 +437,7 @@ melser-time-picker {
 ### Configuración de Formato Personalizado
 
 ```javascript
-const picker = document.querySelector("melser-time-picker");
+const picker = document.querySelector("me-time-picker");
 if (picker) {
   // Configurar formato 12h con AM/PM
   picker.format = "12h";
@@ -467,7 +467,7 @@ if (picker) {
 ### Validación de Horarios de Negocio
 
 ```javascript
-const picker = document.querySelector("melser-time-picker");
+const picker = document.querySelector("me-time-picker");
 if (picker) {
   picker.addEventListener("change", (e) => {
     const selectedTime = e.target.value;
@@ -565,7 +565,7 @@ El componente MelserTimePicker incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "melser-ui/components/melser-time-picker.js";
+import "me-ui/components/me-time-picker.js";
 
 // Verificar que no esté deshabilitado
 console.log(picker.disabled); // Debe ser false
@@ -575,46 +575,39 @@ console.log(picker.disabled); // Debe ser false
 
 ```html
 <!-- Verificar que format="12h" esté configurado -->
-<melser-time-picker format="12h" label="Formato 12 horas"></melser-time-picker>
+<me-time-picker format="12h" label="Formato 12 horas"></me-time-picker>
 ```
 
 ### Intervalos no cambian
 
 ```html
 <!-- Configurar step apropiadamente -->
-<melser-time-picker
-  step="900"
-  label="Intervalos de 15 minutos"
-></melser-time-picker>
+<me-time-picker step="900" label="Intervalos de 15 minutos"></me-time-picker>
 ```
 
 ### Límites de hora no funcionan
 
 ```html
 <!-- Verificar formato de min/max -->
-<melser-time-picker
+<me-time-picker
   min="09:00"
   max="17:00"
   label="Horario laboral"
-></melser-time-picker>
+></me-time-picker>
 ```
 
 ### Segundos no se muestran
 
 ```html
 <!-- Verificar que show-seconds esté habilitado -->
-<melser-time-picker
-  show-seconds
-  step="1"
-  label="Con segundos"
-></melser-time-picker>
+<me-time-picker show-seconds step="1" label="Con segundos"></me-time-picker>
 ```
 
 ### Focus no visible
 
 ```css
 /* Personalizar indicador de foco */
-melser-time-picker:focus-within {
+me-time-picker:focus-within {
   box-shadow: 0 0 0 2px #3b82f6;
   border-color: #3b82f6;
 }
@@ -624,11 +617,11 @@ melser-time-picker:focus-within {
 
 ```html
 <!-- Agregar descripción para casos específicos -->
-<melser-time-picker
+<me-time-picker
   aria-label="Selecciona la hora de tu cita médica"
   step="900"
   placeholder="09:00"
-></melser-time-picker>
+></me-time-picker>
 ```
 
 ### Validación de rango falla

@@ -9,52 +9,52 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
 ## Ejemplo Básico
 
 ```html
-<melser-file-upload label="Subir archivo" accept="image/*,application/pdf">
-</melser-file-upload>
+<me-file-upload label="Subir archivo" accept="image/*,application/pdf">
+</me-file-upload>
 ```
 
 ## Demo Interactivo
 
-<melser-file-upload 
+<me-file-upload 
   id="demo-basic" 
   label="Subida básica de archivos" 
   accept="image/*,application/pdf"
   max-files="3">
-</melser-file-upload>
+</me-file-upload>
 
-<melser-file-upload 
+<me-file-upload 
   id="demo-dropzone" 
   label="Drag & Drop Zone" 
   drag-drop
   accept="image/*"
   max-size="5MB">
-</melser-file-upload>
+</me-file-upload>
 
-<melser-file-upload 
+<me-file-upload 
   id="demo-avatar" 
   label="Foto de perfil" 
   accept="image/*"
   max-files="1"
   show-preview
   crop>
-</melser-file-upload>
+</me-file-upload>
 
-<melser-file-upload 
+<me-file-upload 
   id="demo-documents" 
   label="Documentos" 
   accept=".pdf,.doc,.docx"
   max-files="5"
   max-size="10MB">
-</melser-file-upload>
+</me-file-upload>
 
-<melser-file-upload 
+<me-file-upload 
   id="demo-multiple" 
   label="Múltiples archivos" 
   accept="*/*"
   max-files="10"
   multiple
   show-preview>
-</melser-file-upload>
+</me-file-upload>
 
 ## Propiedades
 
@@ -94,7 +94,7 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
 ### Upload de Imágenes con Vista Previa
 
 ```html
-<melser-file-upload
+<me-file-upload
   label="Foto de perfil"
   name="profilePhoto"
   accept="image/*"
@@ -104,13 +104,13 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
   required
   hint="Solo imágenes JPG, PNG. Máximo 2MB"
 >
-</melser-file-upload>
+</me-file-upload>
 ```
 
 ### Upload de Documentos
 
 ```html
-<melser-file-upload
+<me-file-upload
   label="Documentos de identificación"
   name="documents"
   accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
@@ -119,13 +119,13 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
   max-size="10MB"
   drag-drop
 >
-</melser-file-upload>
+</me-file-upload>
 ```
 
 ### Upload con Autoguardado
 
 ```html
-<melser-file-upload
+<me-file-upload
   label="Adjuntar archivos"
   name="attachments"
   accept="*/*"
@@ -134,13 +134,13 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
   url="/api/upload"
   show-progress
 >
-</melser-file-upload>
+</me-file-upload>
 ```
 
 ### Upload con Validación Personalizada
 
 ```html
-<melser-file-upload
+<me-file-upload
   label="Certificado de estudios"
   name="certificate"
   accept="application/pdf,image/*"
@@ -149,7 +149,7 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
   required
   custom-validation="validateCertificate"
 >
-</melser-file-upload>
+</me-file-upload>
 ```
 
 ## Integración con Formularios
@@ -163,7 +163,7 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
   >
     <h4>📸 Documentos Requeridos</h4>
 
-    <melser-file-upload
+    <me-file-upload
       label="DNI o Cédula *"
       name="idDocument"
       accept=".pdf,.jpg,.jpeg,.png"
@@ -173,7 +173,7 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
       show-preview
       id="form-id"
     >
-    </melser-file-upload>
+    </me-file-upload>
   </div>
 
   <div
@@ -181,7 +181,7 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
   >
     <h4>📄 Documentos Opcionales</h4>
 
-    <melser-file-upload
+    <me-file-upload
       label="Certificado de estudios"
       name="educationCert"
       accept=".pdf"
@@ -190,9 +190,9 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
       show-preview
       id="form-education"
     >
-    </melser-file-upload>
+    </me-file-upload>
 
-    <melser-file-upload
+    <me-file-upload
       label="Foto de perfil"
       name="profilePhoto"
       accept="image/*"
@@ -202,9 +202,9 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
       crop
       id="form-photo"
     >
-    </melser-file-upload>
+    </me-file-upload>
 
-    <melser-file-upload
+    <me-file-upload
       label="Portfolio (múltiples archivos)"
       name="portfolio"
       accept="*/*"
@@ -215,7 +215,7 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
       show-preview
       id="form-portfolio"
     >
-    </melser-file-upload>
+    </me-file-upload>
   </div>
 
   <button type="submit" variant="primary">Completar Registro</button>
@@ -225,7 +225,7 @@ Un componente de subida de archivos avanzado con drag & drop, vista previa, vali
 ```javascript
 const form = document.getElementById("registration-form");
 if (form) {
-  const uploads = form.querySelectorAll("melser-file-upload");
+  const uploads = form.querySelectorAll("me-file-upload");
 
   // Manejar eventos de validación
   uploads.forEach((upload) => {
@@ -273,24 +273,24 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="file-upload-playground" schema-name="file-upload" title="Subida de Archivos" description="Ejemplo de subida de archivos con validación.">
+<me-playground-form id="file-upload-playground" schema-name="file-upload" title="Subida de Archivos" description="Ejemplo de subida de archivos con validación.">
 <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
   <h4>📁 Ejemplo de Subida de Archivos</h4>
   
-  <melser-file-upload 
+  <me-file-upload 
     label="Selecciona una imagen"
     name="demoImage"
     accept="image/*"
     max-files="1"
     max-size="3MB"
     show-preview>
-  </melser-file-upload>
+  </me-file-upload>
 </div>
 
 <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
   <h4>📎 Múltiples Archivos (Drag & Drop)</h4>
   
-  <melser-file-upload 
+  <me-file-upload 
     label="Arrastra archivos aquí"
     name="demoFiles"
     accept="*/*"
@@ -299,28 +299,28 @@ if (form) {
     max-size="10MB"
     drag-drop
     show-preview>
-  </melser-file-upload>
+  </me-file-upload>
 </div>
-</melser-playground-form>
+</me-playground-form>
 
 ## Personalización con CSS
 
 ### Variables CSS
 
 ```css
-melser-file-upload {
-  --melser-upload-border: 2px dashed #d1d5db;
-  --melser-upload-border-hover: 2px dashed #3b82f6;
-  --melser-upload-border-active: 2px solid #3b82f6;
-  --melser-upload-bg: #f9fafb;
-  --melser-upload-bg-hover: #f3f4f6;
-  --melser-upload-text-color: #6b7280;
-  --melser-upload-focus-color: #3b82f6;
-  --melser-upload-error-color: #ef4444;
-  --melser-upload-preview-bg: #ffffff;
-  --melser-upload-preview-border: 1px solid #e5e7eb;
-  --melser-upload-progress-bg: #e5e7eb;
-  --melser-upload-progress-fill: #3b82f6;
+me-file-upload {
+  --me-upload-border: 2px dashed #d1d5db;
+  --me-upload-border-hover: 2px dashed #3b82f6;
+  --me-upload-border-active: 2px solid #3b82f6;
+  --me-upload-bg: #f9fafb;
+  --me-upload-bg-hover: #f3f4f6;
+  --me-upload-text-color: #6b7280;
+  --me-upload-focus-color: #3b82f6;
+  --me-upload-error-color: #ef4444;
+  --me-upload-preview-bg: #ffffff;
+  --me-upload-preview-border: 1px solid #e5e7eb;
+  --me-upload-progress-bg: #e5e7eb;
+  --me-upload-progress-fill: #3b82f6;
 }
 ```
 
@@ -328,52 +328,52 @@ melser-file-upload {
 
 <style>
   .custom-upload {
-    --melser-upload-border: 2px dashed #10b981;
-    --melser-upload-border-hover: 2px solid #10b981;
-    --melser-upload-bg: #f0fdf4;
-    --melser-upload-bg-hover: #dcfce7;
+    --me-upload-border: 2px dashed #10b981;
+    --me-upload-border-hover: 2px solid #10b981;
+    --me-upload-bg: #f0fdf4;
+    --me-upload-bg-hover: #dcfce7;
   }
   
   .minimal-upload {
-    --melser-upload-border: 1px solid #d1d5db;
-    --melser-upload-text-color: #9ca3af;
-    --melser-upload-bg: #ffffff;
+    --me-upload-border: 1px solid #d1d5db;
+    --me-upload-text-color: #9ca3af;
+    --me-upload-bg: #ffffff;
   }
   
   .dark-upload {
-    --melser-upload-border: 2px dashed #374151;
-    --melser-upload-border-hover: 2px solid #8b5cf6;
-    --melser-upload-bg: #1f2937;
-    --melser-upload-bg-hover: #374151;
-    --melser-upload-text-color: #d1d5db;
-    --melser-upload-preview-bg: #111827;
+    --me-upload-border: 2px dashed #374151;
+    --me-upload-border-hover: 2px solid #8b5cf6;
+    --me-upload-bg: #1f2937;
+    --me-upload-bg-hover: #374151;
+    --me-upload-text-color: #d1d5db;
+    --me-upload-preview-bg: #111827;
   }
 </style>
 
 <div class="custom-upload" style="margin-bottom: 1rem;">
-  <melser-file-upload 
+  <me-file-upload 
     label="Upload personalizado (verde)"
     accept="image/*"
     max-files="1"
     show-preview>
-  </melser-file-upload>
+  </me-file-upload>
 </div>
 
 <div class="minimal-upload" style="margin-bottom: 1rem;">
-  <melser-file-upload 
+  <me-file-upload 
     label="Upload minimalista"
     accept=".pdf,.doc,.docx"
     max-files="1">
-  </melser-file-upload>
+  </me-file-upload>
 </div>
 
 <div class="dark-upload">
-  <melser-file-upload 
+  <me-file-upload 
     label="Upload tema oscuro"
     accept="*/*"
     multiple
     drag-drop>
-  </melser-file-upload>
+  </me-file-upload>
 </div>
 
 ## Características Avanzadas
@@ -381,7 +381,7 @@ melser-file-upload {
 ### Validación Personalizada
 
 ```javascript
-const upload = document.querySelector("melser-file-upload");
+const upload = document.querySelector("me-file-upload");
 if (upload) {
   upload.addEventListener("file-added", (e) => {
     const file = e.detail.file;
@@ -421,7 +421,7 @@ function isValidFileContent(file) {
 ### Subida Automática con Progreso
 
 ```javascript
-const autoUpload = document.querySelector("melser-file-upload[auto-upload]");
+const autoUpload = document.querySelector("me-file-upload[auto-upload]");
 if (autoUpload) {
   autoUpload.addEventListener("file-added", async (e) => {
     const file = e.detail.file;
@@ -467,7 +467,7 @@ if (autoUpload) {
 ### Previsualización de Imágenes con Crop
 
 ```javascript
-const cropUpload = document.querySelector("melser-file-upload[crop]");
+const cropUpload = document.querySelector("me-file-upload[crop]");
 if (cropUpload) {
   cropUpload.addEventListener("file-added", (e) => {
     const file = e.detail.file;
@@ -518,7 +518,7 @@ El componente MelserFileUpload incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "melser-ui/components/melser-file-upload.js";
+import "me-ui/components/me-file-upload.js";
 
 // Verificar que no esté deshabilitado
 console.log(upload.disabled); // Debe ser false
@@ -528,25 +528,21 @@ console.log(upload.disabled); // Debe ser false
 
 ```html
 <!-- Asegurar que drag-drop esté habilitado -->
-<melser-file-upload drag-drop label="Con drag & drop"></melser-file-upload>
+<me-file-upload drag-drop label="Con drag & drop"></me-file-upload>
 ```
 
 ### Vista previa no aparece
 
 ```html
 <!-- Verificar que show-preview esté habilitado -->
-<melser-file-upload show-preview label="Con vista previa"></melser-file-upload>
+<me-file-upload show-preview label="Con vista previa"></me-file-upload>
 ```
 
 ### Validación no funciona
 
 ```html
 <!-- Configurar límites apropiados -->
-<melser-file-upload
-  max-size="5MB"
-  accept="image/*"
-  max-files="3"
-></melser-file-upload>
+<me-file-upload max-size="5MB" accept="image/*" max-files="3"></me-file-upload>
 ```
 
 ### Subida automática falla
@@ -565,7 +561,7 @@ upload.addEventListener("upload-error", (e) => {
 
 ```css
 /* Personalizar indicador de foco */
-melser-file-upload:focus-within {
+me-file-upload:focus-within {
   box-shadow: 0 0 0 2px #3b82f6;
   border-color: #3b82f6;
 }
@@ -585,8 +581,8 @@ upload.maxPreviews = 10;
 
 ```html
 <!-- Configurar tamaño máximo apropiado -->
-<melser-file-upload
+<me-file-upload
   max-size="10MB"
   hint="El tamaño máximo permitido es 10MB"
-></melser-file-upload>
+></me-file-upload>
 ```

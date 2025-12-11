@@ -9,7 +9,7 @@ Melser UI es una colección de componentes web modernos construidos con Lit. Est
 ## Instalación
 
 ```bash
-npm install melser-ui
+npm install me-ui
 ```
 
 ## Uso Básico
@@ -20,10 +20,10 @@ Puedes importar componentes individuales o toda la librería:
 
 ```typescript
 // Importar componente específico
-import 'melser-ui/components/melser-checkbox.js';
+import "me-ui/components/me-checkbox.js";
 
 // Importar toda la librería
-import 'melser-ui';
+import "me-ui";
 ```
 
 ### Usar en HTML
@@ -33,27 +33,20 @@ Una vez importados, puedes usar los componentes directamente en tu HTML:
 ```html
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ejemplo Melser UI</title>
-</head>
-<body>
-  <h1>Ejemplo de Melser UI</h1>
-  
-  <!-- Usar componente checkbox -->
-  <melser-checkbox 
-    label="Acepto los términos" 
-    checked>
-  </melser-checkbox>
-  
-  <!-- Usar componente text input -->
-  <base-input 
-    label="Nombre" 
-    placeholder="Escribe tu nombre">
-  </base-input>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejemplo Melser UI</title>
+  </head>
+  <body>
+    <h1>Ejemplo de Melser UI</h1>
+
+    <!-- Usar componente checkbox -->
+    <me-checkbox label="Acepto los términos" checked> </me-checkbox>
+
+    <!-- Usar componente text input -->
+    <base-input label="Nombre" placeholder="Escribe tu nombre"> </base-input>
+  </body>
 </html>
 ```
 
@@ -63,22 +56,21 @@ Una vez importados, puedes usar los componentes directamente en tu HTML:
 
 Los componentes usan nombres de tags con prefijo para evitar conflictos:
 
-- ✅ `melser-checkbox` - Válido
-- ✅ `base-input` - Válido  
-- ✅ `melser-color-picker` - Válido
+- ✅ `me-checkbox` - Válido
+- ✅ `base-input` - Válido
+- ✅ `me-color-picker` - Válido
 - ❌ `checkbox` - Podría conflitar // no te deja utilizar sin un - por defecto asi que no hay problemas
 
 ### TypeScript y Imports
 
 ```typescript
 // Tipado correcto
-import type { MelserCheckbox, MelserTextInput } from 'melser-ui/types';
+import type { MelserCheckbox, MelserTextInput } from "me-ui/types";
 
 // Usar con tipado
-const checkbox = document.querySelector('melser-checkbox') as MelserCheckbox;
-const input = document.querySelector('base-input') as MelserTextInput;
+const checkbox = document.querySelector("me-checkbox") as MelserCheckbox;
+const input = document.querySelector("base-input") as MelserTextInput;
 ```
-
 
 ## Próximos Pasos
 

@@ -11,8 +11,7 @@ Hereda todas las funcionalidades base de `MelserBaseInput` (validación requerid
 ### Ejemplo Básico
 
 ```html
-<melser-color-picker label="Color de Fondo" value="#3b82f6">
-</melser-color-picker>
+<me-color-picker label="Color de Fondo" value="#3b82f6"> </me-color-picker>
 ```
 
 ---
@@ -53,7 +52,7 @@ Hereda todas las funcionalidades base de `MelserBaseInput` (validación requerid
   name: string; // Nombre del componente
   value: string; // Valor HEX actual (ej: "#FF0000")
   isValid: boolean; // Si cumple con la validación 'required'
-  componentType: string; // 'melser-color-picker'
+  componentType: string; // 'me-color-picker'
   dataType: string; // 'string'
 }
 ```
@@ -67,23 +66,23 @@ Hereda todas las funcionalidades base de `MelserBaseInput` (validación requerid
 El componente soporta los estilos definidos en la clase base.
 
 ```html
-<melser-color-picker
+<me-color-picker
   label="Outlined"
   variant="outlined"
   value="#7c3aed"
-></melser-color-picker>
+></me-color-picker>
 
-<melser-color-picker
+<me-color-picker
   label="Filled"
   variant="filled"
   value="#db2777"
-></melser-color-picker>
+></me-color-picker>
 
-<melser-color-picker
+<me-color-picker
   label="Standard"
   variant="standard"
   value="#059669"
-></melser-color-picker>
+></me-color-picker>
 ```
 
 ### 2. Tamaños
@@ -91,9 +90,9 @@ El componente soporta los estilos definidos en la clase base.
 Controla el tamaño del padding y la tipografía.
 
 ```html
-<melser-color-picker label="Pequeño" size="small"></melser-color-picker>
-<melser-color-picker label="Normal" size="medium"></melser-color-picker>
-<melser-color-picker label="Grande" size="large"></melser-color-picker>
+<me-color-picker label="Pequeño" size="small"></me-color-picker>
+<me-color-picker label="Normal" size="medium"></me-color-picker>
+<me-color-picker label="Grande" size="large"></me-color-picker>
 ```
 
 ### 3. Validación y Errores
@@ -101,19 +100,19 @@ Controla el tamaño del padding y la tipografía.
 El componente valida automáticamente que el texto ingresado sea un HEX válido de 6 dígitos. Si el input es `required` y está vacío, `isValid` será falso en el evento.
 
 ```html
-<melser-color-picker
+<me-color-picker
   label="Color Obligatorio"
   required
   error-message="Este campo es requerido"
   value=""
 >
-</melser-color-picker>
+</me-color-picker>
 ```
 
 ### 4. Capturar el cambio de valor (JavaScript)
 
 ```javascript
-const picker = document.querySelector("melser-color-picker");
+const picker = document.querySelector("me-color-picker");
 
 picker.addEventListener("ui:change", (e) => {
   const { value, isValid } = e.detail;
@@ -129,53 +128,53 @@ picker.addEventListener("ui:change", (e) => {
 
 ## Demo Interactivo
 
-<melser-color-picker 
+<me-color-picker 
   id="demo-basic" 
   label="Selector básico" 
   value="#3b82f6">
-</melser-color-picker>
+</me-color-picker>
 
-<melser-color-picker 
+<me-color-picker 
   id="demo-sizesm" 
   label="small_size" 
   value="#3b82f6"
   size="small">
-</melser-color-picker>
+</me-color-picker>
 
-<melser-color-picker 
+<me-color-picker 
   id="demo-size-lg" 
   label="large_size" 
   value="#3b82f6"
   size="large">
-</melser-color-picker>
+</me-color-picker>
 
-<melser-color-picker 
+<me-color-picker 
   id="demo-disabled" 
   label="Deshabilitado" 
   value="#ef4444"
   disabled>
-</melser-color-picker>
+</me-color-picker>
 
 ## Demo del Formulario
 
-<melser-playground-form id="color-playground" schema-name="color-picker" title="Personalización de Tema" description="Selecciona los colores de tu interfaz.">
+<me-playground-form id="color-playground" schema-name="color-picker" title="Personalización de Tema" description="Selecciona los colores de tu interfaz.">
   <div style="margin-bottom: 1.5rem;">
-    <melser-color-picker 
+    <me-color-picker 
       label="Color Principal *"
       name="primaryColor"
       required
       value="#3b82f6">
-    </melser-color-picker>
+    </me-color-picker>
   </div>
   
   <div style="margin-bottom: 1.5rem;">
-    <melser-color-picker 
+    <me-color-picker 
       label="Color de Fondo"
       name="backgroundColor"
       value="#ffffff">
-    </melser-color-picker>
+    </me-color-picker>
   </div>
-</melser-playground-form>
+</me-playground-form>
 
 ---
 
@@ -184,22 +183,22 @@ picker.addEventListener("ui:change", (e) => {
 Puedes personalizar la apariencia utilizando las siguientes variables CSS heredadas:
 
 ```css
-melser-color-picker {
+me-color-picker {
   /* Generales */
-  --melser-font-family: "Roboto", sans-serif;
-  --melser-spacing: 1.5rem; /* Margen inferior */
+  --me-font-family: "Roboto", sans-serif;
+  --me-spacing: 1.5rem; /* Margen inferior */
 
   /* Colores */
-  --melser-primary: #3b82f6; /* Color de foco */
-  --melser-error: #ef4444; /* Color de error */
-  --melser-text: #1f2937; /* Color del texto */
-  --melser-label-color: #374151;
-  --melser-border: #d1d5db; /* Color del borde */
-  --melser-bg: #ffffff; /* Fondo del input */
-  --melser-surface: #f3f4f6; /* Fondo para variante 'filled' */
+  --me-primary: #3b82f6; /* Color de foco */
+  --me-error: #ef4444; /* Color de error */
+  --me-text: #1f2937; /* Color del texto */
+  --me-label-color: #374151;
+  --me-border: #d1d5db; /* Color del borde */
+  --me-bg: #ffffff; /* Fondo del input */
+  --me-surface: #f3f4f6; /* Fondo para variante 'filled' */
 
   /* Dimensiones */
-  --melser-radius: 0.5rem; /* Radio de borde */
+  --me-radius: 0.5rem; /* Radio de borde */
 }
 ```
 

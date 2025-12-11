@@ -1,10 +1,10 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { MelserBaseInput, InputVar } from '../core/base-input';
 
 import type { MelserDataType } from '../types/index';
 
-@customElement('melser-date-picker')
+@customElement('me-date-picker')
 export class MelserDatePicker extends MelserBaseInput<string> {
   @property({ type: String }) value = '';
   @property({ type: String }) min = '';

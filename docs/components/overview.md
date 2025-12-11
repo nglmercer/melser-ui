@@ -11,12 +11,14 @@ Melser UI incluye una amplia gama de componentes web modernos y accesibles. Todo
 ### Formularios y Entrada de Datos
 
 #### Entrada de Texto
+
 - **[MelserTextInput](./text-input)** - Campo de texto con validación y estados
 - **[MelserTextarea](./textarea)** - Área de texto multi-línea
 - **[MelserPasswordInput](./password-input)** - Campo de contraseña con toggle de visibilidad
 - **[MelserNumberInput](./number-input)** - Campo numérico con controles de incremento
 
 #### Selectores
+
 - **[MelserSelect](./select)** - Selector desplegable simple
 - **[MelserMultiSelect](./multi-select)** - Selector múltiple con búsqueda
 - **[MelserCombobox](./combobox)** - Combo box con autocompletado
@@ -24,6 +26,7 @@ Melser UI incluye una amplia gama de componentes web modernos y accesibles. Todo
 - **[MelserRadioGroup](./radio-group)** - Grupo de botones radio
 
 #### Entrada Especializada
+
 - **[MelserFileUpload](./file-upload)** - Subida de archivos con drag & drop
 - **[MelserDatePicker](./date-picker)** - Selector de fecha
 - **[MelserTimePicker](./time-picker)** - Selector de hora
@@ -33,10 +36,12 @@ Melser UI incluye una amplia gama de componentes web modernos y accesibles. Todo
 - **[MelserTagsInput](./tags-input)** - Entrada de etiquetas
 
 #### Controles de Rango
+
 - **[MelserRange](./range)** - Slider para rangos numéricos
 - **[MelserDualRange](./dual-range)** - Slider con dos valores (min-max)
 
 #### Controles Especiales
+
 - **[MelserSwitch](./switch)** - Interruptor toggle
 
 ## Ejemplo de Uso de Componentes
@@ -45,30 +50,26 @@ Todos los componentes siguen el mismo patrón de uso:
 
 ```html
 <!-- Componente básico -->
-<melser-checkbox label="Opción simple"></melser-checkbox>
+<me-checkbox label="Opción simple"></me-checkbox>
 
 <!-- Con propiedades -->
-<base-input 
-  label="Nombre de usuario" 
+<base-input
+  label="Nombre de usuario"
   placeholder="Ingresa tu usuario"
   required
-  minlength="3">
+  minlength="3"
+>
 </base-input>
 
 <!-- Con eventos -->
-<button  
-  id="submit-btn" 
-  variant="primary" 
-  disabled>
-  Guardar
-</button >
+<button id="submit-btn" variant="primary" disabled>Guardar</button>
 ```
 
 ```javascript
 // Escuchar eventos
-const button = document.getElementById('submit-btn');
-button?.addEventListener('click', (event) => {
-  console.log('Botón clickeado:', event);
+const button = document.getElementById("submit-btn");
+button?.addEventListener("click", (event) => {
+  console.log("Botón clickeado:", event);
 });
 ```
 
@@ -78,21 +79,21 @@ button?.addEventListener('click', (event) => {
 
 Todos los componentes comparten estas propiedades:
 
-| Propiedad | Tipo | Descripción |
-|-----------|------|-------------|
+| Propiedad  | Tipo      | Descripción                |
+| ---------- | --------- | -------------------------- |
 | `disabled` | `boolean` | Deshabilita la interacción |
 | `required` | `boolean` | Marca como campo requerido |
-| `value` | `string` | Valor del componente |
-| `name` | `string` | Nombre para formularios |
+| `value`    | `string`  | Valor del componente       |
+| `name`     | `string`  | Nombre para formularios    |
 
 ### Eventos Comunes
 
-| Evento | Descripción |
-|--------|-------------|
-| `input` | Se dispara cuando cambia el valor |
+| Evento   | Descripción                       |
+| -------- | --------------------------------- |
+| `input`  | Se dispara cuando cambia el valor |
 | `change` | Se dispara al confirmar el cambio |
-| `focus` | Se dispara al obtener el foco |
-| `blur` | Se dispara al perder el foco |
+| `focus`  | Se dispara al obtener el foco     |
+| `blur`   | Se dispara al perder el foco      |
 
 ### Estados Visuales
 
@@ -105,11 +106,11 @@ Todos los componentes comparten estas propiedades:
 ## Compatibilidad de Navegadores
 
 | Navegador | Versión Mínima |
-|-----------|----------------|
-| Chrome | 88+ |
-| Firefox | 89+ |
-| Safari | 14.1+ |
-| Edge | 88+ |
+| --------- | -------------- |
+| Chrome    | 88+            |
+| Firefox   | 89+            |
+| Safari    | 14.1+          |
+| Edge      | 88+            |
 
 ## Ejemplo Interactivo
 
@@ -119,33 +120,29 @@ Aquí puedes probar algunos componentes en tiempo real:
 
 ```html
 <form id="demo-form">
-  <base-input 
-    label="Email" 
-    type="email" 
+  <base-input
+    label="Email"
+    type="email"
     placeholder="tu@email.com"
     id="email-input"
-    required>
+    required
+  >
   </base-input>
-  
-  <melser-password-input 
-    label="Contraseña" 
+
+  <me-password-input
+    label="Contraseña"
     placeholder="Mínimo 8 caracteres"
     minlength="8"
     id="password-input"
-    required>
-  </melser-password-input>
-  
-  <melser-checkbox 
-    label="Recordarme" 
-    id="remember-checkbox">
-  </melser-checkbox>
-  
-  <button  
-    variant="primary" 
-    type="submit"
-    id="submit-btn">
+    required
+  >
+  </me-password-input>
+
+  <me-checkbox label="Recordarme" id="remember-checkbox"> </me-checkbox>
+
+  <button variant="primary" type="submit" id="submit-btn">
     Iniciar Sesión
-  </button >
+  </button>
 </form>
 ```
 
@@ -153,13 +150,13 @@ Aquí puedes probar algunos componentes en tiempo real:
 
 <base-input id="demo-name" label="Nombre" placeholder="Tu nombre aquí"></base-input>
 
-<melser-select id="demo-select" label="Selecciona una opción">
+<me-select id="demo-select" label="Selecciona una opción">
   <option value="opcion1">Opción 1</option>
   <option value="opcion2">Opción 2</option>
   <option value="opcion3">Opción 3</option>
-</melser-select>
+</me-select>
 
-<melser-rating id="demo-rating" label="Califica este servicio" max="5"></melser-rating>
+<me-rating id="demo-rating" label="Califica este servicio" max="5"></me-rating>
 
 <button  id="demo-form-btn" variant="outline" type="submit">Probar Formulario</button >
 
@@ -167,7 +164,6 @@ Aquí puedes probar algunos componentes en tiempo real:
   <strong>Valores del formulario:</strong>
   <div id="demo-values"></div>
 </div>
-
 
 ## Accesibilidad
 
@@ -184,10 +180,10 @@ Todos los componentes de Melser UI están diseñados con accesibilidad en mente:
 Los componentes usan **CSS Custom Properties** para facilitar la personalización:
 
 ```css
-button  {
-  --melser-primary-color: #3b82f6;
-  --melser-border-radius: 6px;
-  --melser-padding: 8px 16px;
+button {
+  --me-primary-color: #3b82f6;
+  --me-border-radius: 6px;
+  --me-padding: 8px 16px;
 }
 ```
 

@@ -1,6 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { MelserBaseInput, InputVar } from '../core/base-input';
 import type { MelserDataType, SelectOption } from '../types/index';
 
 // Extendemos la interfaz para soportar grupos si es necesario
@@ -8,7 +8,7 @@ interface InternalOption extends SelectOption {
   group?: string;
 }
 
-@customElement('melser-select')
+@customElement('me-select')
 export class MelserSelect extends MelserBaseInput<string> {
   @property({ type: String }) value = '';
   @query('select') inputElement!: HTMLSelectElement;
@@ -27,6 +27,7 @@ export class MelserSelect extends MelserBaseInput<string> {
   // Esta función lee el HTML dentro de tu componente (Light DOM)
   // y lo convierte al array de objetos que tu componente necesita
   private syncOptions() {
+
     // Si el usuario pasó options por propiedad, tienen prioridad
     if (this.options && this.options.length > 0) {
       this._renderedOptions = [...this.options];
@@ -35,6 +36,7 @@ export class MelserSelect extends MelserBaseInput<string> {
 
     const newOptions: InternalOption[] = [];
     const children = Array.from(this.children);
+    let initialSelectedValue: string | undefined;
 
     children.forEach(child => {
       // Manejar <optgroup>
@@ -48,6 +50,10 @@ export class MelserSelect extends MelserBaseInput<string> {
             value: opt.value,
             group: groupLabel
           });
+
+          if (opt.hasAttribute('selected') && !initialSelectedValue) {
+            initialSelectedValue = opt.value;
+          }
         });
       }
       // Manejar <option> directos
@@ -59,13 +65,18 @@ export class MelserSelect extends MelserBaseInput<string> {
         });
 
         // Si el usuario puso el atributo 'selected' en el HTML
-        if (opt.hasAttribute('selected') && !this.value) {
-          this.value = opt.value;
+        if (opt.hasAttribute('selected') && !initialSelectedValue) {
+          initialSelectedValue = opt.value;
         }
       }
     });
 
     this._renderedOptions = newOptions;
+
+    // Solo establecer valor inicial de atributos si no hay valor actual
+    if (initialSelectedValue !== undefined && !this.value) {
+      this.value = initialSelectedValue;
+    }
   }
 
   handleChange(e: Event) {

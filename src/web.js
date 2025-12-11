@@ -2,7 +2,7 @@
 import './styles/theme.css';
 
 import './index';
-import './components/melser-playground-form'; // New Playground Component
+import './components/me-playground-form'; // New Playground Component
 import { setTheme } from './index';
 if (typeof window !== 'undefined') {
   const htmlElement = document.documentElement;
@@ -181,7 +181,7 @@ if (typeof window !== 'undefined') {
         const tagName = component.tagName.toLowerCase();
 
         // Detectar componentes Melser (por prefijo de tag)
-        if (tagName.startsWith('melser-')) {
+        if (tagName.startsWith('me-')) {
           // Intentar obtener nombre y valor
           // Prioridad: atributo name > propiedad name > id
           const name = component.getAttribute('name') || component.name || component.id;

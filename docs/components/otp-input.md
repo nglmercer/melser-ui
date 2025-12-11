@@ -9,31 +9,31 @@ Un componente de entrada de código OTP (One-Time Password) para verificación d
 ## Ejemplo Básico
 
 ```html
-<melser-otp-input length="6" label="Código de verificación"> </melser-otp-input>
+<me-otp-input length="6" label="Código de verificación"> </me-otp-input>
 ```
 
 ## Demo Interactivo
 
-<melser-otp-input 
+<me-otp-input 
   id="demo-basic" 
   length="6"
   label="Código de 6 dígitos">
-</melser-otp-input>
+</me-otp-input>
 
-<melser-otp-input 
+<me-otp-input 
   id="demo-numeric" 
   length="4"
   numeric-only
   label="Código numérico de 4 dígitos">
-</melser-otp-input>
+</me-otp-input>
 
-<melser-otp-input 
+<me-otp-input 
   id="demo-disabled" 
   length="6"
   disabled
   label="OTP deshabilitado"
   value="123456">
-</melser-otp-input>
+</me-otp-input>
 
 ## Propiedades
 
@@ -66,36 +66,36 @@ Un componente de entrada de código OTP (One-Time Password) para verificación d
 ### Código de Verificación SMS
 
 ```html
-<melser-otp-input
+<me-otp-input
   length="6"
   numeric-only
   label="Código SMS"
   hint="Ingresa el código de 6 dígitos enviado a tu teléfono"
 >
-</melser-otp-input>
+</me-otp-input>
 ```
 
 ### Código de Aplicación Authenticator
 
 ```html
-<melser-otp-input
+<me-otp-input
   length="6"
   numeric-only
   label="Código de authenticator"
   hint="Usa tu aplicación de autenticación"
 >
-</melser-otp-input>
+</me-otp-input>
 ```
 
 ### Código Alfanumérico
 
 ```html
-<melser-otp-input
+<me-otp-input
   length="8"
   label="Código de recuperación"
   hint="Código alfanumérico de 8 caracteres"
 >
-</melser-otp-input>
+</me-otp-input>
 ```
 
 ## Integración con Formularios
@@ -114,20 +114,17 @@ Un componente de entrada de código OTP (One-Time Password) para verificación d
   >
   </base-input>
 
-  <melser-otp-input
+  <me-otp-input
     name="otpCode"
     length="6"
     numeric-only
     label="Código de verificación"
     hint="Hemos enviado un código a tu correo"
   >
-  </melser-otp-input>
+  </me-otp-input>
 
-  <melser-checkbox
-    name="rememberDevice"
-    label="Recordar dispositivo por 30 días"
-  >
-  </melser-checkbox>
+  <me-checkbox name="rememberDevice" label="Recordar dispositivo por 30 días">
+  </me-checkbox>
 
   <button type="submit" variant="primary">Verificar</button>
 
@@ -152,7 +149,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="otp-playground" schema-name="otp-input" title="Verificación 2FA" description="Verificación de código y seguridad.">
+<me-playground-form id="otp-playground" schema-name="otp-input" title="Verificación 2FA" description="Verificación de código y seguridad.">
   <div style="margin-bottom: 1.5rem;">
     <base-input 
       label="Correo electrónico"
@@ -163,39 +160,39 @@ if (form) {
   </div>
   
   <div style="margin-bottom: 1.5rem;">
-    <melser-otp-input 
+    <me-otp-input 
       name="otpCode"
       length="6"
       numeric-only
       label="Código de verificación"
       hint="Hemos enviado un código a tu correo">
-    </melser-otp-input>
+    </me-otp-input>
   </div>
   
   <div style="margin-bottom: 1.5rem;">
-    <melser-checkbox 
+    <me-checkbox 
       name="rememberDevice"
       label="Recordar dispositivo por 30 días">
-    </melser-checkbox>
+    </me-checkbox>
   </div>
-</melser-playground-form>
+</me-playground-form>
 
 ## Personalización con CSS
 
 ### Variables CSS
 
 ```css
-melser-otp-input {
-  --melser-otp-input-width: 50px;
-  --melser-otp-input-height: 50px;
-  --melser-otp-input-gap: 8px;
-  --melser-otp-input-font-size: 18px;
-  --melser-otp-input-border: 2px solid #d1d5db;
-  --melser-otp-input-border-radius: 8px;
-  --melser-otp-input-focus-border: #3b82f6;
-  --melser-otp-input-bg: #ffffff;
-  --melser-otp-input-disabled-bg: #f9fafb;
-  --melser-otp-input-disabled-border: #e5e7eb;
+me-otp-input {
+  --me-otp-input-width: 50px;
+  --me-otp-input-height: 50px;
+  --me-otp-input-gap: 8px;
+  --me-otp-input-font-size: 18px;
+  --me-otp-input-border: 2px solid #d1d5db;
+  --me-otp-input-border-radius: 8px;
+  --me-otp-input-focus-border: #3b82f6;
+  --me-otp-input-bg: #ffffff;
+  --me-otp-input-disabled-bg: #f9fafb;
+  --me-otp-input-disabled-border: #e5e7eb;
 }
 ```
 
@@ -203,49 +200,49 @@ melser-otp-input {
 
 <style>
   .custom-otp {
-    --melser-otp-input-width: 60px;
-    --melser-otp-input-height: 60px;
-    --melser-otp-input-font-size: 24px;
-    --melser-otp-input-border-radius: 12px;
-    --melser-otp-input-focus-border: #10b981;
-    --melser-otp-input-border: 2px solid #10b981;
+    --me-otp-input-width: 60px;
+    --me-otp-input-height: 60px;
+    --me-otp-input-font-size: 24px;
+    --me-otp-input-border-radius: 12px;
+    --me-otp-input-focus-border: #10b981;
+    --me-otp-input-border: 2px solid #10b981;
   }
   
   .compact-otp {
-    --melser-otp-input-width: 40px;
-    --melser-otp-input-height: 40px;
-    --melser-otp-input-gap: 4px;
-    --melser-otp-input-font-size: 16px;
+    --me-otp-input-width: 40px;
+    --me-otp-input-height: 40px;
+    --me-otp-input-gap: 4px;
+    --me-otp-input-font-size: 16px;
   }
   
   .dark-theme-otp {
-    --melser-otp-input-bg: #1f2937;
-    --melser-otp-input-border: #4b5563;
-    --melser-otp-input-focus-border: #8b5cf6;
-    --melser-otp-input-font-size: 20px;
+    --me-otp-input-bg: #1f2937;
+    --me-otp-input-border: #4b5563;
+    --me-otp-input-focus-border: #8b5cf6;
+    --me-otp-input-font-size: 20px;
     color: #f9fafb;
   }
 </style>
 
 <div class="custom-otp" style="margin-bottom: 1rem;">
-  <melser-otp-input 
+  <me-otp-input 
     length="6"
     label="OTP personalizado (grande, verde)">
-  </melser-otp-input>
+  </me-otp-input>
 </div>
 
 <div class="compact-otp" style="margin-bottom: 1rem;">
-  <melser-otp-input 
+  <me-otp-input 
     length="6"
     label="OTP compacto">
-  </melser-otp-input>
+  </me-otp-input>
 </div>
 
 <div class="dark-theme-otp">
-  <melser-otp-input 
+  <me-otp-input 
     length="6"
     label="OTP tema oscuro (púrpura)">
-  </melser-otp-input>
+  </me-otp-input>
 </div>
 
 ## Accesibilidad
@@ -274,7 +271,7 @@ El componente MelserOtpInput incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import "melser-ui/components/melser-otp-input.js";
+import "me-ui/components/me-otp-input.js";
 
 // Verificar que no esté deshabilitado
 console.log(otpInput.disabled); // Debe ser false
@@ -284,7 +281,7 @@ console.log(otpInput.disabled); // Debe ser false
 
 ```javascript
 // Asegúrate que auto-focus esté habilitado
-<melser-otp-input length="6" auto-focus label="Código"></melser-otp-input>
+<me-otp-input length="6" auto-focus label="Código"></me-otp-input>
 
 // El componente manejará el enfoque automáticamente
 ```
@@ -293,23 +290,19 @@ console.log(otpInput.disabled); // Debe ser false
 
 ```javascript
 // Usa allowed-chars para personalizar caracteres permitidos
-<melser-otp-input
+<me-otp-input
   length="4"
   allowed-chars="[A-F0-9]"
   label="Código hexadecimal"
-></melser-otp-input>
+></me-otp-input>
 ```
 
 ### El valor no se envía en el formulario
 
 ```html
 <!-- Asegúrate de incluir el atributo name -->
-<melser-otp-input
-  name="verificationCode"
-  length="6"
-  label="Código de verificación"
->
-</melser-otp-input>
+<me-otp-input name="verificationCode" length="6" label="Código de verificación">
+</me-otp-input>
 
 // Recuperar valor en formulario const formData = new FormData(form); const code
 = formData.get('verificationCode');
@@ -319,10 +312,10 @@ console.log(otpInput.disabled); // Debe ser false
 
 ```html
 <!-- Usa aria-label para casos complejos -->
-<melser-otp-input
+<me-otp-input
   aria-label="Código de verificación de 6 dígitos para autenticación de dos factores"
   length="6"
   label="Código de verificación"
 >
-</melser-otp-input>
+</me-otp-input>
 ```

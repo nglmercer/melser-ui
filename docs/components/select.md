@@ -9,16 +9,16 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
 ## Ejemplo Básico
 
 ```html
-<melser-select label="Selecciona una opción" placeholder="Elige una opción">
+<me-select label="Selecciona una opción" placeholder="Elige una opción">
   <option value="opcion1">Opción 1</option>
   <option value="opcion2">Opción 2</option>
   <option value="opcion3">Opción 3</option>
-</melser-select>
+</me-select>
 ```
 
 ## Demo Interactivo
 
-<melser-select 
+<me-select 
   id="demo-basic" 
   label="Selector básico" 
   placeholder="Elige una opción">
@@ -29,9 +29,9 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   <option value="ar">Argentina</option>
   <option value="co">Colombia</option>
   <option value="pe">Perú</option>
-</melser-select>
+</me-select>
 
-<melser-select 
+<me-select 
   id="demo-groups" 
   label="Con grupos" 
   placeholder="Selecciona un país">
@@ -46,9 +46,9 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
     <option value="ar">Argentina</option>
     <option value="co">Colombia</option>
   </optgroup>
-</melser-select>
+</me-select>
 
-<melser-select 
+<me-select 
   id="demo-selected" 
   label="Con valor inicial" 
   value="mx"
@@ -58,9 +58,9 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   <option value="es">España</option>
   <option value="mx" selected>México</option>
   <option value="ar">Argentina</option>
-</melser-select>
+</me-select>
 
-<melser-select 
+<me-select 
   id="demo-disabled" 
   label="Deshabilitado" 
   value="co"
@@ -70,9 +70,9 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   <option value="es">España</option>
   <option value="mx">México</option>
   <option value="co" selected>Colombia</option>
-</melser-select>
+</me-select>
 
-<melser-select 
+<me-select 
   id="demo-search" 
   label="Con búsqueda" 
   searchable
@@ -85,7 +85,7 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   <option value="pe">Perú</option>
   <option value="cl">Chile</option>
   <option value="uy">Uruguay</option>
-</melser-select>
+</me-select>
 
 ## Propiedades
 
@@ -118,7 +118,7 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
 ### Select con Búsqueda
 
 ```html
-<melser-select
+<me-select
   label="País (con búsqueda)"
   searchable
   placeholder="Escribe para buscar..."
@@ -131,13 +131,13 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   <option value="co">Colombia</option>
   <option value="pe">Perú</option>
   <option value="cl">Chile</option>
-</melser-select>
+</me-select>
 ```
 
 ### Select con Validación
 
 ```html
-<melser-select
+<me-select
   label="Tipo de documento *"
   required
   placeholder="Selecciona un tipo"
@@ -148,13 +148,13 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   <option value="passport">Pasaporte</option>
   <option value="license">Licencia de conducir</option>
   <option value="other">Otro</option>
-</melser-select>
+</me-select>
 ```
 
 ### Select Agrupado
 
 ```html
-<melser-select label="Ciudad" placeholder="Selecciona una ciudad">
+<me-select label="Ciudad" placeholder="Selecciona una ciudad">
   <optgroup label="España">
     <option value="madrid">Madrid</option>
     <option value="barcelona">Barcelona</option>
@@ -165,13 +165,13 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
     <option value="guadalajara">Guadalajara</option>
     <option value="monterrey">Monterrey</option>
   </optgroup>
-</melser-select>
+</me-select>
 ```
 
 ### Select con Múltiples Selecciones
 
 ```html
-<melser-select
+<me-select
   label="Habilidades"
   multiple
   placeholder="Selecciona las habilidades relevantes"
@@ -183,7 +183,7 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   <option value="angular">Angular</option>
   <option value="node">Node.js</option>
   <option value="python">Python</option>
-</melser-select>
+</me-select>
 ```
 
 ## Integración con Formularios
@@ -192,7 +192,7 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
 
 ```html
 <form id="registration-select-form">
-  <melser-select
+  <me-select
     label="País de residencia *"
     name="country"
     required
@@ -209,18 +209,18 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
       <option value="co">Colombia</option>
       <option value="pe">Perú</option>
     </optgroup>
-  </melser-select>
+  </me-select>
 
-  <melser-select label="Ciudad" name="city" placeholder="Selecciona una ciudad">
+  <me-select label="Ciudad" name="city" placeholder="Selecciona una ciudad">
     <!-- Opciones dinámicas basadas en país -->
-  </melser-select>
+  </me-select>
 
-  <melser-select label="Tipo de cuenta" name="accountType" searchable clearable>
+  <me-select label="Tipo de cuenta" name="accountType" searchable clearable>
     <option value="">Selecciona un tipo</option>
     <option value="personal">Cuenta Personal</option>
     <option value="business">Cuenta Empresarial</option>
     <option value="student">Cuenta Estudiantil</option>
-  </melser-select>
+  </me-select>
 
   <button type="submit" variant="primary">Completar Registro</button>
 </form>
@@ -287,9 +287,9 @@ function updateCities(citySelect, country) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="select-playground" schema-name="select" title="Formulario de Selección" description="Ejemplo interactivo con validación.">
+<me-playground-form id="select-playground" schema-name="select" title="Formulario de Selección" description="Ejemplo interactivo con validación.">
   <div style="margin-bottom: 1rem;">
-    <melser-select 
+    <me-select 
       label="País *"
       name="country"
       required
@@ -305,20 +305,20 @@ function updateCities(citySelect, country) {
         <option value="co">Colombia</option>
         <option value="pe">Perú</option>
       </optgroup>
-    </melser-select>
+    </me-select>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-select 
+    <me-select 
       label="Ciudad"
       name="city"
       placeholder="Selecciona una ciudad">
       <option value="">Selecciona primero un país</option>
-    </melser-select>
+    </me-select>
   </div>
   
   <div style="margin-bottom: 1rem;">
-    <melser-select 
+    <me-select 
       label="Género"
       name="gender"
       searchable
@@ -327,27 +327,27 @@ function updateCities(citySelect, country) {
       <option value="male">Masculino</option>
       <option value="female">Femenino</option>
       <option value="other">Otro</option>
-    </melser-select>
+    </me-select>
   </div>
-</melser-playground-form>
+</me-playground-form>
 
 ## Personalización con CSS
 
 ### Variables CSS
 
 ```css
-melser-select {
-  --melser-select-width: 100%;
-  --melser-select-height: 40px;
-  --melser-select-padding: 8px 40px 8px 12px;
-  --melser-select-border: 1px solid #d1d5db;
-  --melser-select-border-radius: 6px;
-  --melser-select-focus-border: #3b82f6;
-  --melser-select-dropdown-bg: #ffffff;
-  --melser-select-dropdown-border: #d1d5db;
-  --melser-select-option-hover-bg: #f3f4f6;
-  --melser-select-option-selected-bg: #3b82f6;
-  --melser-select-option-selected-color: #ffffff;
+me-select {
+  --me-select-width: 100%;
+  --me-select-height: 40px;
+  --me-select-padding: 8px 40px 8px 12px;
+  --me-select-border: 1px solid #d1d5db;
+  --me-select-border-radius: 6px;
+  --me-select-focus-border: #3b82f6;
+  --me-select-dropdown-bg: #ffffff;
+  --me-select-dropdown-border: #d1d5db;
+  --me-select-option-hover-bg: #f3f4f6;
+  --me-select-option-selected-bg: #3b82f6;
+  --me-select-option-selected-color: #ffffff;
 }
 ```
 
@@ -355,54 +355,54 @@ melser-select {
 
 <style>
   .custom-select {
-    --melser-select-focus-border: #10b981;
-    --melser-select-option-selected-bg: #10b981;
-    --melser-select-border-radius: 12px;
+    --me-select-focus-border: #10b981;
+    --me-select-option-selected-bg: #10b981;
+    --me-select-border-radius: 12px;
   }
   
   .compact-select {
-    --melser-select-height: 32px;
-    --melser-select-padding: 4px 32px 4px 8px;
+    --me-select-height: 32px;
+    --me-select-padding: 4px 32px 4px 8px;
   }
   
   .dark-select {
-    --melser-select-border: 1px solid #374151;
-    --melser-select-bg: #1f2937;
-    --melser-select-color: #f9fafb;
-    --melser-select-focus-border: #8b5cf6;
-    --melser-select-dropdown-bg: #1f2937;
-    --melser-select-option-hover-bg: #374151;
+    --me-select-border: 1px solid #374151;
+    --me-select-bg: #1f2937;
+    --me-select-color: #f9fafb;
+    --me-select-focus-border: #8b5cf6;
+    --me-select-dropdown-bg: #1f2937;
+    --me-select-option-hover-bg: #374151;
   }
 </style>
 
 <div class="custom-select" style="margin-bottom: 1rem;">
-  <melser-select 
+  <me-select 
     label="Selector personalizado"
     value="opcion2">
     <option value="opcion1">Opción 1</option>
     <option value="opcion2">Opción 2</option>
     <option value="opcion3">Opción 3</option>
-  </melser-select>
+  </me-select>
 </div>
 
 <div class="compact-select" style="margin-bottom: 1rem;">
-  <melser-select 
+  <me-select 
     label="Selector compacto"
     value="es">
     <option value="es">España</option>
     <option value="mx">México</option>
     <option value="ar">Argentina</option>
-  </melser-select>
+  </me-select>
 </div>
 
 <div class="dark-select">
-  <melser-select 
+  <me-select 
     label="Tema oscuro"
     value="fr">
     <option value="fr">Francia</option>
     <option value="de">Alemania</option>
     <option value="it">Italia</option>
-  </melser-select>
+  </me-select>
 </div>
 
 ## Características Avanzadas
@@ -410,7 +410,7 @@ melser-select {
 ### Búsqueda Personalizada
 
 ```javascript
-const searchableSelect = document.querySelector("melser-select[searchable]");
+const searchableSelect = document.querySelector("me-select[searchable]");
 if (searchableSelect) {
   searchableSelect.addEventListener("search", (e) => {
     const searchTerm = e.detail.term;
@@ -434,7 +434,7 @@ function filterOptions(select, term) {
 ### Carga Dinámica de Opciones
 
 ```javascript
-const select = document.querySelector("melser-select");
+const select = document.querySelector("me-select");
 if (select) {
   // Simular carga de datos
   loadDynamicOptions(select);
@@ -488,7 +488,7 @@ El componente MelserSelect incluye:
 
 ```html
 <!-- Asegurar que searchable esté habilitado -->
-<melser-select searchable label="Con búsqueda"></melser-select>
+<me-select searchable label="Con búsqueda"></me-select>
 ```
 
 ### Opciones no se cargan dinámicamente
@@ -509,27 +509,24 @@ select.dispatchEvent(new Event("change"));
 
 ```html
 <!-- Usar required junto con placeholder vacío -->
-<melser-select required placeholder="Selecciona una opción">
+<me-select required placeholder="Selecciona una opción">
   <option value="">Selecciona una opción</option>
   <option value="1">Opción 1</option>
-</melser-select>
+</me-select>
 ```
 
 ### Problemas de accesibilidad
 
 ```html
 <!-- Agregar labels descriptivos para casos complejos -->
-<melser-select
-  aria-label="Selecciona tu país de nacimiento"
-  searchable
-></melser-select>
+<me-select aria-label="Selecciona tu país de nacimiento" searchable></me-select>
 ```
 
 ### Focus no visible
 
 ```css
 /* Personalizar indicador de foco */
-melser-select:focus-within {
+me-select:focus-within {
   box-shadow: 0 0 0 2px #3b82f6;
   border-color: #3b82f6;
 }
