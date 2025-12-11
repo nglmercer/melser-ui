@@ -156,7 +156,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="dual-range-playground" title="Filtros de Búsqueda" description="Rangos de precio y tamaño.">
+<melser-playground-form id="dual-range-playground" schema-name="dual-range" title="Filtros de Búsqueda" description="Rangos de precio y tamaño.">
   <div style="margin-bottom: 1.5rem;">
     <melser-dual-range 
       name="priceRange"

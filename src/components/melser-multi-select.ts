@@ -6,7 +6,27 @@ import type { MelserDataType, SelectOption } from '../types/index';
 
 @customElement('melser-multi-select')
 export class MelserMultiSelect extends MelserBaseInput<string[]> {
-  @property({ type: Array }) value: string[] = [];
+  @property({ 
+    type: Array,
+    converter: {
+      fromAttribute: (value: string | null) => {
+        if (!value) return [];
+        // Try parsing as JSON first (for [ "a", "b" ])
+        try {
+          const parsed = JSON.parse(value);
+          if (Array.isArray(parsed)) return parsed;
+        } catch {
+          // If not JSON, treat as comma-separated string
+        }
+        return value.split(',').map(v => v.trim()).filter(Boolean);
+      },
+      toAttribute: (value: string[]) => {
+        if (!value || value.length === 0) return null;
+        return value.join(',');
+      }
+    }
+  }) 
+  value: string[] = [];
   @property({ type: Array }) options: SelectOption[] = [];
   @query('input') inputElement!: HTMLInputElement;
 
@@ -14,13 +34,13 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
 
   handleChange(e: Event) {
     const select = e.target as HTMLSelectElement;
-    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value);
+    const selectedOptions = Array.from(select.selectedOptions).map(opt => opt.value)||[];
     this.value = selectedOptions;
     this.dispatchChange();
   }
 
   checkValidity(): boolean {
-    if (this.required && (this.value.length === 0)) {
+    if (this.required && (this.value?.length === 0)) {
       return false;
     }
     return true;
@@ -59,7 +79,7 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
     this._renderedOptions = newOptions;
 
     // Only set initial value from attributes if no value is currently present
-    if (initialSelectedValues.length > 0 && this.value.length === 0) {
+    if (initialSelectedValues.length > 0 && this.value?.length === 0) {
       this.value = initialSelectedValues;
     }
   }
@@ -80,7 +100,7 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
           ${this._renderedOptions.map(opt => html`
             <option 
               value="${opt.value}" 
-              ?selected="${this.value.includes(opt.value)}"
+              ?selected="${this.value?.includes(opt.value)}"
             >
               ${opt.label}
             </option>

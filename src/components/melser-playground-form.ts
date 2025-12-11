@@ -84,6 +84,15 @@ export const schemas: Record<string, z.ZodSchema> = {
         endTime: z.string().min(1, "Hora de fin requerida"),
         breakTime: z.string().optional(),
         reminder: z.string().optional()
+    }),
+    'range': z.object({
+        brightness: z.number().min(0).max(100),
+        volume: z.number().min(0).max(100)
+    }),
+    'dual-range': z.object({
+        priceRange: z.array(z.number()).length(2).optional(),
+        sizeRange: z.array(z.number()).length(2).optional(),
+        distanceRange: z.array(z.number()).length(2).optional()
     })
 };
 

@@ -139,7 +139,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="range-playground" title="Configuración de Audio/Video" description="Ajustes de brillo y volumen.">
+<melser-playground-form id="range-playground" schema-name="range" title="Configuración de Audio/Video" description="Ajustes de brillo y volumen.">
   <div style="margin-bottom: 1.5rem;">
     <melser-range 
       name="brightness"
