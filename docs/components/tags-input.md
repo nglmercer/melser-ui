@@ -194,8 +194,10 @@ if (form) {
     published: z.boolean().optional()
   });
   
-  const form = document.getElementById('tags-playground');
-  form.schema = schema;
+  if (typeof document !== 'undefined') {
+    const form = document.getElementById('tags-playground');
+    if (form) form.schema = schema;
+  }
 </script>
 
 ## Ejemplos Avanzados

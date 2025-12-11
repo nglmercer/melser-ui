@@ -345,8 +345,10 @@ if (form) {
     subjects: z.string().optional()
   });
   
-  const form = document.getElementById('multi-select-playground');
-  form.schema = schema;
+  if (typeof document !== 'undefined') {
+    const form = document.getElementById('multi-select-playground');
+    if (form) form.schema = schema;
+  }
 </script>
 
 

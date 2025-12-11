@@ -274,7 +274,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="switch-playground" title="Configuración" description="Ejemplo de configuración con switches y validación Zod.">
+<melser-playground-form id="switch-playground" schema-name="switch" title="Configuración" description="Ejemplo de configuración con switches y validación Zod.">
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>⚡ Configuración Rápida</h4>
     
@@ -333,44 +333,40 @@ if (form) {
 </div>
 
 <script type="module">
-  import { z } from 'zod';
+  // Schema is loaded via schema-name="switch"
   
-  const schema = z.object({
-    premium: z.boolean().default(false),
-    dev: z.boolean().default(false),
-    autosave: z.boolean().default(true),
-    sound: z.boolean().default(true),
-    music: z.boolean().default(true),
-    vibration: z.boolean().default(false),
-    gameNotifications: z.boolean().default(true)
-  });
-  
-  const form = document.getElementById('switch-playground');
-  const detailsDiv = document.getElementById('switch-details');
-  const resultDiv = document.getElementById('switch-result');
-  
-  form.schema = schema;
-  form.defaultData = {
-    autosave: true,
-    sound: true,
-    music: true,
-    gameNotifications: true
-  };
-  
-  form.addEventListener('playground:submit', (e) => {
-     const { data } = e.detail;
-     
-     // Pretty print active settings
-     const active = Object.keys(data).filter(k => data[k]);
-     
-     detailsDiv.innerHTML = `
-        <div style="display:flex; flex-wrap:wrap; gap:8px;">
-           ${active.map(k => `<span style="background:#e0e7ff; color:#3730a3; padding:2px 8px; border-radius:4px; font-size:0.9em;">${k}</span>`).join('')}
-           ${active.length === 0 ? '<span style="color:#666;">Ninguna opción activa</span>' : ''}
-        </div>
-     `;
-     resultDiv.style.display = 'block';
-  });
+  if (typeof document !== 'undefined') {
+      const form = document.getElementById('switch-playground');
+      const detailsDiv = document.getElementById('switch-details');
+      const resultDiv = document.getElementById('switch-result');
+      
+      if (form) {
+          // Default values for the form
+          form.defaultData = {
+              autosave: true,
+              sound: true,
+              music: true,
+              gameNotifications: true
+          };
+          
+          form.addEventListener('playground:submit', (e) => {
+             const { data } = e.detail;
+             
+             // Pretty print active settings
+             const active = Object.keys(data).filter(k => data[k]);
+             
+             if (detailsDiv && resultDiv) {
+                 detailsDiv.innerHTML = `
+                    <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                       ${active.map(k => `<span style="background:#e0e7ff; color:#3730a3; padding:2px 8px; border-radius:4px; font-size:0.9em;">${k}</span>`).join('')}
+                       ${active.length === 0 ? '<span style="color:#666;">Ninguna opción activa</span>' : ''}
+                    </div>
+                 `;
+                 resultDiv.style.display = 'block';
+             }
+          });
+      }
+  }
 </script>
 
 

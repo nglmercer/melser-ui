@@ -387,8 +387,10 @@ function debounce(func, wait) {
     framework: z.string().optional()
   });
   
-  const form = document.getElementById('combobox-playground');
-  form.schema = schema;
+  if (typeof document !== 'undefined') {
+    const form = document.getElementById('combobox-playground');
+    if (form) form.schema = schema;
+  }
 </script>
 
 

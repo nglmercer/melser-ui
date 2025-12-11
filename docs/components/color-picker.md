@@ -173,8 +173,10 @@ picker.addEventListener('ui:change', (e) => {
     backgroundColor: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Debe ser un color hexadecimal válido").optional()
   });
   
-  const form = document.getElementById('color-playground');
-  form.schema = schema;
+  if (typeof document !== 'undefined') {
+    const form = document.getElementById('color-playground');
+    if (form) form.schema = schema;
+  }
 </script>
 
 

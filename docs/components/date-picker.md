@@ -346,8 +346,10 @@ if (form) {
     creationYear: z.string().optional()
   });
   
-  const form = document.getElementById('date-picker-playground');
-  form.schema = schema;
+  if (typeof document !== 'undefined') {
+    const form = document.getElementById('date-picker-playground');
+    if (form) form.schema = schema;
+  }
 </script>
 
 

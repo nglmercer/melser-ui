@@ -143,7 +143,7 @@ melser-checkbox::part(container) {
 El componente emite eventos y valida su estado interno.
 
 ```html
-<melser-playground-form id="checkbox-playground" title="Registro" description="Validación de términos y condiciones.">
+<melser-playground-form id="checkbox-playground" schema-name="checkbox" title="Registro" description="Validación de términos y condiciones.">
   <melser-checkbox 
     name="terms" 
     label="Acepto los términos *" 
@@ -151,17 +151,7 @@ El componente emite eventos y valida su estado interno.
   </melser-checkbox>
 </melser-playground-form>
 
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    // Checkbox value is boolean. Refine ensures it's true.
-    terms: z.boolean().refine(val => val === true, "Es obligatorio aceptar los términos")
-  });
-  
-  const form = document.getElementById('checkbox-playground');
-  form.schema = schema;
-</script>
+
 ```
 
 ## Solución de Problemas

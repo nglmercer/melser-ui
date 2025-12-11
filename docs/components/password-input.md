@@ -15,40 +15,6 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
 </melser-password-input>
 ```
 
-## Demo Interactiva
-
-<melser-password-input 
-  id="demo-basic" 
-  label="Contraseña básica" 
-  placeholder="Escribe una contraseña...">
-</melser-password-input>
-
-<melser-password-input 
-  id="demo-strong" 
-  label="Contraseña fuerte *" 
-  placeholder="Mínimo 8 caracteres"
-  minlength="8"
-  show-toggle
-  strength-meter
-  required>
-</melser-password-input>
-
-<melser-password-input 
-  id="demo-weak" 
-  label="Contraseña débil" 
-  placeholder="Contraseña de ejemplo"
-  show-toggle
-  strength-meter
-  value="123">
-</melser-password-input>
-
-<melser-password-input 
-  id="demo-weak-toggle" 
-  label="Mostrar/Ocultar" 
-  placeholder="Click en el ojo para mostrar"
-  show-toggle>
-</melser-password-input>
-
 ## Propiedades
 
 | Propiedad | Tipo | Valor por Defecto | Descripción |
@@ -210,8 +176,10 @@ if (form) {
     path: ["confirmPassword"]
   });
   
-  const form = document.getElementById('password-playground');
-  form.schema = schema;
+  if (typeof document !== 'undefined') {
+    const form = document.getElementById('password-playground');
+    if (form) form.schema = schema;
+  }
 </script>
 
 ## Personalización con CSS

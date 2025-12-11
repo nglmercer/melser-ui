@@ -15,36 +15,6 @@ Un componente de entrada de texto avanzado y personalizable con validación, ico
 </base-input>
 ```
 
-## Demo Interactiva
-
-<base-input 
-  id="demo-basic" 
-  label="Campo de texto básico" 
-  placeholder="Escribe algo...">
-</base-input>
-
-<base-input 
-  id="demo-required" 
-  label="Campo requerido *" 
-  placeholder="Este campo es obligatorio"
-  required>
-</base-input>
-
-<base-input 
-  id="demo-disabled" 
-  label="Campo deshabilitado" 
-  placeholder="No puedes escribir aquí"
-  disabled
-  value="Valor predefinido">
-</base-input>
-
-<base-input 
-  id="demo-password" 
-  label="Contraseña" 
-  type="password" 
-  placeholder="Mínimo 8 caracteres"
-  minlength="8">
-</base-input>
 
 ## Propiedades
 
@@ -203,7 +173,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="text-input-playground" title="Formulario de Ejemplo" description="Ejemplo interactivo con validación Zod automática.">
+<melser-playground-form id="text-input-playground" schema-name="text-input" title="Formulario de Ejemplo" description="Ejemplo interactivo con validación Zod automática.">
   <div style="margin-bottom: 1rem;">
     <base-input 
       label="Nombre completo *"
@@ -243,19 +213,7 @@ if (form) {
   </div>
 </melser-playground-form>
 
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    fullName: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
-    email: z.string().email("Email inválido"),
-    phone: z.string().optional(),
-    website: z.string().url("URL inválida").optional().or(z.literal(''))
-  });
-  
-  const form = document.getElementById('text-input-playground');
-  form.schema = schema;
-</script>
+
 
 ## Personalización con CSS
 

@@ -305,8 +305,10 @@ if (form) {
      demoFiles: z.any().optional()
   });
   
-  const form = document.getElementById('file-upload-playground');
-  form.schema = schema;
+  if (typeof document !== 'undefined') {
+    const form = document.getElementById('file-upload-playground');
+    if (form) form.schema = schema;
+  }
 </script>
 
 

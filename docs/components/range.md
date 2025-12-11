@@ -182,8 +182,10 @@ if (form) {
     volume: z.coerce.number().min(0).max(100)
   });
   
-  const form = document.getElementById('range-playground');
-  form.schema = schema;
+  if (typeof document !== 'undefined') {
+    const form = document.getElementById('range-playground');
+    if (form) form.schema = schema;
+  }
 </script>
 
 

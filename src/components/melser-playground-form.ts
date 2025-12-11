@@ -1,8 +1,47 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { z } from 'zod';
 import { ZodFormController } from '../utils/form-controller';
-import { Var } from '../theme/tokens';
+import { Var, setTheme } from '../theme/tokens';
+
+export const playgroundSchema = z.object({
+    fullName: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
+    email: z.string().email("Email inválido"),
+    phone: z.string().optional(),
+    website: z.string().url("URL inválida").optional().or(z.literal(''))
+});
+
+// Schema Registry
+export const schemas: Record<string, z.ZodSchema> = {
+    'default': playgroundSchema,
+    'text-input': playgroundSchema,
+    'textarea': z.object({
+        message: z.string().min(10, "Mínimo 10 caracteres").max(500, "Máximo 500 caracteres"),
+        additionalInfo: z.string().optional()
+    }),
+    'checkbox': z.object({
+        terms: z.boolean().refine(val => val === true, "Es obligatorio aceptar los términos")
+    }),
+    'radio': z.object({
+        opinion: z.string().min(1, "Debes seleccionar una opinión"),
+        experience: z.string().optional(),
+        preference: z.string().optional()
+    }),
+    'select': z.object({
+        country: z.string().min(1, "Selecciona tu país"),
+        city: z.string().optional(),
+        gender: z.string().optional()
+    }),
+    'switch': z.object({
+        premium: z.boolean().default(false),
+        dev: z.boolean().default(false),
+        autosave: z.boolean().default(true),
+        sound: z.boolean().default(true),
+        music: z.boolean().default(true),
+        vibration: z.boolean().default(false),
+        gameNotifications: z.boolean().default(true)
+    })
+};
 
 /**
  * A generic playground form wrapper that handles Zod validation and state management automatically.
@@ -10,7 +49,8 @@ import { Var } from '../theme/tokens';
  */
 @customElement('melser-playground-form')
 export class MelserPlaygroundForm extends LitElement {
-    @property({ attribute: false }) schema!: z.ZodSchema;
+    @property({ attribute: 'schema-name' }) schemaName = '';
+    @property({ attribute: false }) schema: z.ZodSchema = playgroundSchema;
     @property({ attribute: false }) defaultData: any = {};
     @property({ type: String }) title = 'Interactive Example';
     @property({ type: String }) description = '';
@@ -20,10 +60,11 @@ export class MelserPlaygroundForm extends LitElement {
     // Track if we are initialized
     private _initialized = false;
 
+    @state() private _theme: 'light' | 'dark' = 'light';
+
     constructor() {
         super();
-        // Initialize with empty schema temporarily until properties are set
-        this.form = new ZodFormController(this, z.object({}), {});
+        this.form = new ZodFormController(this, this.schema, {});
     }
 
     connectedCallback() {
@@ -31,9 +72,34 @@ export class MelserPlaygroundForm extends LitElement {
         this.addEventListener('ui:change', this.handleUiChange as EventListener);
         // We also listen to submit from any native form button inside
         this.addEventListener('click', this.handleClick);
+        this.syncInitialValues();
+    }
+
+    protected firstUpdated(): void {
+        // Look up schema by name if provided
+        if (this.schemaName && schemas[this.schemaName]) {
+            this.schema = schemas[this.schemaName];
+        }
+
+        // Ensure initialized with default schema if no props changed
+        if (!this._initialized) {
+            this.form.updateConfig(this.schema, this.defaultData);
+            this._initialized = true;
+            this.syncInitialValues();
+            this.syncErrors();
+        }
     }
 
     protected updated(changedProperties: Map<string, any>): void {
+        if (changedProperties.has('schemaName')) {
+            if (this.schemaName && schemas[this.schemaName]) {
+                this.schema = schemas[this.schemaName];
+                // We might need to trigger another update or handle it directly
+                this.form.updateConfig(this.schema, this.defaultData);
+                this.syncInitialValues();
+            }
+        }
+
         if (changedProperties.has('schema') || changedProperties.has('defaultData')) {
             if (this.schema) {
                 this.form.updateConfig(this.schema, this.defaultData);
@@ -77,6 +143,11 @@ export class MelserPlaygroundForm extends LitElement {
         } else {
             console.warn('❌ Playground Form Invalid:', this.form.errors);
         }
+    }
+
+    toggleTheme() {
+        this._theme = this._theme === 'light' ? 'dark' : 'light';
+        setTheme(this._theme);
     }
 
     /**
@@ -142,6 +213,11 @@ export class MelserPlaygroundForm extends LitElement {
                <span class="badge ${this.form.isValid ? 'valid' : 'invalid'}">
                  ${this.form.isValid ? 'Valid' : 'Invalid'}
                </span>
+            </div>
+            <div class="debug-header" style="margin-top: 0.5rem; justify-content: flex-end;">
+                 <button class="theme-btn" @click=${this.toggleTheme}>
+                    ${this._theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
+                 </button>
             </div>
             <pre class="debug-content">${JSON.stringify(this.form.data, null, 2)}</pre>
             
@@ -221,7 +297,7 @@ export class MelserPlaygroundForm extends LitElement {
     }
 
     .debug-section {
-        background: #f8fafc; /* Slate 50 */
+        background: ${Var.color.surface.variant};
         border-left: 1px solid ${Var.color.border.default};
         padding: 1.5rem;
         font-size: 0.85rem;
@@ -242,7 +318,7 @@ export class MelserPlaygroundForm extends LitElement {
     }
 
     .debug-content {
-        background: white;
+        background: ${Var.color.surface.primary};
         padding: 1rem;
         border-radius: ${Var.radius.default};
         border: 1px solid ${Var.color.border.default};
@@ -273,6 +349,23 @@ export class MelserPlaygroundForm extends LitElement {
     .badge.invalid {
         background: #fee2e2;
         color: #991b1b;
+    }
+
+    .theme-btn {
+        background: transparent;
+        border: 1px solid ${Var.color.border.default};
+        color: ${Var.color.text.secondary};
+        padding: 0.25rem 0.5rem;
+        border-radius: ${Var.radius.default};
+        font-size: 0.75rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+    .theme-btn:hover {
+        background: ${Var.color.bg.hover};
+        color: ${Var.color.text.primary};
     }
   `;
 }

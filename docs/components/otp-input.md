@@ -189,8 +189,10 @@ if (form) {
     rememberDevice: z.boolean().default(false)
   });
   
-  const form = document.getElementById('otp-playground');
-  form.schema = schema;
+  if (typeof document !== 'undefined') {
+    const form = document.getElementById('otp-playground');
+    if (form) form.schema = schema;
+  }
 </script>
 
     

@@ -181,7 +181,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="textarea-playground" title="Formulario de Contacto" description="Mensaje y comentarios adicionales.">
+<melser-playground-form id="textarea-playground" schema-name="textarea" title="Formulario de Contacto" description="Mensaje y comentarios adicionales.">
   <div style="margin-bottom: 1rem;">
     <melser-textarea 
       label="Mensaje *"
@@ -205,17 +205,7 @@ if (form) {
   </div>
 </melser-playground-form>
 
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    message: z.string().min(10, "Mínimo 10 caracteres").max(500, "Máximo 500 caracteres"),
-    additionalInfo: z.string().optional()
-  });
-  
-  const form = document.getElementById('textarea-playground');
-  form.schema = schema;
-</script>
+
 
 ## Personalización con CSS
 

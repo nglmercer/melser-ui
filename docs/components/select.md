@@ -292,7 +292,7 @@ function updateCities(citySelect, country) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="select-playground" title="Selección de Ubicación" description="Selectores dependientes y validación.">
+<melser-playground-form id="select-playground" schema-name="select" title="Selección de Ubicación" description="Selectores dependientes y validación.">
   <div style="margin-bottom: 1rem;">
     <melser-select 
       label="País *"
@@ -337,66 +337,55 @@ function updateCities(citySelect, country) {
 </melser-playground-form>
 
 <script type="module">
-  import { z } from 'zod';
+  // Schema loaded via schema-name="select"
   
-  const schema = z.object({
-    country: z.string().min(1, "Selecciona tu país"),
-    city: z.string().optional(),
-    gender: z.string().optional()
-  });
-  
-  const form = document.getElementById('select-playground');
-  form.schema = schema;
-
-  // Cities Data
-  const cities = {
-    'es': [
-      { value: 'madrid', label: 'Madrid' },
-      { value: 'barcelona', label: 'Barcelona' }
-    ],
-    'mx': [
-      { value: 'cdmx', label: 'Ciudad de México' },
-      { value: 'guadalajara', label: 'Guadalajara' }
-    ],
-    'ar': [
-      { value: 'ba', label: 'Buenos Aires' },
-      { value: 'cor', label: 'Córdoba' }
-    ],
-    'co': [
-        { value: 'bog', label: 'Bogotá' }
-    ]
-  };
-
-  // Listen for changes
-  form.addEventListener('ui:change', (e) => {
-    const { name, value } = e.detail;
-    
-    if (name === 'country') {
-       const citySelect = form.querySelector('melser-select[name="city"]');
-       // Reset city
-       // We need to trigger update in controller too if we change value programmatically?
-       // If we change DOM, component emits change? 
-       // Usually we change options first.
-       
-       const countryCities = cities[value] || [];
-       
-       if (countryCities.length > 0) {
-           citySelect.innerHTML = '<option value="">Selecciona una ciudad</option>';
-           countryCities.forEach(c => {
-               const opt = document.createElement('option');
-               opt.value = c.value;
-               opt.textContent = c.label;
-               citySelect.appendChild(opt);
-           });
-           citySelect.disabled = false;
-       } else {
-           citySelect.innerHTML = '<option value="">No hay ciudades disponibles</option>';
-           citySelect.disabled = true;
-       }
-       // Clear value in form controller?
-       // The user selects city manually next.
-    }
-  });
+  if (typeof document !== 'undefined') {
+      const form = document.getElementById('select-playground');
+      if (form) {
+          // Cities Data
+          const cities = {
+            'es': [
+              { value: 'madrid', label: 'Madrid' },
+              { value: 'barcelona', label: 'Barcelona' }
+            ],
+            'mx': [
+              { value: 'cdmx', label: 'Ciudad de México' },
+              { value: 'guadalajara', label: 'Guadalajara' }
+            ],
+            'ar': [
+              { value: 'ba', label: 'Buenos Aires' },
+              { value: 'cor', label: 'Córdoba' }
+            ],
+            'co': [
+                { value: 'bog', label: 'Bogotá' }
+            ]
+          };
+        
+          // Listen for changes
+          form.addEventListener('ui:change', (e) => {
+            const { name, value } = e.detail;
+            
+            if (name === 'country') {
+               const citySelect = form.querySelector('melser-select[name="city"]');
+               const countryCities = cities[value] || [];
+               
+               if (countryCities.length > 0) {
+                   citySelect.innerHTML = '<option value="">Selecciona una ciudad</option>';
+                   countryCities.forEach(c => {
+                       const opt = document.createElement('option');
+                       opt.value = c.value;
+                       opt.textContent = c.label;
+                       citySelect.appendChild(opt);
+                   });
+                   citySelect.disabled = false;
+               } else {
+                   citySelect.innerHTML = '<option value="">No hay ciudades disponibles</option>';
+                   citySelect.disabled = true;
+               }
+            }
+          });
+      }
+  }
 </script>
 
 

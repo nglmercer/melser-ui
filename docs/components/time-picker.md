@@ -355,14 +355,18 @@ if (form) {
     reminder: z.string().optional()
   });
   
-  const form = document.getElementById('time-picker-playground');
-  form.schema = schema;
-  form.defaultData = {
-    startTime: "09:00",
-    endTime: "17:00",
-    breakTime: "01:00",
-    reminder: "15:00:00"
-  };
+  if (typeof document !== 'undefined') {
+    const form = document.getElementById('time-picker-playground');
+    if (form) {
+        form.schema = schema;
+        form.defaultData = {
+            startTime: "09:00",
+            endTime: "17:00",
+            breakTime: "01:00",
+            reminder: "15:00:00"
+        };
+    }
+  }
 </script>
 
 

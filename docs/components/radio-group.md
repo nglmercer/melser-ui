@@ -289,7 +289,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="radio-playground" title="Encuesta de Satisfacción" description="Preguntas de selección simple con validación.">
+<melser-playground-form id="radio-playground" schema-name="radio" title="Encuesta de Satisfacción" description="Preguntas de selección simple con validación.">
   <div style="margin-bottom: 1.5rem;">
     <melser-radio-group 
       label="¿Te gusta este componente? *"
@@ -326,18 +326,7 @@ if (form) {
   </div>
 </melser-playground-form>
 
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    opinion: z.string().min(1, "Debes seleccionar una opinión"),
-    experience: z.string().optional(),
-    preference: z.string().optional()
-  });
-  
-  const form = document.getElementById('radio-playground');
-  form.schema = schema;
-</script>
+
 
 <div id="radio-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">
   <strong>Resultados de la Encuesta:</strong>

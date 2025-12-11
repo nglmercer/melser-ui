@@ -285,26 +285,32 @@ if (form) {
     discount: z.coerce.number().min(0).max(50).default(0)
   });
   
-  const form = document.getElementById('number-input-playground');
-  const resultDiv = document.getElementById('calculation-result');
-  const detailsDiv = document.getElementById('calc-details');
-  
-  form.schema = schema;
-  form.defaultData = { quantity: 1, discount: 0 };
-  
-  form.addEventListener('playground:submit', (e) => {
-    const { data } = e.detail;
-    const total = data.price * data.quantity;
-    const discountAmount = total * (data.discount / 100);
-    const finalPrice = total - discountAmount;
+  if (typeof document !== 'undefined') {
+    const form = document.getElementById('number-input-playground');
+    const resultDiv = document.getElementById('calculation-result');
+    const detailsDiv = document.getElementById('calc-details');
     
-    detailsDiv.innerHTML = `
-      <p>Subtotal: €${total.toFixed(2)}</p>
-      <p>Descuento: -€${discountAmount.toFixed(2)}</p>
-      <p style="font-size: 1.2em; color: var(--melser-primary);">Total: €${finalPrice.toFixed(2)}</p>
-    `;
-    resultDiv.style.display = 'block';
-  });
+    if (form) {
+        form.schema = schema;
+        form.defaultData = { quantity: 1, discount: 0 };
+        
+        form.addEventListener('playground:submit', (e) => {
+            const { data } = e.detail;
+            const total = data.price * data.quantity;
+            const discountAmount = total * (data.discount / 100);
+            const finalPrice = total - discountAmount;
+            
+            if (detailsDiv && resultDiv) {
+                detailsDiv.innerHTML = `
+                <p>Subtotal: €${total.toFixed(2)}</p>
+                <p>Descuento: -€${discountAmount.toFixed(2)}</p>
+                <p style="font-size: 1.2em; color: var(--melser-primary);">Total: €${finalPrice.toFixed(2)}</p>
+                `;
+                resultDiv.style.display = 'block';
+            }
+        });
+    }
+  }
 </script>
 
 
