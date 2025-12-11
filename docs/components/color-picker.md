@@ -158,7 +158,7 @@ picker.addEventListener("ui:change", (e) => {
 
 ## Demo del Formulario
 
-<melser-playground-form id="color-playground" title="Personalización de Tema" description="Selecciona los colores de tu interfaz.">
+<melser-playground-form id="color-playground" schema-name="color-picker" title="Personalización de Tema" description="Selecciona los colores de tu interfaz.">
   <div style="margin-bottom: 1.5rem;">
     <melser-color-picker 
       label="Color Principal *"

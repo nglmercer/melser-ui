@@ -273,7 +273,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="file-upload-playground" title="Subida de Archivos" description="Ejemplo de subida de archivos con validación.">
+<melser-playground-form id="file-upload-playground" schema-name="file-upload" title="Subida de Archivos" description="Ejemplo de subida de archivos con validación.">
 <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
   <h4>📁 Ejemplo de Subida de Archivos</h4>
   

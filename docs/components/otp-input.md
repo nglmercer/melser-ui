@@ -152,7 +152,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="otp-playground" title="Verificación 2FA" description="Verificación de código y seguridad.">
+<melser-playground-form id="otp-playground" schema-name="otp-input" title="Verificación 2FA" description="Verificación de código y seguridad.">
   <div style="margin-bottom: 1.5rem;">
     <base-input 
       label="Correo electrónico"

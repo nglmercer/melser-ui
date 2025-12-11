@@ -54,6 +54,36 @@ export const schemas: Record<string, z.ZodSchema> = {
         price: z.number().min(0, "El precio no puede ser negativo").optional(),
         quantity: z.number().min(1, "Mínimo 1 unidad").max(50, "Máximo 50 unidades").optional(),
         discount: z.number().min(0, "Mínimo 0%").max(50, "Máximo 50%").optional()
+    }),
+    'otp-input': z.object({
+        email: z.string().email("Correo electrónico inválido").optional(),
+        otpCode: z.string().min(6, "El código debe tener 6 dígitos").max(6, "El código debe tener 6 dígitos"),
+        rememberDevice: z.boolean().optional()
+    }),
+    'color-picker': z.object({
+        primaryColor: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Debe ser un código hexadecimal válido (ej: #FF0000)"),
+        backgroundColor: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Debe ser un código hexadecimal válido").optional()
+    }),
+    'tags-input': z.object({
+        title: z.string().min(5, "El título es muy corto"),
+        tags: z.array(z.string()).min(1, "Debes agregar al menos una etiqueta").max(8, "Máximo 8 etiquetas"),
+        published: z.boolean().optional()
+    }),
+    'file-upload': z.object({
+        demoImage: z.any().optional(),
+        demoFiles: z.any().optional()
+    }),
+    'date-picker': z.object({
+        eventDate: z.string().min(1, "Debe seleccionar una fecha"),
+        enrollmentRange: z.union([z.string(), z.array(z.string())]).optional(),
+        breakDates: z.union([z.string(), z.array(z.string())]).optional(),
+        creationYear: z.string().optional()
+    }),
+    'time-picker': z.object({
+        startTime: z.string().min(1, "Hora de inicio requerida"),
+        endTime: z.string().min(1, "Hora de fin requerida"),
+        breakTime: z.string().optional(),
+        reminder: z.string().optional()
     })
 };
 

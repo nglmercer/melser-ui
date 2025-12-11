@@ -310,7 +310,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="date-picker-playground" title="Planificación de Evento" description="Gestión de fechas con rangos y validación.">
+<melser-playground-form id="date-picker-playground" schema-name="date-picker" title="Planificación de Evento" description="Gestión de fechas con rangos y validación.">
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
   <h4>📅 Planificación de Evento</h4>
   

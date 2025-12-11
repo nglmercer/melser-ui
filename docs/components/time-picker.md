@@ -321,7 +321,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="time-picker-playground" title="Configuración de Horarios" description="Definición de turnos y recordatorios.">
+<melser-playground-form id="time-picker-playground" schema-name="time-picker" title="Configuración de Horarios" description="Definición de turnos y recordatorios.">
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
   <h4>⏰ Configuración de Horarios</h4>
     

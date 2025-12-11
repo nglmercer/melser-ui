@@ -153,7 +153,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="tags-playground" title="Publicar Artículo" description="Etiquetado y validación de contenido.">
+<melser-playground-form id="tags-playground" schema-name="tags-input" title="Publicar Artículo" description="Etiquetado y validación de contenido.">
   <div style="margin-bottom: 1.5rem;">
     <base-input 
       label="Título del artículo"
