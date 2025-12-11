@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
-import { customElement, property,query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { customElement, property, query } from 'lit/decorators.js';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('melser-range')
@@ -45,14 +46,14 @@ export class MelserRange extends MelserBaseInput<number> {
         padding: 0;
         border: none;
         width: 100%;
-        accent-color: var(--melser-primary);
+        accent-color: ${Var.color.primary};
         height: 1.5rem;
         background: transparent;
         cursor: pointer;
       }
       
       input[type="range"]:focus-visible {
-        outline: 2px solid var(--melser-primary);
+        outline: 2px solid ${Var.color.primary};
         outline-offset: 2px;
         border-radius: 4px;
       }

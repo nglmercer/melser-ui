@@ -1,6 +1,6 @@
 import { html, css } from 'lit';
-import { customElement, property, state,query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { customElement, property, state, query } from 'lit/decorators.js';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
 import type { MelserDataType } from '../types/index';
 
 // Simple star SVG path
@@ -11,7 +11,7 @@ export class MelserRating extends MelserBaseInput<number> {
     @property({ type: Number }) value = 0;
     @property({ type: Number }) max = 5;
     @property({ type: Number }) min = 0;
-    
+
     /** * Granularity of selection. 
      * 1 = integers only (1, 2, 3)
      * 0.5 = half stars (1.5, 2.5)
@@ -41,7 +41,7 @@ export class MelserRating extends MelserBaseInput<number> {
         const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
         const x = e.clientX - rect.left;
         const width = rect.width;
-        
+
         // Calculate raw value based on mouse position within the star
         // e.g., Hovering 50% of 4th star = 3 + 0.5 = 3.5
         const percent = Math.min(1, Math.max(0, x / width));
@@ -49,10 +49,10 @@ export class MelserRating extends MelserBaseInput<number> {
 
         // Snap to precision
         let snappedValue = Math.ceil(rawValue / this.precision) * this.precision;
-        
+
         // Ensure bounds
         snappedValue = Math.min(this.max, Math.max(this.min, snappedValue));
-        
+
         // Fix JS floating point errors (e.g. 4.100000002)
         this._hoverValue = parseFloat(snappedValue.toFixed(2));
     }
@@ -106,7 +106,7 @@ export class MelserRating extends MelserBaseInput<number> {
         css`
             :host {
                 --star-size: 1.5rem;
-                --star-color-empty: var(--melser-border, #e5e7eb);
+                --star-color-empty: ${InputVar['border-color']};
                 --star-color-filled: #fbbf24;
             }
 

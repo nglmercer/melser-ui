@@ -37,7 +37,9 @@ export function createComponentTheme<T extends Record<string, CSSResult | string
     // The resulting object allows using vars.bg -> css`var(--base-input-bg)`
     const vars = Object.keys(tokens).reduce((acc, key) => {
         const varName = `--${prefix}-${key}`;
-        acc[key as keyof T] = css`var(${unsafeCSS(varName)})`;
+        // Include the default value as a fallback
+        const defaultValue = getCssText(tokens[key]);
+        acc[key as keyof T] = css`var(${unsafeCSS(varName)}, ${unsafeCSS(defaultValue)})`;
         return acc;
     }, {} as Record<keyof T, CSSResult>);
 

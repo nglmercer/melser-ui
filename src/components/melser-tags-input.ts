@@ -1,54 +1,55 @@
 import { html, css } from 'lit';
-import { customElement, property, state,query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { customElement, property, state, query } from 'lit/decorators.js';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('melser-tags-input')
 export class MelserTagsInput extends MelserBaseInput<string[]> {
-    @property({ type: Array }) value: string[] = [];
-    @state() inputValue = '';
-    @query('input') inputElement!: HTMLInputElement;
-    readonly dataType: MelserDataType = 'array';
+  @property({ type: Array }) value: string[] = [];
+  @state() inputValue = '';
+  @query('input') inputElement!: HTMLInputElement;
+  readonly dataType: MelserDataType = 'array';
 
-    handleInput(e: Event) {
-        const input = e.target as HTMLInputElement;
-        this.inputValue = input.value;
+  handleInput(e: Event) {
+    const input = e.target as HTMLInputElement;
+    this.inputValue = input.value;
+  }
+
+  handleKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      this.addTag();
+    } else if (e.key === 'Backspace' && !this.inputValue && this.value.length > 0) {
+      this.removeTag(this.value.length - 1);
     }
+  }
 
-    handleKeyDown(e: KeyboardEvent) {
-        if (e.key === 'Enter' || e.key === ',') {
-            e.preventDefault();
-            this.addTag();
-        } else if (e.key === 'Backspace' && !this.inputValue && this.value.length > 0) {
-            this.removeTag(this.value.length - 1);
-        }
+  addTag() {
+    const tag = this.inputValue.trim();
+    if (tag && !this.value.includes(tag)) {
+      this.value = [...this.value, tag];
+      this.inputValue = '';
+      this.dispatchChange();
+    } else if (tag && this.value.includes(tag)) {
+      this.inputValue = ''; // Clear duplicate input
     }
+  }
 
-    addTag() {
-        const tag = this.inputValue.trim();
-        if (tag && !this.value.includes(tag)) {
-            this.value = [...this.value, tag];
-            this.inputValue = '';
-            this.dispatchChange();
-        } else if (tag && this.value.includes(tag)) {
-            this.inputValue = ''; // Clear duplicate input
-        }
+  removeTag(index: number) {
+    this.value = this.value.filter((_, i) => i !== index);
+    this.dispatchChange();
+  }
+
+  checkValidity(): boolean {
+    if (this.required && this.value.length === 0) {
+      return false;
     }
+    return true;
+  }
 
-    removeTag(index: number) {
-        this.value = this.value.filter((_, i) => i !== index);
-        this.dispatchChange();
-    }
-
-    checkValidity(): boolean {
-        if (this.required && this.value.length === 0) {
-            return false;
-        }
-        return true;
-    }
-
-    render() {
-        return html`
+  render() {
+    return html`
       <div class="input-wrapper">
         ${this.label ? html`<label>${this.label}</label>` : ''}
         
@@ -75,28 +76,28 @@ export class MelserTagsInput extends MelserBaseInput<string[]> {
         <div class="error" part="error">${this.errorMessage}</div>
       </div>
     `;
-    }
+  }
 
-    static styles = [
-        MelserBaseInput.styles,
-        css`
+  static styles = [
+    MelserBaseInput.styles,
+    css`
       .tags-container {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
         padding: 0.5rem;
-        border: 1px solid var(--melser-border);
-        border-radius: var(--melser-radius);
-        background-color: var(--melser-input-bg);
+        border: 1px solid ${InputVar['border-color']};
+        border-radius: ${InputVar.radius};
+        background-color: ${InputVar.bg};
         min-height: 42px;
         box-sizing: border-box;
         cursor: text;
-        transition: border-color 0.2s, box-shadow 0.2s;
+        transition: ${InputVar['hover-transition']};
       }
 
       .tags-container:focus-within {
-        border-color: var(--melser-primary);
-        box-shadow: 0 0 0 2px hsla(var(--melser-primary-h), var(--melser-primary-s), var(--melser-primary-l), 0.2);
+        border-color: ${InputVar['focus-ring-color']};
+        box-shadow: ${InputVar['focus-shadow']};
       }
 
       input {
@@ -109,14 +110,14 @@ export class MelserTagsInput extends MelserBaseInput<string[]> {
         box-shadow: none !important;
         background: transparent !important;
         font-size: 1rem;
-        color: var(--melser-text);
+        color: ${InputVar['text-color']};
       }
 
       .tag {
         display: inline-flex;
         align-items: center;
-        background-color: hsla(var(--melser-primary-h), var(--melser-primary-s), var(--melser-primary-l), 0.1);
-        color: var(--melser-primary);
+        background-color: ${Var.color.surface.variant};
+        color: ${Var.color.primary};
         padding: 0.25rem 0.5rem;
         border-radius: 4px;
         font-size: 0.9rem;
@@ -138,5 +139,5 @@ export class MelserTagsInput extends MelserBaseInput<string[]> {
         opacity: 1;
       }
     `
-    ];
+  ];
 }

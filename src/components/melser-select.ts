@@ -1,6 +1,6 @@
 import { html, css } from 'lit';
-import { customElement, property, state,query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { customElement, property, state, query } from 'lit/decorators.js';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
 import type { MelserDataType, SelectOption } from '../types/index';
 
 // Extendemos la interfaz para soportar grupos si es necesario
@@ -41,15 +41,15 @@ export class MelserSelect extends MelserBaseInput<string> {
       if (child.tagName.toLowerCase() === 'optgroup') {
         const groupLabel = (child as HTMLOptGroupElement).label;
         const groupOptions = Array.from(child.querySelectorAll('option'));
-        
+
         groupOptions.forEach(opt => {
-           newOptions.push({
-             label: opt.textContent || '',
-             value: opt.value,
-             group: groupLabel
-           });
+          newOptions.push({
+            label: opt.textContent || '',
+            value: opt.value,
+            group: groupLabel
+          });
         });
-      } 
+      }
       // Manejar <option> directos
       else if (child.tagName.toLowerCase() === 'option') {
         const opt = child as HTMLOptionElement;
@@ -57,10 +57,10 @@ export class MelserSelect extends MelserBaseInput<string> {
           label: opt.textContent || '',
           value: opt.value
         });
-        
+
         // Si el usuario puso el atributo 'selected' en el HTML
         if (opt.hasAttribute('selected') && !this.value) {
-            this.value = opt.value;
+          this.value = opt.value;
         }
       }
     });
@@ -141,10 +141,10 @@ export class MelserSelect extends MelserBaseInput<string> {
       select {
         appearance: none;
         width: 100%; /* Asegurar ancho completo */
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right 1rem center;
-        background-size: 1em;
+        background-image: ${InputVar['select-bg-image']};
+        background-repeat: ${InputVar['select-bg-repeat']};
+        background-position: ${InputVar['select-bg-position']};
+        background-size: ${InputVar['select-bg-size']};
       }
     `
   ];

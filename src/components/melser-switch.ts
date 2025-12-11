@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
-import { customElement, property,query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { customElement, property, query } from 'lit/decorators.js';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('melser-switch')
@@ -50,15 +51,15 @@ export class MelserSwitch extends MelserBaseInput<boolean> {
       .switch-label {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: ${InputVar.gap};
         cursor: pointer;
       }
 
       .switch-container {
         position: relative;
         display: inline-block;
-        width: 48px;
-        height: 24px;
+        width: ${InputVar['switch-width']};
+        height: ${InputVar['switch-height']};
       }
 
       input {
@@ -75,39 +76,39 @@ export class MelserSwitch extends MelserBaseInput<boolean> {
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: var(--melser-border);
+        background-color: ${InputVar['border-color']};
         transition: .3s;
-        border-radius: 24px;
+        border-radius: ${InputVar['switch-radius']};
       }
 
       .slider:before {
         position: absolute;
         content: "";
-        height: 18px;
-        width: 18px;
-        left: 3px;
-        bottom: 3px;
-        background-color: white;
+        height: ${InputVar['switch-thumb-size']};
+        width: ${InputVar['switch-thumb-size']};
+        left: ${InputVar['switch-thumb-left']};
+        bottom: ${InputVar['switch-thumb-bottom']};
+        background-color: ${InputVar.bg};
         transition: .3s;
-        border-radius: 50%;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        border-radius: ${Var.radius.pill};
+        box-shadow: ${InputVar['switch-shadow']};
       }
 
       input:checked + .slider {
-        background-color: var(--melser-primary);
+        background-color: ${InputVar['control-bg-checked']};
       }
 
       input:focus-visible + .slider {
-        box-shadow: 0 0 0 2px var(--melser-bg), 0 0 0 4px var(--melser-primary);
+        box-shadow: ${InputVar['focus-shadow']};
       }
 
       input:checked + .slider:before {
-        transform: translateX(24px);
+        transform: ${InputVar['switch-thumb-transform-checked']};
       }
       
       input:disabled + .slider {
-        background-color: var(--melser-surface);
-        cursor: not-allowed;
+        background-color: ${InputVar['control-bg-disabled']};
+        cursor: ${InputVar['disabled-cursor']};
       }
     `
   ];

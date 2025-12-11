@@ -1,24 +1,25 @@
 import { html, css } from 'lit';
-import { customElement, property,query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { customElement, property, query } from 'lit/decorators.js';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('melser-time-picker')
 export class MelserTimePicker extends MelserBaseInput<string> {
-    @property({ type: String }) value = '';
-    @property({ type: String }) min = '';
-    @property({ type: String }) max = '';
-    @query('input') inputElement!: HTMLInputElement;
-    readonly dataType: MelserDataType = 'string';
+  @property({ type: String }) value = '';
+  @property({ type: String }) min = '';
+  @property({ type: String }) max = '';
+  @query('input') inputElement!: HTMLInputElement;
+  readonly dataType: MelserDataType = 'string';
 
-    handleInput(e: Event) {
-        const input = e.target as HTMLInputElement;
-        this.value = input.value;
-        this.dispatchChange();
-    }
+  handleInput(e: Event) {
+    const input = e.target as HTMLInputElement;
+    this.value = input.value;
+    this.dispatchChange();
+  }
 
-    render() {
-        return html`
+  render() {
+    return html`
       <div class="input-wrapper">
         ${this.label ? html`<label for="${this.inputId}">${this.label}</label>` : ''}
         <input
@@ -35,21 +36,45 @@ export class MelserTimePicker extends MelserBaseInput<string> {
         <div class="error" part="error">${this.errorMessage}</div>
       </div>
     `;
-    }
+  }
 
-    static styles = [
-        MelserBaseInput.styles,
-        css`
+  static styles = [
+    MelserBaseInput.styles,
+    css`
+      :host {
+        display: block;
+        width: 100%;
+      }
+
+      input[type="time"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* Specific styling to ensure border/hover works if base styles are overridden by UA */
+      input[type="time"]:hover:not(:disabled) {
+        border-color: ${InputVar['border-color-hover']};
+      }
+
+      input[type="time"]:focus {
+        border-color: ${InputVar['focus-ring-color']};
+      }
+
       input[type="time"]::-webkit-calendar-picker-indicator {
         cursor: pointer;
         opacity: 0.6;
         transition: 0.2s;
-        filter: invert(var(--melser-icon-invert, 0));
+        padding: 4px;
+        /* Try to conform to the text color, or keep it standard */
       }
       
       input[type="time"]::-webkit-calendar-picker-indicator:hover {
         opacity: 1;
+        background-color: ${InputVar['bg-hover']};
+        border-radius: 50%;
       }
     `
-    ];
+  ];
 }
