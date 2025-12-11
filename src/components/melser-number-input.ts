@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('melser-number-input')
@@ -36,7 +37,7 @@ export class MelserNumberInput extends MelserBaseInput<number> {
   private safeMath(operation: 'add' | 'sub'): number {
     const precisionFactor = Math.pow(10, this.precision);
     const current = isNaN(this.value) ? 0 : this.value;
-    
+
     const v = Math.round(current * precisionFactor);
     const s = Math.round(this.step * precisionFactor);
 
@@ -61,7 +62,7 @@ export class MelserNumberInput extends MelserBaseInput<number> {
       const precisionFactor = Math.pow(10, this.precision);
       const stepInt = Math.round(this.step * precisionFactor);
       const valInt = Math.round(safeVal * precisionFactor);
-      
+
       // Find nearest multiple
       const remainder = valInt % stepInt;
       let snappedInt = valInt;
@@ -73,7 +74,7 @@ export class MelserNumberInput extends MelserBaseInput<number> {
           snappedInt = valInt - remainder;
         }
       }
-      
+
       safeVal = snappedInt / precisionFactor;
     }
 
@@ -110,10 +111,10 @@ export class MelserNumberInput extends MelserBaseInput<number> {
    */
   handleChange(e: Event) {
     const input = e.target as HTMLInputElement;
-    
+
     // If empty on blur, decide behavior (reset to min, 0, or leave empty)
     if (input.value === '') {
-      return; 
+      return;
     }
 
     let val = parseFloat(input.value);
@@ -123,11 +124,11 @@ export class MelserNumberInput extends MelserBaseInput<number> {
 
     // Update internal state
     this.value = validatedVal;
-    
+
     // Format the visual input to the correct decimal places
     // This fixes visual issues like "10" showing as "10.000000001"
-    const displayValue = this.precision > 0 
-      ? validatedVal.toFixed(this.precision) 
+    const displayValue = this.precision > 0
+      ? validatedVal.toFixed(this.precision)
       : validatedVal.toString();
 
     if (this.inputElement) {
@@ -141,16 +142,16 @@ export class MelserNumberInput extends MelserBaseInput<number> {
     if (this.disabled) return;
     const rawNewValue = this.safeMath('add');
     const validValue = this.validateAndSnap(rawNewValue);
-    
+
     this.value = validValue;
-    
+
     // Update input display immediately for buttons
     if (this.inputElement) {
-        this.inputElement.value = this.precision > 0 
-            ? validValue.toFixed(this.precision) 
-            : validValue.toString();
+      this.inputElement.value = this.precision > 0
+        ? validValue.toFixed(this.precision)
+        : validValue.toString();
     }
-    
+
     this.dispatchChange();
   }
 
@@ -158,13 +159,13 @@ export class MelserNumberInput extends MelserBaseInput<number> {
     if (this.disabled) return;
     const rawNewValue = this.safeMath('sub');
     const validValue = this.validateAndSnap(rawNewValue);
-    
+
     this.value = validValue;
 
     if (this.inputElement) {
-        this.inputElement.value = this.precision > 0 
-            ? validValue.toFixed(this.precision) 
-            : validValue.toString();
+      this.inputElement.value = this.precision > 0
+        ? validValue.toFixed(this.precision)
+        : validValue.toString();
     }
 
     this.dispatchChange();
@@ -228,17 +229,17 @@ export class MelserNumberInput extends MelserBaseInput<number> {
       .number-control {
         display: flex;
         align-items: stretch;
-        border: 1px solid var(--melser-border);
-        border-radius: var(--melser-radius);
-        background-color: var(--melser-input-bg);
+        border: 1px solid ${InputVar['border-color']};
+        border-radius: ${InputVar.radius};
+        background-color: ${InputVar.bg};
         width: 100%;
         overflow: hidden;
         transition: border-color 0.2s, box-shadow 0.2s;
         height: 40px;
       }
       .number-control:focus-within {
-        border-color: var(--melser-primary);
-        box-shadow: 0 0 0 2px hsla(var(--melser-primary-h), var(--melser-primary-s), var(--melser-primary-l), 0.2);
+        border-color: ${InputVar['focus-ring-color']};
+        box-shadow: ${InputVar['focus-shadow']};
       }
       input[type="number"] {
         flex: 1;
@@ -251,7 +252,7 @@ export class MelserNumberInput extends MelserBaseInput<number> {
         background: transparent;
         box-shadow: none;
         height: 100%;
-        color: var(--melser-text);
+        color: ${InputVar['text-color']};
         font-size: 1rem;
         padding: 0;
       }
@@ -265,9 +266,9 @@ export class MelserNumberInput extends MelserBaseInput<number> {
         margin: 0;
       }
       .stepper-btn {
-        background: var(--melser-surface);
+        background: ${Var.color.surface.variant};
         border: none;
-        color: var(--melser-text);
+        color: ${InputVar['text-color']};
         width: 40px;
         flex-shrink: 0;
         display: flex;
@@ -281,7 +282,7 @@ export class MelserNumberInput extends MelserBaseInput<number> {
         height: auto;
       }
       .stepper-btn:hover:not(:disabled) {
-        background-color: var(--melser-border);
+        background-color: ${InputVar['border-color-hover']};
       }
       .stepper-btn:disabled {
         opacity: 0.5;

@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
-import { customElement, property,query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { customElement, property, query } from 'lit/decorators.js';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('melser-date-picker')
@@ -49,6 +50,9 @@ export class MelserDatePicker extends MelserBaseInput<string> {
         width: 100%;
         -webkit-appearance: none;
         position: relative;
+        /* Inherit font and color from input mixin */
+        font-family: inherit;
+        color: ${InputVar['text-color']};
       }
       
       /* Make the calendar icon look better in supported browsers */
@@ -56,7 +60,11 @@ export class MelserDatePicker extends MelserBaseInput<string> {
         cursor: pointer;
         opacity: 0.6;
         transition: 0.2s;
-        filter: invert(var(--melser-icon-invert, 0)); /* Handle dark mode if needed */
+        /* Using a filter to colorize the icon based on our primary color is tricky without SVG injection.
+           However, we can force it to be dark or light depending on theme if needed. 
+           For now, let's keep it simple or use a token if we had one for icons specifically.
+        */
+        filter: invert(0.4); /* Placeholder for better contrast */
       }
       
       input[type="date"]::-webkit-calendar-picker-indicator:hover {

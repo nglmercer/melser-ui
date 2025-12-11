@@ -1,7 +1,8 @@
-import { html, css,type PropertyValues } from 'lit';
+import { html, css, type PropertyValues } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js'; // Cleaner classes
-import { MelserBaseInput } from '../core/melser-base-input';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { Var } from '../theme/tokens';
 import type { MelserDataType, SelectOption } from '../types/index';
 
 interface InternalOption extends SelectOption {
@@ -40,7 +41,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
     }
     // If value changes externally, update the display text
     if (changedProps.has('value')) {
-        this.syncInputWithInternalValue();
+      this.syncInputWithInternalValue();
     }
   }
 
@@ -58,20 +59,20 @@ export class MelserCombobox extends MelserBaseInput<string> {
 
     const optionsFromSlot: InternalOption[] = [];
     const children = Array.from(this.children);
-    
+
     children.forEach(child => {
       const tagName = child.tagName.toLowerCase();
       if (tagName === 'optgroup') {
-          const groupLabel = (child as HTMLOptGroupElement).label;
-          const groupOptions = Array.from(child.querySelectorAll('option'));
-          groupOptions.forEach(opt => {
-              optionsFromSlot.push({
-                  label: opt.textContent || '',
-                  value: opt.value,
-                  group: groupLabel
-              });
-              this.checkInitialSelected(opt);
+        const groupLabel = (child as HTMLOptGroupElement).label;
+        const groupOptions = Array.from(child.querySelectorAll('option'));
+        groupOptions.forEach(opt => {
+          optionsFromSlot.push({
+            label: opt.textContent || '',
+            value: opt.value,
+            group: groupLabel
           });
+          this.checkInitialSelected(opt);
+        });
       } else if (tagName === 'option') {
         const opt = child as HTMLOptionElement;
         optionsFromSlot.push({
@@ -88,9 +89,9 @@ export class MelserCombobox extends MelserBaseInput<string> {
   }
 
   private checkInitialSelected(opt: HTMLOptionElement) {
-      if (opt.hasAttribute('selected') && !this.value) {
-          this.value = opt.value;
-      }
+    if (opt.hasAttribute('selected') && !this.value) {
+      this.value = opt.value;
+    }
   }
 
   private syncInputWithInternalValue() {
@@ -128,7 +129,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
         this._highlightedIndex = Math.min(this._highlightedIndex + 1, this._filteredOptions.length - 1);
         this.scrollHighlightedIntoView();
         break;
-      
+
       case 'ArrowUp':
         e.preventDefault();
         this.openMenu();
@@ -139,10 +140,10 @@ export class MelserCombobox extends MelserBaseInput<string> {
       case 'Enter':
         e.preventDefault();
         if (this._isOpen && this._highlightedIndex >= 0) {
-            const opt = this._filteredOptions[this._highlightedIndex];
-            if (opt) this.selectOption(opt);
+          const opt = this._filteredOptions[this._highlightedIndex];
+          if (opt) this.selectOption(opt);
         } else {
-             this.openMenu();
+          this.openMenu();
         }
         break;
 
@@ -156,11 +157,11 @@ export class MelserCombobox extends MelserBaseInput<string> {
   scrollHighlightedIntoView() {
     // RequestAnimationFrame is better than setTimeout(0) for visual updates
     requestAnimationFrame(() => {
-        if (!this.listElement) return;
-        const highlightedItem = this.listElement.querySelector(`li[data-index="${this._highlightedIndex}"]`);
-        if (highlightedItem) {
-            highlightedItem.scrollIntoView({ block: 'nearest' });
-        }
+      if (!this.listElement) return;
+      const highlightedItem = this.listElement.querySelector(`li[data-index="${this._highlightedIndex}"]`);
+      if (highlightedItem) {
+        highlightedItem.scrollIntoView({ block: 'nearest' });
+      }
     });
   }
 
@@ -168,7 +169,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
     this.value = option.value;
     this._inputValue = option.label;
     this.closeMenu();
-    this._filteredOptions = this._allOptions; 
+    this._filteredOptions = this._allOptions;
     this.dispatchChange();
   }
 
@@ -184,22 +185,22 @@ export class MelserCombobox extends MelserBaseInput<string> {
     const relatedTarget = e.relatedTarget as HTMLElement;
 
     if (currentTarget.contains(relatedTarget)) {
-        return; // Focus is still inside our component
+      return; // Focus is still inside our component
     }
 
     // Delay closing slightly to allow "click" events on options to fire first
     // if the user clicked an option directly.
     this._blurTimeout = window.setTimeout(() => {
-        this.closeMenu();
-        
-        // Reset text if invalid
-        const exactMatch = this._allOptions.find(o => o.label.toLowerCase() === this._inputValue.toLowerCase());
-        if (exactMatch) {
-            if (this.value !== exactMatch.value) this.selectOption(exactMatch);
-        } else {
-            // Revert to last valid value
-            this.syncInputWithInternalValue();
-        }
+      this.closeMenu();
+
+      // Reset text if invalid
+      const exactMatch = this._allOptions.find(o => o.label.toLowerCase() === this._inputValue.toLowerCase());
+      if (exactMatch) {
+        if (this.value !== exactMatch.value) this.selectOption(exactMatch);
+      } else {
+        // Revert to last valid value
+        this.syncInputWithInternalValue();
+      }
     }, 150);
   }
 
@@ -220,10 +221,10 @@ export class MelserCombobox extends MelserBaseInput<string> {
 
   toggleDropdown() {
     if (this._isOpen) {
-        this.closeMenu();
+      this.closeMenu();
     } else {
-        this.openMenu();
-        this.inputElement.focus();
+      this.openMenu();
+      this.inputElement.focus();
     }
   }
 
@@ -274,12 +275,12 @@ export class MelserCombobox extends MelserBaseInput<string> {
             aria-labelledby="${labelId}"
           >
             ${this._filteredOptions.length > 0 ? this._filteredOptions.map((opt, index) => {
-              const prevOpt = this._filteredOptions[index - 1];
-              const showGroupHeader = opt.group && (!prevOpt || prevOpt.group !== opt.group);
-              const isSelected = opt.value === this.value;
-              const isHighlighted = index === this._highlightedIndex;
+      const prevOpt = this._filteredOptions[index - 1];
+      const showGroupHeader = opt.group && (!prevOpt || prevOpt.group !== opt.group);
+      const isSelected = opt.value === this.value;
+      const isHighlighted = index === this._highlightedIndex;
 
-              return html`
+      return html`
                 ${showGroupHeader ? html`
                     <li role="presentation" class="group-header">${opt.group}</li>
                 ` : ''}
@@ -289,23 +290,23 @@ export class MelserCombobox extends MelserBaseInput<string> {
                   role="option"
                   aria-selected="${isSelected}"
                   class="${classMap({
-                    'option-item': true,
-                    'selected': isSelected,
-                    'highlighted': isHighlighted
-                  })}"
+        'option-item': true,
+        'selected': isSelected,
+        'highlighted': isHighlighted
+      })}"
                   data-index="${index}"
-                  @mousedown="${(e: Event) => { 
-                      // Prevent default to avoid blur triggering before click
-                      e.preventDefault(); 
-                      this.selectOption(opt); 
-                  }}"
+                  @mousedown="${(e: Event) => {
+          // Prevent default to avoid blur triggering before click
+          e.preventDefault();
+          this.selectOption(opt);
+        }}"
                   @mouseenter="${() => this._highlightedIndex = index}"
                 >
                   ${opt.label}
                   ${isSelected ? html`<span class="check-icon">✓</span>` : ''}
                 </li>
               `;
-            }) : html`
+    }) : html`
               <li class="no-results" role="option" aria-disabled="true">No results found</li>
             `}
           </ul>
@@ -325,7 +326,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
 
       .chevron {
         position: absolute; right: 0.75rem; top: 50%;
-        transform: translateY(-50%); color: #888; cursor: pointer;
+        transform: translateY(-50%); color: ${Var.color.text.secondary}; cursor: pointer;
         display: flex; align-items: center; transition: transform 0.2s;
         z-index: 2;
       }
@@ -333,9 +334,9 @@ export class MelserCombobox extends MelserBaseInput<string> {
 
       .options-list {
         position: absolute; top: 100%; left: 0; right: 0;
-        background: var(--melser-surface, white);
-        border: 1px solid var(--melser-border, #ccc);
-        border-radius: var(--melser-radius, 4px);
+        background: ${Var.color.surface.primary};
+        border: 1px solid ${InputVar['border-color']};
+        border-radius: ${InputVar.radius};
         margin-top: 4px; padding: 0; list-style: none;
         max-height: 250px; overflow-y: auto; z-index: 1000;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -351,21 +352,34 @@ export class MelserCombobox extends MelserBaseInput<string> {
 
       .group-header {
         padding: 8px 12px; font-size: 0.75rem; font-weight: 700;
-        text-transform: uppercase; color: var(--melser-text-secondary, #6b7280);
-        background-color: var(--melser-bg-secondary, #f9fafb);
+        text-transform: uppercase; color: ${Var.color.text.secondary};
+        background-color: ${Var.color.bg.disabled};
         position: sticky; top: 0; z-index: 1;
       }
 
       .option-item {
-        padding: 0.75rem 0.75rem 0.75rem 1rem;
-        cursor: pointer; color: var(--melser-text, black);
+        padding: ${InputVar['option-padding']};
+        cursor: pointer; color: ${InputVar['option-color']};
         display: flex; justify-content: space-between; align-items: center;
       }
 
-      .option-item.highlighted { background-color: var(--melser-input-bg, #ccc); }
-      .option-item.selected { color: var(--melser-primary, #007bff); font-weight: 600; background-color: var(--melser-primary-light, #e6f0ff); }
-      .option-item.selected.highlighted { background-color: var(--melser-primary-light-hover, #d0e1fd); }
-      .no-results { padding: 0.75rem; color: #888; text-align: center; font-style: italic; }
+      .option-item.highlighted { background-color: ${InputVar['option-bg-hover']}; color: ${InputVar['option-color-hover']}; }
+      
+      .option-item.selected { 
+          color: ${InputVar['option-color-checked']}; 
+          font-weight: 600; 
+          background-color: ${InputVar['option-bg-checked']}; 
+      }
+      
+      /* If needed, we can add a specific selected-highlighted state, 
+         but option-bg-checked is usually strong enough.
+         For now let's reuse checked style + opacity or darken ? 
+      */
+      .option-item.selected.highlighted { 
+         filter: brightness(0.95);
+      }
+      
+      .no-results { padding: 0.75rem; color: ${Var.color.text.secondary}; text-align: center; font-style: italic; }
       
       .check-icon { font-size: 0.8em; }
     `

@@ -1,6 +1,7 @@
-import { html, css,type PropertyValues } from 'lit';
-import { customElement, property, state,query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { html, css, type PropertyValues } from 'lit';
+import { customElement, property, state, query } from 'lit/decorators.js';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('melser-dual-range')
@@ -147,7 +148,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
       // También forzamos el valor visual en el click por seguridad
       // Verificación de nulidad en targetIndex
       if (this.value && this.value[targetIndex] !== undefined) {
-         inputs[targetIndex].value = String(this.value[targetIndex]);
+        inputs[targetIndex].value = String(this.value[targetIndex]);
       }
     }
   }
@@ -161,7 +162,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
     const range = this.max - this.min;
     // Evitar división por cero
     const safeRange = range === 0 ? 1 : range;
-    
+
     const leftPercent = ((val0 - this.min) / safeRange) * 100;
     const rightPercent = ((val1 - this.min) / safeRange) * 100;
 
@@ -252,10 +253,10 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
         appearance: none;
         width: 1.2rem;
         height: 1.2rem;
-        background: var(--melser-surface, #fff);
+        background: ${Var.color.surface.primary};
         border-radius: 50%;
         cursor: grab;
-        border: 2px solid var(--melser-primary, #007bff);
+        border: 2px solid ${Var.color.primary};
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         margin-top: -0.5rem; 
         transition: transform 0.1s, background-color 0.2s;
@@ -268,23 +269,23 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
         pointer-events: auto;
         width: 1.2rem;
         height: 1.2rem;
-        background: var(--melser-surface, #fff);
+        background: ${Var.color.surface.primary};
         border-radius: 50%;
         cursor: grab;
-        border: 2px solid var(--melser-primary, #007bff);
+        border: 2px solid ${Var.color.primary};
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         z-index: 11;
       }
 
       /* Estados Focus y Active para los Thumbs */
       input[type=range]:focus::-webkit-slider-thumb {
-        background: var(--melser-primary, #007bff);
+        background: ${Var.color.primary};
         border-color: white;
         transform: scale(1.1);
       }
       
       input[type=range]:focus::-moz-range-thumb {
-        background: var(--melser-primary, #007bff);
+        background: ${Var.color.primary};
         border-color: white;
         transform: scale(1.1);
       }
@@ -299,7 +300,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
         position: absolute;
         width: 100%;
         height: 0.25rem;
-        background: var(--melser-border, #ddd);
+        background: ${InputVar['border-color']};
         border-radius: 1rem;
         z-index: 1;
         pointer-events: none;
@@ -308,7 +309,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
       .track-fill {
         position: absolute;
         height: 0.25rem;
-        background: var(--melser-primary, #007bff);
+        background: ${Var.color.primary};
         z-index: 1;
         border-radius: 1rem;
         pointer-events: none;
@@ -318,7 +319,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
       .tooltip {
         position: absolute;
         top: -1.5rem;
-        background: var(--melser-primary, #007bff);
+        background: ${Var.color.primary};
         color: white;
         font-size: 0.75rem;
         padding: 0.2rem 0.5rem;

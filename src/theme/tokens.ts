@@ -17,6 +17,8 @@ export const tokens = {
             900: '#111827',
         },
         blue: {
+            50: '#eff6ff',
+            100: '#dbeafe',
             500: '#3B82F6',
             600: '#2563EB',
             700: '#005fcc', // Melser Primary?
@@ -29,6 +31,7 @@ export const tokens = {
     // Tier 2: Semantic / System
     color: {
         primary: { $value: '{palette.blue.700}' }, // Maps to --melser-color-primary
+        primaryLighter: { $value: '{palette.blue.50}' },
         error: { $value: '{palette.red.600}' },
 
         bg: {

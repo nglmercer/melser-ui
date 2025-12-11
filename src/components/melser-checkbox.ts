@@ -1,19 +1,20 @@
 import { html, css, nothing } from 'lit';
-import { customElement, property,query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { customElement, property, query } from 'lit/decorators.js';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('melser-checkbox')
 export class MelserCheckbox extends MelserBaseInput<boolean> {
   @property({ type: Boolean }) value = false;
-  
+
   @property({ type: Boolean, reflect: true }) checked = false;
   @query('input') inputElement!: HTMLInputElement;
   readonly dataType: MelserDataType = 'boolean';
 
   handleChange(e: Event) {
     const input = e.target as HTMLInputElement;
-    
+
     this.value = input.checked;
     this.checked = input.checked;
     this.dispatchChange();
@@ -60,7 +61,7 @@ export class MelserCheckbox extends MelserBaseInput<boolean> {
   }
 
   static styles = [
-    MelserBaseInput.styles, 
+    MelserBaseInput.styles,
     css`
       :host {
         display: block;
@@ -69,7 +70,7 @@ export class MelserCheckbox extends MelserBaseInput<boolean> {
       .checkbox-container {
         display: inline-flex;
         align-items: center;
-        gap: var(--base-input-gap);
+        gap: ${InputVar.gap};
         cursor: pointer;
         position: relative;
         width: 100%;
@@ -87,71 +88,71 @@ export class MelserCheckbox extends MelserBaseInput<boolean> {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: var(--base-input-control-size);
-        height: var(--base-input-control-size);
-        border: var(--base-input-control-border-width) solid var(--base-input-control-border-color);
-        border-radius: var(--base-input-control-radius);
-        background-color: var(--base-input-control-bg);
-        transition: var(--base-input-hover-transition);
+        width: ${InputVar['control-size']};
+        height: ${InputVar['control-size']};
+        border: ${InputVar['control-border-width']} solid ${InputVar['control-border-color']};
+        border-radius: ${InputVar['control-radius']};
+        background-color: ${InputVar['control-bg']};
+        transition: ${InputVar['hover-transition']};
         flex-shrink: 0;
       }
 
       .control svg {
-        width: var(--base-input-icon-size);
-        height: var(--base-input-icon-size);
+        width: ${InputVar['icon-size']};
+        height: ${InputVar['icon-size']};
         fill: white;
-        transform: scale(var(--base-input-icon-scale));
+        transform: scale(${InputVar['icon-scale']});
         transition: transform 0.2s ease-in-out;
       }
 
       input:checked + .control {
-        background-color: var(--base-input-control-bg-checked);
-        border-color: var(--base-input-control-border-color-checked);
+        background-color: ${InputVar['control-bg-checked']};
+        border-color: ${InputVar['control-border-color-checked']};
       }
 
       input:checked + .control svg {
-        transform: scale(var(--base-input-icon-scale-checked));
+        transform: scale(${InputVar['icon-scale-checked']});
       }
 
       input:focus-visible + .control {
-        box-shadow: var(--base-input-focus-shadow);
+        box-shadow: ${InputVar['focus-shadow']};
       }
 
       /* Hover state for control */
       input:hover:not(:disabled) + .control {
-        border-color: var(--base-input-control-border-color-hover);
-        background-color: var(--base-input-control-bg-hover);
+        border-color: ${InputVar['control-border-color-hover']};
+        background-color: ${InputVar['control-bg-hover']};
       }
 
       :host([variant="card"]) .checkbox-container {
-        border: 1px solid var(--base-input-control-border-color);
-        padding: var(--base-input-padding-large);
-        border-radius: var(--base-input-radius);
-        transition: var(--base-input-hover-transition);
-        background-color: var(--base-input-container-bg);
+        border: 1px solid ${InputVar['control-border-color']};
+        padding: ${InputVar['padding-large']};
+        border-radius: ${InputVar.radius};
+        transition: ${InputVar['hover-transition']};
+        background-color: ${InputVar['container-bg']};
       }
 
       :host([variant="card"]) input:checked ~ .checkbox-container,
       :host([variant="card"]) .checkbox-container:has(input:checked) {
-        border-color: var(--base-input-control-border-color-checked);
-        background-color: hsla(var(--melser-primary-h), var(--melser-primary-s), var(--melser-primary-l), 0.05);
+        border-color: ${InputVar['control-border-color-checked']};
+        background-color: ${Var.color.surface.variant};
       }
 
       /* Disabled states are inherited from base-input */
       :host([disabled]) .control {
-        background-color: var(--base-input-control-bg-disabled);
-        border-color: var(--base-input-control-border-color-disabled);
-        cursor: var(--base-input-disabled-cursor);
+        background-color: ${InputVar['control-bg-disabled']};
+        border-color: ${InputVar['control-border-color-disabled']};
+        cursor: ${InputVar['disabled-cursor']};
       }
 
       /* Label text styling */
       .label-text {
-        color: var(--base-input-text-color);
-        font-size: var(--base-input-font-size);
+        color: ${InputVar['text-color']};
+        font-size: ${InputVar['font-size']};
       }
 
       .label-text .required-mark {
-        color: var(--base-input-label-color-required);
+        color: ${InputVar['label-color-required']};
         margin-left: 2px;
       }
     `

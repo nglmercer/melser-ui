@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
-import { customElement, property,query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { customElement, property, query } from 'lit/decorators.js';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { Var } from '../theme/tokens';
 import type { MelserDataType, SelectOption } from '../types/index';
 
 @customElement('melser-multi-select')
@@ -62,8 +63,8 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
         padding: 0.5rem;
       }
       .help-text {
-        font-size: 0.75rem;
-        color: #666;
+        font-size: ${Var.font.size.small};
+        color: ${Var.color.text.secondary};
         margin-top: -0.25rem;
       }
     `

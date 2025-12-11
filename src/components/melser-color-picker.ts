@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('melser-color-picker')
@@ -67,8 +68,8 @@ export class MelserColorPicker extends MelserBaseInput<string> {
     MelserBaseInput.styles,
     css`
       :host {
-        /* Define a default focus color if not provided globally */
-        --focus-color: var(--melser-focus, #2563eb);
+        /* Use InputVar for focus color consistency */
+        --focus-color: ${InputVar['focus-ring-color']};
       }
 
       .color-container {
@@ -86,7 +87,7 @@ export class MelserColorPicker extends MelserBaseInput<string> {
         width: 3rem;
         height: 3rem;
         padding: 0;
-        border-radius: var(--melser-radius, 4px);
+        border-radius: ${InputVar.radius};
         background: none;
         cursor: pointer;
         flex-shrink: 0;
@@ -102,11 +103,11 @@ export class MelserColorPicker extends MelserBaseInput<string> {
 
       input[type="color"]:focus-visible {
         /* Use a strong outline color */
-        outline: 2px solid var(--focus-color);
+        outline: 2px solid ${InputVar['focus-ring-color']};
         outline-offset: 2px;
         /* Optional: Add box-shadow for better visibility/softness */
-        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2); 
-        border-radius: var(--melser-radius, 4px);
+        box-shadow: 0 0 0 4px ${Var.color.surface.variant}; 
+        border-radius: ${InputVar.radius};
       }
       
       /* Webkit specific inner parts */
@@ -115,16 +116,16 @@ export class MelserColorPicker extends MelserBaseInput<string> {
       }
       
       input[type="color"]::-webkit-color-swatch {
-        border: 1px solid var(--melser-border, #ccc);
-        border-radius: var(--melser-radius, 4px);
+        border: 1px solid ${InputVar['border-color']};
+        border-radius: ${InputVar.radius};
         /* Ensure the swatch doesn't bleed out */
         box-sizing: border-box;
       }
 
       /* Firefox specific inner parts */
       input[type="color"]::-moz-color-swatch {
-        border: 1px solid var(--melser-border, #ccc);
-        border-radius: var(--melser-radius, 4px);
+        border: 1px solid ${InputVar['border-color']};
+        border-radius: ${InputVar.radius};
       }
 
       /* --- TEXT INPUT STYLES --- */
@@ -134,8 +135,8 @@ export class MelserColorPicker extends MelserBaseInput<string> {
         text-transform: uppercase;
         height: 3rem;
         box-sizing: border-box;
-        border: 1px solid var(--melser-border, #ccc);
-        border-radius: var(--melser-radius, 4px);
+        border: 1px solid ${InputVar['border-color']};
+        border-radius: ${InputVar.radius};
         padding: 0 1rem;
       }
 
@@ -145,15 +146,15 @@ export class MelserColorPicker extends MelserBaseInput<string> {
       }
 
       .hex-input:focus-visible {
-        border-color: var(--focus-color);
-        outline: 2px solid var(--focus-color);
+        border-color: ${InputVar['focus-ring-color']};
+        outline: 2px solid ${InputVar['focus-ring-color']};
         outline-offset: -1px; /* Draws outline inside/on border to prevent layout shifts */
       }
 
       .error {
-        color: var(--melser-error, #ff0000);
-        font-size: 0.75rem;
-        margin-top: 0.25rem;
+        color: ${InputVar['error-color']};
+        font-size: ${InputVar['error-font-size']};
+        margin-top: ${InputVar['error-margin-top']};
       }
     `
   ];

@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
-import { customElement, property, state,query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/melser-base-input';
+import { customElement, property, state, query } from 'lit/decorators.js';
+import { MelserBaseInput, InputVar } from '../core/melser-base-input';
+import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 // Iconos extraídos para limpiar el render
@@ -89,22 +90,22 @@ export class MelserPasswordInput extends MelserBaseInput<string> {
         
         /* Estilos base heredados o reseteados */
         height: 40px; /* Altura consistente */
-        border: 1px solid var(--melser-border);
-        border-radius: var(--melser-radius);
-        background-color: var(--melser-input-bg);
-        color: var(--melser-text);
+        border: 1px solid ${InputVar['border-color']};
+        border-radius: ${InputVar.radius};
+        background-color: ${InputVar.bg};
+        color: ${InputVar['text-color']};
         padding-left: 0.75rem;
         transition: border-color 0.2s, box-shadow 0.2s;
       }
 
       input:focus {
         outline: none;
-        border-color: var(--melser-primary);
-        box-shadow: 0 0 0 2px hsla(var(--melser-primary-h), var(--melser-primary-s), var(--melser-primary-l), 0.2);
+        border-color: ${InputVar['focus-ring-color']};
+        box-shadow: ${InputVar['focus-shadow']};
       }
 
       input:disabled {
-        background-color: var(--melser-disabled-bg, #f5f5f5);
+        background-color: ${InputVar['bg-disabled']};
         cursor: not-allowed;
       }
 
@@ -116,7 +117,7 @@ export class MelserPasswordInput extends MelserBaseInput<string> {
         background: none;
         border: none;
         cursor: pointer;
-        color: var(--melser-text-secondary, #888);
+        color: ${Var.color.text.secondary};
         display: flex;
         align-items: center;
         justify-content: center;
@@ -128,13 +129,13 @@ export class MelserPasswordInput extends MelserBaseInput<string> {
       }
 
       .toggle-btn:hover:not(:disabled) {
-        color: var(--melser-primary);
-        background-color: var(--melser-surface);
+        color: ${Var.color.primary};
+        background-color: ${Var.color.surface.variant};
       }
       
       .toggle-btn:focus {
         outline: none;
-        box-shadow: 0 0 0 2px var(--melser-primary);
+        box-shadow: 0 0 0 2px ${Var.color.primary};
       }
 
       .toggle-btn:disabled {
