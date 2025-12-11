@@ -27,11 +27,7 @@ export const schemas: Record<string, z.ZodSchema> = {
         experience: z.string().optional(),
         preference: z.string().optional()
     }),
-    'select': z.object({
-        country: z.string().min(1, "Selecciona tu país"),
-        city: z.string().optional(),
-        gender: z.string().optional()
-    }),
+
     'switch': z.object({
         premium: z.boolean().default(false),
         dev: z.boolean().default(false),
@@ -86,13 +82,22 @@ export const schemas: Record<string, z.ZodSchema> = {
         reminder: z.string().optional()
     }),
     'range': z.object({
-        brightness: z.number().min(0).max(100),
-        volume: z.number().min(0).max(100)
+        brightness: z.coerce.number().min(0).max(100),
+        volume: z.coerce.number().min(0).max(100)
     }),
     'dual-range': z.object({
-        priceRange: z.array(z.number()).length(2).optional(),
-        sizeRange: z.array(z.number()).length(2).optional(),
-        distanceRange: z.array(z.number()).length(2).optional()
+        priceRange: z.array(z.coerce.number()).length(2).optional(),
+        sizeRange: z.array(z.coerce.number()).length(2).optional(),
+        distanceRange: z.array(z.coerce.number()).length(2).optional()
+    }),
+    'select': z.object({
+        country: z.string().min(1, "Selecciona una opción"),
+        city: z.string().optional(),
+        gender: z.string().optional()
+    }),
+    'multi-select': z.object({
+        subjects: z.array(z.string()).min(1, "Selecciona al menos una materia"),
+        frameworks: z.array(z.string()).min(1, "Selecciona al menos un framework").optional()
     })
 };
 

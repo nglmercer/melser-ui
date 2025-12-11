@@ -287,7 +287,7 @@ function updateCities(citySelect, country) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="select-playground" schema-name="select" title="Selección de Ubicación" description="Selectores dependientes y validación.">
+<melser-playground-form id="select-playground" schema-name="select" title="Formulario de Selección" description="Ejemplo interactivo con validación.">
   <div style="margin-bottom: 1rem;">
     <melser-select 
       label="País *"

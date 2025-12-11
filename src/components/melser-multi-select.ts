@@ -4,6 +4,10 @@ import { MelserBaseInput } from '../core/melser-base-input';
 import { Var } from '../theme/tokens';
 import type { MelserDataType, SelectOption } from '../types/index';
 
+interface InternalOption extends SelectOption {
+  group?: string;
+}
+
 @customElement('melser-multi-select')
 export class MelserMultiSelect extends MelserBaseInput<string[]> {
   @property({ 
@@ -27,7 +31,7 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
     }
   }) 
   value: string[] = [];
-  @property({ type: Array }) options: SelectOption[] = [];
+  @property({ type: Array }) options: InternalOption[] = [];
   @query('input') inputElement!: HTMLInputElement;
 
   readonly dataType: MelserDataType = 'array';
@@ -46,7 +50,7 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
     return true;
   }
 
-  @state() private _renderedOptions: SelectOption[] = [];
+  @state() private _renderedOptions: InternalOption[] = [];
 
   override firstUpdated() {
     this.syncOptions();
@@ -58,12 +62,30 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
       return;
     }
 
-    const newOptions: SelectOption[] = [];
+    const newOptions: InternalOption[] = [];
     const children = Array.from(this.children);
     const initialSelectedValues: string[] = [];
 
     children.forEach(child => {
-      if (child.tagName.toLowerCase() === 'option') {
+      // Handle <optgroup>
+      if (child.tagName.toLowerCase() === 'optgroup') {
+        const groupLabel = (child as HTMLOptGroupElement).label;
+        const groupOptions = Array.from(child.querySelectorAll('option'));
+
+        groupOptions.forEach(opt => {
+          newOptions.push({
+            label: opt.textContent || '',
+            value: opt.value,
+            group: groupLabel
+          });
+          
+          if (opt.hasAttribute('selected')) {
+            initialSelectedValues.push(opt.value);
+          }
+        });
+      }
+      // Handle direct <option>
+      else if (child.tagName.toLowerCase() === 'option') {
         const opt = child as HTMLOptionElement;
         newOptions.push({
           label: opt.textContent || '',
@@ -97,7 +119,52 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
           @change="${this.handleChange}"
           part="select"
         >
-          ${this._renderedOptions.map(opt => html`
+          ${this._renderOptionsWithGroups()}
+        </select>
+        <div class="error" part="error">${this.errorMessage}</div>
+        <div class="help-text">Hold Ctrl/Cmd to select multiple</div>
+      </div>
+    `;
+  }
+
+  private _renderOptionsWithGroups() {
+    const hasGroups = this._renderedOptions.some(o => o.group);
+
+    if (!hasGroups) {
+      return this._renderedOptions.map(opt => html`
+        <option 
+          value="${opt.value}" 
+          ?selected="${this.value?.includes(opt.value)}"
+        >
+          ${opt.label}
+        </option>
+      `);
+    }
+
+    const groups: Record<string, InternalOption[]> = {};
+    const orphans: InternalOption[] = [];
+
+    this._renderedOptions.forEach(opt => {
+      if (opt.group) {
+        if (!groups[opt.group]) groups[opt.group] = [];
+        groups[opt.group].push(opt);
+      } else {
+        orphans.push(opt);
+      }
+    });
+
+    return html`
+      ${orphans.map(opt => html`
+        <option 
+          value="${opt.value}" 
+          ?selected="${this.value?.includes(opt.value)}"
+        >
+          ${opt.label}
+        </option>
+      `)}
+      ${Object.entries(groups).map(([groupName, opts]) => html`
+        <optgroup label="${groupName}">
+          ${opts.map(opt => html`
             <option 
               value="${opt.value}" 
               ?selected="${this.value?.includes(opt.value)}"
@@ -105,10 +172,8 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
               ${opt.label}
             </option>
           `)}
-        </select>
-        <div class="error" part="error">${this.errorMessage}</div>
-        <div class="help-text">Hold Ctrl/Cmd to select multiple</div>
-      </div>
+        </optgroup>
+      `)}
     `;
   }
 

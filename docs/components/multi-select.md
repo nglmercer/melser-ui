@@ -294,7 +294,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<melser-playground-form id="multi-select-playground" title="Intereses Académicos" description="Selección múltiple con límites y validación.">
+<melser-playground-form id="multi-select-playground" schema-name="multi-select" title="Selección de Habilidades" description="Selecciona tus tecnologías favoritas.">
   <div style="margin-bottom: 1rem;">
     <melser-multi-select 
       label="Hobbies (mín 2, máx 4) *"
