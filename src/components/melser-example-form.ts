@@ -7,6 +7,7 @@ import { ZodFormController } from '../utils/form-controller';
 import { MelserTextInput } from './base-input';
 import { MelserNumberInput } from './melser-number-input';
 import { MelserCheckbox } from './melser-checkbox';
+import { Var } from '../theme/tokens';
 
 // Define Schema
 const userSchema = z.object({
@@ -189,7 +190,7 @@ export class MelserExampleForm extends LitElement {
   static styles = css`
     :host {
       display: block;
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: ${Var.font.family};
     }
 
     .example-form-wrapper {
@@ -197,11 +198,12 @@ export class MelserExampleForm extends LitElement {
       margin: 2rem auto;
       padding: 2.5rem;
       border-radius: 16px;
-      background: #ffffff;
+      background: ${Var.color.bg.default};
+      color: ${Var.color.text.primary};
       box-shadow: 
         0 4px 6px -1px rgba(0, 0, 0, 0.05),
         0 10px 15px -3px rgba(0, 0, 0, 0.05),
-        0 0 0 1px rgba(0,0,0,0.05);
+        0 0 0 1px ${Var.color.border.default};
     }
     
     .header {
@@ -211,7 +213,7 @@ export class MelserExampleForm extends LitElement {
 
     h2 { 
         margin: 0 0 0.5rem 0; 
-        color: #111827; 
+        color: ${Var.color.text.primary}; 
         font-size: 1.5rem;
         font-weight: 700;
         letter-spacing: -0.025em;
@@ -219,13 +221,13 @@ export class MelserExampleForm extends LitElement {
     
     .subtitle { 
         margin: 0;
-        color: #6b7280; 
+        color: ${Var.color.text.secondary}; 
         font-size: 0.875rem;
         line-height: 1.5;
     }
 
     code {
-        background: #f3f4f6;
+        background: ${Var.color.bg.hover};
         padding: 0.2rem 0.4rem;
         border-radius: 4px;
         font-size: 0.8em;
@@ -242,7 +244,7 @@ export class MelserExampleForm extends LitElement {
     .submit-btn {
         width: 100%;
         padding: 0.75rem 1.5rem;
-        background-color: #2563eb; /* Primary Blue */
+        background-color: ${Var.color.primary}; /* Primary Blue */
         color: white;
         border: none;
         border-radius: 8px;
@@ -254,7 +256,8 @@ export class MelserExampleForm extends LitElement {
     }
     
     .submit-btn:hover {
-        background-color: #1d4ed8;
+        /* We ideally have primaryHover in tokens, for now we can rely on opacity or CSS manipulation, or just keep hardcoded hex for hover if token missing */
+        filter: brightness(0.9);
         transform: translateY(-1px);
         box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
     }

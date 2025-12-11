@@ -94,17 +94,17 @@ El componente incluye estilos alternativos "out of the box".
 
 ### 3. Personalización vía CSS (Variables)
 
-El componente hereda los colores globales, pero puedes sobreescribirlos localmente.
+El componente hereda los colores globales, pero puedes sobreescribirlos localmente usando variables `base-input-*`.
 
 ```css
 /* En tu hoja de estilos global o componente padre */
 .mi-checkbox-custom {
-  /* Color cuando está activo */
-  --melser-primary: #ff4081; 
+  /* Color de fondo cuando está activo */
+  --base-input-control-bg-checked: #ff4081; 
   /* Color del borde inactivo */
-  --melser-border: #b0bec5;
+  --base-input-control-border-color: #b0bec5;
   /* Radio del borde (hacerlo redondo) */
-  --melser-radius: 50%; 
+  --base-input-control-radius: 50%; 
 }
 ```
 

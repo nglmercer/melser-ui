@@ -255,41 +255,52 @@ if (form) {
 
 ### Variables CSS
 
+Debido al nuevo sistema de Design Tokens, las variables ahora siguen un patrón consistente `base-input-*`.
+
 ```css
 base-input {
-  --melser-input-width: 100%;
-  --melser-input-height: 40px;
-  --melser-input-padding: 8px 12px;
-  --melser-input-border: 1px solid #d1d5db;
-  --melser-input-border-radius: 6px;
-  --melser-input-focus-border: #3b82f6;
-  --melser-input-error-border: #ef4444;
-  --melser-input-font-size: 14px;
-  --melser-input-background: #ffffff;
-  --melser-input-disabled-bg: #f9fafb;
+  /* Variables Principales */
+  --base-input-bg: #ffffff;
+  --base-input-bg-hover: #f9fafb;
+  --base-input-bg-focus: #ffffff;
+  
+  --base-input-text-color: #333333;
+  --base-input-text-color-placeholder: #6b7280;
+  
+  --base-input-border-color: #cccccc;
+  --base-input-border-color-hover: #999999;
+  --base-input-border-color-focus: #3B82F6;
+  
+  --base-input-padding: 0.75rem;
+  --base-input-radius: 4px;
+  --base-input-font-size: 1rem;
+  
+  --base-input-focus-ring-color: #3B82F6;
+  --base-input-focus-ring-width: 2px;
 }
 ```
 
 ### Ejemplos de Personalización
 
 <style>
-  .custom-input {
-    --melser-input-focus-border: #10b981;
-    --melser-input-error-border: #f59e0b;
-    --melser-input-border-radius: 12px;
+  .custom-input base-input {
+    --base-input-focus-ring-color: #10b981;
+    --base-input-border-color-focus: #10b981;
+    --base-input-radius: 12px;
+    --base-input-bg: #ecfdf5;
   }
   
-  .large-input {
-    --melser-input-height: 48px;
-    --melser-input-font-size: 16px;
-    --melser-input-padding: 12px 16px;
+  .large-input base-input {
+    --base-input-padding: 1rem 1.5rem;
+    --base-input-font-size: 1.25rem;
   }
   
-  .dark-theme-input {
-    --melser-input-border: 1px solid #374151;
-    --melser-input-focus-border: #8b5cf6;
-    --melser-input-background: #1f2937;
-    --melser-input-color: #f9fafb;
+  .dark-theme-input base-input {
+    --base-input-bg: #1f2937;
+    --base-input-border-color: #374151;
+    --base-input-text-color: #f3f4f6;
+    --base-input-text-color-placeholder: #9ca3af;
+    --base-input-focus-ring-color: #8b5cf6;
   }
 </style>
 
@@ -309,8 +320,8 @@ base-input {
 
 <div class="dark-theme-input">
   <base-input 
-    label="Tema oscuro"
-    placeholder="Para modo oscuro"
+    label="Tema oscuro (Manual)"
+    placeholder="Override manual de estilos"
     value="Texto en tema oscuro">
   </base-input>
 </div>

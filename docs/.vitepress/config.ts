@@ -9,7 +9,7 @@ export default defineConfig({
     template: {
       compilerOptions: {
         // Le dice a Vue que cualquier etiqueta que empiece con "melser-" es un Custom Element
-        isCustomElement: (tag) => tag.startsWith('melser-')
+        isCustomElement: (tag) => tag.startsWith('melser-') || tag.startsWith('base-')
       }
     }
   },
@@ -29,7 +29,7 @@ export default defineConfig({
 
   themeConfig: {
     logo: '/vite.svg',
-    
+
     nav: [
       { text: 'Guía', link: '/guide/getting-started' },
       { text: 'Componentes', link: '/components/overview' }
@@ -45,7 +45,8 @@ export default defineConfig({
         items: [
           { text: 'Empezar', link: '/guide/getting-started' },
           { text: 'Instalación', link: '/guide/installation' },
-          { text: 'Alias @/', link: '/guide/aliases' }
+          { text: 'Alias @/', link: '/guide/aliases' },
+          { text: 'Sistema de Temas', link: '/guide/theming' }
         ]
       },
       // --- Sección de Componentes ---
