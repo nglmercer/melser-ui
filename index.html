@@ -8,7 +8,7 @@
   <title>Melser UI Demo</title>
   <script type="module" src="/src/index.ts"></script>
   <style>
-    /* Import Theme Variables */
+    /* ImportTheme Variables */
     @import url('./src/styles/theme.css');
 
     body {
@@ -170,7 +170,7 @@
       <!-- Switch expects boolean, we'll force a string via JS below -->
       <melser-switch id="invalid-switch" name="invalid-switch" label="Invalid Switch (Value='yes')"></melser-switch>
 
-      <button class="btn" id="submit-btn">Get Data & Validate</button>
+      <button class="btn" id="submit-btn" type="button">Get Data & Validate</button>
     </form>
 
     <h3>Result (Zod-ready structure):</h3>
@@ -179,6 +179,8 @@
 
   <script type="module">
     import { registerComponent, MelserSwitch } from '/src/index.ts';
+    import { z } from 'zod';
+    import { zodToJsonSchema } from "zod-to-json-schema";
 
     // DEMO: Register a component with a custom tag name
     registerComponent('custom-brand-switch', MelserSwitch);
@@ -191,6 +193,104 @@
         invalidSwitch.value = "not-a-boolean";
       }
     }, 500);
+
+    // Handle submit
+    document.getElementById('submit-btn').addEventListener('click', () => {
+      const inputs = document.querySelectorAll(
+        `melser-text-input, melser-select, melser-checkbox, melser-range, 
+         melser-multi-select, melser-radio-group, melser-textarea, melser-switch, 
+         melser-file-upload, melser-tags-input, melser-date-picker, melser-time-picker, 
+         melser-number-input, melser-password-input, melser-otp-input, melser-combobox, 
+         melser-color-picker, melser-rating, melser-dual-range, custom-brand-switch`
+      );
+
+      // 1. Extract raw data object { fieldName: value }
+      const formData = {};
+
+      inputs.forEach(el => {
+        const data = el.getData();
+        if (data.name) {
+          formData[data.name] = data.value;
+        }
+      });
+
+      // 2. Build Zod Schema Dynamically based on input type/name
+      // This is a simplified heuristic for demonstration. 
+      const schemaShape = {};
+
+      inputs.forEach(el => {
+        const name = el.getAttribute('name');
+        if (!name) return;
+
+        const tagName = el.tagName.toLowerCase();
+        const type = el.getAttribute('type');
+        const required = el.hasAttribute('required');
+
+        let validator;
+
+        // Determine base validator
+        switch (tagName) {
+          case 'melser-number-input':
+          case 'melser-range':
+          case 'melser-rating':
+            validator = z.coerce.number();
+            break;
+          case 'melser-checkbox':
+          case 'melser-switch':
+          case 'custom-brand-switch':
+            validator = z.boolean();
+            break;
+          case 'melser-multi-select':
+          case 'melser-tags-input':
+          case 'melser-dual-range': // Dual range returns array [min, max]
+            validator = z.array(z.any());
+            break;
+          case 'melser-date-picker':
+            // value is typically string or Date object depending on implementation
+            validator = z.string().or(z.date());
+            break;
+          default:
+            validator = z.string();
+        }
+
+        // Add refinements
+        // For strings, min(1) is usually what 'required' implies unless it can be empty
+        if (required) {
+          if (validator instanceof z.ZodString) {
+            validator = validator.min(1, { message: "Field is required" });
+          }
+        } else {
+          // If not required, allow optional (undefined) or empty string
+          validator = validator.optional().or(z.literal(''));
+        }
+
+        // Special cases based on name (heuristic)
+        if (name === 'email' || type === 'email') {
+          validator = z.string().email();
+        }
+
+        schemaShape[name] = validator;
+      });
+
+      const schema = z.object(schemaShape);
+
+      // 3. Convert to JSON Schema
+      const jsonSchema = zodToJsonSchema(schema, "myDemoForm");
+
+      // 4. Validate Data
+      const validationResult = schema.safeParse(formData);
+
+      const output = {
+        formData,
+        validationResult: {
+          success: validationResult.success,
+          errors: validationResult.success ? null : validationResult.error.flatten()
+        },
+        generatedJsonSchema: jsonSchema
+      };
+
+      document.getElementById('result').textContent = JSON.stringify(output, null, 2);
+    });
   </script>
 
   <script>
@@ -209,63 +309,49 @@
     });
 
     // Populate options
-    const roleSelect = document.querySelector('melser-select[name="role"]');
-    roleSelect.options = [
-      { label: 'Admin', value: 'admin' },
-      { label: 'User', value: 'user' },
-      { label: 'Guest', value: 'guest' }
-    ];
+    // Use requestAnimationFrame to ensure Custom Elements are upgraded
+    requestAnimationFrame(() => {
+      const roleSelect = document.querySelector('melser-select[name="role"]');
+      if (roleSelect) {
+        roleSelect.options = [
+          { label: 'Admin', value: 'admin' },
+          { label: 'User', value: 'user' },
+          { label: 'Guest', value: 'guest' }
+        ];
+      }
 
-    const interestsSelect = document.querySelector('melser-multi-select');
-    interestsSelect.options = [
-      { label: 'Coding', value: 'coding' },
-      { label: 'Design', value: 'design' },
-      { label: 'Music', value: 'music' },
-      { label: 'Gaming', value: 'gaming' }
-    ];
+      const interestsSelect = document.querySelector('melser-multi-select');
+      if (interestsSelect) {
+        interestsSelect.options = [
+          { label: 'Coding', value: 'coding' },
+          { label: 'Design', value: 'design' },
+          { label: 'Music', value: 'music' },
+          { label: 'Gaming', value: 'gaming' }
+        ];
+      }
 
-    const radioGroup = document.querySelector('melser-radio-group');
-    radioGroup.options = [
-      { label: 'Email', value: 'email' },
-      { label: 'SMS', value: 'sms' },
-      { label: 'Push', value: 'push' }
-    ];
+      const radioGroup = document.querySelector('melser-radio-group');
+      if (radioGroup) {
+        radioGroup.options = [
+          { label: 'Email', value: 'email' },
+          { label: 'SMS', value: 'sms' },
+          { label: 'Push', value: 'push' }
+        ];
+      }
 
-    const countryCombobox = document.querySelector('melser-combobox');
-    countryCombobox.options = [
-      { label: 'United States', value: 'us' },
-      { label: 'United Kingdom', value: 'uk' },
-      { label: 'Canada', value: 'ca' },
-      { label: 'Australia', value: 'au' },
-      { label: 'Germany', value: 'de' },
-      { label: 'France', value: 'fr' },
-      { label: 'Japan', value: 'jp' },
-      { label: 'Brazil', value: 'br' }
-    ];
-
-    // Handle submit
-    document.getElementById('submit-btn').addEventListener('click', () => {
-      // Select all Melser components AND the custom one
-      const inputs = document.querySelectorAll(
-        'melser-text-input, melser-select, melser-checkbox, melser-range, melser-multi-select, melser-radio-group, melser-textarea, melser-switch, melser-file-upload, melser-tags-input, melser-date-picker, melser-time-picker, melser-number-input, melser-password-input, melser-otp-input, melser-combobox, melser-color-picker, melser-rating, melser-dual-range, custom-brand-switch'
-      );
-
-      const data = Array.from(inputs).map(input => input.getData());
-
-      // Example of how this maps to Zod schemas
-      const schemaDescription = data.map(field => {
-        let zodType = `z.${field.dataType}()`;
-        if (field.dataType === 'array') zodType = `z.array(z.string())`;
-        if (field.dataType === 'object') zodType = `z.instanceof(File)`; // Special case for file
-        return `${field.name}: ${zodType}`;
-      });
-
-      const output = {
-        formData: data,
-        zodSchemaHint: schemaDescription
-      };
-
-      document.getElementById('result').textContent = JSON.stringify(output, null, 2);
+      const countryCombobox = document.querySelector('melser-combobox');
+      if (countryCombobox) {
+        countryCombobox.options = [
+          { label: 'United States', value: 'us' },
+          { label: 'United Kingdom', value: 'uk' },
+          { label: 'Canada', value: 'ca' },
+          { label: 'Australia', value: 'au' },
+          { label: 'Germany', value: 'de' },
+          { label: 'France', value: 'fr' },
+          { label: 'Japan', value: 'jp' },
+          { label: 'Brazil', value: 'br' }
+        ];
+      }
     });
   </script>
 </body>

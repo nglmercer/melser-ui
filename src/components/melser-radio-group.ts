@@ -132,31 +132,31 @@ export class MelserRadioGroup extends MelserBaseInput<string> {
     css`
       .main-label {
         display: block;
-        margin-bottom: 0.75rem;
-        font-weight: 700;
-        font-size: 1rem;
-        color: var(--melser-text);
+        margin-bottom: var(--base-input-gap);
+        font-weight: var(--base-input-font-weight-label);
+        font-size: var(--base-input-font-size-medium);
+        color: var(--base-input-label-color);
       }
 
       .radio-group {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: var(--base-input-container-gap);
       }
 
-      /* Estilos para el título de grupo (reemplazo visual de legend) */
+      /* Group header styling */
       .group-header {
         font-size: 0.85rem;
-        font-weight: 700;
+        font-weight: var(--base-input-font-weight-label);
         text-transform: uppercase;
-        color: var(--melser-text-secondary, #6b7280);
-        margin-top: 0.75rem;
-        margin-bottom: 0.25rem;
-        padding-left: 0.25rem;
-        border-bottom: 1px solid var(--melser-border, #e5e7eb);
+        color: var(--base-input-text-color-placeholder);
+        margin-top: var(--base-input-gap);
+        margin-bottom: var(--base-input-container-gap);
+        padding-left: var(--base-input-container-gap);
+        border-bottom: 1px solid var(--base-input-border-color);
       }
       
-      /* Primer header sin margen top */
+      /* First header without top margin */
       .group-header:first-child {
         margin-top: 0;
       }
@@ -164,57 +164,67 @@ export class MelserRadioGroup extends MelserBaseInput<string> {
       .radio-label {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        padding: 0.25rem 0.5rem;
+        gap: var(--base-input-gap);
+        padding: var(--base-input-container-gap) var(--base-input-container-gap);
         cursor: pointer;
-        border-radius: 4px;
-        transition: background 0.1s;
+        border-radius: var(--base-input-radius);
+        transition: var(--base-input-hover-transition);
       }
 
       .radio-label:hover {
-        background-color: var(--_input-bg-hover, #f9fafb);
+        background-color: var(--base-input-bg-hover);
       }
 
       .radio-label.disabled {
-        cursor: not-allowed;
-        opacity: 0.6;
+        cursor: var(--base-input-disabled-cursor);
+        opacity: var(--base-input-opacity-disabled);
       }
 
       input[type="radio"] {
         appearance: none;
-        width: 1.15em;
-        height: 1.15em;
+        width: var(--base-input-radio-size);
+        height: var(--base-input-radio-size);
         margin: 0;
         cursor: pointer;
-        border: 2px solid var(--melser-border, #d1d5db);
+        border: var(--base-input-control-border-width) solid var(--base-input-control-border-color);
         border-radius: 50%;
-        background-color: var(--melser-input-bg, white);
+        background-color: var(--base-input-bg);
         display: grid;
         place-content: center;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: var(--base-input-hover-transition);
       }
 
       input[type="radio"]::before {
         content: "";
-        width: 0.6em;
-        height: 0.6em;
+        width: var(--base-input-radio-dot-size);
+        height: var(--base-input-radio-dot-size);
         border-radius: 50%;
-        transform: scale(0);
+        transform: scale(var(--base-input-icon-scale));
         transition: 0.15s transform ease-in-out;
-        background-color: var(--melser-primary, #007bff);
+        background-color: var(--base-input-control-bg-checked);
       }
 
       input[type="radio"]:checked {
-        border-color: var(--melser-primary, #007bff);
+        border-color: var(--base-input-control-border-color-checked);
       }
 
       input[type="radio"]:checked::before {
-        transform: scale(1);
+        transform: scale(var(--base-input-radio-scale-checked));
       }
       
+      input[type="radio"]:focus-visible {
+        box-shadow: var(--base-input-focus-shadow);
+      }
+
       input[type="radio"]:disabled {
-        border-color: #e5e7eb;
-        background-color: #f3f4f6;
+        border-color: var(--base-input-border-color-disabled);
+        background-color: var(--base-input-bg-disabled);
+        cursor: var(--base-input-disabled-cursor);
+      }
+
+      .label-text {
+        color: var(--base-input-text-color);
+        font-size: var(--base-input-font-size);
       }
     `
   ];

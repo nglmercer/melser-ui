@@ -64,27 +64,12 @@ export class MelserCheckbox extends MelserBaseInput<boolean> {
     css`
       :host {
         display: block;
-        --_chk-size: 1.25rem;
-        --_chk-bg: var(--melser-input-bg, #fff);
-        --_chk-border: var(--melser-border, #ccc);
-        --_chk-active: var(--melser-primary, #6200ee);
-        --_chk-radius: var(--melser-radius, 4px);
-      }
-
-      :host([size="small"]) {
-        --_chk-size: 1rem;
-        font-size: 0.875rem;
-      }
-      
-      :host([size="large"]) {
-        --_chk-size: 1.6rem;
-        font-size: 1.15rem;
       }
 
       .checkbox-container {
         display: inline-flex;
         align-items: center;
-        gap: 0.75em;
+        gap: var(--base-input-gap);
         cursor: pointer;
         position: relative;
         width: 100%;
@@ -102,59 +87,71 @@ export class MelserCheckbox extends MelserBaseInput<boolean> {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: var(--_chk-size);
-        height: var(--_chk-size);
-        border: 2px solid var(--_chk-border);
-        border-radius: var(--_chk-radius);
-        background-color: var(--_chk-bg);
-        transition: all 0.2s ease-in-out;
+        width: var(--base-input-control-size);
+        height: var(--base-input-control-size);
+        border: var(--base-input-control-border-width) solid var(--base-input-control-border-color);
+        border-radius: var(--base-input-control-radius);
+        background-color: var(--base-input-control-bg);
+        transition: var(--base-input-hover-transition);
         flex-shrink: 0;
       }
 
       .control svg {
-        width: 70%;
-        height: 70%;
+        width: var(--base-input-icon-size);
+        height: var(--base-input-icon-size);
         fill: white;
-        transform: scale(0);
+        transform: scale(var(--base-input-icon-scale));
         transition: transform 0.2s ease-in-out;
       }
 
       input:checked + .control {
-        background-color: var(--_chk-active);
-        border-color: var(--_chk-active);
+        background-color: var(--base-input-control-bg-checked);
+        border-color: var(--base-input-control-border-color-checked);
       }
 
       input:checked + .control svg {
-        transform: scale(1);
+        transform: scale(var(--base-input-icon-scale-checked));
       }
 
       input:focus-visible + .control {
-        box-shadow: 0 0 0 3px hsla(var(--melser-primary-h), var(--melser-primary-s), var(--melser-primary-l), 0.3);
+        box-shadow: var(--base-input-focus-shadow);
       }
 
-      :host([disabled]) {
-        opacity: 0.6;
-        pointer-events: none;
-      }
-      :host([disabled]) .control {
-        background-color: var(--melser-surface, #eee);
+      /* Hover state for control */
+      input:hover:not(:disabled) + .control {
+        border-color: var(--base-input-control-border-color-hover);
+        background-color: var(--base-input-control-bg-hover);
       }
 
       :host([variant="card"]) .checkbox-container {
-        border: 1px solid var(--_chk-border);
-        padding: 1rem;
-        border-radius: var(--melser-radius);
-        transition: border-color 0.2s;
+        border: 1px solid var(--base-input-control-border-color);
+        padding: var(--base-input-padding-large);
+        border-radius: var(--base-input-radius);
+        transition: var(--base-input-hover-transition);
+        background-color: var(--base-input-container-bg);
       }
 
       :host([variant="card"]) input:checked ~ .checkbox-container,
       :host([variant="card"]) .checkbox-container:has(input:checked) {
-        border-color: var(--_chk-active);
+        border-color: var(--base-input-control-border-color-checked);
         background-color: hsla(var(--melser-primary-h), var(--melser-primary-s), var(--melser-primary-l), 0.05);
       }
 
-      .required-mark {
-        color: var(--melser-error);
+      /* Disabled states are inherited from base-input */
+      :host([disabled]) .control {
+        background-color: var(--base-input-control-bg-disabled);
+        border-color: var(--base-input-control-border-color-disabled);
+        cursor: var(--base-input-disabled-cursor);
+      }
+
+      /* Label text styling */
+      .label-text {
+        color: var(--base-input-text-color);
+        font-size: var(--base-input-font-size);
+      }
+
+      .label-text .required-mark {
+        color: var(--base-input-label-color-required);
         margin-left: 2px;
       }
     `
