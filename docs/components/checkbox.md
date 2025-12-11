@@ -143,35 +143,24 @@ melser-checkbox::part(container) {
 El componente emite eventos y valida su estado interno.
 
 ```html
-<form id="registro-form">
-  
+<melser-playground-form id="checkbox-playground" title="Registro" description="Validación de términos y condiciones.">
   <melser-checkbox 
     name="terms" 
     label="Acepto los términos *" 
-    required 
-    error-message="Es obligatorio aceptar los términos">
+    required>
   </melser-checkbox>
+</melser-playground-form>
 
-  <button type="submit">Registrar</button>
-</form>
-
-<script>
-  const form = document.getElementById('registro-form');
-  const termsChk = form.querySelector('melser-checkbox[name="terms"]');
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Método 1: Usar la API del componente
-    if (!termsChk.checkValidity()) {
-      alert(termsChk.errorMessage);
-      return;
-    }
-
-    // Método 2: Obtener datos limpios
-    console.log('Datos:', termsChk.getData()); 
-    // Output: { name: 'terms', value: true, isValid: true, ... }
+<script type="module">
+  import { z } from 'zod';
+  
+  const schema = z.object({
+    // Checkbox value is boolean. Refine ensures it's true.
+    terms: z.boolean().refine(val => val === true, "Es obligatorio aceptar los términos")
   });
+  
+  const form = document.getElementById('checkbox-playground');
+  form.schema = schema;
 </script>
 ```
 

@@ -267,46 +267,47 @@ if (form) {
 
 ## Demo del Formulario
 
-<form id="file-upload-form">
+<melser-playground-form id="file-upload-playground" title="Subida de Archivos" description="Ejemplo de subida de archivos con validación.">
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>📁 Ejemplo de Subida de Archivos</h4>
     
-  <melser-file-upload 
-    label="Selecciona una imagen"
-    name="demoImage"
-    accept="image/*"
-    max-files="1"
-    max-size="3MB"
-    show-preview
-    id="form-image">
-  </melser-file-upload>
+    <melser-file-upload 
+      label="Selecciona una imagen"
+      name="demoImage"
+      accept="image/*"
+      max-files="1"
+      max-size="3MB"
+      show-preview>
+    </melser-file-upload>
   </div>
   
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>📎 Múltiples Archivos (Drag & Drop)</h4>
     
-  <melser-file-upload 
-    label="Arrastra archivos aquí"
-    name="demoFiles"
-    accept="*/*"
-    multiple
-    max-files="5"
-    max-size="10MB"
-    drag-drop
-    show-preview
-    id="form-files">
-  </melser-file-upload>
+    <melser-file-upload 
+      label="Arrastra archivos aquí"
+      name="demoFiles"
+      accept="*/*"
+      multiple
+      max-files="5"
+      max-size="10MB"
+      drag-drop
+      show-preview>
+    </melser-file-upload>
   </div>
-  
-  <button  type="submit" variant="primary" id="form-submit">
-    Procesar Archivos
-  </button >
-</form>
+</melser-playground-form>
 
-<div id="upload-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">
-  <strong>Archivos Procesados:</strong>
-  <div id="upload-details"></div>
-</div>
+<script type="module">
+  import { z } from 'zod';
+  
+  const schema = z.object({
+     demoImage: z.any().optional(),
+     demoFiles: z.any().optional()
+  });
+  
+  const form = document.getElementById('file-upload-playground');
+  form.schema = schema;
+</script>
 
 
 ## Personalización con CSS

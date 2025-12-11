@@ -296,58 +296,59 @@ if (form) {
 
 ## Demo del Formulario
 
-<form id="date-picker-form">
+<melser-playground-form id="date-picker-playground" title="Planificación de Evento" description="Gestión de fechas con rangos y validación.">
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>📅 Planificación de Evento</h4>
     
-  <melser-date-picker 
-    label="Fecha del evento *"
-    name="eventDate"
-    required
-    min="today"
-    placeholder="Selecciona la fecha"
-    locale="es"
-    id="form-event-date">
-  </melser-date-picker>
-  
-  <melser-date-picker 
-    label="Rango de inscripción"
-    name="enrollmentRange"
-    mode="range"
-    placeholder="Desde - Hasta"
-    show-clear
-    id="form-enrollment">
-  </melser-date-picker>
-  
-  <melser-date-picker 
-    label="Fechas de descanso"
-    name="breakDates"
-    mode="multiple"
-    placeholder="Selecciona fechas"
-    show-clear
-    id="form-break">
-  </melser-date-picker>
-  
-  <melser-date-picker 
-    label="Año de creación"
-    name="creationYear"
-    view="year"
-    min="2020"
-    max="2030"
-    placeholder="Selecciona un año"
-    id="form-year">
-  </melser-date-picker>
+    <melser-date-picker 
+      label="Fecha del evento *"
+      name="eventDate"
+      required
+      min="today"
+      placeholder="Selecciona la fecha"
+      locale="es">
+    </melser-date-picker>
+    
+    <melser-date-picker 
+      label="Rango de inscripción"
+      name="enrollmentRange"
+      mode="range"
+      placeholder="Desde - Hasta"
+      show-clear>
+    </melser-date-picker>
+    
+    <melser-date-picker 
+      label="Fechas de descanso"
+      name="breakDates"
+      mode="multiple"
+      placeholder="Selecciona fechas"
+      show-clear>
+    </melser-date-picker>
+    
+    <melser-date-picker 
+      label="Año de creación"
+      name="creationYear"
+      view="year"
+      min="2020"
+      max="2030"
+      placeholder="Selecciona un año">
+    </melser-date-picker>
   </div>
-  
-  <button  type="submit" variant="primary" id="form-submit">
-    Crear Evento
-  </button >
-</form>
+</melser-playground-form>
 
-<div id="date-result" style="margin-top: 1rem; padding: 1rem; border-radius: 6px; display: none;">
-  <strong>Información del Evento:</strong>
-  <div id="date-details"></div>
-</div>
+<script type="module">
+  import { z } from 'zod';
+  
+  const schema = z.object({
+    eventDate: z.string().min(1, "La fecha del evento es obligatoria"),
+    enrollmentRange: z.string().optional(),
+    breakDates: z.string().optional(),
+    creationYear: z.string().optional()
+  });
+  
+  const form = document.getElementById('date-picker-playground');
+  form.schema = schema;
+</script>
 
 
 ## Personalización con CSS

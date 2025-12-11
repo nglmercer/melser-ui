@@ -158,12 +158,11 @@ if (form) {
 
 ## Demo del Formulario
 
-<form id="tags-form">
+<melser-playground-form id="tags-playground" title="Publicar Artículo" description="Etiquetado y validación de contenido.">
   <div style="margin-bottom: 1.5rem;">
     <base-input 
       label="Título del artículo"
       name="title"
-      id="form-title"
       required>
     </base-input>
   </div>
@@ -174,23 +173,30 @@ if (form) {
       placeholder="Etiquetas del artículo..."
       label="Etiquetas"
       max-tags="8"
-      min-length="2"
-      id="form-tags">
+      min-length="2">
     </melser-tags-input>
   </div>
   
   <div style="margin-bottom: 1.5rem;">
     <melser-checkbox 
       name="published"
-      label="Publicar inmediatamente"
-      id="form-published">
+      label="Publicar inmediatamente">
     </melser-checkbox>
   </div>
+</melser-playground-form>
+
+<script type="module">
+  import { z } from 'zod';
   
-  <button  type="submit" variant="primary" id="form-submit">
-    Publicar Artículo
-  </button >
-</form>
+  const schema = z.object({
+    title: z.string().min(3, "El título es muy corto"),
+    tags: z.string().min(1, "Agrega al menos una etiqueta"),
+    published: z.boolean().optional()
+  });
+  
+  const form = document.getElementById('tags-playground');
+  form.schema = schema;
+</script>
 
 ## Ejemplos Avanzados
 

@@ -152,15 +152,14 @@ if (form) {
 
 ## Demo del Formulario
 
-<form id="range-form">
+<melser-playground-form id="range-playground" title="Configuración de Audio/Video" description="Ajustes de brillo y volumen.">
   <div style="margin-bottom: 1.5rem;">
     <melser-range 
       name="brightness"
       min="0" 
       max="100" 
       value="70"
-      label="Brillo de pantalla"
-      id="form-brightness">
+      label="Brillo de pantalla">
     </melser-range>
   </div>
   
@@ -170,15 +169,22 @@ if (form) {
       min="0" 
       max="100" 
       value="50"
-      label="Volumen"
-      id="form-volume">
+      label="Volumen">
     </melser-range>
   </div>
+</melser-playground-form>
+
+<script type="module">
+  import { z } from 'zod';
   
-  <button  type="submit" variant="primary" id="form-submit">
-    Guardar Configuración
-  </button >
-</form>
+  const schema = z.object({
+    brightness: z.coerce.number().min(0).max(100),
+    volume: z.coerce.number().min(0).max(100)
+  });
+  
+  const form = document.getElementById('range-playground');
+  form.schema = schema;
+</script>
 
 
 ## Personalización con CSS

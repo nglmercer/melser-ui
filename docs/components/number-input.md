@@ -224,7 +224,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<form id="number-form">
+<melser-playground-form id="number-input-playground" title="Cálculo de Productos" description="Calculadora de precios con validación en tiempo real.">
   <div style="margin-bottom: 1rem;">
     <melser-number-input 
       label="Edad *"
@@ -232,8 +232,7 @@ if (form) {
       min="18"
       max="100"
       required
-      placeholder="25"
-      id="form-age">
+      placeholder="25">
     </melser-number-input>
   </div>
   
@@ -245,8 +244,7 @@ if (form) {
       step="0.01"
       precision="2"
       required
-      placeholder="0.00"
-      id="form-price">
+      placeholder="0.00">
     </melser-number-input>
   </div>
   
@@ -256,8 +254,7 @@ if (form) {
       name="quantity"
       min="1"
       max="50"
-      value="1"
-      id="form-quantity">
+      value="1">
     </melser-number-input>
   </div>
   
@@ -268,20 +265,47 @@ if (form) {
       min="0"
       max="50"
       step="5"
-      value="0"
-      id="form-discount">
+      value="0">
     </melser-number-input>
   </div>
-  
-  <button  type="submit" variant="primary" id="form-submit">
-    Calcular Total
-  </button >
-</form>
+</melser-playground-form>
 
 <div id="calculation-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">
   <strong>Resultado del Cálculo:</strong>
   <div id="calc-details"></div>
 </div>
+
+<script type="module">
+  import { z } from 'zod';
+  
+  const schema = z.object({
+    age: z.coerce.number().min(18).max(100),
+    price: z.coerce.number().min(0),
+    quantity: z.coerce.number().min(1).max(50).default(1),
+    discount: z.coerce.number().min(0).max(50).default(0)
+  });
+  
+  const form = document.getElementById('number-input-playground');
+  const resultDiv = document.getElementById('calculation-result');
+  const detailsDiv = document.getElementById('calc-details');
+  
+  form.schema = schema;
+  form.defaultData = { quantity: 1, discount: 0 };
+  
+  form.addEventListener('playground:submit', (e) => {
+    const { data } = e.detail;
+    const total = data.price * data.quantity;
+    const discountAmount = total * (data.discount / 100);
+    const finalPrice = total - discountAmount;
+    
+    detailsDiv.innerHTML = `
+      <p>Subtotal: €${total.toFixed(2)}</p>
+      <p>Descuento: -€${discountAmount.toFixed(2)}</p>
+      <p style="font-size: 1.2em; color: var(--melser-primary);">Total: €${finalPrice.toFixed(2)}</p>
+    `;
+    resultDiv.style.display = 'block';
+  });
+</script>
 
 
 ## Personalización con CSS

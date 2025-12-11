@@ -203,15 +203,14 @@ if (form) {
 
 ## Demo del Formulario
 
-<form id="text-input-form">
+<melser-playground-form id="text-input-playground" title="Formulario de Ejemplo" description="Ejemplo interactivo con validación Zod automática.">
   <div style="margin-bottom: 1rem;">
     <base-input 
       label="Nombre completo *"
       name="fullName"
       required
       minlength="2"
-      placeholder="Juan Pérez"
-      id="form-name">
+      placeholder="Juan Pérez">
     </base-input>
   </div>
   
@@ -221,8 +220,7 @@ if (form) {
       type="email"
       name="email"
       required
-      placeholder="juan@email.com"
-      id="form-email">
+      placeholder="juan@email.com">
     </base-input>
   </div>
   
@@ -231,8 +229,7 @@ if (form) {
       label="Teléfono"
       type="tel"
       name="phone"
-      placeholder="123-456-7890"
-      id="form-phone">
+      placeholder="123-456-7890">
     </base-input>
   </div>
   
@@ -241,15 +238,24 @@ if (form) {
       label="Sitio web"
       type="url"
       name="website"
-      placeholder="https://miweb.com"
-      id="form-website">
+      placeholder="https://miweb.com">
     </base-input>
   </div>
+</melser-playground-form>
+
+<script type="module">
+  import { z } from 'zod';
   
-  <button  type="submit" variant="primary" id="form-submit">
-    Enviar Formulario
-  </button >
-</form>
+  const schema = z.object({
+    fullName: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
+    email: z.string().email("Email inválido"),
+    phone: z.string().optional(),
+    website: z.string().url("URL inválida").optional().or(z.literal(''))
+  });
+  
+  const form = document.getElementById('text-input-playground');
+  form.schema = schema;
+</script>
 
 ## Personalización con CSS
 

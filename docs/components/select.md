@@ -292,14 +292,13 @@ function updateCities(citySelect, country) {
 
 ## Demo del Formulario
 
-<form id="select-form">
+<melser-playground-form id="select-playground" title="Selección de Ubicación" description="Selectores dependientes y validación.">
   <div style="margin-bottom: 1rem;">
     <melser-select 
       label="País *"
       name="country"
       required
-      placeholder="Selecciona tu país"
-      id="form-country">
+      placeholder="Selecciona tu país">
       <optgroup label="Europa">
         <option value="es">España</option>
         <option value="fr">Francia</option>
@@ -318,8 +317,7 @@ function updateCities(citySelect, country) {
     <melser-select 
       label="Ciudad"
       name="city"
-      placeholder="Selecciona una ciudad"
-      id="form-city">
+      placeholder="Selecciona una ciudad">
       <option value="">Selecciona primero un país</option>
     </melser-select>
   </div>
@@ -329,19 +327,77 @@ function updateCities(citySelect, country) {
       label="Género"
       name="gender"
       searchable
-      clearable
-      id="form-gender">
+      clearable>
       <option value="">Prefiero no decir</option>
       <option value="male">Masculino</option>
       <option value="female">Femenino</option>
       <option value="other">Otro</option>
     </melser-select>
   </div>
+</melser-playground-form>
+
+<script type="module">
+  import { z } from 'zod';
   
-  <button  type="submit" variant="primary" id="form-submit">
-    Enviar Formulario
-  </button >
-</form>
+  const schema = z.object({
+    country: z.string().min(1, "Selecciona tu país"),
+    city: z.string().optional(),
+    gender: z.string().optional()
+  });
+  
+  const form = document.getElementById('select-playground');
+  form.schema = schema;
+
+  // Cities Data
+  const cities = {
+    'es': [
+      { value: 'madrid', label: 'Madrid' },
+      { value: 'barcelona', label: 'Barcelona' }
+    ],
+    'mx': [
+      { value: 'cdmx', label: 'Ciudad de México' },
+      { value: 'guadalajara', label: 'Guadalajara' }
+    ],
+    'ar': [
+      { value: 'ba', label: 'Buenos Aires' },
+      { value: 'cor', label: 'Córdoba' }
+    ],
+    'co': [
+        { value: 'bog', label: 'Bogotá' }
+    ]
+  };
+
+  // Listen for changes
+  form.addEventListener('ui:change', (e) => {
+    const { name, value } = e.detail;
+    
+    if (name === 'country') {
+       const citySelect = form.querySelector('melser-select[name="city"]');
+       // Reset city
+       // We need to trigger update in controller too if we change value programmatically?
+       // If we change DOM, component emits change? 
+       // Usually we change options first.
+       
+       const countryCities = cities[value] || [];
+       
+       if (countryCities.length > 0) {
+           citySelect.innerHTML = '<option value="">Selecciona una ciudad</option>';
+           countryCities.forEach(c => {
+               const opt = document.createElement('option');
+               opt.value = c.value;
+               opt.textContent = c.label;
+               citySelect.appendChild(opt);
+           });
+           citySelect.disabled = false;
+       } else {
+           citySelect.innerHTML = '<option value="">No hay ciudades disponibles</option>';
+           citySelect.disabled = true;
+       }
+       // Clear value in form controller?
+       // The user selects city manually next.
+    }
+  });
+</script>
 
 
 ## Personalización con CSS

@@ -140,25 +140,27 @@ El componente ya no usa props para estilos (`size`, `color`), sino que aprovecha
 El componente funciona nativamente dentro de formularios gracias a `MelserBaseInput`.
 
 ```html
-<form id="feedback-form">
-  <melser-rating 
-    label="Experiencia General" 
-    name="rating" 
-    required 
-    max="5"
-    precision="0.5">
-  </melser-rating>
-  
-  <button type="submit">Enviar</button>
-</form>
+<melser-playground-form id="rating-playground" title="Encuesta de Feedback" description="Valoración del servicio.">
+  <div style="margin-bottom: 1rem;">
+    <melser-rating 
+      label="Experiencia General" 
+      name="rating" 
+      required 
+      max="5"
+      precision="0.5">
+    </melser-rating>
+  </div>
+</melser-playground-form>
 
-<script>
-  const form = document.getElementById('feedback-form');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    console.log("Rating:", formData.get('rating')); // Devuelve el número (ej: "4.5")
+<script type="module">
+  import { z } from 'zod';
+  
+  const schema = z.object({
+    rating: z.coerce.number().min(0.5, "La calificación es requerida").max(5)
   });
+  
+  const form = document.getElementById('rating-playground');
+  form.schema = schema;
 </script>
 ```
 

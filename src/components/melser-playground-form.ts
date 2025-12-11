@@ -58,8 +58,8 @@ export class MelserPlaygroundForm extends LitElement {
     handleClick = (e: MouseEvent) => {
         const target = e.target as HTMLElement;
         // Check if it's a submit button
+        e.preventDefault();
         if (target.matches('button[type="submit"]') || target.closest('button[type="submit"]')) {
-            e.preventDefault();
             this.handleSubmit();
         }
     }

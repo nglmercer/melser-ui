@@ -161,7 +161,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<form id="dual-range-form">
+<melser-playground-form id="dual-range-playground" title="Filtros de Búsqueda" description="Rangos de precio y tamaño.">
   <div style="margin-bottom: 1.5rem;">
     <melser-dual-range 
       name="priceRange"
@@ -169,8 +169,7 @@ if (form) {
       max="5000" 
       value="500,2500"
       step="100"
-      label="Rango de precios ($)"
-      id="form-priceRange">
+      label="Rango de precios ($)">
     </melser-dual-range>
   </div>
   
@@ -180,8 +179,7 @@ if (form) {
       min="10" 
       max="500" 
       value="50,200"
-      label="Tamaño (m²)"
-      id="form-sizeRange">
+      label="Tamaño (m²)">
     </melser-dual-range>
   </div>
   
@@ -192,15 +190,23 @@ if (form) {
       max="100" 
       value="0,25"
       step="5"
-      label="Distancia (km)"
-      id="form-distanceRange">
+      label="Distancia (km)">
     </melser-dual-range>
   </div>
+</melser-playground-form>
+
+<script type="module">
+  import { z } from 'zod';
   
-  <button  type="submit" variant="primary" id="form-submit">
-    Aplicar Filtros
-  </button >
-</form>
+  const schema = z.object({
+    priceRange: z.string().regex(/^\d+(\.\d+)?,\d+(\.\d+)?$/),
+    sizeRange: z.string(),
+    distanceRange: z.string()
+  });
+  
+  const form = document.getElementById('dual-range-playground');
+  form.schema = schema;
+</script>
 
 ## Ejemplos Avanzados
 

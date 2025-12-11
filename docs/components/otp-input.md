@@ -153,7 +153,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<form id="otp-form">
+<melser-playground-form id="otp-playground" title="Verificación 2FA" description="Verificación de código y seguridad.">
   <div style="margin-bottom: 1.5rem;">
     <base-input 
       label="Correo electrónico"
@@ -169,25 +169,29 @@ if (form) {
       length="6"
       numeric-only
       label="Código de verificación"
-      hint="Hemos enviado un código a tu correo"
-      id="form-otp">
+      hint="Hemos enviado un código a tu correo">
     </melser-otp-input>
   </div>
   
   <div style="margin-bottom: 1.5rem;">
     <melser-checkbox 
       name="rememberDevice"
-      label="Recordar dispositivo por 30 días"
-      id="form-remember">
+      label="Recordar dispositivo por 30 días">
     </melser-checkbox>
   </div>
+</melser-playground-form>
+
+<script type="module">
+  import { z } from 'zod';
   
-  <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-    <button  type="submit" variant="primary" id="form-submit">
-      Verificar
-    </button >    
-  </div>
-</form>
+  const schema = z.object({
+    otpCode: z.string().length(6, "El código debe tener 6 dígitos"),
+    rememberDevice: z.boolean().default(false)
+  });
+  
+  const form = document.getElementById('otp-playground');
+  form.schema = schema;
+</script>
 
     
 ## Ejemplos Avanzados

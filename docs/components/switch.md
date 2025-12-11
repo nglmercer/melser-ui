@@ -274,27 +274,24 @@ if (form) {
 
 ## Demo del Formulario
 
-<form id="switch-form">
+<melser-playground-form id="switch-playground" title="Configuración" description="Ejemplo de configuración con switches y validación Zod.">
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>⚡ Configuración Rápida</h4>
     
     <melser-switch 
       label="Activar características premium"
-      name="premium"
-      id="form-premium">
+      name="premium">
     </melser-switch>
     
     <melser-switch 
       label="Modo desarrollo"
-      name="dev"
-      id="form-dev">
+      name="dev">
     </melser-switch>
     
     <melser-switch 
       label="Guardar automáticamente"
       name="autosave"
-      checked
-      id="form-autosave">
+      checked>
     </melser-switch>
   </div>
   
@@ -305,43 +302,76 @@ if (form) {
       label="Sonido activado"
       name="sound"
       checked
-      color="success"
-      id="form-sound">
+      color="success">
     </melser-switch>
     
     <melser-switch 
       label="Música de fondo"
       name="music"
       checked
-      color="primary"
-      id="form-music">
+      color="primary">
     </melser-switch>
     
     <melser-switch 
       label="Vibración"
       name="vibration"
-      color="warning"
-      id="form-vibration">
+      color="warning">
     </melser-switch>
     
     <melser-switch 
       label="Notificaciones de juego"
       name="gameNotifications"
       checked
-      color="primary"
-      id="form-game-notifications">
+      color="primary">
     </melser-switch>
   </div>
-  
-  <button  type="submit" variant="primary" id="form-submit">
-    Aplicar Configuración
-  </button >
-</form>
+</melser-playground-form>
 
 <div id="switch-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">
   <strong>Configuración Aplicada:</strong>
   <div id="switch-details"></div>
 </div>
+
+<script type="module">
+  import { z } from 'zod';
+  
+  const schema = z.object({
+    premium: z.boolean().default(false),
+    dev: z.boolean().default(false),
+    autosave: z.boolean().default(true),
+    sound: z.boolean().default(true),
+    music: z.boolean().default(true),
+    vibration: z.boolean().default(false),
+    gameNotifications: z.boolean().default(true)
+  });
+  
+  const form = document.getElementById('switch-playground');
+  const detailsDiv = document.getElementById('switch-details');
+  const resultDiv = document.getElementById('switch-result');
+  
+  form.schema = schema;
+  form.defaultData = {
+    autosave: true,
+    sound: true,
+    music: true,
+    gameNotifications: true
+  };
+  
+  form.addEventListener('playground:submit', (e) => {
+     const { data } = e.detail;
+     
+     // Pretty print active settings
+     const active = Object.keys(data).filter(k => data[k]);
+     
+     detailsDiv.innerHTML = `
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+           ${active.map(k => `<span style="background:#e0e7ff; color:#3730a3; padding:2px 8px; border-radius:4px; font-size:0.9em;">${k}</span>`).join('')}
+           ${active.length === 0 ? '<span style="color:#666;">Ninguna opción activa</span>' : ''}
+        </div>
+     `;
+     resultDiv.style.display = 'block';
+  });
+</script>
 
 
 ## Personalización con CSS

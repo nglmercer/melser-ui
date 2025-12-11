@@ -305,62 +305,65 @@ if (form) {
 
 ## Demo del Formulario
 
-<form id="time-picker-form">
+<melser-playground-form id="time-picker-playground" title="Configuración de Horarios" description="Definición de turnos y recordatorios.">
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
     <h4>⏰ Configuración de Horarios</h4>
     
-  <melser-time-picker 
-    label="Hora de inicio *"
-    name="startTime"
-    required
-    value="09:00"
-    placeholder="Hora de inicio"
-    format="12h"
-    id="form-start">
-  </melser-time-picker>
-  
-  <melser-time-picker 
-    label="Hora de fin *"
-    name="endTime"
-    required
-    value="17:00"
-    placeholder="Hora de fin"
-    format="12h"
-    min="09:00"
-    id="form-end">
-  </melser-time-picker>
-  
-  <melser-time-picker 
-    label="Tiempo de descanso"
-    name="breakTime"
-    value="01:00"
-    step="1800"
-    placeholder="Duración del descanso"
-    format="12h"
-    id="form-break">
-  </melser-time-picker>
-  
-  <melser-time-picker 
-    label="Recordatorio automático"
-    name="reminder"
-    value="15:00"
-    step="300"
-    placeholder="Cuándo recordar"
-    format="24h"
-    show-seconds
-    id="form-reminder">
-  </melser-time-picker>
+    <melser-time-picker 
+      label="Hora de inicio *"
+      name="startTime"
+      required
+      placeholder="Hora de inicio"
+      format="12h">
+    </melser-time-picker>
+    
+    <melser-time-picker 
+      label="Hora de fin *"
+      name="endTime"
+      required
+      placeholder="Hora de fin"
+      format="12h"
+      min="09:00">
+    </melser-time-picker>
+    
+    <melser-time-picker 
+      label="Tiempo de descanso"
+      name="breakTime"
+      step="1800"
+      placeholder="Duración del descanso"
+      format="12h">
+    </melser-time-picker>
+    
+    <melser-time-picker 
+      label="Recordatorio automático"
+      name="reminder"
+      step="300"
+      placeholder="Cuándo recordar"
+      format="24h"
+      show-seconds>
+    </melser-time-picker>
   </div>
-  
-  <button  type="submit" variant="primary" id="form-submit">
-    Configurar Horarios
-  </button >
-</form>
+</melser-playground-form>
 
-<div id="time-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">
-  <strong>Configuración de Horarios:</strong>
-  <div id="time-details"></div>
-</div>
+<script type="module">
+  import { z } from 'zod';
+  
+  const schema = z.object({
+    startTime: z.string().min(1, "Hora de inicio requerida"),
+    endTime: z.string().min(1, "Hora de fin requerida"),
+    breakTime: z.string().optional(),
+    reminder: z.string().optional()
+  });
+  
+  const form = document.getElementById('time-picker-playground');
+  form.schema = schema;
+  form.defaultData = {
+    startTime: "09:00",
+    endTime: "17:00",
+    breakTime: "01:00",
+    reminder: "15:00:00"
+  };
+</script>
 
 
 ## Personalización con CSS

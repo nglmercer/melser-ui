@@ -144,6 +144,40 @@ picker.addEventListener('ui:change', (e) => {
 </melser-color-picker>
 
 
+## Demo del Formulario
+
+<melser-playground-form id="color-playground" title="Personalización de Tema" description="Selecciona los colores de tu interfaz.">
+  <div style="margin-bottom: 1.5rem;">
+    <melser-color-picker 
+      label="Color Principal *"
+      name="primaryColor"
+      required
+      value="#3b82f6">
+    </melser-color-picker>
+  </div>
+  
+  <div style="margin-bottom: 1.5rem;">
+    <melser-color-picker 
+      label="Color de Fondo"
+      name="backgroundColor"
+      value="#ffffff">
+    </melser-color-picker>
+  </div>
+</melser-playground-form>
+
+<script type="module">
+  import { z } from 'zod';
+  
+  const schema = z.object({
+    primaryColor: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Debe ser un color hexadecimal válido"),
+    backgroundColor: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Debe ser un color hexadecimal válido").optional()
+  });
+  
+  const form = document.getElementById('color-playground');
+  form.schema = schema;
+</script>
+
+
 -----
 
 ## Estilizado (CSS Variables)

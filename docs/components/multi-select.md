@@ -288,7 +288,7 @@ if (form) {
 
 ## Demo del Formulario
 
-<form id="multi-select-form">
+<melser-playground-form id="multi-select-playground" title="Intereses Académicos" description="Selección múltiple con límites y validación.">
   <div style="margin-bottom: 1rem;">
     <melser-multi-select 
       label="Hobbies (mín 2, máx 4) *"
@@ -298,8 +298,7 @@ if (form) {
       max-selections="4"
       show-counter
       select-all
-      placeholder="Selecciona tus hobbies"
-      id="form-hobbies">
+      placeholder="Selecciona tus hobbies">
       <option value="sports">🏃‍♂️ Deportes</option>
       <option value="music">🎵 Música</option>
       <option value="reading">📚 Lectura</option>
@@ -318,8 +317,7 @@ if (form) {
       searchable
       placeholder="Busca materias..."
       show-counter
-      max-selections="6"
-      id="form-subjects">
+      max-selections="6">
       <optgroup label="Ciencias">
         <option value="math">📐 Matemáticas</option>
         <option value="physics">⚛️ Física</option>
@@ -334,16 +332,22 @@ if (form) {
       </optgroup>
     </melser-multi-select>
   </div>
-  
-  <button  type="submit" variant="primary" id="form-submit">
-    Enviar Formulario
-  </button >
-</form>
+</melser-playground-form>
 
-<div id="hobbies-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">
-  <strong>Resultados Seleccionados:</strong>
-  <div id="hobbies-details"></div>
-</div>
+<script type="module">
+  import { z } from 'zod';
+  
+  const schema = z.object({
+    hobbies: z.string().refine(val => {
+       const count = val ? val.split(',').length : 0;
+       return count >= 2 && count <= 4;
+    }, "Selecciona entre 2 y 4 hobbies"),
+    subjects: z.string().optional()
+  });
+  
+  const form = document.getElementById('multi-select-playground');
+  form.schema = schema;
+</script>
 
 
 ## Personalización con CSS

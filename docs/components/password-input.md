@@ -164,14 +164,13 @@ if (form) {
 
 ### Formulario de Inicio de Sesión
 
-<form id="password-form">
+<melser-playground-form id="password-playground" title="Cambio de Contraseña" description="Validación de fortaleza y coincidencia.">
   <div style="margin-bottom: 1rem;">
     <melser-password-input 
       label="Contraseña actual *"
       name="currentPassword"
       required
-      placeholder="Tu contraseña actual"
-      id="form-current">
+      placeholder="Tu contraseña actual">
     </melser-password-input>
   </div>
   
@@ -183,8 +182,7 @@ if (form) {
       minlength="8"
       strength-meter
       show-toggle
-      placeholder="Nueva contraseña"
-      id="form-new">
+      placeholder="Nueva contraseña">
     </melser-password-input>
   </div>
   
@@ -195,15 +193,26 @@ if (form) {
       required
       minlength="8"
       show-toggle
-      placeholder="Repite la nueva contraseña"
-      id="form-confirm">
+      placeholder="Repite la nueva contraseña">
     </melser-password-input>
   </div>
+</melser-playground-form>
+
+<script type="module">
+  import { z } from 'zod';
   
-  <button  type="submit" variant="primary" id="form-submit">
-    Cambiar Contraseña
-  </button >
-</form>
+  const schema = z.object({
+    currentPassword: z.string().min(1, "La contraseña actual es requerida"),
+    newPassword: z.string().min(8, "Al menos 8 caracteres"),
+    confirmPassword: z.string()
+  }).refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Las contraseñas no coinciden",
+    path: ["confirmPassword"]
+  });
+  
+  const form = document.getElementById('password-playground');
+  form.schema = schema;
+</script>
 
 ## Personalización con CSS
 

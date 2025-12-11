@@ -289,14 +289,13 @@ if (form) {
 
 ## Demo del Formulario
 
-<form id="radio-form">
+<melser-playground-form id="radio-playground" title="Encuesta de Satisfacción" description="Preguntas de selección simple con validación.">
   <div style="margin-bottom: 1.5rem;">
     <melser-radio-group 
       label="¿Te gusta este componente? *"
       name="opinion"
       required
-      orientation="horizontal"
-      id="form-opinion">
+      orientation="horizontal">
       <option value="me_encanta" label="¡Me encanta!"></option>
       <option value="me_gusta" label="Me gusta"></option>
       <option value="es_aceptable" label="Es aceptable"></option>
@@ -308,8 +307,7 @@ if (form) {
     <melser-radio-group 
       label="Nivel de experiencia con componentes web"
       name="experience"
-      orientation="vertical"
-      id="form-experience">
+      orientation="vertical">
       <option value="principiante" label="🟢 Principiante - Es mi primera vez"></option>
       <option value="intermedio" label="🟡 Intermedio - Tengo algo de experiencia"></option>
       <option value="avanzado" label="🔴 Avanzado - Soy experto"></option>
@@ -320,18 +318,26 @@ if (form) {
     <melser-radio-group 
       label="Preferencia de uso"
       name="preference"
-      orientation="horizontal"
-      id="form-preference">
+      orientation="horizontal">
       <option value="codigo" label="💻 Prefiero código"></option>
       <option value="visual" label="🎨 Prefiero interfaces visuales"></option>
       <option value="ambos" label="⚖️ Ambos son útiles"></option>
     </melser-radio-group>
   </div>
+</melser-playground-form>
+
+<script type="module">
+  import { z } from 'zod';
   
-  <button  type="submit" variant="primary" id="form-submit">
-    Enviar Respuestas
-  </button >
-</form>
+  const schema = z.object({
+    opinion: z.string().min(1, "Debes seleccionar una opinión"),
+    experience: z.string().optional(),
+    preference: z.string().optional()
+  });
+  
+  const form = document.getElementById('radio-playground');
+  form.schema = schema;
+</script>
 
 <div id="radio-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">
   <strong>Resultados de la Encuesta:</strong>

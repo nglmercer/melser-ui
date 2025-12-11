@@ -307,7 +307,7 @@ function debounce(func, wait) {
 
 ## Demo del Formulario
 
-<form id="combobox-form">
+<melser-playground-form id="combobox-playground" title="Encuesta de Desarrollo" description="Ejemplo de autocompletado y validación.">
   <div style="margin-bottom: 1rem;">
     <melser-combobox 
       label="Lenguaje de programación"
@@ -315,8 +315,7 @@ function debounce(func, wait) {
       placeholder="Busca un lenguaje..."
       highlight-matches
       min-length="2"
-      max-results="20"
-      id="form-language">
+      max-results="20">
       <option value="javascript">JavaScript</option>
       <option value="typescript">TypeScript</option>
       <option value="python">Python</option>
@@ -338,8 +337,7 @@ function debounce(func, wait) {
       name="project"
       allow-free-text
       placeholder="Selecciona o crea un proyecto..."
-      highlight-matches
-      id="form-project">
+      highlight-matches>
       <option value="web-app">Aplicación Web</option>
       <option value="mobile-app">App Móvil</option>
       <option value="desktop-app">Aplicación Desktop</option>
@@ -355,8 +353,7 @@ function debounce(func, wait) {
       name="framework"
       placeholder="Busca tu framework..."
       highlight-matches
-      max-results="15"
-      id="form-framework">
+      max-results="15">
       <optgroup label="Frontend">
         <option value="react">React</option>
         <option value="vue">Vue.js</option>
@@ -379,16 +376,20 @@ function debounce(func, wait) {
       </optgroup>
     </melser-combobox>
   </div>
-  
-  <button  type="submit" variant="primary" id="form-submit">
-    Enviar Formulario
-  </button >
-</form>
+</melser-playground-form>
 
-<div id="combobox-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">
-  <strong>Selección Final:</strong>
-  <div id="combobox-details"></div>
-</div>
+<script type="module">
+  import { z } from 'zod';
+  
+  const schema = z.object({
+    language: z.string().min(1, "Selecciona un lenguaje"),
+    project: z.string().min(1, "El proyecto es requerido"),
+    framework: z.string().optional()
+  });
+  
+  const form = document.getElementById('combobox-playground');
+  form.schema = schema;
+</script>
 
 
 ## Personalización con CSS
