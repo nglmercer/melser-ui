@@ -1,6 +1,6 @@
 Aqui tienes la documentación actualizada en formato Markdown para reflejar exactamente la implementación del componente `MelserRating` que acabamos de crear (usando `precision`, SVGs, y variables CSS en lugar de props de estilo).
 
------
+---
 
 ## title: MelserRating
 
@@ -11,10 +11,7 @@ Un componente de calificación con estrellas basado en SVG, con soporte para pre
 ## Ejemplo Básico
 
 ```html
-<melser-rating 
-  label="Califica este servicio" 
-  max="5">
-</melser-rating>
+<melser-rating label="Califica este servicio" max="5"> </melser-rating>
 ```
 
 ## Demo Interactivo
@@ -53,25 +50,25 @@ disabled>
 
 ## Propiedades
 
-| Propiedad | Tipo | Valor por Defecto | Descripción |
-|-----------|------|-------------------|-------------|
-| `value` | `number` | `0` | Valor numérico actual de la calificación. |
-| `max` | `number` | `5` | Número total de estrellas a mostrar. |
-| `min` | `number` | `0` | Valor mínimo permitido. |
-| `precision` | `number` | `1` | Granularidad de la selección (1, 0.5, 0.1, etc.). |
-| `label` | `string` | `''` | Etiqueta visible del campo. |
-| `disabled` | `boolean` | `false` | Deshabilita la interacción. |
-| `readonly` | `boolean` | `false` | Modo solo lectura (útil para mostrar promedios). |
-| `required` | `boolean` | `false` | Marca el campo como requerido en formularios. |
+| Propiedad   | Tipo      | Valor por Defecto | Descripción                                       |
+| ----------- | --------- | ----------------- | ------------------------------------------------- |
+| `value`     | `number`  | `0`               | Valor numérico actual de la calificación.         |
+| `max`       | `number`  | `5`               | Número total de estrellas a mostrar.              |
+| `min`       | `number`  | `0`               | Valor mínimo permitido.                           |
+| `precision` | `number`  | `1`               | Granularidad de la selección (1, 0.5, 0.1, etc.). |
+| `label`     | `string`  | `''`              | Etiqueta visible del campo.                       |
+| `disabled`  | `boolean` | `false`           | Deshabilita la interacción.                       |
+| `readonly`  | `boolean` | `false`           | Modo solo lectura (útil para mostrar promedios).  |
+| `required`  | `boolean` | `false`           | Marca el campo como requerido en formularios.     |
 
 ## Eventos
 
 El componente hereda la funcionalidad de `MelserBaseInput`.
 
-| Evento | Descripción |
-|--------|-------------|
-| `change` | Se dispara cuando el usuario hace clic y confirma una calificación. |
-| `input` | Se dispara durante la interacción (opcional, dependiendo de la base). |
+| Evento   | Descripción                                                           |
+| -------- | --------------------------------------------------------------------- |
+| `change` | Se dispara cuando el usuario hace clic y confirma una calificación.   |
+| `input`  | Se dispara durante la interacción (opcional, dependiendo de la base). |
 
 ## Ejemplos de Uso
 
@@ -80,11 +77,12 @@ El componente hereda la funcionalidad de `MelserBaseInput`.
 Para permitir seleccionar valores como 3.5 o 4.5, establece la propiedad `precision` en `0.5`.
 
 ```html
-<melser-rating 
+<melser-rating
   label="Calidad del servicio"
   name="serviceQuality"
   max="5"
-  precision="0.5">
+  precision="0.5"
+>
 </melser-rating>
 ```
 
@@ -93,11 +91,7 @@ Para permitir seleccionar valores como 3.5 o 4.5, establece la propiedad `precis
 Para casos científicos o promedios exactos (ej. 8.7), usa una precisión más fina.
 
 ```html
-<melser-rating 
-  label="Puntuación Exacta"
-  max="10"
-  precision="0.1"
-  value="8.7">
+<melser-rating label="Puntuación Exacta" max="10" precision="0.1" value="8.7">
 </melser-rating>
 ```
 
@@ -107,11 +101,11 @@ El componente ya no usa props para estilos (`size`, `color`), sino que aprovecha
 
 ### Variables Disponibles
 
-| Variable | Valor por Defecto | Descripción |
-|----------|-------------------|-------------|
-| `--star-size` | `1.5rem` | Tamaño (ancho y alto) de cada estrella. |
-| `--star-color-filled` | `#fbbf24` | Color de la estrella activa (amarillo/dorado). |
-| `--star-color-empty` | `var(--melser-border, #e5e7eb)` | Color de fondo de la estrella inactiva. |
+| Variable              | Valor por Defecto               | Descripción                                    |
+| --------------------- | ------------------------------- | ---------------------------------------------- |
+| `--star-size`         | `1.5rem`                        | Tamaño (ancho y alto) de cada estrella.        |
+| `--star-color-filled` | `#fbbf24`                       | Color de la estrella activa (amarillo/dorado). |
+| `--star-color-empty`  | `var(--melser-border, #e5e7eb)` | Color de fondo de la estrella inactiva.        |
 
 ### Ejemplos de Estilos
 
@@ -140,37 +134,29 @@ El componente ya no usa props para estilos (`size`, `color`), sino que aprovecha
 El componente funciona nativamente dentro de formularios gracias a `MelserBaseInput`.
 
 ```html
-<melser-playground-form id="rating-playground" title="Encuesta de Feedback" description="Valoración del servicio.">
+<melser-playground-form
+  id="rating-playground"
+  title="Encuesta de Feedback"
+  description="Valoración del servicio."
+>
   <div style="margin-bottom: 1rem;">
-    <melser-rating 
-      label="Experiencia General" 
-      name="rating" 
-      required 
+    <melser-rating
+      label="Experiencia General"
+      name="rating"
+      required
       max="5"
-      precision="0.5">
+      precision="0.5"
+    >
     </melser-rating>
   </div>
 </melser-playground-form>
-
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    rating: z.coerce.number().min(0.5, "La calificación es requerida").max(5)
-  });
-  
-  if (typeof document !== 'undefined') {
-    const form = document.getElementById('rating-playground');
-    if (form) form.schema = schema;
-  }
-</script>
 ```
 
 ## Accesibilidad
 
-  * Soporta navegación básica.
-  * Utiliza SVGs escalables que no dependen de fuentes externas.
-  * El área de clic es el contenedor de la estrella completa, mejorando la usabilidad en dispositivos táctiles.
+- Soporta navegación básica.
+- Utiliza SVGs escalables que no dependen de fuentes externas.
+- El área de clic es el contenedor de la estrella completa, mejorando la usabilidad en dispositivos táctiles.
 
 ## Troubleshooting
 
@@ -200,7 +186,7 @@ melser-rating {
 El componente maneja internamente el redondeo visual, pero el valor crudo puede tener imperfecciones de punto flotante. El componente incluye una corrección interna (`toFixed(2)`), pero si persiste, puedes redondearlo al recibir el evento:
 
 ```javascript
-element.addEventListener('change', (e) => {
+element.addEventListener("change", (e) => {
   const cleanValue = parseFloat(e.target.value.toFixed(1));
 });
 ```

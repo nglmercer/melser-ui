@@ -9,45 +9,46 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
 ## Ejemplo Básico
 
 ```html
-<melser-password-input 
-  label="Contraseña" 
-  placeholder="Crea una contraseña segura">
+<melser-password-input
+  label="Contraseña"
+  placeholder="Crea una contraseña segura"
+>
 </melser-password-input>
 ```
 
 ## Propiedades
 
-| Propiedad | Tipo | Valor por Defecto | Descripción |
-|-----------|------|-------------------|-------------|
-| `show-toggle` | `boolean` | `true` | Muestra/oculta botón de visibilidad |
-| `strength-meter` | `boolean` | `false` | Muestra medidor de fortaleza |
-| `minlength` | `number` | `undefined` | Longitud mínima requerida |
-| `maxlength` | `number` | `undefined` | Longitud máxima permitida |
-| `show-password` | `boolean` | `false` | Estado inicial de visibilidad |
-| `strength-levels` | `array` | `['débil', 'media', 'fuerte', 'muy fuerte']` | Niveles de fortaleza |
-| `label` | `string` | `''` | Etiqueta visible del campo |
-| `placeholder` | `string` | `''` | Texto de marcador de posición |
-| `value` | `string` | `''` | Valor del campo |
-| `disabled` | `boolean` | `false` | Deshabilita la interacción |
-| `required` | `boolean` | `false` | Campo requerido en formularios |
+| Propiedad         | Tipo      | Valor por Defecto                            | Descripción                         |
+| ----------------- | --------- | -------------------------------------------- | ----------------------------------- |
+| `show-toggle`     | `boolean` | `true`                                       | Muestra/oculta botón de visibilidad |
+| `strength-meter`  | `boolean` | `false`                                      | Muestra medidor de fortaleza        |
+| `minlength`       | `number`  | `undefined`                                  | Longitud mínima requerida           |
+| `maxlength`       | `number`  | `undefined`                                  | Longitud máxima permitida           |
+| `show-password`   | `boolean` | `false`                                      | Estado inicial de visibilidad       |
+| `strength-levels` | `array`   | `['débil', 'media', 'fuerte', 'muy fuerte']` | Niveles de fortaleza                |
+| `label`           | `string`  | `''`                                         | Etiqueta visible del campo          |
+| `placeholder`     | `string`  | `''`                                         | Texto de marcador de posición       |
+| `value`           | `string`  | `''`                                         | Valor del campo                     |
+| `disabled`        | `boolean` | `false`                                      | Deshabilita la interacción          |
+| `required`        | `boolean` | `false`                                      | Campo requerido en formularios      |
 
 ## Eventos
 
-| Evento | Descripción |
-|--------|-------------|
-| `input` | Se dispara al cambiar el valor |
-| `change` | Se dispara al confirmar el cambio |
+| Evento              | Descripción                          |
+| ------------------- | ------------------------------------ |
+| `input`             | Se dispara al cambiar el valor       |
+| `change`            | Se dispara al confirmar el cambio    |
 | `toggle-visibility` | Se dispara al cambiar la visibilidad |
-| `strength-change` | Se dispara al cambiar la fortaleza |
-| `focus` | Se dispara al obtener el foco |
-| `blur` | Se dispara al perder el foco |
+| `strength-change`   | Se dispara al cambiar la fortaleza   |
+| `focus`             | Se dispara al obtener el foco        |
+| `blur`              | Se dispara al perder el foco         |
 
 ## Ejemplos de Uso
 
 ### Contraseña con Validación de Fortaleza
 
 ```html
-<melser-password-input 
+<melser-password-input
   label="Nueva contraseña *"
   placeholder="Mínimo 8 caracteres"
   minlength="8"
@@ -55,7 +56,8 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
   strength-meter
   show-toggle
   required
-  hint="Debe incluir mayúsculas, números y símbolos">
+  hint="Debe incluir mayúsculas, números y símbolos"
+>
 </melser-password-input>
 ```
 
@@ -63,51 +65,52 @@ Un componente de entrada de contraseña con toggle de visibilidad, validación d
 
 ```html
 <form id="register-form">
-  <melser-password-input 
+  <melser-password-input
     label="Contraseña *"
     name="password"
     required
     minlength="8"
     strength-meter
     show-toggle
-    placeholder="Crea una contraseña segura">
+    placeholder="Crea una contraseña segura"
+  >
   </melser-password-input>
-  
-  <melser-password-input 
+
+  <melser-password-input
     label="Confirmar contraseña *"
     name="confirmPassword"
     required
     minlength="8"
     show-toggle
-    placeholder="Repite tu contraseña">
+    placeholder="Repite tu contraseña"
+  >
   </melser-password-input>
-  
-  <button  type="submit" variant="primary">
-    Registrarse
-  </button >
+
+  <button type="submit" variant="primary">Registrarse</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById('register-form');
+const form = document.getElementById("register-form");
 if (form) {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
-    const password = form.querySelector('[name="password"]')?.value || '';
-    const confirmPassword = form.querySelector('[name="confirmPassword"]')?.value || '';
-    
+
+    const password = form.querySelector('[name="password"]')?.value || "";
+    const confirmPassword =
+      form.querySelector('[name="confirmPassword"]')?.value || "";
+
     if (password !== confirmPassword) {
-      alert('Las contraseñas no coinciden');
+      alert("Las contraseñas no coinciden");
       return;
     }
-    
+
     if (password.length < 8) {
-      alert('La contraseña debe tener al menos 8 caracteres');
+      alert("La contraseña debe tener al menos 8 caracteres");
       return;
     }
-    
-    alert('¡Registro exitoso!');
+
+    alert("¡Registro exitoso!");
   });
 }
 ```
@@ -115,14 +118,15 @@ if (form) {
 ### Contraseña con Requisitos Específicos
 
 ```html
-<melser-password-input 
+<melser-password-input
   label="Contraseña segura *"
   required
   minlength="12"
   strength-meter
   placeholder="Al menos 12 caracteres, mayúsculas, números y símbolos"
   pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}"
-  error="La contraseña debe tener al menos 12 caracteres, incluyendo mayúsculas, números y símbolos">
+  error="La contraseña debe tener al menos 12 caracteres, incluyendo mayúsculas, números y símbolos"
+>
 </melser-password-input>
 ```
 
@@ -163,24 +167,6 @@ if (form) {
     </melser-password-input>
   </div>
 </melser-playground-form>
-
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    currentPassword: z.string().min(1, "La contraseña actual es requerida"),
-    newPassword: z.string().min(8, "Al menos 8 caracteres"),
-    confirmPassword: z.string()
-  }).refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Las contraseñas no coinciden",
-    path: ["confirmPassword"]
-  });
-  
-  if (typeof document !== 'undefined') {
-    const form = document.getElementById('password-playground');
-    if (form) form.schema = schema;
-  }
-</script>
 
 ## Personalización con CSS
 
@@ -249,24 +235,24 @@ melser-password-input {
 ### Validación de Fortaleza Personalizada
 
 ```javascript
-const passwordInput = document.querySelector('melser-password-input');
+const passwordInput = document.querySelector("melser-password-input");
 if (passwordInput) {
-  passwordInput.addEventListener('strength-change', (e) => {
+  passwordInput.addEventListener("strength-change", (e) => {
     const { strength, score } = e.detail;
-    
+
     switch (score) {
       case 0:
       case 1:
-        console.log('⚠️ Contraseña muy débil');
+        console.log("⚠️ Contraseña muy débil");
         break;
       case 2:
-        console.log('⚠️ Contraseña débil');
+        console.log("⚠️ Contraseña débil");
         break;
       case 3:
-        console.log('✅ Contraseña aceptable');
+        console.log("✅ Contraseña aceptable");
         break;
       case 4:
-        console.log('🔒 Contraseña fuerte');
+        console.log("🔒 Contraseña fuerte");
         break;
     }
   });
@@ -276,12 +262,13 @@ if (passwordInput) {
 ### Requisitos Específicos
 
 ```html
-<melser-password-input 
+<melser-password-input
   label="Contraseña corporativa"
   strength-meter
   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$"
   hint="Debe incluir: mayúsculas, minúsculas, números, símbolos, mínimo 12 caracteres"
-  strength-levels="['Muy Débil', 'Débil', 'Aceptable', 'Fuerte', 'Excelente']">
+  strength-levels="['Muy Débil', 'Débil', 'Aceptable', 'Fuerte', 'Excelente']"
+></melser-password-input>
 ```
 
 ## Accesibilidad
@@ -310,7 +297,7 @@ El componente MelserPasswordInput incluye:
 
 ```javascript
 // Asegúrate de que el atributo esté presente
-passwordInput.setAttribute('strength-meter', '');
+passwordInput.setAttribute("strength-meter", "");
 
 // O verificar la propiedad
 console.log(passwordInput.strengthMeter); // Debe ser true
@@ -320,25 +307,33 @@ console.log(passwordInput.strengthMeter); // Debe ser true
 
 ```html
 <!-- Verifica que show-toggle esté habilitado -->
-<melser-password-input 
+<melser-password-input
   show-toggle
-  label="Contraseña con toggle">
+  label="Contraseña con toggle"
+></melser-password-input>
 ```
 
 ### Validación de fortaleza no coincide
 
 ```javascript
 // Personalizar los criterios de fortaleza
-passwordInput.strengthLevels = ['Muy Débil', 'Débil', 'Media', 'Fuerte', 'Perfecta'];
+passwordInput.strengthLevels = [
+  "Muy Débil",
+  "Débil",
+  "Media",
+  "Fuerte",
+  "Perfecta",
+];
 ```
 
 ### Problemas con screen readers
 
 ```html
 <!-- Agregar aria-label para mayor claridad -->
-<melser-password-input 
+<melser-password-input
   aria-label="Campo de contraseña con medidor de fortaleza"
-  strength-meter>
+  strength-meter
+></melser-password-input>
 ```
 
 ### Focus no visible
@@ -350,4 +345,3 @@ melser-password-input:focus-within {
   border-color: #3b82f6;
 }
 ```
-

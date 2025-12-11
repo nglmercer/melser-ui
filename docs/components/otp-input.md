@@ -9,10 +9,7 @@ Un componente de entrada de código OTP (One-Time Password) para verificación d
 ## Ejemplo Básico
 
 ```html
-<melser-otp-input 
-  length="6"
-  label="Código de verificación">
-</melser-otp-input>
+<melser-otp-input length="6" label="Código de verificación"> </melser-otp-input>
 ```
 
 ## Demo Interactivo
@@ -40,61 +37,64 @@ Un componente de entrada de código OTP (One-Time Password) para verificación d
 
 ## Propiedades
 
-| Propiedad | Tipo | Valor por Defecto | Descripción |
-|-----------|------|-------------------|-------------|
-| `length` | `number` | `6` | Número de dígitos del código |
-| `value` | `string` | `''` | Valor actual del OTP |
-| `disabled` | `boolean` | `false` | Deshabilita la interacción |
-| `readonly` | `boolean` | `false` | Solo lectura |
-| `name` | `string` | `''` | Nombre para formularios |
-| `label` | `string` | `''` | Etiqueta visible del componente |
-| `placeholder` | `string` | `'•'` | Carácter de marcador |
-| `numericOnly` | `boolean` | `false` | Solo permite números |
-| `autoFocus` | `boolean` | `true` | Enfoque automático al cargar |
-| `caseSensitive` | `boolean` | `false` | Distingue mayúsculas/minúsculas |
-| `allowedChars` | `string` | `''` | Caracteres permitidos (regex) |
+| Propiedad       | Tipo      | Valor por Defecto | Descripción                     |
+| --------------- | --------- | ----------------- | ------------------------------- |
+| `length`        | `number`  | `6`               | Número de dígitos del código    |
+| `value`         | `string`  | `''`              | Valor actual del OTP            |
+| `disabled`      | `boolean` | `false`           | Deshabilita la interacción      |
+| `readonly`      | `boolean` | `false`           | Solo lectura                    |
+| `name`          | `string`  | `''`              | Nombre para formularios         |
+| `label`         | `string`  | `''`              | Etiqueta visible del componente |
+| `placeholder`   | `string`  | `'•'`             | Carácter de marcador            |
+| `numericOnly`   | `boolean` | `false`           | Solo permite números            |
+| `autoFocus`     | `boolean` | `true`            | Enfoque automático al cargar    |
+| `caseSensitive` | `boolean` | `false`           | Distingue mayúsculas/minúsculas |
+| `allowedChars`  | `string`  | `''`              | Caracteres permitidos (regex)   |
 
 ## Eventos
 
-| Evento | Descripción |
-|--------|-------------|
-| `input` | Se dispara al cambiar el valor |
+| Evento     | Descripción                             |
+| ---------- | --------------------------------------- |
+| `input`    | Se dispara al cambiar el valor          |
 | `complete` | Se dispara cuando se completa el código |
-| `paste` | Se dispara al pegar contenido |
-| `focus` | Se dispara al obtener el foco |
-| `blur` | Se dispara al perder el foco |
+| `paste`    | Se dispara al pegar contenido           |
+| `focus`    | Se dispara al obtener el foco           |
+| `blur`     | Se dispara al perder el foco            |
 
 ## Ejemplos de Uso
 
 ### Código de Verificación SMS
 
 ```html
-<melser-otp-input 
+<melser-otp-input
   length="6"
   numeric-only
   label="Código SMS"
-  hint="Ingresa el código de 6 dígitos enviado a tu teléfono">
+  hint="Ingresa el código de 6 dígitos enviado a tu teléfono"
+>
 </melser-otp-input>
 ```
 
 ### Código de Aplicación Authenticator
 
 ```html
-<melser-otp-input 
+<melser-otp-input
   length="6"
   numeric-only
   label="Código de authenticator"
-  hint="Usa tu aplicación de autenticación">
+  hint="Usa tu aplicación de autenticación"
+>
 </melser-otp-input>
 ```
 
 ### Código Alfanumérico
 
 ```html
-<melser-otp-input 
+<melser-otp-input
   length="8"
   label="Código de recuperación"
-  hint="Código alfanumérico de 8 caracteres">
+  hint="Código alfanumérico de 8 caracteres"
+>
 </melser-otp-input>
 ```
 
@@ -105,48 +105,47 @@ Un componente de entrada de código OTP (One-Time Password) para verificación d
 ```html
 <form id="verification-form">
   <h3>Verificación de Dos Factores</h3>
-  
-  <base-input 
+
+  <base-input
     label="Correo electrónico"
     type="email"
     value="usuario@ejemplo.com"
-    disabled>
+    disabled
+  >
   </base-input>
-  
-  <melser-otp-input 
+
+  <melser-otp-input
     name="otpCode"
     length="6"
     numeric-only
     label="Código de verificación"
-    hint="Hemos enviado un código a tu correo">
+    hint="Hemos enviado un código a tu correo"
+  >
   </melser-otp-input>
-  
-  <melser-checkbox 
+
+  <melser-checkbox
     name="rememberDevice"
-    label="Recordar dispositivo por 30 días">
+    label="Recordar dispositivo por 30 días"
+  >
   </melser-checkbox>
-  
-  <button  type="submit" variant="primary">
-    Verificar
-  </button >
-  
-  <button  type="button" variant="secondary">
-    Reenviar código
-  </button >
+
+  <button type="submit" variant="primary">Verificar</button>
+
+  <button type="button" variant="secondary">Reenviar código</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById('verification-form');
+const form = document.getElementById("verification-form");
 if (form) {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    
-    console.log('Datos de verificación:', data);
-    alert('¡Verificación completada!');
+
+    console.log("Datos de verificación:", data);
+    alert("¡Verificación completada!");
   });
 }
 ```
@@ -181,21 +180,6 @@ if (form) {
   </div>
 </melser-playground-form>
 
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    otpCode: z.string().length(6, "El código debe tener 6 dígitos"),
-    rememberDevice: z.boolean().default(false)
-  });
-  
-  if (typeof document !== 'undefined') {
-    const form = document.getElementById('otp-playground');
-    if (form) form.schema = schema;
-  }
-</script>
-
-    
 ## Ejemplos Avanzados
 
 ### Verificación con Temporizador
@@ -327,7 +311,7 @@ El componente MelserOtpInput incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import 'melser-ui/components/melser-otp-input.js';
+import "melser-ui/components/melser-otp-input.js";
 
 // Verificar que no esté deshabilitado
 console.log(otpInput.disabled); // Debe ser false
@@ -337,11 +321,7 @@ console.log(otpInput.disabled); // Debe ser false
 
 ```javascript
 // Asegúrate que auto-focus esté habilitado
-<melser-otp-input 
-  length="6"
-  auto-focus
-  label="Código">
-</melser-otp-input>
+<melser-otp-input length="6" auto-focus label="Código"></melser-otp-input>
 
 // El componente manejará el enfoque automáticamente
 ```
@@ -350,36 +330,36 @@ console.log(otpInput.disabled); // Debe ser false
 
 ```javascript
 // Usa allowed-chars para personalizar caracteres permitidos
-<melser-otp-input 
+<melser-otp-input
   length="4"
   allowed-chars="[A-F0-9]"
-  label="Código hexadecimal">
-</melser-otp-input>
+  label="Código hexadecimal"
+></melser-otp-input>
 ```
 
 ### El valor no se envía en el formulario
 
 ```html
 <!-- Asegúrate de incluir el atributo name -->
-<melser-otp-input 
+<melser-otp-input
   name="verificationCode"
   length="6"
-  label="Código de verificación">
+  label="Código de verificación"
+>
 </melser-otp-input>
 
-// Recuperar valor en formulario
-const formData = new FormData(form);
-const code = formData.get('verificationCode');
+// Recuperar valor en formulario const formData = new FormData(form); const code
+= formData.get('verificationCode');
 ```
 
 ### Problemas de accesibilidad
 
 ```html
 <!-- Usa aria-label para casos complejos -->
-<melser-otp-input 
+<melser-otp-input
   aria-label="Código de verificación de 6 dígitos para autenticación de dos factores"
   length="6"
-  label="Código de verificación">
+  label="Código de verificación"
+>
 </melser-otp-input>
 ```
-

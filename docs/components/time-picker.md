@@ -9,9 +9,7 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
 ## Ejemplo Básico
 
 ```html
-<melser-time-picker 
-  label="Selecciona una hora" 
-  placeholder="HH:MM">
+<melser-time-picker label="Selecciona una hora" placeholder="HH:MM">
 </melser-time-picker>
 ```
 
@@ -74,30 +72,29 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
   placeholder="HH:MM:SS">
 </melser-time-picker>
 
-
 ## Propiedades
 
-| Propiedad | Tipo | Valor por Defecto | Descripción |
-|-----------|------|-------------------|-------------|
-| `value` | `string` | `''` | Hora seleccionada (HH:MM:SS) |
-| `min` | `string` | `''` | Hora mínima permitida |
-| `max` | `string` | `''` | Hora máxima permitida |
-| `format` | `string` | `'24h'` | Formato de hora (12h, 24h) |
-| `step` | `number` | `60` | Intervalo en segundos (60=1min, 900=15min) |
-| `show-seconds` | `boolean` | `false` | Muestra selector de segundos |
-| `disabled` | `boolean` | `false` | Deshabilita la interacción |
-| `readonly` | `boolean` | `false` | Solo lectura |
-| `required` | `boolean` | `false` | Campo requerido en formularios |
-| `placeholder` | `string` | `''` | Texto de marcador de posición |
-| `label` | `string` | `''` | Etiqueta visible del campo |
+| Propiedad      | Tipo      | Valor por Defecto | Descripción                                |
+| -------------- | --------- | ----------------- | ------------------------------------------ |
+| `value`        | `string`  | `''`              | Hora seleccionada (HH:MM:SS)               |
+| `min`          | `string`  | `''`              | Hora mínima permitida                      |
+| `max`          | `string`  | `''`              | Hora máxima permitida                      |
+| `format`       | `string`  | `'24h'`           | Formato de hora (12h, 24h)                 |
+| `step`         | `number`  | `60`              | Intervalo en segundos (60=1min, 900=15min) |
+| `show-seconds` | `boolean` | `false`           | Muestra selector de segundos               |
+| `disabled`     | `boolean` | `false`           | Deshabilita la interacción                 |
+| `readonly`     | `boolean` | `false`           | Solo lectura                               |
+| `required`     | `boolean` | `false`           | Campo requerido en formularios             |
+| `placeholder`  | `string`  | `''`              | Texto de marcador de posición              |
+| `label`        | `string`  | `''`              | Etiqueta visible del campo                 |
 
 ## Eventos
 
-| Evento | Descripción |
-|--------|-------------|
-| `change` | Se dispara al cambiar la hora |
-| `focus` | Se dispara al obtener el foco |
-| `blur` | Se dispara al perder el foco |
+| Evento             | Descripción                          |
+| ------------------ | ------------------------------------ |
+| `change`           | Se dispara al cambiar la hora        |
+| `focus`            | Se dispara al obtener el foco        |
+| `blur`             | Se dispara al perder el foco         |
 | `validation-error` | Se dispara con errores de validación |
 
 ## Ejemplos de Uso
@@ -105,32 +102,34 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
 ### Selector de Hora Simple
 
 ```html
-<melser-time-picker 
+<melser-time-picker
   label="Hora de la cita"
   name="appointmentTime"
   required
-  placeholder="Selecciona la hora">
+  placeholder="Selecciona la hora"
+>
 </melser-time-picker>
 ```
 
 ### Selector con Restricciones de Horario
 
 ```html
-<melser-time-picker 
+<melser-time-picker
   label="Hora de entrega"
   name="deliveryTime"
   min="08:00"
   max="22:00"
   step="1800"
   placeholder="Entre 8:00 AM y 10:00 PM"
-  hint="Entregas disponibles cada 30 minutos">
+  hint="Entregas disponibles cada 30 minutos"
+>
 </melser-time-picker>
 ```
 
 ### Selector de Horario de Trabajo
 
 ```html
-<melser-time-picker 
+<melser-time-picker
   label="Hora de inicio *"
   name="workStart"
   required
@@ -138,20 +137,22 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
   max="12:00"
   step="900"
   placeholder="Hora de inicio (6:00 AM - 12:00 PM)"
-  format="12h">
+  format="12h"
+>
 </melser-time-picker>
 ```
 
 ### Selector con Formato 12h
 
 ```html
-<melser-time-picker 
+<melser-time-picker
   label="Hora de la reunión"
   name="meetingTime"
   format="12h"
   show-seconds
   step="300"
-  placeholder="Ej: 2:30:45 PM">
+  placeholder="Ej: 2:30:45 PM"
+>
 </melser-time-picker>
 ```
 
@@ -161,19 +162,22 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
 
 ```html
 <form id="appointment-form">
-  <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+  <div
+    style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;"
+  >
     <h4>🗓️ Programación de Cita</h4>
-    
-    <melser-date-picker 
+
+    <melser-date-picker
       label="Fecha de la cita *"
       name="date"
       required
       min="today"
       placeholder="Selecciona la fecha"
-      id="form-date">
+      id="form-date"
+    >
     </melser-date-picker>
-    
-    <melser-time-picker 
+
+    <melser-time-picker
       label="Hora de la cita *"
       name="time"
       required
@@ -182,123 +186,135 @@ Un componente de selección de tiempo avanzado con formato 12h/24h, intervalos p
       step="1800"
       placeholder="Entre 9:00 AM y 5:00 PM"
       format="12h"
-      id="form-time">
+      id="form-time"
+    >
     </melser-time-picker>
-    
-    <melser-time-picker 
+
+    <melser-time-picker
       label="Duración estimada"
       name="duration"
       value="01:00"
       step="900"
       placeholder="Duración de la cita"
       format="12h"
-      id="form-duration">
+      id="form-duration"
+    >
     </melser-time-picker>
   </div>
-  
-  <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+
+  <div
+    style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;"
+  >
     <h4>⏰ Recordatorios</h4>
-    
-    <melser-time-picker 
+
+    <melser-time-picker
       label="Recordatorio 1"
       name="reminder1"
       placeholder="1 hora antes"
       format="12h"
-      id="form-reminder1">
+      id="form-reminder1"
+    >
     </melser-time-picker>
-    
-    <melser-time-picker 
+
+    <melser-time-picker
       label="Recordatorio 2"
       name="reminder2"
       placeholder="24 horas antes"
       format="12h"
-      id="form-reminder2">
+      id="form-reminder2"
+    >
     </melser-time-picker>
   </div>
-  
-  <button  type="submit" variant="primary">
-    Agendar Cita
-  </button >
+
+  <button type="submit" variant="primary">Agendar Cita</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById('appointment-form');
+const form = document.getElementById("appointment-form");
 if (form) {
-  const datePicker = document.getElementById('form-date');
-  const timePicker = document.getElementById('form-time');
-  const durationPicker = document.getElementById('form-duration');
-  
+  const datePicker = document.getElementById("form-date");
+  const timePicker = document.getElementById("form-time");
+  const durationPicker = document.getElementById("form-duration");
+
   // Validar horarios de oficina
   if (timePicker) {
-    timePicker.addEventListener('change', (e) => {
+    timePicker.addEventListener("change", (e) => {
       const selectedTime = e.target.value;
       if (selectedTime) {
         const time = new Date(`2000-01-01T${selectedTime}`);
         const minTime = new Date(`2000-01-01T09:00`);
         const maxTime = new Date(`2000-01-01T17:00`);
-        
+
         if (time < minTime || time > maxTime) {
-          alert('La hora debe estar entre 9:00 AM y 5:00 PM');
-          e.target.value = '';
+          alert("La hora debe estar entre 9:00 AM y 5:00 PM");
+          e.target.value = "";
         }
       }
     });
   }
-  
+
   // Calcular hora de fin basada en duración
   if (timePicker && durationPicker) {
-    timePicker.addEventListener('change', calculateEndTime);
-    durationPicker.addEventListener('change', calculateEndTime);
+    timePicker.addEventListener("change", calculateEndTime);
+    durationPicker.addEventListener("change", calculateEndTime);
   }
-  
+
   function calculateEndTime() {
     const startTime = timePicker.value;
     const duration = durationPicker.value;
-    
+
     if (startTime && duration) {
       const start = new Date(`2000-01-01T${startTime}`);
-      const durMinutes = duration.split(':').reduce((acc, time) => (60 * acc) + +time);
-      const end = new Date(start.getTime() + (durMinutes * 60 * 1000));
-      
+      const durMinutes = duration
+        .split(":")
+        .reduce((acc, time) => 60 * acc + +time);
+      const end = new Date(start.getTime() + durMinutes * 60 * 1000);
+
       const endTime = end.toTimeString().slice(0, 5);
       console.log(`Cita: ${startTime} - ${endTime} (${duration})`);
     }
   }
-  
-  form.addEventListener('submit', (e) => {
+
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
-    const date = datePicker?.value || '';
-    const time = timePicker?.value || '';
-    const duration = durationPicker?.value || '';
-    const reminder1 = form.querySelector('[name="reminder1"]')?.value || '';
-    const reminder2 = form.querySelector('[name="reminder2"]')?.value || '';
-    
+
+    const date = datePicker?.value || "";
+    const time = timePicker?.value || "";
+    const duration = durationPicker?.value || "";
+    const reminder1 = form.querySelector('[name="reminder1"]')?.value || "";
+    const reminder2 = form.querySelector('[name="reminder2"]')?.value || "";
+
     if (!date || !time) {
-      alert('Por favor completa la fecha y hora de la cita');
+      alert("Por favor completa la fecha y hora de la cita");
       return;
     }
-    
+
     // Calcular hora de fin
-    let endTime = '';
+    let endTime = "";
     if (time && duration) {
       const start = new Date(`2000-01-01T${time}`);
-      const durMinutes = duration.split(':').reduce((acc, time) => (60 * acc) + +time);
-      const end = new Date(start.getTime() + (durMinutes * 60 * 1000));
+      const durMinutes = duration
+        .split(":")
+        .reduce((acc, time) => 60 * acc + +time);
+      const end = new Date(start.getTime() + durMinutes * 60 * 1000);
       endTime = end.toTimeString().slice(0, 5);
     }
-    
+
     const appointmentData = {
       date,
       time,
       duration,
       endTime,
-      reminders: [reminder1, reminder2].filter(Boolean)
+      reminders: [reminder1, reminder2].filter(Boolean),
     };
-    
-    console.log('Cita programada:', appointmentData);
-    alert(`¡Cita agendada exitosamente!\n${date} a las ${time}${endTime ? ' - ' + endTime : ''}`);
+
+    console.log("Cita programada:", appointmentData);
+    alert(
+      `¡Cita agendada exitosamente!\n${date} a las ${time}${
+        endTime ? " - " + endTime : ""
+      }`
+    );
   });
 }
 ```
@@ -307,68 +323,43 @@ if (form) {
 
 <melser-playground-form id="time-picker-playground" title="Configuración de Horarios" description="Definición de turnos y recordatorios.">
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
-    <h4>⏰ Configuración de Horarios</h4>
+  <h4>⏰ Configuración de Horarios</h4>
     
-    <melser-time-picker 
-      label="Hora de inicio *"
-      name="startTime"
-      required
-      placeholder="Hora de inicio"
-      format="12h">
-    </melser-time-picker>
-    
-    <melser-time-picker 
-      label="Hora de fin *"
-      name="endTime"
-      required
-      placeholder="Hora de fin"
-      format="12h"
-      min="09:00">
-    </melser-time-picker>
-    
-    <melser-time-picker 
-      label="Tiempo de descanso"
-      name="breakTime"
-      step="1800"
-      placeholder="Duración del descanso"
-      format="12h">
-    </melser-time-picker>
-    
-    <melser-time-picker 
-      label="Recordatorio automático"
-      name="reminder"
-      step="300"
-      placeholder="Cuándo recordar"
-      format="24h"
-      show-seconds>
-    </melser-time-picker>
+  <melser-time-picker 
+    label="Hora de inicio *"
+    name="startTime"
+    required
+    placeholder="Hora de inicio"
+    format="12h">
+  </melser-time-picker>
+  
+  <melser-time-picker 
+    label="Hora de fin *"
+    name="endTime"
+    required
+    placeholder="Hora de fin"
+    format="12h"
+    min="09:00">
+  </melser-time-picker>
+  
+  <melser-time-picker 
+    label="Tiempo de descanso"
+    name="breakTime"
+    step="1800"
+    placeholder="Duración del descanso"
+    format="12h">
+  </melser-time-picker>
+  
+  <melser-time-picker 
+    label="Recordatorio automático"
+    name="reminder"
+    step="300"
+    placeholder="Cuándo recordar"
+    format="24h"
+    show-seconds>
+  </melser-time-picker>
   </div>
 </melser-playground-form>
-
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    startTime: z.string().min(1, "Hora de inicio requerida"),
-    endTime: z.string().min(1, "Hora de fin requerida"),
-    breakTime: z.string().optional(),
-    reminder: z.string().optional()
-  });
-  
-  if (typeof document !== 'undefined') {
-    const form = document.getElementById('time-picker-playground');
-    if (form) {
-        form.schema = schema;
-        form.defaultData = {
-            startTime: "09:00",
-            endTime: "17:00",
-            breakTime: "01:00",
-            reminder: "15:00:00"
-        };
-    }
-  }
-</script>
-
 
 ## Personalización con CSS
 
@@ -446,26 +437,29 @@ melser-time-picker {
 ### Configuración de Formato Personalizado
 
 ```javascript
-const picker = document.querySelector('melser-time-picker');
+const picker = document.querySelector("melser-time-picker");
 if (picker) {
   // Configurar formato 12h con AM/PM
-  picker.format = '12h';
+  picker.format = "12h";
   picker.showSeconds = true;
   picker.step = 1; // Mostrar cada segundo
-  
+
   // Escuchar cambios de formato
-  picker.addEventListener('change', (e) => {
+  picker.addEventListener("change", (e) => {
     const time = e.target.value;
     const date = new Date(`2000-01-01T${time}`);
-    
+
     // Mostrar en diferentes formatos
-    console.log('24h format:', time);
-    console.log('12h format:', date.toLocaleTimeString('en-US', { 
-      hour12: true, 
-      hour: '2-digit', 
-      minute: '2-digit',
-      second: '2-digit'
-    }));
+    console.log("24h format:", time);
+    console.log(
+      "12h format:",
+      date.toLocaleTimeString("en-US", {
+        hour12: true,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      })
+    );
   });
 }
 ```
@@ -473,31 +467,39 @@ if (picker) {
 ### Validación de Horarios de Negocio
 
 ```javascript
-const picker = document.querySelector('melser-time-picker');
+const picker = document.querySelector("melser-time-picker");
 if (picker) {
-  picker.addEventListener('change', (e) => {
+  picker.addEventListener("change", (e) => {
     const selectedTime = e.target.value;
     const businessHours = {
-      open: '09:00',
-      close: '17:00',
-      lunchStart: '12:00',
-      lunchEnd: '13:00'
+      open: "09:00",
+      close: "17:00",
+      lunchStart: "12:00",
+      lunchEnd: "13:00",
     };
-    
+
     const time = new Date(`2000-01-01T${selectedTime}`);
     const open = new Date(`2000-01-01T${businessHours.open}`);
     const close = new Date(`2000-01-01T${businessHours.close}`);
     const lunchStart = new Date(`2000-01-01T${businessHours.lunchStart}`);
     const lunchEnd = new Date(`2000-01-01T${businessHours.lunchEnd}`);
-    
+
     if (time < open || time > close) {
-      picker.dispatchEvent(new CustomEvent('validation-error', {
-        detail: { error: 'Fuera del horario de atención (9:00 AM - 5:00 PM)' }
-      }));
+      picker.dispatchEvent(
+        new CustomEvent("validation-error", {
+          detail: {
+            error: "Fuera del horario de atención (9:00 AM - 5:00 PM)",
+          },
+        })
+      );
     } else if (time >= lunchStart && time < lunchEnd) {
-      picker.dispatchEvent(new CustomEvent('validation-error', {
-        detail: { error: 'Durante el horario de almuerzo (12:00 PM - 1:00 PM)' }
-      }));
+      picker.dispatchEvent(
+        new CustomEvent("validation-error", {
+          detail: {
+            error: "Durante el horario de almuerzo (12:00 PM - 1:00 PM)",
+          },
+        })
+      );
     }
   });
 }
@@ -508,33 +510,33 @@ if (picker) {
 ```javascript
 function setupTimePickerContext(picker, context) {
   switch (context) {
-    case 'medical':
+    case "medical":
       picker.step = 900; // 15 minutos para citas médicas
-      picker.min = '08:00';
-      picker.max = '18:00';
+      picker.min = "08:00";
+      picker.max = "18:00";
       break;
-      
-    case 'delivery':
+
+    case "delivery":
       picker.step = 3600; // 1 hora para entregas
-      picker.min = '09:00';
-      picker.max = '21:00';
+      picker.min = "09:00";
+      picker.max = "21:00";
       break;
-      
-    case 'meeting':
+
+    case "meeting":
       picker.step = 1800; // 30 minutos para reuniones
-      picker.min = '08:00';
-      picker.max = '19:00';
-      picker.format = '12h';
+      picker.min = "08:00";
+      picker.max = "19:00";
+      picker.format = "12h";
       break;
   }
 }
 
 // Usar según el contexto
-const medicalPicker = document.querySelector('#medical-time');
-const deliveryPicker = document.querySelector('#delivery-time');
+const medicalPicker = document.querySelector("#medical-time");
+const deliveryPicker = document.querySelector("#delivery-time");
 
-setupTimePickerContext(medicalPicker, 'medical');
-setupTimePickerContext(deliveryPicker, 'delivery');
+setupTimePickerContext(medicalPicker, "medical");
+setupTimePickerContext(deliveryPicker, "delivery");
 ```
 
 ## Accesibilidad
@@ -563,7 +565,7 @@ El componente MelserTimePicker incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import 'melser-ui/components/melser-time-picker.js';
+import "melser-ui/components/melser-time-picker.js";
 
 // Verificar que no esté deshabilitado
 console.log(picker.disabled); // Debe ser false
@@ -573,38 +575,39 @@ console.log(picker.disabled); // Debe ser false
 
 ```html
 <!-- Verificar que format="12h" esté configurado -->
-<melser-time-picker 
-  format="12h"
-  label="Formato 12 horas">
+<melser-time-picker format="12h" label="Formato 12 horas"></melser-time-picker>
 ```
 
 ### Intervalos no cambian
 
 ```html
 <!-- Configurar step apropiadamente -->
-<melser-time-picker 
+<melser-time-picker
   step="900"
-  label="Intervalos de 15 minutos">
+  label="Intervalos de 15 minutos"
+></melser-time-picker>
 ```
 
 ### Límites de hora no funcionan
 
 ```html
 <!-- Verificar formato de min/max -->
-<melser-time-picker 
+<melser-time-picker
   min="09:00"
   max="17:00"
-  label="Horario laboral">
+  label="Horario laboral"
+></melser-time-picker>
 ```
 
 ### Segundos no se muestran
 
 ```html
 <!-- Verificar que show-seconds esté habilitado -->
-<melser-time-picker 
+<melser-time-picker
   show-seconds
   step="1"
-  label="Con segundos">
+  label="Con segundos"
+></melser-time-picker>
 ```
 
 ### Focus no visible
@@ -621,10 +624,11 @@ melser-time-picker:focus-within {
 
 ```html
 <!-- Agregar descripción para casos específicos -->
-<melser-time-picker 
+<melser-time-picker
   aria-label="Selecciona la hora de tu cita médica"
   step="900"
-  placeholder="09:00">
+  placeholder="09:00"
+></melser-time-picker>
 ```
 
 ### Validación de rango falla
@@ -643,3 +647,4 @@ function isValidTime(time) {
 // Reducir opciones limitando el rango
 picker.minHour = 9;
 picker.maxHour = 17;
+```

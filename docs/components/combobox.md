@@ -9,9 +9,10 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
 ## Ejemplo Básico
 
 ```html
-<melser-combobox 
-  label="Selecciona un país" 
-  placeholder="Escribe para buscar...">
+<melser-combobox
+  label="Selecciona un país"
+  placeholder="Escribe para buscar..."
+>
   <option value="es">España</option>
   <option value="mx">México</option>
   <option value="ar">Argentina</option>
@@ -25,6 +26,7 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
   id="demo-basic" 
   label="País básico" 
   placeholder="Escribe para buscar...">
+
   <option value="es">España</option>
   <option value="mx">México</option>
   <option value="ar">Argentina</option>
@@ -41,6 +43,7 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
   placeholder="Busca una ciudad..."
   async-data
   min-length="2">
+
   <!-- Opciones se cargarán dinámicamente -->
 </melser-combobox>
 
@@ -48,6 +51,7 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
   id="demo-groups" 
   label="Con grupos" 
   placeholder="Selecciona una ciudad">
+
   <optgroup label="España">
     <option value="madrid">Madrid</option>
     <option value="barcelona">Barcelona</option>
@@ -70,6 +74,7 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
   label="Con resaltado" 
   placeholder="Busca frameworks..."
   highlight-matches>
+
   <option value="react">React</option>
   <option value="react-native">React Native</option>
   <option value="vue">Vue.js</option>
@@ -85,6 +90,7 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
   label="Permite texto libre" 
   placeholder="Escribe o selecciona..."
   allow-free-text>
+
   <option value="frontend">Frontend Developer</option>
   <option value="backend">Backend Developer</option>
   <option value="fullstack">Fullstack Developer</option>
@@ -93,74 +99,82 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
 
 ## Propiedades
 
-| Propiedad | Tipo | Valor por Defecto | Descripción |
-|-----------|------|-------------------|-------------|
-| `min-length` | `number` | `0` | Mínimo de caracteres para buscar |
-| `max-results` | `number` | `10` | Máximo número de resultados |
-| `async-data` | `boolean` | `false` | Carga datos de forma asíncrona |
-| `highlight-matches` | `boolean` | `false` | Resalta coincidencias |
-| `allow-free-text` | `boolean` | `false` | Permite seleccionar texto libre |
-| `debounce-time` | `number` | `300` | Tiempo de espera en ms |
-| `placeholder` | `string` | `''` | Texto de marcador de posición |
-| `label` | `string` | `''` | Etiqueta visible del campo |
-| `name` | `string` | `''` | Nombre para formularios |
-| `value` | `string` | `''` | Valor seleccionado |
-| `disabled` | `boolean` | `false` | Deshabilita la interacción |
-| `required` | `boolean` | `false` | Campo requerido en formularios |
+| Propiedad           | Tipo      | Valor por Defecto | Descripción                      |
+| ------------------- | --------- | ----------------- | -------------------------------- |
+| `min-length`        | `number`  | `0`               | Mínimo de caracteres para buscar |
+| `max-results`       | `number`  | `10`              | Máximo número de resultados      |
+| `async-data`        | `boolean` | `false`           | Carga datos de forma asíncrona   |
+| `highlight-matches` | `boolean` | `false`           | Resalta coincidencias            |
+| `allow-free-text`   | `boolean` | `false`           | Permite seleccionar texto libre  |
+| `debounce-time`     | `number`  | `300`             | Tiempo de espera en ms           |
+| `placeholder`       | `string`  | `''`              | Texto de marcador de posición    |
+| `label`             | `string`  | `''`              | Etiqueta visible del campo       |
+| `name`              | `string`  | `''`              | Nombre para formularios          |
+| `value`             | `string`  | `''`              | Valor seleccionado               |
+| `disabled`          | `boolean` | `false`           | Deshabilita la interacción       |
+| `required`          | `boolean` | `false`           | Campo requerido en formularios   |
 
 ## Eventos
 
-| Evento | Descripción |
-|--------|-------------|
-| `input` | Se dispara al escribir en el campo |
-| `change` | Se dispara al seleccionar una opción |
-| `search` | Se dispara al iniciar búsqueda |
-| `search-complete` | Se dispara cuando la búsqueda termina |
-| `match-found` | Se disparan coincidencias encontradas |
-| `no-matches` | Se dispara cuando no hay coincidencias |
-| `free-text-selected` | Se dispara al seleccionar texto libre |
-| `async-data-loaded` | Se dispara cuando datos asíncronos se cargan |
-| `focus` | Se dispara al obtener el foco |
-| `blur` | Se dispara al perder el foco |
+| Evento               | Descripción                                  |
+| -------------------- | -------------------------------------------- |
+| `input`              | Se dispara al escribir en el campo           |
+| `change`             | Se dispara al seleccionar una opción         |
+| `search`             | Se dispara al iniciar búsqueda               |
+| `search-complete`    | Se dispara cuando la búsqueda termina        |
+| `match-found`        | Se disparan coincidencias encontradas        |
+| `no-matches`         | Se dispara cuando no hay coincidencias       |
+| `free-text-selected` | Se dispara al seleccionar texto libre        |
+| `async-data-loaded`  | Se dispara cuando datos asíncronos se cargan |
+| `focus`              | Se dispara al obtener el foco                |
+| `blur`               | Se dispara al perder el foco                 |
 
 ## Ejemplos de Uso
 
 ### Combobox con Carga Asíncrona
 
 ```html
-<melser-combobox 
+<melser-combobox
   label="Buscar usuario"
   placeholder="Escribe el nombre..."
   async-data
   min-length="2"
-  max-results="20">
+  max-results="20"
+>
   <!-- Las opciones se cargan dinámicamente -->
 </melser-combobox>
 ```
 
 ```javascript
-const combobox = document.querySelector('melser-combobox[async-data]');
+const combobox = document.querySelector("melser-combobox[async-data]");
 if (combobox) {
-  combobox.addEventListener('search', async (e) => {
+  combobox.addEventListener("search", async (e) => {
     const term = e.detail.term;
-    
+
     if (term.length < 2) return;
-    
+
     try {
-      const response = await fetch(`/api/users/search?q=${encodeURIComponent(term)}`);
+      const response = await fetch(
+        `/api/users/search?q=${encodeURIComponent(term)}`
+      );
       const users = await response.json();
-      
+
       // Actualizar opciones
-      updateComboboxOptions(combobox, users.map(user => ({
-        value: user.id,
-        label: `${user.name} (${user.email})`
-      })));
-      
-      combobox.dispatchEvent(new CustomEvent('async-data-loaded', {
-        detail: { users }
-      }));
+      updateComboboxOptions(
+        combobox,
+        users.map((user) => ({
+          value: user.id,
+          label: `${user.name} (${user.email})`,
+        }))
+      );
+
+      combobox.dispatchEvent(
+        new CustomEvent("async-data-loaded", {
+          detail: { users },
+        })
+      );
     } catch (error) {
-      console.error('Error cargando usuarios:', error);
+      console.error("Error cargando usuarios:", error);
     }
   });
 }
@@ -169,12 +183,13 @@ if (combobox) {
 ### Combobox con Resaltado de Coincidencias
 
 ```html
-<melser-combobox 
+<melser-combobox
   label="Buscar producto"
   placeholder="Nombre del producto..."
   highlight-matches
   min-length="3"
-  max-results="50">
+  max-results="50"
+>
   <option value="laptop-gaming">Laptop Gaming Pro</option>
   <option value="laptop-office">Laptop Office</option>
   <option value="mouse-gaming">Mouse Gaming RGB</option>
@@ -187,14 +202,15 @@ if (combobox) {
 ### Combobox con Validación
 
 ```html
-<melser-combobox 
+<melser-combobox
   label="Email de contacto"
   placeholder="Buscar contacto..."
   async-data
   min-length="3"
   required
   error="Selecciona un contacto válido"
-  hint="Escribe para buscar un contacto existente">
+  hint="Escribe para buscar un contacto existente"
+>
   <!-- Opciones dinámicas -->
 </melser-combobox>
 ```
@@ -202,11 +218,12 @@ if (combobox) {
 ### Combobox con Texto Libre
 
 ```html
-<melser-combobox 
+<melser-combobox
   label="Categoría personalizada"
   placeholder="Selecciona o crea una categoría..."
   allow-free-text
-  highlight-matches>
+  highlight-matches
+>
   <option value="tecnologia">Tecnología</option>
   <option value="salud">Salud</option>
   <option value="educacion">Educación</option>
@@ -220,75 +237,83 @@ if (combobox) {
 
 ```html
 <form id="message-form">
-  <melser-combobox 
+  <melser-combobox
     label="Destinatario *"
     name="recipient"
     required
     async-data
     min-length="2"
     placeholder="Busca un usuario..."
-    error="Selecciona un destinatario válido">
+    error="Selecciona un destinatario válido"
+  >
     <!-- Se cargará dinámicamente -->
   </melser-combobox>
-  
-  <melser-combobox 
+
+  <melser-combobox
     label="Asunto"
     name="subject"
     allow-free-text
     placeholder="Selecciona o escribe un asunto..."
-    highlight-matches>
+    highlight-matches
+  >
     <option value="soporte">Solicitud de Soporte</option>
     <option value="feedback">Feedback</option>
     <option value="consulta">Consulta General</option>
     <option value="bug">Reporte de Error</option>
   </melser-combobox>
-  
-  <button  type="submit" variant="primary">
-    Enviar Mensaje
-  </button >
+
+  <button type="submit" variant="primary">Enviar Mensaje</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById('message-form');
+const form = document.getElementById("message-form");
 if (form) {
   const recipientSelect = form.querySelector('[name="recipient"]');
   const subjectSelect = form.querySelector('[name="subject"]');
-  
+
   // Manejar carga asíncrona de destinatarios
   if (recipientSelect) {
-    recipientSelect.addEventListener('search', debounce(async (e) => {
-      const term = e.detail.term;
-      
-      if (term.length < 2) return;
-      
-      try {
-        const response = await fetch(`/api/users/search?q=${encodeURIComponent(term)}`);
-        const users = await response.json();
-        
-        updateComboboxOptions(recipientSelect, users.map(user => ({
-          value: user.id,
-          label: `${user.name} <${user.email}>`
-        })));
-      } catch (error) {
-        console.error('Error buscando usuarios:', error);
-      }
-    }, 300));
+    recipientSelect.addEventListener(
+      "search",
+      debounce(async (e) => {
+        const term = e.detail.term;
+
+        if (term.length < 2) return;
+
+        try {
+          const response = await fetch(
+            `/api/users/search?q=${encodeURIComponent(term)}`
+          );
+          const users = await response.json();
+
+          updateComboboxOptions(
+            recipientSelect,
+            users.map((user) => ({
+              value: user.id,
+              label: `${user.name} <${user.email}>`,
+            }))
+          );
+        } catch (error) {
+          console.error("Error buscando usuarios:", error);
+        }
+      }, 300)
+    );
   }
-  
-  form.addEventListener('submit', (e) => {
+
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
-    const recipient = form.querySelector('[name="recipient"]')?.value || '';
-    const subject = form.querySelector('[name="subject"]')?.value || '';
-    
+
+    const recipient = form.querySelector('[name="recipient"]')?.value || "";
+    const subject = form.querySelector('[name="subject"]')?.value || "";
+
     if (!recipient) {
-      alert('Por favor selecciona un destinatario');
+      alert("Por favor selecciona un destinatario");
       return;
     }
-    
-    console.log('Mensaje:', { recipient, subject });
-    alert('¡Mensaje enviado correctamente!');
+
+    console.log("Mensaje:", { recipient, subject });
+    alert("¡Mensaje enviado correctamente!");
   });
 }
 
@@ -378,22 +403,6 @@ function debounce(func, wait) {
   </div>
 </melser-playground-form>
 
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    language: z.string().min(1, "Selecciona un lenguaje"),
-    project: z.string().min(1, "El proyecto es requerido"),
-    framework: z.string().optional()
-  });
-  
-  if (typeof document !== 'undefined') {
-    const form = document.getElementById('combobox-playground');
-    if (form) form.schema = schema;
-  }
-</script>
-
-
 ## Personalización con CSS
 
 ### Variables CSS
@@ -475,16 +484,17 @@ melser-combobox {
 ### Configuración de Búsqueda Personalizada
 
 ```javascript
-const combobox = document.querySelector('melser-combobox');
+const combobox = document.querySelector("melser-combobox");
 if (combobox) {
   // Configurar búsqueda personalizada
   combobox.searchOptions = {
-    fuzzy: true,        // Búsqueda aproximada
-    weight: {           // Peso de campos
+    fuzzy: true, // Búsqueda aproximada
+    weight: {
+      // Peso de campos
       label: 1.0,
-      value: 0.8
+      value: 0.8,
     },
-    threshold: 0.3      // Umbral de similitud
+    threshold: 0.3, // Umbral de similitud
   };
 }
 ```
@@ -492,33 +502,36 @@ if (combobox) {
 ### Manejo de Datos Asíncronos
 
 ```javascript
-const combobox = document.querySelector('melser-combobox[async-data]');
+const combobox = document.querySelector("melser-combobox[async-data]");
 if (combobox) {
-  combobox.addEventListener('search', async (e) => {
+  combobox.addEventListener("search", async (e) => {
     const { term } = e.detail;
-    
+
     try {
       // Mostrar indicador de carga
-      combobox.setAttribute('loading', '');
-      
+      combobox.setAttribute("loading", "");
+
       const response = await fetch(`/api/search?q=${encodeURIComponent(term)}`);
       const results = await response.json();
-      
+
       // Actualizar opciones
       updateComboboxOptions(combobox, results);
-      
+
       // Disparar evento de datos cargados
-      combobox.dispatchEvent(new CustomEvent('async-data-loaded', {
-        detail: { results }
-      }));
-      
+      combobox.dispatchEvent(
+        new CustomEvent("async-data-loaded", {
+          detail: { results },
+        })
+      );
     } catch (error) {
-      console.error('Error cargando datos:', error);
-      combobox.dispatchEvent(new CustomEvent('async-error', {
-        detail: { error }
-      }));
+      console.error("Error cargando datos:", error);
+      combobox.dispatchEvent(
+        new CustomEvent("async-error", {
+          detail: { error },
+        })
+      );
     } finally {
-      combobox.removeAttribute('loading');
+      combobox.removeAttribute("loading");
     }
   });
 }
@@ -528,23 +541,28 @@ if (combobox) {
 
 ```javascript
 // Ejemplo con API de países
-const countryCombobox = document.querySelector('#country-combobox');
+const countryCombobox = document.querySelector("#country-combobox");
 if (countryCombobox) {
-  countryCombobox.addEventListener('search', debounce(async (e) => {
-    const term = e.detail.term;
-    
-    if (term.length < 2) return;
-    
-    const response = await fetch(`https://restcountries.com/v3.1/name/${term}`);
-    const countries = await response.json();
-    
-    const options = countries.map(country => ({
-      value: country.cca2,
-      label: `${country.name.common} (${country.cca2})`
-    }));
-    
-    updateComboboxOptions(countryCombobox, options);
-  }, 400));
+  countryCombobox.addEventListener(
+    "search",
+    debounce(async (e) => {
+      const term = e.detail.term;
+
+      if (term.length < 2) return;
+
+      const response = await fetch(
+        `https://restcountries.com/v3.1/name/${term}`
+      );
+      const countries = await response.json();
+
+      const options = countries.map((country) => ({
+        value: country.cca2,
+        label: `${country.name.common} (${country.cca2})`,
+      }));
+
+      updateComboboxOptions(countryCombobox, options);
+    }, 400)
+  );
 }
 ```
 
@@ -585,8 +603,8 @@ combobox.debounceTime = 300;
 combobox.asyncData = true;
 
 // Y manejar errores apropiadamente
-combobox.addEventListener('async-error', (e) => {
-  console.error('Error de API:', e.detail.error);
+combobox.addEventListener("async-error", (e) => {
+  console.error("Error de API:", e.detail.error);
 });
 ```
 
@@ -594,18 +612,14 @@ combobox.addEventListener('async-error', (e) => {
 
 ```html
 <!-- Asegurar que highlight-matches esté habilitado -->
-<melser-combobox 
-  highlight-matches
-  label="Con resaltado">
+<melser-combobox highlight-matches label="Con resaltado"></melser-combobox>
 ```
 
 ### Texto libre no funciona
 
 ```html
 <!-- Verificar que allow-free-text esté habilitado -->
-<melser-combobox 
-  allow-free-text
-  label="Con texto libre">
+<melser-combobox allow-free-text label="Con texto libre"></melser-combobox>
 ```
 
 ### Problemas de rendimiento
@@ -617,7 +631,7 @@ combobox.maxResults = 20;
 // Usar búsqueda aproximada con umbral
 combobox.searchOptions = {
   fuzzy: true,
-  threshold: 0.4
+  threshold: 0.4,
 };
 ```
 
@@ -638,8 +652,9 @@ melser-combobox:focus-within {
 combobox.closeDropdown();
 
 // O escuchar eventos externos
-document.addEventListener('click', (e) => {
+document.addEventListener("click", (e) => {
   if (!combobox.contains(e.target)) {
     combobox.closeDropdown();
   }
 });
+```

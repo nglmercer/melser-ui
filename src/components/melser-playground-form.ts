@@ -69,10 +69,18 @@ export class MelserPlaygroundForm extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
+        // Custom Event from Melser Components
         this.addEventListener('ui:change', this.handleUiChange as EventListener);
+
+        // Native Events for standard inputs
+        this.addEventListener('input', this.handleNativeInput);
+        this.addEventListener('change', this.handleNativeChange);
+
         // We also listen to submit from any native form button inside
         this.addEventListener('click', this.handleClick);
         this.syncInitialValues();
+
+        // Listen to theme updates if any
     }
 
     protected firstUpdated(): void {
@@ -97,6 +105,7 @@ export class MelserPlaygroundForm extends LitElement {
                 // We might need to trigger another update or handle it directly
                 this.form.updateConfig(this.schema, this.defaultData);
                 this.syncInitialValues();
+                this.syncErrors();
             }
         }
 
@@ -105,6 +114,7 @@ export class MelserPlaygroundForm extends LitElement {
                 this.form.updateConfig(this.schema, this.defaultData);
                 this._initialized = true;
                 this.syncInitialValues();
+                this.syncErrors();
             }
         }
 
@@ -121,11 +131,40 @@ export class MelserPlaygroundForm extends LitElement {
         }
     };
 
+    handleNativeInput = (e: Event) => {
+        const target = e.target as HTMLInputElement;
+        // Ignore Melser components that might bubble input
+        if (target.tagName.includes('-')) return;
+
+        const name = target.getAttribute('name') || target.name;
+        if (name) {
+            this.form.setValue(name, target.value, true);
+        }
+    }
+
+    handleNativeChange = (e: Event) => {
+        const target = e.target as HTMLInputElement;
+        if (target.tagName.includes('-')) return;
+
+        const name = target.getAttribute('name') || target.name;
+        if (name) {
+            let value: any = target.value;
+            if (target.type === 'checkbox') {
+                value = target.checked;
+            } else if (target.type === 'number') {
+                value = target.value === '' ? undefined : Number(target.value);
+            }
+            this.form.setValue(name, value, true);
+        }
+    }
+
     handleClick = (e: MouseEvent) => {
-        const target = e.target as HTMLElement;
+        const path = e.composedPath();
+        const target = path[0] as HTMLElement;
+
         // Check if it's a submit button
-        e.preventDefault();
         if (target.matches('button[type="submit"]') || target.closest('button[type="submit"]')) {
+            e.preventDefault();
             this.handleSubmit();
         }
     }
@@ -145,6 +184,35 @@ export class MelserPlaygroundForm extends LitElement {
         }
     }
 
+    handleReset() {
+        this.form.updateConfig(this.schema, this.defaultData);
+        // Clear inputs visually
+        const inputs = this.querySelectorAll<HTMLInputElement>('[name]');
+        inputs.forEach(el => {
+            const name = el.getAttribute('name') || el.name;
+            if (!name) return;
+            const initialVal = this.defaultData[name]; // undefined if not in defaultData
+
+            // Checkbox/Radio
+            if ('checked' in el && (el.type === 'checkbox' || el.type === 'radio')) {
+                el.checked = !!initialVal;
+            }
+            // Value based inputs
+            else if ('value' in el) {
+                el.value = initialVal !== undefined ? String(initialVal) : '';
+            }
+
+            // Reset UI error state for Melser components
+            if ('errorMessage' in el) {
+                (el as any).errorMessage = '';
+            }
+            // Reset invalid attribute
+            el.removeAttribute('invalid');
+        });
+
+        this.requestUpdate();
+    }
+
     toggleTheme() {
         this._theme = this._theme === 'light' ? 'dark' : 'light';
         setTheme(this._theme);
@@ -154,32 +222,33 @@ export class MelserPlaygroundForm extends LitElement {
      * Pushes initial data values to the inputs if they are empty
      */
     syncInitialValues() {
-        const inputs = this.querySelectorAll('[name]');
-        inputs.forEach((el: any) => {
-            const name = el.getAttribute('name') || el.name;
+        const inputs = this.querySelectorAll<HTMLElement>('[name]');
+        inputs.forEach(el => {
+            const name = el.getAttribute('name') || (el as any).name;
             if (name && this.form.data[name] !== undefined) {
-                // Only set if the element supports it
-                if ('value' in el) {
-                    // Don't overwrite if user already typed? 
-                    // For initial load it's fine.
-                    el.value = this.form.data[name];
+                const value = this.form.data[name];
+
+                // Handle Checkboxes/Switches
+                if ('checked' in el) {
+                    (el as any).checked = value === true;
                 }
-                if ('checked' in el && typeof this.form.data[name] === 'boolean') {
-                    el.checked = this.form.data[name];
+                // Handle Value
+                else if ('value' in el) {
+                    (el as any).value = value;
                 }
             }
         });
     }
 
     syncErrors() {
-        const inputs = this.querySelectorAll('[name]');
-        inputs.forEach((el: any) => {
-            const name = el.getAttribute('name') || el.name;
+        const inputs = this.querySelectorAll<HTMLElement>('[name]');
+        inputs.forEach(el => {
+            const name = el.getAttribute('name') || (el as any).name;
             if (name) {
                 const error = this.form.getError(name);
                 // Set errorMessage property if it exists (Melser components)
                 if ('errorMessage' in el) {
-                    el.errorMessage = error || '';
+                    (el as any).errorMessage = error || '';
                 }
                 // Set invalid attribute
                 if (error) {
@@ -195,30 +264,34 @@ export class MelserPlaygroundForm extends LitElement {
         return html`
       <div class="playground-layout">
         <div class="form-section">
-            ${this.title ? html`<h3 class="form-title">${this.title}</h3>` : ''}
-            ${this.description ? html`<p class="form-desc">${this.description}</p>` : ''}
+            <div class="header-row">
+                ${this.title ? html`<h3 class="form-title">${this.title}</h3>` : ''}
+                ${this.description ? html`<p class="form-desc">${this.description}</p>` : ''}
+            </div>
             
             <form class="slot-container" @submit=${(e: Event) => e.preventDefault()}>
                 <slot></slot>
             </form>
             
             <div class="actions">
-               <button class="validate-btn" @click=${this.handleSubmit}>Validate & Submit</button>
+                <button class="btn validate-btn" @click=${this.handleSubmit}>Validate & Submit</button>
+                <button class="btn reset-btn" @click=${this.handleReset}>Reset</button>
             </div>
         </div>
         
         <div class="debug-section">
             <div class="debug-header">
                <span>Live State</span>
-               <span class="badge ${this.form.isValid ? 'valid' : 'invalid'}">
-                 ${this.form.isValid ? 'Valid' : 'Invalid'}
-               </span>
+               <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <span class="badge ${this.form.isValid ? 'valid' : 'invalid'}">
+                        ${this.form.isValid ? 'Valid' : 'Invalid'}
+                    </span>
+                    <button class="theme-btn" @click=${this.toggleTheme} title="Toggle Theme">
+                        ${this._theme === 'light' ? '🌙' : '☀️'}
+                    </button>
+               </div>
             </div>
-            <div class="debug-header" style="margin-top: 0.5rem; justify-content: flex-end;">
-                 <button class="theme-btn" @click=${this.toggleTheme}>
-                    ${this._theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
-                 </button>
-            </div>
+
             <pre class="debug-content">${JSON.stringify(this.form.data, null, 2)}</pre>
             
             ${Object.keys(this.form.errors).length > 0 ? html`
@@ -241,14 +314,14 @@ export class MelserPlaygroundForm extends LitElement {
     .playground-layout {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 2rem;
         background: ${Var.color.bg.default};
         border: 1px solid ${Var.color.border.default};
         border-radius: ${Var.radius.default};
         overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 900px) {
         .playground-layout {
             grid-template-columns: 3fr 2fr;
         }
@@ -256,65 +329,104 @@ export class MelserPlaygroundForm extends LitElement {
 
     .form-section {
         padding: 2rem;
+        border-right: 1px solid ${Var.color.border.default};
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .header-row {
+        margin-bottom: 2rem;
     }
 
     .form-title {
         margin: 0 0 0.5rem 0;
-        font-size: 1.25rem;
+        font-size: 1.5rem;
+        font-weight: 700;
         color: ${Var.color.text.primary};
+        letter-spacing: -0.025em;
     }
 
     .form-desc {
-        margin: 0 0 1.5rem 0;
+        margin: 0;
         color: ${Var.color.text.secondary};
-        font-size: 0.875rem;
+        font-size: 0.95rem;
+        line-height: 1.5;
     }
 
     .slot-container {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 1.25rem;
     }
 
     .actions {
-        margin-top: 1.5rem;
+        margin-top: 2rem;
         padding-top: 1.5rem;
-        border-top: 1px dashed ${Var.color.border.default};
+        border-top: 1px solid ${Var.color.border.default};
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: ${Var.radius.default};
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .validate-btn {
         background: ${Var.color.primary};
         color: white;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: ${Var.radius.default};
-        font-weight: 600;
-        cursor: pointer;
-        transition: opacity 0.2s;
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
     }
     .validate-btn:hover {
-        opacity: 0.9;
+        filter: brightness(1.1);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+    .validate-btn:active {
+        transform: translateY(0);
+    }
+
+    .reset-btn {
+        background: transparent;
+        color: ${Var.color.text.secondary};
+        border-color: ${Var.color.border.default};
+    }
+    .reset-btn:hover {
+        background: ${Var.color.bg.hover};
+        color: ${Var.color.text.primary};
+        border-color: ${Var.color.text.secondary};
     }
 
     .debug-section {
         background: ${Var.color.surface.variant};
-        border-left: 1px solid ${Var.color.border.default};
         padding: 1.5rem;
         font-size: 0.85rem;
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        max-height: 600px;
+        overflow-y: auto;
     }
 
     .debug-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         color: ${Var.color.text.secondary};
         font-size: 0.75rem;
+        margin-bottom: 0.25rem;
     }
 
     .debug-content {
@@ -326,6 +438,8 @@ export class MelserPlaygroundForm extends LitElement {
         overflow-x: auto;
         font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
         color: ${Var.color.text.primary};
+        font-size: 0.8rem;
+        line-height: 1.4;
     }
     
     .debug-content.errors {
@@ -333,39 +447,56 @@ export class MelserPlaygroundForm extends LitElement {
         background: #fef2f2;
         border-color: #fecaca;
     }
+    :host([theme="dark"]) .debug-content.errors {
+        background: #450a0a;
+        border-color: #7f1d1d;
+    }
 
     .badge {
-        padding: 0.25rem 0.5rem;
+        padding: 0.25rem 0.6rem;
         border-radius: 999px;
         font-size: 0.7rem;
         font-weight: 700;
+        text-transform: uppercase;
     }
     
     .badge.valid {
         background: #dcfce7;
         color: #166534;
     }
+    :host([theme="dark"]) .badge.valid {
+         background: #14532d;
+         color: #dcfce7;
+    }
     
     .badge.invalid {
         background: #fee2e2;
         color: #991b1b;
+    }
+    :host([theme="dark"]) .badge.invalid {
+        background: #7f1d1d;
+        color: #fee2e2;
     }
 
     .theme-btn {
         background: transparent;
         border: 1px solid ${Var.color.border.default};
         color: ${Var.color.text.secondary};
-        padding: 0.25rem 0.5rem;
-        border-radius: ${Var.radius.default};
-        font-size: 0.75rem;
-        cursor: pointer;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
         display: flex;
         align-items: center;
-        gap: 0.25rem;
+        justify-content: center;
+        cursor: pointer;
+        padding: 0;
+        font-size: 1rem;
+        transition: all 0.2s;
     }
     .theme-btn:hover {
         background: ${Var.color.bg.hover};
         color: ${Var.color.text.primary};
+        border-color: ${Var.color.text.secondary};
     }
   `;
 }

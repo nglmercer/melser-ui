@@ -9,9 +9,7 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
 ## Ejemplo Básico
 
 ```html
-<melser-number-input 
-  label="Cantidad" 
-  placeholder="Ingresa un número">
+<melser-number-input label="Cantidad" placeholder="Ingresa un número">
 </melser-number-input>
 ```
 
@@ -70,87 +68,91 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
 
 ## Propiedades
 
-| Propiedad | Tipo | Valor por Defecto | Descripción |
-|-----------|------|-------------------|-------------|
-| `min` | `number` | `undefined` | Valor mínimo permitido |
-| `max` | `number` | `undefined` | Valor máximo permitido |
-| `step` | `number` | `1` | Incremento/decremento |
-| `precision` | `number` | `undefined` | Decimales a mostrar |
-| `show-controls` | `boolean` | `true` | Muestra botones + y - |
-| `format-on-blur` | `boolean` | `false` | Formatea al perder el foco |
-| `locale` | `string` | `'es-ES'` | Localización para formateo |
-| `label` | `string` | `''` | Etiqueta visible del campo |
-| `placeholder` | `string` | `''` | Texto de marcador de posición |
-| `value` | `number` | `0` | Valor numérico del campo |
-| `disabled` | `boolean` | `false` | Deshabilita la interacción |
-| `readonly` | `boolean` | `false` | Solo lectura |
-| `required` | `boolean` | `false` | Campo requerido en formularios |
+| Propiedad        | Tipo      | Valor por Defecto | Descripción                    |
+| ---------------- | --------- | ----------------- | ------------------------------ |
+| `min`            | `number`  | `undefined`       | Valor mínimo permitido         |
+| `max`            | `number`  | `undefined`       | Valor máximo permitido         |
+| `step`           | `number`  | `1`               | Incremento/decremento          |
+| `precision`      | `number`  | `undefined`       | Decimales a mostrar            |
+| `show-controls`  | `boolean` | `true`            | Muestra botones + y -          |
+| `format-on-blur` | `boolean` | `false`           | Formatea al perder el foco     |
+| `locale`         | `string`  | `'es-ES'`         | Localización para formateo     |
+| `label`          | `string`  | `''`              | Etiqueta visible del campo     |
+| `placeholder`    | `string`  | `''`              | Texto de marcador de posición  |
+| `value`          | `number`  | `0`               | Valor numérico del campo       |
+| `disabled`       | `boolean` | `false`           | Deshabilita la interacción     |
+| `readonly`       | `boolean` | `false`           | Solo lectura                   |
+| `required`       | `boolean` | `false`           | Campo requerido en formularios |
 
 ## Eventos
 
-| Evento | Descripción |
-|--------|-------------|
-| `input` | Se dispara al cambiar el valor |
-| `change` | Se dispara al confirmar el cambio |
-| `step-up` | Se dispara al incrementar |
-| `step-down` | Se dispara al decrementar |
-| `focus` | Se dispara al obtener el foco |
-| `blur` | Se dispara al perder el foco |
-| `invalid` | Se dispara con valor inválido |
+| Evento      | Descripción                       |
+| ----------- | --------------------------------- |
+| `input`     | Se dispara al cambiar el valor    |
+| `change`    | Se dispara al confirmar el cambio |
+| `step-up`   | Se dispara al incrementar         |
+| `step-down` | Se dispara al decrementar         |
+| `focus`     | Se dispara al obtener el foco     |
+| `blur`      | Se dispara al perder el foco      |
+| `invalid`   | Se dispara con valor inválido     |
 
 ## Ejemplos de Uso
 
 ### Input con Rango Específico
 
 ```html
-<melser-number-input 
+<melser-number-input
   label="Edad (años)"
   min="18"
   max="100"
   placeholder="25"
-  hint="Solo personas mayores de 18 años">
+  hint="Solo personas mayores de 18 años"
+>
 </melser-number-input>
 ```
 
 ### Input con Pasos Personalizados
 
 ```html
-<melser-number-input 
+<melser-number-input
   label="Porcentaje (%)"
   min="0"
   max="100"
   step="5"
   value="25"
   show-controls
-  format-on-blur>
+  format-on-blur
+>
 </melser-number-input>
 ```
 
 ### Input Decimal Preciso
 
 ```html
-<melser-number-input 
+<melser-number-input
   label="Precio (€)"
   min="0"
   step="0.01"
   precision="2"
   placeholder="0.00"
   locale="es-ES"
-  hint="Precisión hasta 2 decimales">
+  hint="Precisión hasta 2 decimales"
+>
 </melser-number-input>
 ```
 
 ### Input de Cantidad para Carrito
 
 ```html
-<melser-number-input 
+<melser-number-input
   label="Cantidad"
   min="1"
   max="99"
   step="1"
   value="1"
   show-controls
-  class="cart-quantity">
+  class="cart-quantity"
+>
 </melser-number-input>
 ```
 
@@ -160,7 +162,7 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
 
 ```html
 <form id="product-form">
-  <melser-number-input 
+  <melser-number-input
     label="Precio (€) *"
     name="price"
     type="number"
@@ -168,56 +170,61 @@ Un componente de entrada numérica con controles de incremento/decremento, valid
     step="0.01"
     precision="2"
     required
-    placeholder="0.00">
+    placeholder="0.00"
+  >
   </melser-number-input>
-  
-  <melser-number-input 
+
+  <melser-number-input
     label="Stock disponible *"
     name="stock"
     min="0"
     max="1000"
     required
-    value="0">
+    value="0"
+  >
   </melser-number-input>
-  
-  <melser-number-input 
+
+  <melser-number-input
     label="Descuento (%)"
     name="discount"
     min="0"
     max="50"
     step="5"
-    value="0">
+    value="0"
+  >
   </melser-number-input>
-  
-  <button  type="submit" variant="primary">
-    Guardar Producto
-  </button >
+
+  <button type="submit" variant="primary">Guardar Producto</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById('product-form');
+const form = document.getElementById("product-form");
 if (form) {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
-    const price = parseFloat(form.querySelector('[name="price"]')?.value || '0');
-    const stock = parseInt(form.querySelector('[name="stock"]')?.value || '0');
-    const discount = parseFloat(form.querySelector('[name="discount"]')?.value || '0');
-    
+
+    const price = parseFloat(
+      form.querySelector('[name="price"]')?.value || "0"
+    );
+    const stock = parseInt(form.querySelector('[name="stock"]')?.value || "0");
+    const discount = parseFloat(
+      form.querySelector('[name="discount"]')?.value || "0"
+    );
+
     if (price <= 0) {
-      alert('El precio debe ser mayor a 0');
+      alert("El precio debe ser mayor a 0");
       return;
     }
-    
+
     if (stock < 0) {
-      alert('El stock no puede ser negativo');
+      alert("El stock no puede ser negativo");
       return;
     }
-    
+
     const finalPrice = price * (1 - discount / 100);
-    console.log('Producto:', { price, stock, discount, finalPrice });
-    alert('¡Producto guardado exitosamente!');
+    console.log("Producto:", { price, stock, discount, finalPrice });
+    alert("¡Producto guardado exitosamente!");
   });
 }
 ```
@@ -269,50 +276,6 @@ if (form) {
     </melser-number-input>
   </div>
 </melser-playground-form>
-
-<div id="calculation-result" style="margin-top: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 6px; display: none;">
-  <strong>Resultado del Cálculo:</strong>
-  <div id="calc-details"></div>
-</div>
-
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    age: z.coerce.number().min(18).max(100),
-    price: z.coerce.number().min(0),
-    quantity: z.coerce.number().min(1).max(50).default(1),
-    discount: z.coerce.number().min(0).max(50).default(0)
-  });
-  
-  if (typeof document !== 'undefined') {
-    const form = document.getElementById('number-input-playground');
-    const resultDiv = document.getElementById('calculation-result');
-    const detailsDiv = document.getElementById('calc-details');
-    
-    if (form) {
-        form.schema = schema;
-        form.defaultData = { quantity: 1, discount: 0 };
-        
-        form.addEventListener('playground:submit', (e) => {
-            const { data } = e.detail;
-            const total = data.price * data.quantity;
-            const discountAmount = total * (data.discount / 100);
-            const finalPrice = total - discountAmount;
-            
-            if (detailsDiv && resultDiv) {
-                detailsDiv.innerHTML = `
-                <p>Subtotal: €${total.toFixed(2)}</p>
-                <p>Descuento: -€${discountAmount.toFixed(2)}</p>
-                <p style="font-size: 1.2em; color: var(--melser-primary);">Total: €${finalPrice.toFixed(2)}</p>
-                `;
-                resultDiv.style.display = 'block';
-            }
-        });
-    }
-  }
-</script>
-
 
 ## Personalización con CSS
 
@@ -383,14 +346,14 @@ melser-number-input {
 ### Formateo Automático
 
 ```javascript
-const numberInput = document.querySelector('melser-number-input');
+const numberInput = document.querySelector("melser-number-input");
 if (numberInput) {
   numberInput.formatOnBlur = true;
-  numberInput.locale = 'es-ES';
-  
-  numberInput.addEventListener('blur', (e) => {
+  numberInput.locale = "es-ES";
+
+  numberInput.addEventListener("blur", (e) => {
     // Se formatea automáticamente al perder el foco
-    console.log('Valor formateado:', e.target.value);
+    console.log("Valor formateado:", e.target.value);
   });
 }
 ```
@@ -398,15 +361,15 @@ if (numberInput) {
 ### Validación Personalizada
 
 ```javascript
-const numberInput = document.querySelector('melser-number-input');
+const numberInput = document.querySelector("melser-number-input");
 if (numberInput) {
-  numberInput.addEventListener('invalid', (e) => {
+  numberInput.addEventListener("invalid", (e) => {
     const value = parseFloat(e.target.value);
     const min = parseFloat(e.target.min);
     const max = parseFloat(e.target.max);
-    
+
     if (isNaN(value)) {
-      console.log('⚠️ Valor no es un número');
+      console.log("⚠️ Valor no es un número");
     } else if (value < min) {
       console.log(`⚠️ El valor debe ser mayor o igual a ${min}`);
     } else if (value > max) {
@@ -419,15 +382,17 @@ if (numberInput) {
 ### Controles de Teclado
 
 ```html
-<melser-number-input 
+<melser-number-input
   label="Navegación por teclado"
   placeholder="Usa flechas arriba/abajo"
   min="0"
   max="100"
-  step="1">
+  step="1"
+></melser-number-input>
 ```
 
 **Controles disponibles:**
+
 - ↑ (Arrow Up): Incrementa el valor
 - ↓ (Arrow Down): Decrementa el valor
 - Page Up: Incrementa por 10
@@ -461,9 +426,7 @@ El componente MelserNumberInput incluye:
 
 ```html
 <!-- Verificar que show-controls esté habilitado -->
-<melser-number-input 
-  show-controls
-  label="Con controles">
+<melser-number-input show-controls label="Con controles"></melser-number-input>
 ```
 
 ### Valor no se actualiza
@@ -478,21 +441,18 @@ numberInput.value = 42; // Correcto
 
 ```html
 <!-- Asegurar que los atributos estén configurados -->
-<melser-number-input 
-  min="0"
-  max="100"
-  step="1"
-  required>
+<melser-number-input min="0" max="100" step="1" required></melser-number-input>
 ```
 
 ### Problemas de accesibilidad
 
 ```html
 <!-- Agregar etiquetas descriptivas -->
-<melser-number-input 
+<melser-number-input
   aria-label="Cantidad de productos (mínimo 1, máximo 99)"
   min="1"
-  max="99">
+  max="99"
+></melser-number-input>
 ```
 
 ### Focus no visible
@@ -512,3 +472,4 @@ melser-number-input:focus-within {
 numberInput.step = 0.01;
 numberInput.precision = 2;
 numberInput.formatOnBlur = true;
+```

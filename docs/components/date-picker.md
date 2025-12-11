@@ -9,9 +9,7 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
 ## Ejemplo Básico
 
 ```html
-<melser-date-picker 
-  label="Selecciona una fecha" 
-  placeholder="dd/mm/yyyy">
+<melser-date-picker label="Selecciona una fecha" placeholder="dd/mm/yyyy">
 </melser-date-picker>
 ```
 
@@ -66,69 +64,70 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
   placeholder="Selecciona un año">
 </melser-date-picker>
 
-
 ## Propiedades
 
-| Propiedad | Tipo | Valor por Defecto | Descripción |
-|-----------|------|-------------------|-------------|
-| `value` | `string` | `''` | Fecha seleccionada (YYYY-MM-DD) |
-| `min` | `string` | `''` | Fecha mínima permitida |
-| `max` | `string` | `''` | Fecha máxima permitida |
-| `disabled` | `boolean` | `false` | Deshabilita la interacción |
-| `required` | `boolean` | `false` | Campo requerido en formularios |
-| `readonly` | `boolean` | `false` | Solo lectura |
-| `placeholder` | `string` | `''` | Texto de marcador de posición |
-| `format` | `string` | `'YYYY-MM-DD'` | Formato de fecha |
-| `locale` | `string` | `'en'` | Localización del calendario |
-| `mode` | `string` | `'single'` | Modo de selección (single, range, multiple) |
-| `view` | `string` | `'day'` | Vista inicial (day, month, year) |
-| `first-day-of-week` | `number` | `0` | Primer día de la semana (0=Domingo, 1=Lunes) |
-| `show-today` | `boolean` | `true` | Muestra botón "Hoy" |
-| `show-clear` | `boolean` | `true` | Muestra botón "Limpiar" |
-| `label` | `string` | `''` | Etiqueta visible del campo |
+| Propiedad           | Tipo      | Valor por Defecto | Descripción                                  |
+| ------------------- | --------- | ----------------- | -------------------------------------------- |
+| `value`             | `string`  | `''`              | Fecha seleccionada (YYYY-MM-DD)              |
+| `min`               | `string`  | `''`              | Fecha mínima permitida                       |
+| `max`               | `string`  | `''`              | Fecha máxima permitida                       |
+| `disabled`          | `boolean` | `false`           | Deshabilita la interacción                   |
+| `required`          | `boolean` | `false`           | Campo requerido en formularios               |
+| `readonly`          | `boolean` | `false`           | Solo lectura                                 |
+| `placeholder`       | `string`  | `''`              | Texto de marcador de posición                |
+| `format`            | `string`  | `'YYYY-MM-DD'`    | Formato de fecha                             |
+| `locale`            | `string`  | `'en'`            | Localización del calendario                  |
+| `mode`              | `string`  | `'single'`        | Modo de selección (single, range, multiple)  |
+| `view`              | `string`  | `'day'`           | Vista inicial (day, month, year)             |
+| `first-day-of-week` | `number`  | `0`               | Primer día de la semana (0=Domingo, 1=Lunes) |
+| `show-today`        | `boolean` | `true`            | Muestra botón "Hoy"                          |
+| `show-clear`        | `boolean` | `true`            | Muestra botón "Limpiar"                      |
+| `label`             | `string`  | `''`              | Etiqueta visible del campo                   |
 
 ## Eventos
 
-| Evento | Descripción |
-|--------|-------------|
-| `change` | Se dispara al cambiar la fecha |
-| `focus` | Se dispara al obtener el foco |
-| `blur` | Se dispara al perder el foco |
-| `range-change` | Se dispara al cambiar el rango (modo range) |
-| `multiple-change` | Se dispara al cambiar múltiples fechas |
-| `view-change` | Se dispara al cambiar la vista |
+| Evento            | Descripción                                 |
+| ----------------- | ------------------------------------------- |
+| `change`          | Se dispara al cambiar la fecha              |
+| `focus`           | Se dispara al obtener el foco               |
+| `blur`            | Se dispara al perder el foco                |
+| `range-change`    | Se dispara al cambiar el rango (modo range) |
+| `multiple-change` | Se dispara al cambiar múltiples fechas      |
+| `view-change`     | Se dispara al cambiar la vista              |
 
 ## Ejemplos de Uso
 
 ### Selector de Fecha Simple
 
 ```html
-<melser-date-picker 
+<melser-date-picker
   label="Fecha de nacimiento"
   name="birthDate"
   required
   max="today"
-  placeholder="Selecciona tu fecha de nacimiento">
+  placeholder="Selecciona tu fecha de nacimiento"
+>
 </melser-date-picker>
 ```
 
 ### Selector de Rango de Fechas
 
 ```html
-<melser-date-picker 
+<melser-date-picker
   label="Período de viaje"
   name="travelPeriod"
   mode="range"
   placeholder="Desde - Hasta"
   show-clear
-  hint="Selecciona las fechas de inicio y fin de tu viaje">
+  hint="Selecciona las fechas de inicio y fin de tu viaje"
+>
 </melser-date-picker>
 ```
 
 ### Selector con Restricciones
 
 ```html
-<melser-date-picker 
+<melser-date-picker
   label="Fecha de cita médica"
   name="appointmentDate"
   required
@@ -136,32 +135,35 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
   max="2024-12-31"
   locale="es"
   first-day-of-week="1"
-  placeholder="Selecciona una fecha futura">
+  placeholder="Selecciona una fecha futura"
+>
 </melser-date-picker>
 ```
 
 ### Selector de Múltiples Fechas
 
 ```html
-<melser-date-picker 
+<melser-date-picker
   label="Fechas de disponibilidad"
   name="availableDates"
   mode="multiple"
   show-today
-  placeholder="Selecciona múltiples fechas">
+  placeholder="Selecciona múltiples fechas"
+>
 </melser-date-picker>
 ```
 
 ### Selector de Solo Años
 
 ```html
-<melser-date-picker 
+<melser-date-picker
   label="Año de graduación"
   name="graduationYear"
   view="year"
   min="2000"
   max="2030"
-  placeholder="Selecciona un año">
+  placeholder="Selecciona un año"
+>
 </melser-date-picker>
 ```
 
@@ -171,125 +173,137 @@ Un componente de selección de fechas avanzado con calendario, validación de ra
 
 ```html
 <form id="hotel-booking-form">
-  <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+  <div
+    style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;"
+  >
     <h4>🗓️ Fechas de Reserva</h4>
-    
-    <melser-date-picker 
+
+    <melser-date-picker
       label="Fecha de check-in *"
       name="checkIn"
       required
       min="today"
       placeholder="Fecha de llegada"
-      id="form-checkin">
+      id="form-checkin"
+    >
     </melser-date-picker>
-    
-    <melser-date-picker 
+
+    <melser-date-picker
       label="Fecha de check-out *"
       name="checkOut"
       required
       placeholder="Fecha de salida"
-      id="form-checkout">
+      id="form-checkout"
+    >
     </melser-date-picker>
-    
-    <melser-date-picker 
+
+    <melser-date-picker
       label="Fechas de preferencia (opcional)"
       name="preferences"
       mode="multiple"
       placeholder="Fechas que prefieres"
       show-clear
-      id="form-preferences">
+      id="form-preferences"
+    >
     </melser-date-picker>
   </div>
-  
-  <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+
+  <div
+    style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;"
+  >
     <h4>👤 Información Personal</h4>
-    
-    <melser-date-picker 
+
+    <melser-date-picker
       label="Fecha de nacimiento"
       name="birthDate"
       max="today"
       placeholder="Para verificar mayoría de edad"
-      id="form-birthdate">
+      id="form-birthdate"
+    >
     </melser-date-picker>
   </div>
-  
-  <button  type="submit" variant="primary">
-    Buscar Disponibilidad
-  </button >
+
+  <button type="submit" variant="primary">Buscar Disponibilidad</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById('hotel-booking-form');
+const form = document.getElementById("hotel-booking-form");
 if (form) {
-  const checkInPicker = document.getElementById('form-checkin');
-  const checkOutPicker = document.getElementById('form-checkout');
-  
+  const checkInPicker = document.getElementById("form-checkin");
+  const checkOutPicker = document.getElementById("form-checkout");
+
   // Validar que check-out sea posterior a check-in
   if (checkInPicker && checkOutPicker) {
-    checkInPicker.addEventListener('change', (e) => {
+    checkInPicker.addEventListener("change", (e) => {
       const checkInDate = new Date(e.target.value);
       if (checkInDate) {
         // Establecer fecha mínima de check-out
         const nextDay = new Date(checkInDate);
         nextDay.setDate(nextDay.getDate() + 1);
-        checkOutPicker.min = nextDay.toISOString().split('T')[0];
+        checkOutPicker.min = nextDay.toISOString().split("T")[0];
       }
     });
-    
-    checkOutPicker.addEventListener('change', (e) => {
+
+    checkOutPicker.addEventListener("change", (e) => {
       const checkInDate = new Date(checkInPicker.value);
       const checkOutDate = new Date(e.target.value);
-      
+
       if (checkInDate && checkOutDate && checkOutDate <= checkInDate) {
-        alert('La fecha de check-out debe ser posterior a la fecha de check-in');
-        e.target.value = '';
+        alert(
+          "La fecha de check-out debe ser posterior a la fecha de check-in"
+        );
+        e.target.value = "";
       }
     });
   }
-  
+
   // Validar fecha de nacimiento
-  const birthDatePicker = document.getElementById('form-birthdate');
+  const birthDatePicker = document.getElementById("form-birthdate");
   if (birthDatePicker) {
-    birthDatePicker.addEventListener('change', (e) => {
+    birthDatePicker.addEventListener("change", (e) => {
       const birthDate = new Date(e.target.value);
       const today = new Date();
       const age = today.getFullYear() - birthDate.getFullYear();
-      
+
       if (age < 18) {
-        alert('Debes ser mayor de 18 años para hacer una reserva');
-        e.target.value = '';
+        alert("Debes ser mayor de 18 años para hacer una reserva");
+        e.target.value = "";
       }
     });
   }
-  
-  form.addEventListener('submit', (e) => {
+
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
-    const checkIn = checkInPicker?.value || '';
-    const checkOut = checkOutPicker?.value || '';
-    const birthDate = birthDatePicker?.value || '';
-    const preferences = form.querySelector('[name="preferences"]')?.value || '';
-    
+
+    const checkIn = checkInPicker?.value || "";
+    const checkOut = checkOutPicker?.value || "";
+    const birthDate = birthDatePicker?.value || "";
+    const preferences = form.querySelector('[name="preferences"]')?.value || "";
+
     if (!checkIn || !checkOut) {
-      alert('Por favor completa las fechas de check-in y check-out');
+      alert("Por favor completa las fechas de check-in y check-out");
       return;
     }
-    
+
     const checkInDate = new Date(checkIn);
     const checkOutDate = new Date(checkOut);
-    const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
-    
+    const nights = Math.ceil(
+      (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)
+    );
+
     const bookingData = {
       checkIn,
       checkOut,
       nights,
       birthDate,
-      preferences: preferences ? preferences.split(',') : []
+      preferences: preferences ? preferences.split(",") : [],
     };
-    
-    console.log('Datos de reserva:', bookingData);
-    alert(`¡Búsqueda realizada!\nEstancia: ${nights} noches\nDesde ${checkIn} hasta ${checkOut}`);
+
+    console.log("Datos de reserva:", bookingData);
+    alert(
+      `¡Búsqueda realizada!\nEstancia: ${nights} noches\nDesde ${checkIn} hasta ${checkOut}`
+    );
   });
 }
 ```
@@ -298,60 +312,43 @@ if (form) {
 
 <melser-playground-form id="date-picker-playground" title="Planificación de Evento" description="Gestión de fechas con rangos y validación.">
   <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
-    <h4>📅 Planificación de Evento</h4>
-    
-    <melser-date-picker 
-      label="Fecha del evento *"
-      name="eventDate"
-      required
-      min="today"
-      placeholder="Selecciona la fecha"
-      locale="es">
-    </melser-date-picker>
-    
-    <melser-date-picker 
-      label="Rango de inscripción"
-      name="enrollmentRange"
-      mode="range"
-      placeholder="Desde - Hasta"
-      show-clear>
-    </melser-date-picker>
-    
-    <melser-date-picker 
-      label="Fechas de descanso"
-      name="breakDates"
-      mode="multiple"
-      placeholder="Selecciona fechas"
-      show-clear>
-    </melser-date-picker>
-    
-    <melser-date-picker 
-      label="Año de creación"
-      name="creationYear"
-      view="year"
-      min="2020"
-      max="2030"
-      placeholder="Selecciona un año">
-    </melser-date-picker>
-  </div>
+  <h4>📅 Planificación de Evento</h4>
+  
+  <melser-date-picker 
+    label="Fecha del evento *"
+    name="eventDate"
+    required
+    min="today"
+    placeholder="Selecciona la fecha"
+    locale="es">
+  </melser-date-picker>
+  
+  <melser-date-picker 
+    label="Rango de inscripción"
+    name="enrollmentRange"
+    mode="range"
+    placeholder="Desde - Hasta"
+    show-clear>
+  </melser-date-picker>
+  
+  <melser-date-picker 
+    label="Fechas de descanso"
+    name="breakDates"
+    mode="multiple"
+    placeholder="Selecciona fechas"
+    show-clear>
+  </melser-date-picker>
+  
+  <melser-date-picker 
+    label="Año de creación"
+    name="creationYear"
+    view="year"
+    min="2020"
+    max="2030"
+    placeholder="Selecciona un año">
+  </melser-date-picker>
+</div>
 </melser-playground-form>
-
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    eventDate: z.string().min(1, "La fecha del evento es obligatoria"),
-    enrollmentRange: z.string().optional(),
-    breakDates: z.string().optional(),
-    creationYear: z.string().optional()
-  });
-  
-  if (typeof document !== 'undefined') {
-    const form = document.getElementById('date-picker-playground');
-    if (form) form.schema = schema;
-  }
-</script>
-
 
 ## Personalización con CSS
 
@@ -430,18 +427,18 @@ melser-date-picker {
 ### Configuración de Localización
 
 ```javascript
-const picker = document.querySelector('melser-date-picker');
+const picker = document.querySelector("melser-date-picker");
 if (picker) {
   // Configurar localización en español
-  picker.locale = 'es';
+  picker.locale = "es";
   picker.firstDayOfWeek = 1; // Lunes como primer día
-  
+
   // Formato personalizado
-  picker.format = 'DD/MM/YYYY';
-  
+  picker.format = "DD/MM/YYYY";
+
   // Escuchar cambios de vista
-  picker.addEventListener('view-change', (e) => {
-    console.log('Vista cambiada a:', e.detail.view);
+  picker.addEventListener("view-change", (e) => {
+    console.log("Vista cambiada a:", e.detail.view);
   });
 }
 ```
@@ -449,22 +446,22 @@ if (picker) {
 ### Validación Personalizada de Fechas
 
 ```javascript
-const picker = document.querySelector('melser-date-picker');
+const picker = document.querySelector("melser-date-picker");
 if (picker) {
-  picker.addEventListener('change', (e) => {
+  picker.addEventListener("change", (e) => {
     const selectedDate = new Date(e.target.value);
     const today = new Date();
-    const maxDate = new Date('2024-12-31');
-    
+    const maxDate = new Date("2024-12-31");
+
     // Validación personalizada
     if (selectedDate > maxDate) {
-      alert('La fecha no puede ser posterior al 31 de diciembre de 2024');
-      e.target.value = '';
+      alert("La fecha no puede ser posterior al 31 de diciembre de 2024");
+      e.target.value = "";
       return;
     }
-    
+
     if (selectedDate < today) {
-      console.log('Fecha en el pasado:', selectedDate.toLocaleDateString());
+      console.log("Fecha en el pasado:", selectedDate.toLocaleDateString());
     }
   });
 }
@@ -473,7 +470,7 @@ if (picker) {
 ### Fechas Deshabilitadas Dinámicamente
 
 ```javascript
-const picker = document.querySelector('melser-date-picker');
+const picker = document.querySelector("melser-date-picker");
 if (picker) {
   // Función para verificar si una fecha está deshabilitada
   function isDateDisabled(date) {
@@ -482,17 +479,17 @@ if (picker) {
     if (dayOfWeek === 0 || dayOfWeek === 6) {
       return true;
     }
-    
+
     // Deshabilitar fechas específicas
     const disabledDates = [
-      '2024-01-01', // Año nuevo
-      '2024-12-25'  // Navidad
+      "2024-01-01", // Año nuevo
+      "2024-12-25", // Navidad
     ];
-    
-    const dateString = date.toISOString().split('T')[0];
+
+    const dateString = date.toISOString().split("T")[0];
     return disabledDates.includes(dateString);
   }
-  
+
   picker.isDateDisabled = isDateDisabled;
 }
 ```
@@ -523,7 +520,7 @@ El componente MelserDatePicker incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import 'melser-ui/components/melser-date-picker.js';
+import "melser-ui/components/melser-date-picker.js";
 
 // Verificar que no esté deshabilitado
 console.log(picker.disabled); // Debe ser false
@@ -533,17 +530,18 @@ console.log(picker.disabled); // Debe ser false
 
 ```html
 <!-- Configurar límites apropiados -->
-<melser-date-picker 
+<melser-date-picker
   min="2024-01-01"
   max="2024-12-31"
-  required>
+  required
+></melser-date-picker>
 ```
 
 ### Localización no funciona
 
 ```javascript
 // Verificar que la localización esté configurada
-picker.locale = 'es';
+picker.locale = "es";
 picker.firstDayOfWeek = 1;
 ```
 
@@ -551,16 +549,14 @@ picker.firstDayOfWeek = 1;
 
 ```javascript
 // Configurar formato personalizado
-picker.format = 'DD/MM/YYYY'; // o 'MM/DD/YYYY', etc.
+picker.format = "DD/MM/YYYY"; // o 'MM/DD/YYYY', etc.
 ```
 
 ### Rango de fechas no funciona
 
 ```html
 <!-- Verificar que mode="range" esté configurado -->
-<melser-date-picker 
-  mode="range"
-  label="Selector de rango">
+<melser-date-picker mode="range" label="Selector de rango"></melser-date-picker>
 ```
 
 ### Focus no visible
@@ -577,9 +573,10 @@ melser-date-picker:focus-within {
 
 ```html
 <!-- Agregar descripción para casos específicos -->
-<melser-date-picker 
+<melser-date-picker
   aria-label="Selecciona tu fecha de nacimiento"
-  placeholder="DD/MM/AAAA">
+  placeholder="DD/MM/AAAA"
+></melser-date-picker>
 ```
 
 ### Fechas deshabilitadas no se muestran
@@ -596,3 +593,4 @@ picker.isDateDisabled = (date) => {
 ```javascript
 // Limitar rango de años mostrados
 picker.yearRange = 10; // Solo mostrar 5 años antes y después
+```

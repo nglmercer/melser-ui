@@ -9,11 +9,7 @@ Un componente de rango (slider) personalizable para selección de valores numér
 ## Ejemplo Básico
 
 ```html
-<melser-range 
-  min="0" 
-  max="100" 
-  value="50">
-</melser-range>
+<melser-range min="0" max="100" value="50"> </melser-range>
 ```
 
 ## Demo Interactivo
@@ -44,64 +40,61 @@ Un componente de rango (slider) personalizable para selección de valores numér
   label="Rango deshabilitado">
 </melser-range>
 
-
 ## Propiedades
 
-| Propiedad | Tipo | Valor por Defecto | Descripción |
-|-----------|------|-------------------|-------------|
-| `min` | `number` | `0` | Valor mínimo del rango |
-| `max` | `number` | `100` | Valor máximo del rango |
-| `value` | `number` | `50` | Valor actual del rango |
-| `step` | `number` | `1` | Incremento/decremento del valor |
-| `disabled` | `boolean` | `false` | Deshabilita la interacción |
-| `name` | `string` | `''` | Nombre para formularios |
-| `label` | `string` | `''` | Etiqueta visible del rango |
-| `showValue` | `boolean` | `true` | Muestra el valor actual |
+| Propiedad   | Tipo      | Valor por Defecto | Descripción                     |
+| ----------- | --------- | ----------------- | ------------------------------- |
+| `min`       | `number`  | `0`               | Valor mínimo del rango          |
+| `max`       | `number`  | `100`             | Valor máximo del rango          |
+| `value`     | `number`  | `50`              | Valor actual del rango          |
+| `step`      | `number`  | `1`               | Incremento/decremento del valor |
+| `disabled`  | `boolean` | `false`           | Deshabilita la interacción      |
+| `name`      | `string`  | `''`              | Nombre para formularios         |
+| `label`     | `string`  | `''`              | Etiqueta visible del rango      |
+| `showValue` | `boolean` | `true`            | Muestra el valor actual         |
 
 ## Eventos
 
-| Evento | Descripción |
-|--------|-------------|
-| `input` | Se dispara al cambiar el valor (en tiempo real) |
-| `change` | Se dispara al confirmar el cambio |
-| `focus` | Se dispara al obtener el foco |
-| `blur` | Se dispara al perder el foco |
+| Evento   | Descripción                                     |
+| -------- | ----------------------------------------------- |
+| `input`  | Se dispara al cambiar el valor (en tiempo real) |
+| `change` | Se dispara al confirmar el cambio               |
+| `focus`  | Se dispara al obtener el foco                   |
+| `blur`   | Se dispara al perder el foco                    |
 
 ## Ejemplos de Uso
 
 ### Rango con Etiqueta
 
 ```html
-<melser-range 
-  min="0" 
-  max="200" 
-  value="75"
-  label="Presupuesto mensual ($)">
+<melser-range min="0" max="200" value="75" label="Presupuesto mensual ($)">
 </melser-range>
 ```
 
 ### Rango con Pasos
 
 ```html
-<melser-range 
-  min="0" 
-  max="10" 
+<melser-range
+  min="0"
+  max="10"
   value="7"
   step="1"
-  label="Calificación del 1 al 10">
+  label="Calificación del 1 al 10"
+>
 </melser-range>
 ```
 
 ### Rango de Precios
 
 ```html
-<melser-range 
-  min="100" 
-  max="1000" 
+<melser-range
+  min="100"
+  max="1000"
   value="500"
   step="50"
   show-value
-  label="Rango de precios">
+  label="Rango de precios"
+>
 </melser-range>
 ```
 
@@ -112,40 +105,34 @@ Un componente de rango (slider) personalizable para selección de valores numér
 ```html
 <form id="settings-form">
   <h3>Configuración de Usuario</h3>
-  
-  <melser-range 
+
+  <melser-range
     name="brightness"
-    min="0" 
-    max="100" 
+    min="0"
+    max="100"
     value="70"
-    label="Brillo de pantalla">
+    label="Brillo de pantalla"
+  >
   </melser-range>
-  
-  <melser-range 
-    name="volume"
-    min="0" 
-    max="100" 
-    value="50"
-    label="Volumen">
+
+  <melser-range name="volume" min="0" max="100" value="50" label="Volumen">
   </melser-range>
-  
-  <button  type="submit" variant="primary">
-    Guardar Configuración
-  </button >
+
+  <button type="submit" variant="primary">Guardar Configuración</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById('settings-form');
+const form = document.getElementById("settings-form");
 if (form) {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    
-    console.log('Configuración guardada:', data);
-    alert('¡Configuración guardada correctamente!');
+
+    console.log("Configuración guardada:", data);
+    alert("¡Configuración guardada correctamente!");
   });
 }
 ```
@@ -173,21 +160,6 @@ if (form) {
     </melser-range>
   </div>
 </melser-playground-form>
-
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    brightness: z.coerce.number().min(0).max(100),
-    volume: z.coerce.number().min(0).max(100)
-  });
-  
-  if (typeof document !== 'undefined') {
-    const form = document.getElementById('range-playground');
-    if (form) form.schema = schema;
-  }
-</script>
-
 
 ## Personalización con CSS
 
@@ -263,7 +235,7 @@ El componente MelserRange incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import 'melser-ui/components/melser-range.js';
+import "melser-ui/components/melser-range.js";
 
 // Verificar que no esté deshabilitado
 console.log(range.disabled); // Debe ser false
@@ -273,21 +245,18 @@ console.log(range.disabled); // Debe ser false
 
 ```html
 <!-- Asegúrate de incluir el atributo name -->
-<melser-range 
-  name="volume"
-  min="0" 
-  max="100" 
-  value="50">
-</melser-range>
+<melser-range name="volume" min="0" max="100" value="50"> </melser-range>
 ```
 
 ### Problemas de accesibilidad
 
 ```html
 <!-- Para rangos complejos, usa aria-label -->
-<melser-range 
+<melser-range
   aria-label="Temperatura en grados Celsius"
-  min="-20" 
-  max="50" 
-  value="22">
+  min="-20"
+  max="50"
+  value="22"
+>
 </melser-range>
+```

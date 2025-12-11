@@ -9,9 +9,7 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
 ## Ejemplo Básico
 
 ```html
-<melser-tags-input 
-  placeholder="Agrega etiquetas..."
-  label="Etiquetas">
+<melser-tags-input placeholder="Agrega etiquetas..." label="Etiquetas">
 </melser-tags-input>
 ```
 
@@ -39,64 +37,67 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
 
 ## Propiedades
 
-| Propiedad | Tipo | Valor por Defecto | Descripción |
-|-----------|------|-------------------|-------------|
-| `value` | `string` | `''` | Etiquetas actuales (separadas por comas) |
-| `placeholder` | `string` | `'Agrega etiqueta...'` | Texto del marcador |
-| `disabled` | `boolean` | `false` | Deshabilita la interacción |
-| `readonly` | `boolean` | `false` | Solo lectura |
-| `name` | `string` | `''` | Nombre para formularios |
-| `label` | `string` | `''` | Etiqueta visible del componente |
-| `maxTags` | `number` | `undefined` | Número máximo de etiquetas |
-| `minLength` | `number` | `1` | Longitud mínima de etiqueta |
-| `maxLength` | `number` | `50` | Longitud máxima de etiqueta |
-| `allowDuplicates` | `boolean` | `false` | Permite etiquetas duplicadas |
-| `delimiter` | `string` | `','` | Delimitador para valores |
-| `removeOnBackspace` | `boolean` | `true` | Elimina última etiqueta con backspace |
+| Propiedad           | Tipo      | Valor por Defecto      | Descripción                              |
+| ------------------- | --------- | ---------------------- | ---------------------------------------- |
+| `value`             | `string`  | `''`                   | Etiquetas actuales (separadas por comas) |
+| `placeholder`       | `string`  | `'Agrega etiqueta...'` | Texto del marcador                       |
+| `disabled`          | `boolean` | `false`                | Deshabilita la interacción               |
+| `readonly`          | `boolean` | `false`                | Solo lectura                             |
+| `name`              | `string`  | `''`                   | Nombre para formularios                  |
+| `label`             | `string`  | `''`                   | Etiqueta visible del componente          |
+| `maxTags`           | `number`  | `undefined`            | Número máximo de etiquetas               |
+| `minLength`         | `number`  | `1`                    | Longitud mínima de etiqueta              |
+| `maxLength`         | `number`  | `50`                   | Longitud máxima de etiqueta              |
+| `allowDuplicates`   | `boolean` | `false`                | Permite etiquetas duplicadas             |
+| `delimiter`         | `string`  | `','`                  | Delimitador para valores                 |
+| `removeOnBackspace` | `boolean` | `true`                 | Elimina última etiqueta con backspace    |
 
 ## Eventos
 
-| Evento | Descripción |
-|--------|-------------|
-| `change` | Se dispara al cambiar las etiquetas |
-| `tag-add` | Se dispara al agregar una etiqueta |
+| Evento       | Descripción                         |
+| ------------ | ----------------------------------- |
+| `change`     | Se dispara al cambiar las etiquetas |
+| `tag-add`    | Se dispara al agregar una etiqueta  |
 | `tag-remove` | Se dispara al eliminar una etiqueta |
-| `input` | Se dispara al escribir en el input |
-| `focus` | Se dispara al obtener el foco |
-| `blur` | Se dispara al perder el foco |
+| `input`      | Se dispara al escribir en el input  |
+| `focus`      | Se dispara al obtener el foco       |
+| `blur`       | Se dispara al perder el foco        |
 
 ## Ejemplos de Uso
 
 ### Entrada de Habilidades
 
 ```html
-<melser-tags-input 
+<melser-tags-input
   placeholder="Agrega tus habilidades..."
   label="Habilidades técnicas"
   max-tags="10"
-  min-length="2">
+  min-length="2"
+>
 </melser-tags-input>
 ```
 
 ### Categorías de Producto
 
 ```html
-<melser-tags-input 
+<melser-tags-input
   placeholder="Categorías del producto"
   label="Categorías"
   max-tags="5"
-  allow-duplicates="false">
+  allow-duplicates="false"
+>
 </melser-tags-input>
 ```
 
 ###Etiquetas con Validación
 
 ```html
-<melser-tags-input 
+<melser-tags-input
   placeholder="Etiquetas (mínimo 3 caracteres)"
   label="Etiquetas con validación"
   min-length="3"
-  max-length="20">
+  max-length="20"
+>
 </melser-tags-input>
 ```
 
@@ -107,51 +108,45 @@ Un componente de entrada de etiquetas para agregar, editar y eliminar tags con a
 ```html
 <form id="article-form">
   <h3>Publicar Artículo</h3>
-  
-  <base-input 
-    label="Título del artículo"
-    name="title"
-    required>
-  </base-input>
-  
-  <melser-textarea 
+
+  <base-input label="Título del artículo" name="title" required> </base-input>
+
+  <melser-textarea
     label="Contenido del artículo"
     name="content"
     rows="6"
-    required>
+    required
+  >
   </melser-textarea>
-  
-  <melser-tags-input 
+
+  <melser-tags-input
     name="tags"
     placeholder="Etiquetas del artículo..."
     label="Etiquetas"
     max-tags="8"
     min-length="2"
-    required>
+    required
+  >
   </melser-tags-input>
-  
-  <melser-checkbox 
-    name="published"
-    label="Publicar inmediatamente">
+
+  <melser-checkbox name="published" label="Publicar inmediatamente">
   </melser-checkbox>
-  
-  <button  type="submit" variant="primary">
-    Publicar Artículo
-  </button >
+
+  <button type="submit" variant="primary">Publicar Artículo</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById('article-form');
+const form = document.getElementById("article-form");
 if (form) {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    
-    console.log('Artículo publicado:', data);
-    alert('¡Artículo publicado correctamente!');
+
+    console.log("Artículo publicado:", data);
+    alert("¡Artículo publicado correctamente!");
   });
 }
 ```
@@ -184,21 +179,6 @@ if (form) {
     </melser-checkbox>
   </div>
 </melser-playground-form>
-
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    title: z.string().min(3, "El título es muy corto"),
-    tags: z.string().min(1, "Agrega al menos una etiqueta"),
-    published: z.boolean().optional()
-  });
-  
-  if (typeof document !== 'undefined') {
-    const form = document.getElementById('tags-playground');
-    if (form) form.schema = schema;
-  }
-</script>
 
 ## Ejemplos Avanzados
 
@@ -346,7 +326,7 @@ El componente MelserTagsInput incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import 'melser-ui/components/melser-tags-input.js';
+import "melser-ui/components/melser-tags-input.js";
 
 // Verificar que no esté deshabilitado o solo lectura
 console.log(tagsInput.disabled); // Debe ser false
@@ -357,51 +337,47 @@ console.log(tagsInput.readonly); // Debe ser false
 
 ```javascript
 // Por defecto no permite duplicados, habilita si es necesario
-<melser-tags-input 
+<melser-tags-input
   allow-duplicates
-  placeholder="Permitir duplicados">
-</melser-tags-input>
+  placeholder="Permitir duplicados"
+></melser-tags-input>
 ```
 
 ### El valor no se envía en el formulario
 
 ```html
 <!-- Asegúrate de incluir el atributo name -->
-<melser-tags-input 
-  name="articleTags"
-  placeholder="Etiquetas del artículo">
+<melser-tags-input name="articleTags" placeholder="Etiquetas del artículo">
 </melser-tags-input>
 
-// Recuperar valor en formulario
-const formData = new FormData(form);
-const tags = formData.get('articleTags'); // "tag1, tag2, tag3"
-
-// Convertir a array
-const tagsArray = tags.split(',').map(tag => tag.trim());
+// Recuperar valor en formulario const formData = new FormData(form); const tags
+= formData.get('articleTags'); // "tag1, tag2, tag3" // Convertir a array const
+tagsArray = tags.split(',').map(tag => tag.trim());
 ```
 
 ### Problemas de accesibilidad
 
 ```html
 <!-- Usa aria-label para casos complejos -->
-<melser-tags-input 
+<melser-tags-input
   aria-label="Etiquetas para categorizar el artículo, separadas por comas"
-  placeholder="Etiquetas del artículo">
+  placeholder="Etiquetas del artículo"
+>
 </melser-tags-input>
 ```
 
 ### Validación personalizada
 
 ```javascript
-const tagsInput = document.getElementById('my-tags');
+const tagsInput = document.getElementById("my-tags");
 
-tagsInput.addEventListener('tag-add', (e) => {
+tagsInput.addEventListener("tag-add", (e) => {
   const tag = e.detail.tag;
-  
+
   // Validación personalizada
-  if (tag.includes('palabra-prohibida')) {
+  if (tag.includes("palabra-prohibida")) {
     e.preventDefault();
-    alert('Esta etiqueta no está permitida');
+    alert("Esta etiqueta no está permitida");
   }
 });
 ```

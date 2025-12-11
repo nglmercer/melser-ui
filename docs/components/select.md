@@ -9,9 +9,7 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
 ## Ejemplo Básico
 
 ```html
-<melser-select 
-  label="Selecciona una opción" 
-  placeholder="Elige una opción">
+<melser-select label="Selecciona una opción" placeholder="Elige una opción">
   <option value="opcion1">Opción 1</option>
   <option value="opcion2">Opción 2</option>
   <option value="opcion3">Opción 3</option>
@@ -24,6 +22,7 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   id="demo-basic" 
   label="Selector básico" 
   placeholder="Elige una opción">
+
   <option value="">Selecciona una opción</option>
   <option value="es">España</option>
   <option value="mx">México</option>
@@ -36,6 +35,7 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   id="demo-groups" 
   label="Con grupos" 
   placeholder="Selecciona un país">
+
   <optgroup label="Europa">
     <option value="es">España</option>
     <option value="fr">Francia</option>
@@ -53,6 +53,7 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   label="Con valor inicial" 
   value="mx"
   placeholder="País predefinido">
+
   <option value="">Selecciona un país</option>
   <option value="es">España</option>
   <option value="mx" selected>México</option>
@@ -64,6 +65,7 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   label="Deshabilitado" 
   value="co"
   disabled>
+
   <option value="">Selecciona una opción</option>
   <option value="es">España</option>
   <option value="mx">México</option>
@@ -75,6 +77,7 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   label="Con búsqueda" 
   searchable
   placeholder="Busca un país...">
+
   <option value="es">España</option>
   <option value="mx">México</option>
   <option value="ar">Argentina</option>
@@ -84,43 +87,43 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
   <option value="uy">Uruguay</option>
 </melser-select>
 
-
 ## Propiedades
 
-| Propiedad | Tipo | Valor por Defecto | Descripción |
-|-----------|------|-------------------|-------------|
-| `searchable` | `boolean` | `false` | Habilita búsqueda en opciones |
-| `clearable` | `boolean` | `false` | Permite limpiar la selección |
-| `disabled` | `boolean` | `false` | Deshabilita la interacción |
-| `required` | `boolean` | `false` | Campo requerido en formularios |
-| `multiple` | `boolean` | `false` | Permite múltiples selecciones |
-| `placeholder` | `string` | `''` | Texto cuando no hay selección |
-| `label` | `string` | `''` | Etiqueta visible del campo |
-| `name` | `string` | `''` | Nombre para formularios |
-| `value` | `string` | `''` | Valor seleccionado |
+| Propiedad     | Tipo      | Valor por Defecto | Descripción                    |
+| ------------- | --------- | ----------------- | ------------------------------ |
+| `searchable`  | `boolean` | `false`           | Habilita búsqueda en opciones  |
+| `clearable`   | `boolean` | `false`           | Permite limpiar la selección   |
+| `disabled`    | `boolean` | `false`           | Deshabilita la interacción     |
+| `required`    | `boolean` | `false`           | Campo requerido en formularios |
+| `multiple`    | `boolean` | `false`           | Permite múltiples selecciones  |
+| `placeholder` | `string`  | `''`              | Texto cuando no hay selección  |
+| `label`       | `string`  | `''`              | Etiqueta visible del campo     |
+| `name`        | `string`  | `''`              | Nombre para formularios        |
+| `value`       | `string`  | `''`              | Valor seleccionado             |
 
 ## Eventos
 
-| Evento | Descripción |
-|--------|-------------|
-| `change` | Se dispara al cambiar la selección |
-| `search` | Se dispara durante la búsqueda (solo searchable) |
-| `clear` | Se dispara al limpiar la selección (solo clearable) |
-| `focus` | Se dispara al obtener el foco |
-| `blur` | Se dispara al perder el foco |
-| `open` | Se dispara al abrir el dropdown |
-| `close` | Se dispara al cerrar el dropdown |
+| Evento   | Descripción                                         |
+| -------- | --------------------------------------------------- |
+| `change` | Se dispara al cambiar la selección                  |
+| `search` | Se dispara durante la búsqueda (solo searchable)    |
+| `clear`  | Se dispara al limpiar la selección (solo clearable) |
+| `focus`  | Se dispara al obtener el foco                       |
+| `blur`   | Se dispara al perder el foco                        |
+| `open`   | Se dispara al abrir el dropdown                     |
+| `close`  | Se dispara al cerrar el dropdown                    |
 
 ## Ejemplos de Uso
 
 ### Select con Búsqueda
 
 ```html
-<melser-select 
+<melser-select
   label="País (con búsqueda)"
   searchable
   placeholder="Escribe para buscar..."
-  clearable>
+  clearable
+>
   <option value="">Todos los países</option>
   <option value="es">España</option>
   <option value="mx">México</option>
@@ -134,11 +137,12 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
 ### Select con Validación
 
 ```html
-<melser-select 
+<melser-select
   label="Tipo de documento *"
   required
   placeholder="Selecciona un tipo"
-  error="Debes seleccionar un tipo de documento">
+  error="Debes seleccionar un tipo de documento"
+>
   <option value="">Selecciona un tipo</option>
   <option value="dni">DNI</option>
   <option value="passport">Pasaporte</option>
@@ -150,9 +154,7 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
 ### Select Agrupado
 
 ```html
-<melser-select 
-  label="Ciudad"
-  placeholder="Selecciona una ciudad">
+<melser-select label="Ciudad" placeholder="Selecciona una ciudad">
   <optgroup label="España">
     <option value="madrid">Madrid</option>
     <option value="barcelona">Barcelona</option>
@@ -169,10 +171,11 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
 ### Select con Múltiples Selecciones
 
 ```html
-<melser-select 
+<melser-select
   label="Habilidades"
   multiple
-  placeholder="Selecciona las habilidades relevantes">
+  placeholder="Selecciona las habilidades relevantes"
+>
   <option value="javascript">JavaScript</option>
   <option value="typescript">TypeScript</option>
   <option value="react">React</option>
@@ -189,11 +192,12 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
 
 ```html
 <form id="registration-select-form">
-  <melser-select 
+  <melser-select
     label="País de residencia *"
     name="country"
     required
-    placeholder="Selecciona tu país">
+    placeholder="Selecciona tu país"
+  >
     <optgroup label="Europa">
       <option value="es">España</option>
       <option value="fr">Francia</option>
@@ -206,82 +210,73 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
       <option value="pe">Perú</option>
     </optgroup>
   </melser-select>
-  
-  <melser-select 
-    label="Ciudad"
-    name="city"
-    placeholder="Selecciona una ciudad">
+
+  <melser-select label="Ciudad" name="city" placeholder="Selecciona una ciudad">
     <!-- Opciones dinámicas basadas en país -->
   </melser-select>
-  
-  <melser-select 
-    label="Tipo de cuenta"
-    name="accountType"
-    searchable
-    clearable>
+
+  <melser-select label="Tipo de cuenta" name="accountType" searchable clearable>
     <option value="">Selecciona un tipo</option>
     <option value="personal">Cuenta Personal</option>
     <option value="business">Cuenta Empresarial</option>
     <option value="student">Cuenta Estudiantil</option>
   </melser-select>
-  
-  <button  type="submit" variant="primary">
-    Completar Registro
-  </button >
+
+  <button type="submit" variant="primary">Completar Registro</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById('registration-select-form');
+const form = document.getElementById("registration-select-form");
 if (form) {
   const countrySelect = form.querySelector('[name="country"]');
   const citySelect = form.querySelector('[name="city"]');
-  
+
   // Actualizar ciudades basado en el país
   if (countrySelect && citySelect) {
-    countrySelect.addEventListener('change', (e) => {
+    countrySelect.addEventListener("change", (e) => {
       const country = e.target.value;
       updateCities(citySelect, country);
     });
   }
-  
-  form.addEventListener('submit', (e) => {
+
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    
+
     if (!data.country) {
-      alert('Por favor selecciona tu país');
+      alert("Por favor selecciona tu país");
       return;
     }
-    
-    console.log('Datos del formulario:', data);
-    alert('¡Registro completado exitosamente!');
+
+    console.log("Datos del formulario:", data);
+    alert("¡Registro completado exitosamente!");
   });
 }
 
 function updateCities(citySelect, country) {
   const cities = {
-    'es': [
-      { value: 'madrid', label: 'Madrid' },
-      { value: 'barcelona', label: 'Barcelona' },
-      { value: 'valencia', label: 'Valencia' }
+    es: [
+      { value: "madrid", label: "Madrid" },
+      { value: "barcelona", label: "Barcelona" },
+      { value: "valencia", label: "Valencia" },
     ],
-    'mx': [
-      { value: 'cdmx', label: 'Ciudad de México' },
-      { value: 'guadalajara', label: 'Guadalajara' },
-      { value: 'monterrey', label: 'Monterrey' }
-    ]
+    mx: [
+      { value: "cdmx", label: "Ciudad de México" },
+      { value: "guadalajara", label: "Guadalajara" },
+      { value: "monterrey", label: "Monterrey" },
+    ],
   };
-  
+
   // Limpiar opciones actuales
   citySelect.innerHTML = '<option value="">Selecciona una ciudad</option>';
-  
+
   // Agregar nuevas opciones
   if (cities[country]) {
-    cities[country].forEach(city => {
-      const option = document.createElement('option');
+    cities[country].forEach((city) => {
+      const option = document.createElement("option");
       option.value = city.value;
       option.textContent = city.label;
       citySelect.appendChild(option);
@@ -335,59 +330,6 @@ function updateCities(citySelect, country) {
     </melser-select>
   </div>
 </melser-playground-form>
-
-<script type="module">
-  // Schema loaded via schema-name="select"
-  
-  if (typeof document !== 'undefined') {
-      const form = document.getElementById('select-playground');
-      if (form) {
-          // Cities Data
-          const cities = {
-            'es': [
-              { value: 'madrid', label: 'Madrid' },
-              { value: 'barcelona', label: 'Barcelona' }
-            ],
-            'mx': [
-              { value: 'cdmx', label: 'Ciudad de México' },
-              { value: 'guadalajara', label: 'Guadalajara' }
-            ],
-            'ar': [
-              { value: 'ba', label: 'Buenos Aires' },
-              { value: 'cor', label: 'Córdoba' }
-            ],
-            'co': [
-                { value: 'bog', label: 'Bogotá' }
-            ]
-          };
-        
-          // Listen for changes
-          form.addEventListener('ui:change', (e) => {
-            const { name, value } = e.detail;
-            
-            if (name === 'country') {
-               const citySelect = form.querySelector('melser-select[name="city"]');
-               const countryCities = cities[value] || [];
-               
-               if (countryCities.length > 0) {
-                   citySelect.innerHTML = '<option value="">Selecciona una ciudad</option>';
-                   countryCities.forEach(c => {
-                       const opt = document.createElement('option');
-                       opt.value = c.value;
-                       opt.textContent = c.label;
-                       citySelect.appendChild(opt);
-                   });
-                   citySelect.disabled = false;
-               } else {
-                   citySelect.innerHTML = '<option value="">No hay ciudades disponibles</option>';
-                   citySelect.disabled = true;
-               }
-            }
-          });
-      }
-  }
-</script>
-
 
 ## Personalización con CSS
 
@@ -468,21 +410,23 @@ melser-select {
 ### Búsqueda Personalizada
 
 ```javascript
-const searchableSelect = document.querySelector('melser-select[searchable]');
+const searchableSelect = document.querySelector("melser-select[searchable]");
 if (searchableSelect) {
-  searchableSelect.addEventListener('search', (e) => {
+  searchableSelect.addEventListener("search", (e) => {
     const searchTerm = e.detail.term;
-    
+
     // Filtrar opciones basado en el término de búsqueda
     filterOptions(searchableSelect, searchTerm);
   });
 }
 
 function filterOptions(select, term) {
-  const options = select.querySelectorAll('option');
-  options.forEach(option => {
-    const matches = option.textContent.toLowerCase().includes(term.toLowerCase());
-    option.style.display = matches ? 'block' : 'none';
+  const options = select.querySelectorAll("option");
+  options.forEach((option) => {
+    const matches = option.textContent
+      .toLowerCase()
+      .includes(term.toLowerCase());
+    option.style.display = matches ? "block" : "none";
   });
 }
 ```
@@ -490,7 +434,7 @@ function filterOptions(select, term) {
 ### Carga Dinámica de Opciones
 
 ```javascript
-const select = document.querySelector('melser-select');
+const select = document.querySelector("melser-select");
 if (select) {
   // Simular carga de datos
   loadDynamicOptions(select);
@@ -499,21 +443,21 @@ if (select) {
 async function loadDynamicOptions(select) {
   try {
     // Simular API call
-    const response = await fetch('/api/countries');
+    const response = await fetch("/api/countries");
     const countries = await response.json();
-    
+
     // Limpiar opciones existentes
     select.innerHTML = '<option value="">Selecciona un país</option>';
-    
+
     // Agregar nuevas opciones
-    countries.forEach(country => {
-      const option = document.createElement('option');
+    countries.forEach((country) => {
+      const option = document.createElement("option");
       option.value = country.code;
       option.textContent = country.name;
       select.appendChild(option);
     });
   } catch (error) {
-    console.error('Error cargando opciones:', error);
+    console.error("Error cargando opciones:", error);
   }
 }
 ```
@@ -544,9 +488,7 @@ El componente MelserSelect incluye:
 
 ```html
 <!-- Asegurar que searchable esté habilitado -->
-<melser-select 
-  searchable
-  label="Con búsqueda">
+<melser-select searchable label="Con búsqueda"></melser-select>
 ```
 
 ### Opciones no se cargan dinámicamente
@@ -560,16 +502,14 @@ select.innerHTML = `
 `;
 
 // Disparar evento para actualizar el componente
-select.dispatchEvent(new Event('change'));
+select.dispatchEvent(new Event("change"));
 ```
 
 ### Validación no funciona
 
 ```html
 <!-- Usar required junto con placeholder vacío -->
-<melser-select 
-  required
-  placeholder="Selecciona una opción">
+<melser-select required placeholder="Selecciona una opción">
   <option value="">Selecciona una opción</option>
   <option value="1">Opción 1</option>
 </melser-select>
@@ -579,9 +519,10 @@ select.dispatchEvent(new Event('change'));
 
 ```html
 <!-- Agregar labels descriptivos para casos complejos -->
-<melser-select 
+<melser-select
   aria-label="Selecciona tu país de nacimiento"
-  searchable>
+  searchable
+></melser-select>
 ```
 
 ### Focus no visible
@@ -601,8 +542,9 @@ melser-select:focus-within {
 select.close();
 
 // O escuchar eventos de click externo
-document.addEventListener('click', (e) => {
+document.addEventListener("click", (e) => {
   if (!select.contains(e.target)) {
     select.close();
   }
 });
+```

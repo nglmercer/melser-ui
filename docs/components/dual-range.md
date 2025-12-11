@@ -9,11 +9,7 @@ Un componente de rango doble (dual slider) para selección de rangos de valores 
 ## Ejemplo Básico
 
 ```html
-<melser-dual-range 
-  min="0" 
-  max="100" 
-  value="30,70">
-</melser-dual-range>
+<melser-dual-range min="0" max="100" value="30,70"> </melser-dual-range>
 ```
 
 ## Demo Interactivo
@@ -46,61 +42,59 @@ Un componente de rango doble (dual slider) para selección de rangos de valores 
 
 ## Propiedades
 
-| Propiedad | Tipo | Valor por Defecto | Descripción |
-|-----------|------|-------------------|-------------|
-| `min` | `number` | `0` | Valor mínimo del rango |
-| `max` | `number` | `100` | Valor máximo del rango |
-| `value` | `string` | `'30,70'` | Valores actuales (min,max) |
-| `step` | `number` | `1` | Incremento/decremento de los valores |
-| `disabled` | `boolean` | `false` | Deshabilita la interacción |
-| `name` | `string` | `''` | Nombre para formularios |
-| `label` | `string` | `''` | Etiqueta visible del rango |
-| `showValues` | `boolean` | `true` | Muestra los valores actuales |
-| `separator` | `string` | `' - '` | Separador entre valores |
+| Propiedad    | Tipo      | Valor por Defecto | Descripción                          |
+| ------------ | --------- | ----------------- | ------------------------------------ |
+| `min`        | `number`  | `0`               | Valor mínimo del rango               |
+| `max`        | `number`  | `100`             | Valor máximo del rango               |
+| `value`      | `string`  | `'30,70'`         | Valores actuales (min,max)           |
+| `step`       | `number`  | `1`               | Incremento/decremento de los valores |
+| `disabled`   | `boolean` | `false`           | Deshabilita la interacción           |
+| `name`       | `string`  | `''`              | Nombre para formularios              |
+| `label`      | `string`  | `''`              | Etiqueta visible del rango           |
+| `showValues` | `boolean` | `true`            | Muestra los valores actuales         |
+| `separator`  | `string`  | `' - '`           | Separador entre valores              |
 
 ## Eventos
 
-| Evento | Descripción |
-|--------|-------------|
-| `input` | Se dispara al cambiar los valores (en tiempo real) |
-| `change` | Se dispara al confirmar los cambios |
-| `focus` | Se dispara al obtener el foco |
-| `blur` | Se dispara al perder el foco |
+| Evento   | Descripción                                        |
+| -------- | -------------------------------------------------- |
+| `input`  | Se dispara al cambiar los valores (en tiempo real) |
+| `change` | Se dispara al confirmar los cambios                |
+| `focus`  | Se dispara al obtener el foco                      |
+| `blur`   | Se dispara al perder el foco                       |
 
 ## Ejemplos de Uso
 
 ### Rango de Precio
 
 ```html
-<melser-dual-range 
-  min="100" 
-  max="1000" 
+<melser-dual-range
+  min="100"
+  max="1000"
   value="250,750"
   step="50"
-  label="Rango de precios ($)">
+  label="Rango de precios ($)"
+>
 </melser-dual-range>
 ```
 
 ### Rango de Edad
 
 ```html
-<melser-dual-range 
-  min="18" 
-  max="65" 
-  value="25,45"
-  label="Rango de edad">
+<melser-dual-range min="18" max="65" value="25,45" label="Rango de edad">
 </melser-dual-range>
 ```
 
 ### Rango de Horario
 
 ```html
-<melser-dual-range 
-  min="0" 
-  max="24" 
+<melser-dual-range
+  min="0"
+  max="24"
   value="9,17"
   step="0.5"
-  label="Horario laboral">
+  label="Horario laboral"
+>
 </melser-dual-range>
 ```
 
@@ -111,50 +105,51 @@ Un componente de rango doble (dual slider) para selección de rangos de valores 
 ```html
 <form id="filters-form">
   <h3>Filtros de Búsqueda</h3>
-  
-  <melser-dual-range 
+
+  <melser-dual-range
     name="priceRange"
-    min="0" 
-    max="5000" 
+    min="0"
+    max="5000"
     value="500,2500"
     step="100"
-    label="Rango de precios ($)">
+    label="Rango de precios ($)"
+  >
   </melser-dual-range>
-  
-  <melser-dual-range 
+
+  <melser-dual-range
     name="sizeRange"
-    min="10" 
-    max="500" 
+    min="10"
+    max="500"
     value="50,200"
-    label="Tamaño (m²)">
+    label="Tamaño (m²)"
+  >
   </melser-dual-range>
-  
-  <melser-dual-range 
+
+  <melser-dual-range
     name="distanceRange"
-    min="0" 
-    max="100" 
+    min="0"
+    max="100"
     value="0,25"
     step="5"
-    label="Distancia (km)">
+    label="Distancia (km)"
+  >
   </melser-dual-range>
-  
-  <button  type="submit" variant="primary">
-    Aplicar Filtros
-  </button >
+
+  <button type="submit" variant="primary">Aplicar Filtros</button>
 </form>
 ```
 
 ```javascript
-const form = document.getElementById('filters-form');
+const form = document.getElementById("filters-form");
 if (form) {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    
-    console.log('Filtros aplicados:', data);
-    alert('¡Filtros aplicados correctamente!');
+
+    console.log("Filtros aplicados:", data);
+    alert("¡Filtros aplicados correctamente!");
   });
 }
 ```
@@ -194,21 +189,6 @@ if (form) {
     </melser-dual-range>
   </div>
 </melser-playground-form>
-
-<script type="module">
-  import { z } from 'zod';
-  
-  const schema = z.object({
-    priceRange: z.string().regex(/^\d+(\.\d+)?,\d+(\.\d+)?$/),
-    sizeRange: z.string(),
-    distanceRange: z.string()
-  });
-  
-  if (typeof document !== 'undefined') {
-    const form = document.getElementById('dual-range-playground');
-    if (form) form.schema = schema;
-  }
-</script>
 
 ## Ejemplos Avanzados
 
@@ -347,7 +327,7 @@ El componente MelserDualRange incluye:
 
 ```javascript
 // Verificar que el componente esté importado
-import 'melser-ui/components/melser-dual-range.js';
+import "melser-ui/components/melser-dual-range.js";
 
 // Verificar que no esté deshabilitado
 console.log(dualRange.disabled); // Debe ser false
@@ -358,28 +338,21 @@ console.log(dualRange.disabled); // Debe ser false
 ```javascript
 // El componente debería prevenir que los valores se crucen
 // Si ocurre, verifica el formato del valor
-dualRange.value = '30,70'; // Formato correcto: "min,max"
+dualRange.value = "30,70"; // Formato correcto: "min,max"
 
 // Evita valores como:
-dualRange.value = '70,30'; // Incorrecto: max > min
+dualRange.value = "70,30"; // Incorrecto: max > min
 ```
 
 ### El valor no se envía en el formulario
 
 ```html
 <!-- Asegúrate de incluir el atributo name -->
-<melser-dual-range 
-  name="priceRange"
-  min="0" 
-  max="1000" 
-  value="250,750">
+<melser-dual-range name="priceRange" min="0" max="1000" value="250,750">
 </melser-dual-range>
 
-// Recuperar valor en formulario
-const formData = new FormData(form);
-const priceRange = formData.get('priceRange'); // "250,750"
-
-// Procesar los valores
+// Recuperar valor en formulario const formData = new FormData(form); const
+priceRange = formData.get('priceRange'); // "250,750" // Procesar los valores
 const [minPrice, maxPrice] = priceRange.split(',').map(Number);
 ```
 
@@ -387,11 +360,11 @@ const [minPrice, maxPrice] = priceRange.split(',').map(Number);
 
 ```html
 <!-- Para rangos complejos, usa aria-label -->
-<melser-dual-range 
+<melser-dual-range
   aria-label="Rango de precios mínimo y máximo"
-  min="0" 
-  max="5000" 
-  value="1000,3000">
+  min="0"
+  max="5000"
+  value="1000,3000"
+>
 </melser-dual-range>
 ```
-
