@@ -23,6 +23,20 @@ export class ZodFormController<T extends z.ZodSchema> implements ReactiveControl
         host.addController(this);
     }
 
+    /**
+     * Updates the schema and optionally the data.
+     * Useful for dynamic forms or playground environments.
+     */
+    updateConfig(schema: T, data?: z.infer<T>) {
+        this.schema = schema;
+        if (data !== undefined) {
+            this.data = data;
+            this.errors = {};
+            this.isValid = true;
+        }
+        this.host.requestUpdate();
+    }
+
     hostConnected() {
         // Optional: Validate on mount? Usually not.
     }

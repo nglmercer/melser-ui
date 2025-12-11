@@ -2,13 +2,15 @@
 import './styles/theme.css';
 
 import './index';
-
+import './components/melser-playground-form'; // New Playground Component
+import { setTheme } from './index';
 if (typeof window !== 'undefined') {
   const htmlElement = document.documentElement;
 
   const applyTheme = (theme) => {
     if (htmlElement.getAttribute('data-theme') !== theme) {
       htmlElement.setAttribute('data-theme', theme);
+      setTheme(theme);
     }
   };
 
@@ -33,7 +35,7 @@ if (typeof window !== 'undefined') {
   } else {
     init();
   }
-const setupGlobalFormHandler = () => {
+  const setupGlobalFormHandler = () => {
     // Crear contenedor para resultados si no existe
     let resultsContainer = document.getElementById('form-results-container');
     if (!resultsContainer) {
@@ -101,8 +103,8 @@ const setupGlobalFormHandler = () => {
       if (formData && Object.keys(formData).length > 0) {
         for (const [key, value] of Object.entries(formData)) {
           // Detectar si es un array para mostrarlo mejor
-          const displayValue = Array.isArray(value) 
-            ? `[${value.join(', ')}]` 
+          const displayValue = Array.isArray(value)
+            ? `[${value.join(', ')}]`
             : String(value);
 
           resultHTML += `
@@ -162,12 +164,12 @@ const setupGlobalFormHandler = () => {
         if (input.name && !formDataObj.hasOwnProperty(input.name)) {
           // Solo asignar si no existe ya (para radios, si uno está marcado, no sobreescribir con null)
           // Para checkboxes, false. Para radios, null.
-          if(input.type === 'checkbox') {
-             formDataObj[input.name] = false;
+          if (input.type === 'checkbox') {
+            formDataObj[input.name] = false;
           } else if (input.type === 'radio') {
-             // Solo poner null si ningún radio con ese nombre fue seleccionado
-             const siblings = form.querySelectorAll(`input[type="radio"][name="${input.name}"]:checked`);
-             if(siblings.length === 0) formDataObj[input.name] = null;
+            // Solo poner null si ningún radio con ese nombre fue seleccionado
+            const siblings = form.querySelectorAll(`input[type="radio"][name="${input.name}"]:checked`);
+            if (siblings.length === 0) formDataObj[input.name] = null;
           }
         }
       });
@@ -177,37 +179,37 @@ const setupGlobalFormHandler = () => {
       const melserComponents = form.querySelectorAll('*'); // Iterar todo para filtrar por propiedad o tag
       melserComponents.forEach(component => {
         const tagName = component.tagName.toLowerCase();
-        
+
         // Detectar componentes Melser (por prefijo de tag)
         if (tagName.startsWith('melser-')) {
-            // Intentar obtener nombre y valor
-            // Prioridad: atributo name > propiedad name > id
-            const name = component.getAttribute('name') || component.name || component.id;
-            
-            // Prioridad valor: propiedad value > atributo value > checked
-            let value = component.value;
-            
-            // Manejo especial para checkboxes/switches de web components si usan 'checked' en lugar de value
-            if (value === undefined && 'checked' in component) {
-                value = component.checked;
-            }
+          // Intentar obtener nombre y valor
+          // Prioridad: atributo name > propiedad name > id
+          const name = component.getAttribute('name') || component.name || component.id;
 
-            if (name) {
-                // Si el componente ya reportó su valor vía ElementInternals (FormData estándar),
-                // esto podría duplicar. Verificamos si ya está en formDataObj.
-                // Si Melser components NO usan ElementInternals, esto es necesario.
-                // Si es un array (multiselect), manejarlo:
-                if (Array.isArray(value)) {
-                    formDataObj[name] = value;
-                } else if (value !== undefined && value !== null && value !== '') {
-                    formDataObj[name] = value;
-                }
+          // Prioridad valor: propiedad value > atributo value > checked
+          let value = component.value;
+
+          // Manejo especial para checkboxes/switches de web components si usan 'checked' en lugar de value
+          if (value === undefined && 'checked' in component) {
+            value = component.checked;
+          }
+
+          if (name) {
+            // Si el componente ya reportó su valor vía ElementInternals (FormData estándar),
+            // esto podría duplicar. Verificamos si ya está en formDataObj.
+            // Si Melser components NO usan ElementInternals, esto es necesario.
+            // Si es un array (multiselect), manejarlo:
+            if (Array.isArray(value)) {
+              formDataObj[name] = value;
+            } else if (value !== undefined && value !== null && value !== '') {
+              formDataObj[name] = value;
             }
+          }
         }
       });
 
       showFormResults(formDataObj, form.id || 'Formulario');
-      
+
       console.groupCollapsed('🚀 Formulario Enviado');
       console.log('Target:', form);
       console.log('Submitter:', event.submitter);
@@ -225,25 +227,25 @@ const setupGlobalFormHandler = () => {
 
       if (submitBtn) {
         const form = submitBtn.form || submitBtn.closest('form');
-        
+
         // Caso especial: Botón fuera del formulario referenciando por ID (atributo form="id")
         // O botón dentro del formulario.
-        
+
         if (form) {
-            // No hacemos preventDefault aquí. Dejamos que el evento click fluya.
-            // El navegador disparará el evento 'submit' automáticamente.
-            // EXCEPCIÓN: Si el botón está fuera del formulario y el navegador no lo soporta bien,
-            // o si necesitamos forzar validación programática.
-            
-            // Pero tu código original intentaba forzar el submit manualmente.
-            // Si necesitas forzarlo (por ejemplo, si preventDefault fue llamado antes erróneamente),
-            // usa requestSubmit que incluye al submitter.
-            
-            // Si es un componente Custom Button que no dispara submit nativo:
-            if (submitBtn.tagName.includes('-')) {
-                event.preventDefault(); // Prevenir doble submit si acaso
-                form.requestSubmit(submitBtn);
-            }
+          // No hacemos preventDefault aquí. Dejamos que el evento click fluya.
+          // El navegador disparará el evento 'submit' automáticamente.
+          // EXCEPCIÓN: Si el botón está fuera del formulario y el navegador no lo soporta bien,
+          // o si necesitamos forzar validación programática.
+
+          // Pero tu código original intentaba forzar el submit manualmente.
+          // Si necesitas forzarlo (por ejemplo, si preventDefault fue llamado antes erróneamente),
+          // usa requestSubmit que incluye al submitter.
+
+          // Si es un componente Custom Button que no dispara submit nativo:
+          if (submitBtn.tagName.includes('-')) {
+            event.preventDefault(); // Prevenir doble submit si acaso
+            form.requestSubmit(submitBtn);
+          }
         }
       }
     });

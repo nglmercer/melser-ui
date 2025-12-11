@@ -236,6 +236,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
         border: none;
         padding: 0;
         height: 100%;
+        background-color: transparent !important;
       }
 
       /* Traer el activo al frente para que no se quede atascado debajo del otro */
@@ -253,7 +254,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
         appearance: none;
         width: 1.2rem;
         height: 1.2rem;
-        background: ${Var.color.surface.primary};
+        background: ${Var.color.primary};
         border-radius: 50%;
         cursor: grab;
         border: 2px solid ${Var.color.primary};
@@ -269,7 +270,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
         pointer-events: auto;
         width: 1.2rem;
         height: 1.2rem;
-        background: ${Var.color.surface.primary};
+        background: ${Var.color.primary};
         border-radius: 50%;
         cursor: grab;
         border: 2px solid ${Var.color.primary};
