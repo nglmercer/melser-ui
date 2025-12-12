@@ -1,4 +1,4 @@
-import { html, css } from 'lit';
+import { html, css, type PropertyValues } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { MelserBaseInput, InputVar } from '../core/Base';
 
@@ -17,6 +17,21 @@ export class MelserDatePicker extends MelserBaseInput<string> {
     const input = e.target as HTMLInputElement;
     this.value = input.value;
     this.dispatchChange();
+  }
+
+  // Override para manejar correctamente el valor inicial
+  override willUpdate(changedProperties: PropertyValues) {
+    if (changedProperties.has('value') && this.value) {
+      // Asegurar que el valor esté en formato YYYY-MM-DD
+      const valueAsAny = this.value as any;
+      if (valueAsAny instanceof Date) {
+        const date = valueAsAny as Date;
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        this.value = `${year}-${month}-${day}`;
+      }
+    }
   }
 
   render() {

@@ -1,4 +1,4 @@
-# Melser UI - Resumen para LLM
+# Melser UI - LLM
 
 ## Descripción General
 Melser UI es una librería de componentes web moderna construida con Lit, TypeScript y CSS. Proporciona componentes de formulario accesibles, personalizables y sin dependencias pesadas. Todos los componentes siguen un patrón unificado basado en `value` y emiten eventos con estructura consistente.

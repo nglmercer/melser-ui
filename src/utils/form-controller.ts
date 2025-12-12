@@ -49,7 +49,13 @@ export class ZodFormController<T extends z.ZodSchema> implements ReactiveControl
      * Update a field value and optionally validate it immediately.
      */
     setValue<K extends keyof z.infer<T>>(key: K, value: z.infer<T>[K], shouldValidate = false) {
-        this.data[key] = value;
+        // Manejar valores undefined o vacíos para campos opcionales
+        if (value === '' || value === null) {
+            // Convertir string vacío a undefined para todos los campos
+            this.data[key] = undefined as any;
+        } else {
+            this.data[key] = value;
+        }
 
         if (shouldValidate) {
             this.validateField(key);

@@ -94,11 +94,19 @@ export class MelserSchemaForm extends LitElement {
                  // If not handled by checkbox logic above
                  if (typeof value === 'string') value = value === 'true';
             } else if (fieldType === 'date') {
-                 // Try to convert string to Date
-                 if (typeof value === 'string' && value) {
-                     const d = new Date(value);
-                     if (!isNaN(d.getTime())) value = d;
-                 }
+                // Convert string to Date - siempre convertir para mantener consistencia
+                if (typeof value === 'string' && value) {
+                    const d = new Date(value);
+                    if (!isNaN(d.getTime())) {
+                        value = d;
+                    } else {
+                        // Si la fecha es inválida, mantener como string vacío
+                        value = undefined;
+                    }
+                } else if (value === '') {
+                    // Convertir string vacío a undefined para campos opcionales
+                    value = undefined;
+                }
             }
         }
         
@@ -242,11 +250,23 @@ export class MelserSchemaForm extends LitElement {
                     ></me-switch>
                 `;
             case 'date':
+                // Convertir Date a string ISO para el input date
+                let dateValue = '';
+                if (value) {
+                    if (value instanceof Date) {
+                        const year = value.getFullYear();
+                        const month = String(value.getMonth() + 1).padStart(2, '0');
+                        const day = String(value.getDate()).padStart(2, '0');
+                        dateValue = `${year}-${month}-${day}`;
+                    } else if (typeof value === 'string') {
+                        dateValue = value;
+                    }
+                }
                 return html`
                     <me-date-picker
                         name="${key}"
                         label="${label}"
-                        value="${value || ''}"
+                        value="${dateValue}"
                         .errorMessage="${error || ''}"
                         @change="${(e: any) => this.handleUiChange(key, e)}"
                         @ui:change="${(e: any) => this.handleUiChange(key, e)}"

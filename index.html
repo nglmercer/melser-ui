@@ -74,6 +74,23 @@
       z-index: 100;
     }
   </style>
+  <style>
+    /* Component Overrides / Specifics */
+    base-input {
+      transition: all 0.2s ease;
+    }
+
+    base-input:hover {
+      --base-input-border-color: var(--me-primary);
+      --base-input-bg: var(--me-surface);
+    }
+
+    /* Ensure focus uses the primary color ring */
+    base-input:focus-within {
+      --base-input-border-color: var(--me-primary);
+      --base-input-focus-ring-color: var(--me-primary);
+    }
+  </style>
 </head>
 
 <body>
