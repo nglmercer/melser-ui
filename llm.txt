@@ -1,0 +1,200 @@
+# Melser UI - Resumen para LLM
+
+## Descripción General
+Melser UI es una librería de componentes web moderna construida con Lit, TypeScript y CSS. Proporciona componentes de formulario accesibles, personalizables y sin dependencias pesadas. Todos los componentes siguen un patrón unificado basado en `value` y emiten eventos con estructura consistente.
+
+## Características Clave
+- Componentes web con Lit para máximo rendimiento
+- TypeScript completo con tipado estático
+- Tematización mediante variables CSS
+- Accesibilidad WCAG integrada
+- Sin dependencias de frameworks pesados
+- Diseño responsive
+- **Patrón unificado**: Todos usan `value` y emiten eventos con misma estructura
+
+## Componentes Principales (25+ componentes)
+
+### Controles de Formulario Básicos
+- Checkbox, Text Input, Number Input, Password Input, Textarea
+- Select, Multi-select, Radio Group, Switch
+- Range Slider, Dual Range
+
+### Inputs Avanzados
+- Combobox con autocompletado
+- Tags Input, OTP Input
+- Date Picker, Time Picker, Color Picker
+- File Upload, Rating System
+
+### Formularios Completos
+- Example Form, Playground Form, Schema-based Form
+
+## API Común Unificada
+
+### Props Compartidos (todos los componentes)
+```typescript
+interface BaseProps {
+  // Identificación
+  name?: string;           // Nombre del campo
+  id?: string;             // ID del elemento
+  inputId?: string;        // ID del input interno
+  
+  // Contenido
+  label?: string;          // Etiqueta del campo
+  placeholder?: string;    // Texto placeholder
+  value: any;              // Valor del campo (TIPO ESPECÍFICO POR COMPONENTE)
+  
+  // Estado
+  required?: boolean;      // Si es requerido
+  disabled?: boolean;      // Si está deshabilitado
+  readonly?: boolean;      // Solo lectura
+  invalid?: boolean;       // Estado inválido
+  debug?: boolean;         // Modo debug
+  
+  // Apariencia
+  variant?: 'outlined' | 'filled' | 'standard';  // Variante visual
+  size?: 'small' | 'medium' | 'large' | 'sm' | 'md' | 'lg';  // Tamaño
+  color?: 'primary' | 'success' | 'warning' | 'danger';       // Color tema
+  class?: string;          // Clases CSS
+  style?: string;          // Estilos inline
+  
+  // Validación
+  errorMessage?: string;   // Mensaje de error
+}
+```
+
+### Métodos Públicos (todos los componentes)
+```typescript
+// Todos los componentes heredan de MelserBaseInput
+class MelserBaseInput<T> {
+  // Obtener datos estructurados
+  getData(): InputData<T>
+  
+  // Validación
+  checkValidity(): boolean
+  
+  // Focus management
+  focus(options?: FocusOptions): void
+  
+  // Event dispatching
+  protected dispatchChange(): void
+}
+```
+
+### Eventos Emitidos (todos los componentes)
+```typescript
+// Evento principal - SIEMPRE emitido con misma estructura
+@event('ui:change') onChange: (event: CustomEvent<InputData>) => void
+
+// Estructura del detail del evento ui:change
+interface InputData<T> {
+  name: string;              // Nombre del campo
+  value: T;                  // Valor tipado
+  isValid: boolean;          // Estado de validez
+  componentType: string;     // Nombre del tag (ej: 'me-checkbox')
+  dataType: string;          // Tipo de dato (ej: 'boolean', 'string', 'array')
+}
+```
+
+### Tipos de Value por Componente
+```typescript
+// Cada componente tiene un tipo de value específico
+MelserCheckbox: boolean
+MelserTextInput: string
+MelserNumberInput: number
+MelserTextarea: string
+MelserSelect: string
+MelserMultiSelect: string[]
+MelserRadioGroup: string
+MelserSwitch: boolean
+MelserRange: number
+MelserDualRange: [number, number]
+MelserCombobox: string
+MelserTagsInput: string[]
+MelserOtpInput: string
+MelserDatePicker: Date
+MelserTimePicker: string
+MelserColorPicker: string
+MelserFileUpload: File[]
+MelserRating: number
+```
+
+## Instalación y Uso
+```bash
+npm install melser-ui
+```
+
+```typescript
+// Opción 1: Registrar todos los componentes a la vez
+import { registerComponents } from 'melser-ui';
+registerComponents(); // Registra todos los componentes con prefijo 'me-'
+
+// Opción 2: Registrar componentes individualmente
+import { registerComponent, MelserTextInput, MelserCheckbox } from 'melser-ui';
+registerComponent('me-text-input', MelserTextInput);
+registerComponent('me-checkbox', MelserCheckbox);
+
+// Opción 3: Importar componentes específicos
+import 'melser-ui/components/melser-checkbox';
+import 'melser-ui/components/melser-text-input';
+```
+
+## Ejemplos de Uso con Eventos
+
+### HTML básico
+```html
+<me-checkbox
+  name="terminos"
+  label="Acepto términos"
+  required>
+</me-checkbox>
+```
+
+### TypeScript con eventos
+```typescript
+const checkbox = document.querySelector('me-checkbox');
+
+// Escuchar cambios - TODOS usan ui:change
+checkbox.addEventListener('ui:change', (e) => {
+  console.log('Datos completos:', e.detail);
+  // e.detail = { name: 'terminos', value: true, isValid: true, componentType: 'me-checkbox', dataType: 'boolean' }
+});
+
+// Acceder a valor actual
+console.log(checkbox.value); // boolean
+console.log(checkbox.getData()); // InputData completo
+```
+
+### Formulario completo con manejo unificado
+```typescript
+// Todos los componentes emiten ui:change con misma estructura
+form.addEventListener('ui:change', (e) => {
+  const { name, value, isValid } = e.detail;
+  console.log(`Campo ${name} cambió a:`, value, 'Válido:', isValid);
+});
+```
+
+## Personalización
+Variables CSS para tematización:
+- --me-primary-color, --me-secondary-color
+- --me-border-radius, --me-font-family
+- Sistema de temas oscuro y personalizado
+
+## Scripts de Desarrollo
+- `npm run dev` - Desarrollo
+- `npm run build` - Construcción
+- `npm run dev:docs` - Documentación local
+- `npm run build:lib` - Construir librería
+
+## Estructura del Proyecto
+- `/src/components/` - Componentes individuales
+- `/src/core/` - Lógica base (MelserBaseInput)
+- `/src/theme/` - Sistema de temas
+- `/src/utils/` - Utilidades
+- `/docs/` - Documentación VitePress
+
+## Casos de Uso
+- Formularios web modernos con manejo unificado de eventos
+- Aplicaciones que necesitan componentes accesibles
+- Proyectos que requieren personalización extensiva
+- Desarrollo con TypeScript y componentes web estándar
+- Sistemas que requieren validación consistente

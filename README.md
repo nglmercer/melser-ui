@@ -19,20 +19,33 @@ npm install melser-ui
 
 ## 📦 Uso
 
-### Importar todos los componentes
+### Opción 1: Registrar todos los componentes a la vez
 
 ```typescript
 import { registerComponents } from 'melser-ui';
 
-// Registrar todos los componentes
+// Registrar todos los componentes con prefijo 'me-'
 registerComponents();
 ```
 
-### Importar componentes individuales
+### Opción 2: Registrar componentes individualmente
 
 ```typescript
+import { registerComponent, MelserTextInput, MelserCheckbox, MelserSelect } from 'melser-ui';
+
+// Registrar componentes específicos con nombres personalizados
+registerComponent('me-text-input', MelserTextInput);
+registerComponent('me-checkbox', MelserCheckbox);
+registerComponent('me-select', MelserSelect);
+```
+
+### Opción 3: Importar componentes específicos
+
+```typescript
+// Importar solo los componentes que necesitas
 import 'melser-ui/components/melser-checkbox';
-import 'melser-ui/components/melser-input';
+import 'melser-ui/components/melser-text-input';
+import 'melser-ui/components/melser-select';
 ```
 
 ### Uso en HTML
@@ -174,12 +187,12 @@ interface BaseProps {
     placeholder="Juan Pérez">
   </me-text-input>
 
-  <me-email-input 
+  <base-input 
     label="Correo electrónico" 
     name="email" 
     required
     placeholder="juan@ejemplo.com">
-  </me-email-input>
+  </base-input>
 
   <me-select 
     label="País" 

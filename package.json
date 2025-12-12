@@ -1,16 +1,32 @@
 {
   "name": "melser-ui",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "type": "module",
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.js",
       "require": "./dist/index.js",
-      "default": "./dist/index.mjs"
+      "default": "./dist/index.js"
+    },
+    "./dist/*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "require": "./dist/*.js"
+    },
+    "./src/index.ts": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "src/index": ["./dist/index.d.ts"],
+      "*": ["./dist/*"]
     }
   },
   "scripts": {
@@ -47,8 +63,20 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
   "bugs": {
     "url": "https://github.com/nglmercer/melser-ui/issues"
   },
-  "homepage": "https://github.com/nglmercer/melser-ui#readme"
+  "homepage": "https://github.com/nglmercer/melser-ui#readme",
+  "sideEffects": [
+    "src/components/*.ts",
+    "src/index.ts"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }

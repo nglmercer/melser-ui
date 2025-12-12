@@ -22,7 +22,7 @@ export { MelserSchemaForm } from './components/melser-schema-form';
 export type { InputData, MelserDataType, SelectOption } from './types/index';
 
 // Export registration utilities
-export { registerComponent, registerWithPrefix } from './utils/registration';
+export { registerComponent, registerWithPrefix, registerComponents } from './utils/registration';
 
 // Export Theme utilities
 export { setTheme, Var } from './theme/tokens';
