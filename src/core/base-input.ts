@@ -270,7 +270,7 @@ export abstract class MelserBaseInput<T = unknown> extends DynamicStyleMixin(Lit
     input:not([type="checkbox"]):not([type="radio"]), 
     select, 
     textarea {
-      width: min(max-content, 100%);
+      max-width: 100%;
       box-sizing: border-box;
       font-family: inherit;
       font-size: ${InputVar['font-size']};

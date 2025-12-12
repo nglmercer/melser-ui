@@ -20,52 +20,60 @@ export class MelserTagsInput extends MelserBaseInput<string[]> {
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
       this.addTag();
-    } else if (e.key === 'Backspace' && !this.inputValue && this.value.length > 0) {
-      this.removeTag(this.value.length - 1);
+    } else if (e.key === 'Backspace' && !this.inputValue) {
+      const tags = this.value || [];
+      if (tags.length > 0) {
+        this.removeTag(tags.length - 1);
+      }
     }
   }
 
   addTag() {
     const tag = this.inputValue.trim();
-    if (tag && !this.value.includes(tag)) {
-      this.value = [...this.value, tag];
+    const currentTags = this.value || [];
+    
+    if (tag && !currentTags.includes(tag)) {
+      this.value = [...currentTags, tag];
       this.inputValue = '';
       this.dispatchChange();
-    } else if (tag && this.value.includes(tag)) {
+    } else if (tag && currentTags.includes(tag)) {
       this.inputValue = ''; // Clear duplicate input
     }
   }
 
   removeTag(index: number) {
-    this.value = this.value.filter((_, i) => i !== index);
+    const currentTags = this.value || [];
+    this.value = currentTags.filter((_, i) => i !== index);
     this.dispatchChange();
   }
 
   checkValidity(): boolean {
-    if (this.required && this.value.length === 0) {
+    const tags = this.value || [];
+    if (this.required && tags.length === 0) {
       return false;
     }
     return true;
   }
 
   render() {
+    const tags = this.value || [];
     return html`
       <div class="input-wrapper">
         ${this.label ? html`<label>${this.label}</label>` : ''}
         
         <div class="tags-container" @click="${() => this.shadowRoot?.querySelector('input')?.focus()}">
-          ${this.value ? this.value.map((tag, index) => html`
+          ${tags.map((tag, index) => html`
             <span class="tag">
               ${tag}
               <button type="button" class="remove-btn" @click="${(e: Event) => { e.stopPropagation(); this.removeTag(index); }}">×</button>
             </span>
-          `) : ''}
+          `)}
           
           <input
             type="text"
             .value="${this.inputValue}"
             ?disabled="${this.disabled}"
-            placeholder="${this.value && this.value.length === 0 ? 'Type and press Enter...' : ''}"
+            placeholder="${tags.length === 0 ? 'Type and press Enter...' : ''}"
             @input="${this.handleInput}"
             @keydown="${this.handleKeyDown}"
             @blur="${this.addTag}"

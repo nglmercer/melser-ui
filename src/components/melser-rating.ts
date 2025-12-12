@@ -11,6 +11,7 @@ export class MelserRating extends MelserBaseInput<number> {
     @property({ type: Number }) value = 0;
     @property({ type: Number }) max = 5;
     @property({ type: Number }) min = 0;
+    @property({ type: Boolean }) readonly = false;
 
     /** * Granularity of selection. 
      * 1 = integers only (1, 2, 3)
@@ -22,7 +23,55 @@ export class MelserRating extends MelserBaseInput<number> {
     @state() private _hoverValue: number | null = null;
 
     readonly dataType: MelserDataType = 'number';
-    @query('input') inputElement!: HTMLInputElement;
+    @query('.rating-container') ratingContainer!: HTMLElement;
+
+    get inputElement(): HTMLInputElement | null {
+        // We don't have a real input, but we can return null or shim it interactions if needed.
+        // For focus delegation we override focus().
+        return null;
+    }
+
+    override focus(options?: FocusOptions) {
+        this.ratingContainer?.focus(options);
+    }
+
+    private _handleKeyDown(e: KeyboardEvent) {
+        if (this.disabled) return;
+
+        let newValue = this.value;
+        const step = this.precision;
+
+        switch (e.key) {
+            case 'ArrowRight':
+            case 'ArrowUp':
+                newValue = Math.min(this.max, this.value + step);
+                e.preventDefault();
+                break;
+            case 'ArrowLeft':
+            case 'ArrowDown':
+                newValue = Math.max(this.min, this.value - step);
+                e.preventDefault();
+                break;
+            case 'Home':
+                newValue = this.min;
+                e.preventDefault();
+                break;
+            case 'End':
+                newValue = this.max;
+                e.preventDefault();
+                break;
+            default:
+                return;
+        }
+
+        // Fix floating point errors
+        newValue = parseFloat(newValue.toFixed(2));
+        
+        if (newValue !== this.value) {
+            this.value = newValue;
+            this.dispatchChange();
+        }
+    }
 
     /**
      * Calculates the width percentage for the "filled" version of a specific star.
@@ -32,11 +81,11 @@ export class MelserRating extends MelserBaseInput<number> {
         // Star 4 (index 4): (4.5 - 3) * 100 = 150% -> clamped to 100%
         // Star 5 (index 5): (4.5 - 4) * 100 = 50%
         const fill = Math.max(0, Math.min(100, (currentDisplayValue - (starIndex - 1)) * 100));
-        return fill;
+        return parseFloat(fill.toFixed(1));
     }
 
     private _handleMouseMove(e: MouseEvent, index: number) {
-        if (this.disabled) return;
+        if (this.disabled || this.readonly) return;
 
         const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -47,8 +96,11 @@ export class MelserRating extends MelserBaseInput<number> {
         const percent = Math.min(1, Math.max(0, x / width));
         const rawValue = (index - 1) + percent;
 
+        // Ensure precision is safe
+        const safePrecision = Math.max(0.01, this.precision);
+
         // Snap to precision
-        let snappedValue = Math.ceil(rawValue / this.precision) * this.precision;
+        let snappedValue = Math.ceil(rawValue / safePrecision) * safePrecision;
 
         // Ensure bounds
         snappedValue = Math.min(this.max, Math.max(this.min, snappedValue));
@@ -58,27 +110,39 @@ export class MelserRating extends MelserBaseInput<number> {
     }
 
     private _handleMouseLeave() {
-        if (this.disabled) return;
+        if (this.disabled || this.readonly) return;
         this._hoverValue = null;
     }
 
     private _handleClick() {
-        if (this.disabled || this._hoverValue === null) return;
+        if (this.disabled || this.readonly || this._hoverValue === null) return;
         this.value = this._hoverValue;
         this.dispatchChange();
     }
 
     render() {
         // What value to show? (Hover takes precedence over actual value)
-        const displayValue = this._hoverValue !== null ? this._hoverValue : this.value;
+        const displayValue = this._hoverValue !== null ? this._hoverValue : (Number(this.value) || 0);
 
         return html`
             <div class="input-wrapper">
-                ${this.label ? html`<label>${this.label}</label>` : ''}
-                
-                <div class="rating-container" @mouseleave="${this._handleMouseLeave}">
+                ${this.label ? html`<label id="rating-label">${this.label}</label>` : ''}
+
+                <div
+                    class="rating-container"
+                    @mouseleave="${this._handleMouseLeave}"
+                    @keydown="${this._handleKeyDown}"
+                    tabindex="${(this.disabled || this.readonly) ? -1 : 0}"
+                    role="slider"
+                    aria-valuemin="${this.min}"
+                    aria-valuemax="${this.max}"
+                    aria-valuenow="${displayValue}"
+                    aria-disabled="${this.disabled}"
+                    aria-readonly="${this.readonly}"
+                    aria-labelledby="rating-label"
+                >
                     ${Array.from({ length: this.max }, (_, i) => i + 1).map(i => html`
-                        <div 
+                        <div
                             class="star-box"
                             @mousemove="${(e: MouseEvent) => this._handleMouseMove(e, i)}"
                             @click="${this._handleClick}"
@@ -86,7 +150,7 @@ export class MelserRating extends MelserBaseInput<number> {
                             <svg class="star-svg empty" viewBox="0 0 24 24">
                                 <path d="${STAR_PATH}"/>
                             </svg>
-                            
+
                             <div class="star-mask" style="width: ${this._calculateFillWidth(i, displayValue)}%">
                                 <svg class="star-svg filled" viewBox="0 0 24 24">
                                     <path d="${STAR_PATH}"/>
@@ -95,7 +159,7 @@ export class MelserRating extends MelserBaseInput<number> {
                         </div>
                     `)}
                 </div>
-                
+
                 <div class="error" part="error">${this.errorMessage}</div>
             </div>
         `;
@@ -114,6 +178,14 @@ export class MelserRating extends MelserBaseInput<number> {
                 display: flex;
                 gap: 0.25rem;
                 align-items: center;
+                outline: none;
+                border-radius: ${InputVar.radius};
+                user-select: none; /* Prevent text selection during rapid clicking */
+            }
+
+            .rating-container:focus-visible {
+                outline: ${InputVar['focus-ring-width']} solid ${InputVar['focus-ring-color']};
+                outline-offset: 2px;
             }
 
             .star-box {
@@ -123,6 +195,7 @@ export class MelserRating extends MelserBaseInput<number> {
                 cursor: pointer;
                 /* Removes highlighting on mobile tap */
                 -webkit-tap-highlight-color: transparent;
+                flex-shrink: 0;
             }
 
             .star-svg {
@@ -143,12 +216,13 @@ export class MelserRating extends MelserBaseInput<number> {
                 overflow: hidden; /* This cuts the star */
                 pointer-events: none; /* Let mouse clicks pass through to .star-box */
                 transition: width 0.1s linear;
+                will-change: width; /* Optimization for animation */
             }
 
             .filled {
                 fill: var(--star-color-filled);
                 /* Important: Force svg to be full size inside the mask */
-                width: var(--star-size); 
+                width: var(--star-size);
                 height: var(--star-size);
             }
 
@@ -158,14 +232,23 @@ export class MelserRating extends MelserBaseInput<number> {
                 transition: transform 0.1s;
             }
 
-            /* Disabled State */
+            /* Disabled/Readonly State */
             :host([disabled]) .rating-container {
                 opacity: 0.6;
                 pointer-events: none;
             }
-            
+
             :host([disabled]) .star-box {
                 cursor: not-allowed;
+            }
+
+            :host([readonly]) .rating-container {
+                opacity: 1; /* Readonly is visible but not interactive */
+                pointer-events: none;
+            }
+
+            :host([readonly]) .star-box {
+                cursor: default;
             }
         `
     ];
