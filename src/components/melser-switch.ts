@@ -7,12 +7,21 @@ import type { MelserDataType } from '../types/index';
 @customElement('me-switch')
 export class MelserSwitch extends MelserBaseInput<boolean> {
   @property({ type: Boolean }) value = false;
+  @property({ type: Boolean, reflect: true }) checked = false;
   @query('input') inputElement!: HTMLInputElement;
   readonly dataType: MelserDataType = 'boolean';
+
+  protected updated(changedProperties: import('lit').PropertyValues) {
+    super.updated(changedProperties);
+    if (changedProperties.has('value')) {
+      this.checked = this.value;
+    }
+  }
 
   handleChange(e: Event) {
     const input = e.target as HTMLInputElement;
     this.value = input.checked;
+    this.checked = input.checked;
     this.dispatchChange();
   }
 

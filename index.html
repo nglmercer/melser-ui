@@ -177,6 +177,14 @@
     <pre id="result">No data yet...</pre>
   </div>
 
+  <div class="card">
+    <h2>Schema Form Demo (@me-schema-form)</h2>
+    <p>This form is generated entirely from a Zod schema.</p>
+    <me-schema-form id="schema-form-demo"></me-schema-form>
+    <h3>Submitted Data:</h3>
+    <pre id="schema-form-output">No submit yet...</pre>
+  </div>
+
   <script type="module">
     import { registerComponent, MelserSwitch, setTheme } from '/src/index.ts';
     import { z } from 'zod';
@@ -308,7 +316,8 @@
     });
   </script>
 
-  <script>
+  <script type="module">
+    import { z } from 'zod';
 
     // Populate options
     // Use requestAnimationFrame to ensure Custom Elements are upgraded
@@ -355,6 +364,33 @@
         ];
       }
     });
+
+    // Schema Form Demo Initialization
+    const schemaForm = document.getElementById('schema-form-demo');
+    if (schemaForm) {
+      const userSchema = z.object({
+        fullName: z.string().min(2, "Name must be at least 2 characters"),
+        age: z.number().min(18, "Must be at least 18"),
+        role: z.enum(['Admin', 'Editor', 'Viewer']),
+        isActive: z.boolean().default(true),
+        birthDate: z.date().optional()
+      });
+
+      schemaForm.schema = userSchema;
+      
+      // Optional: Set initial data
+      schemaForm.defaultData = {
+        fullName: "John Doe",
+        age: 25,
+        role: 'Editor',
+        isActive: true
+      };
+
+      schemaForm.addEventListener('submit', (e) => {
+        const data = e.detail.data;
+        document.getElementById('schema-form-output').textContent = JSON.stringify(data, null, 2);
+      });
+    }
   </script>
 </body>
 

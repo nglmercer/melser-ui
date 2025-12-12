@@ -46,7 +46,8 @@ export default defineConfig({
           { text: 'Empezar', link: '/guide/getting-started' },
           { text: 'Instalación', link: '/guide/installation' },
           { text: 'Alias @/', link: '/guide/aliases' },
-          { text: 'Sistema de Temas', link: '/guide/theming' }
+          { text: 'Sistema de Temas', link: '/guide/theming' },
+          { text: 'Formularios Dinámicos', link: '/guide/dynamic-forms' }
         ]
       },
       // --- Sección de Componentes ---
