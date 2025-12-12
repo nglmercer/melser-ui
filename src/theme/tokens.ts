@@ -155,8 +155,8 @@ export const schemes = {
 };
 
 // Export the generated Accessor Object
-export const Var = createTokenAccessors(tokens, 'melser');
-export const flattenedTokens = flattenTokens(tokens, 'melser');
+export const Var = createTokenAccessors(tokens, 'me');
+export const flattenedTokens = flattenTokens(tokens, 'me');
 
 // Automatically inject tokens into the document root
 import { ThemeManager } from './theme-manager';
@@ -169,7 +169,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
 export function setTheme(mode: 'light' | 'dark') {
     const scheme = schemes[mode];
     if (scheme) {
-        const flattened = flattenTokens(scheme, 'melser');
+        const flattened = flattenTokens(scheme, 'me');
         ThemeManager.setVariables(flattened);
     } else {
         console.warn(`[Melser UI] Theme '${mode}' not found.`);
