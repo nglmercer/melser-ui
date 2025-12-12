@@ -2,7 +2,7 @@ import { html, css, type PropertyValues } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js'; // Cleaner classes
 import { MelserBaseInput, InputVar } from '../core/base-input';
-import { Var } from '../theme/tokens';
+
 import type { MelserDataType, SelectOption } from '../types/index';
 
 interface InternalOption extends SelectOption {
@@ -326,7 +326,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
 
       .chevron {
         position: absolute; right: 0.75rem; top: 50%;
-        transform: translateY(-50%); color: ${Var.color.text.secondary}; cursor: pointer;
+        transform: translateY(-50%); color: ${InputVar['text-color-placeholder']}; cursor: pointer;
         display: flex; align-items: center; transition: transform 0.2s;
         z-index: 2;
       }
@@ -334,7 +334,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
 
       .options-list {
         position: absolute; top: 100%; left: 0; right: 0;
-        background: ${Var.color.surface.primary};
+        background: ${InputVar['bg']};
         border: 1px solid ${InputVar['border-color']};
         border-radius: ${InputVar.radius};
         margin-top: 4px; padding: 0; list-style: none;
@@ -352,8 +352,8 @@ export class MelserCombobox extends MelserBaseInput<string> {
 
       .group-header {
         padding: 8px 12px; font-size: 0.75rem; font-weight: 700;
-        text-transform: uppercase; color: ${Var.color.text.secondary};
-        background-color: ${Var.color.bg.disabled};
+        text-transform: uppercase; color: ${InputVar['text-color-placeholder']};
+        background-color: ${InputVar['bg-disabled']};
         position: sticky; top: 0; z-index: 1;
       }
 
@@ -379,7 +379,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
          filter: brightness(0.95);
       }
       
-      .no-results { padding: 0.75rem; color: ${Var.color.text.secondary}; text-align: center; font-style: italic; }
+      .no-results { padding: 0.75rem; color: ${InputVar['text-color-placeholder']}; text-align: center; font-style: italic; }
       
       .check-icon { font-size: 0.8em; }
     `

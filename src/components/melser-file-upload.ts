@@ -1,7 +1,7 @@
 import { html, css } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { MelserBaseInput, InputVar } from '../core/base-input';
-import { Var } from '../theme/tokens';
+
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-file-upload')
@@ -113,19 +113,19 @@ export class MelserFileUpload extends MelserBaseInput<File | null> {
       }
 
       .drop-zone:hover, .drop-zone.dragging {
-        border-color: ${Var.color.primary};
-        background-color: ${Var.color.primaryLighter}; /* Assuming lighter exists or using Var.color.bg.default */
+        border-color: ${InputVar['focus-ring-color']};
+        background-color: ${InputVar['bg-hover']}; /* Assuming lighter exists or using Var.color.bg.default */
       }
 
       /* Fallback if primaryLighter isn't defined in the strict Map, we can use surface variant */
       .drop-zone:hover, .drop-zone.dragging {
-          background-color: ${Var.color.surface.variant};
+          background-color: ${InputVar['bg-hover']};
       }
 
       .drop-zone.has-file {
         border-style: solid;
-        border-color: ${Var.color.primary};
-        background-color: ${Var.color.bg.default};
+        border-color: ${InputVar['focus-ring-color']};
+        background-color: ${InputVar['bg']};
       }
 
       .content {

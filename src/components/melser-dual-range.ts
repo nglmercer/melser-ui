@@ -1,7 +1,6 @@
 import { html, css, type PropertyValues } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { MelserBaseInput, InputVar } from '../core/base-input';
-import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-dual-range')

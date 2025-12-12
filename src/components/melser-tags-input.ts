@@ -1,7 +1,7 @@
 import { html, css } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { MelserBaseInput, InputVar } from '../core/base-input';
-import { Var } from '../theme/tokens';
+
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-tags-input')
@@ -116,8 +116,8 @@ export class MelserTagsInput extends MelserBaseInput<string[]> {
       .tag {
         display: inline-flex;
         align-items: center;
-        background-color: ${Var.color.surface.variant};
-        color: ${Var.color.primary};
+        background-color: ${InputVar['bg-hover']};
+        color: ${InputVar['icon-color']};
         padding: 0.25rem 0.5rem;
         border-radius: 4px;
         font-size: 0.9rem;

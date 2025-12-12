@@ -1,7 +1,7 @@
 import { html, css } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { MelserBaseInput, InputVar } from '../core/base-input';
-import { Var } from '../theme/tokens';
+
 import type { MelserDataType } from '../types/index';
 
 // Iconos extraídos para limpiar el render
@@ -117,7 +117,7 @@ export class MelserPasswordInput extends MelserBaseInput<string> {
         background: none;
         border: none;
         cursor: pointer;
-        color: ${Var.color.text.secondary};
+        color: ${InputVar['text-color-placeholder']};
         display: flex;
         align-items: center;
         justify-content: center;
@@ -129,13 +129,13 @@ export class MelserPasswordInput extends MelserBaseInput<string> {
       }
 
       .toggle-btn:hover:not(:disabled) {
-        color: ${Var.color.primary};
-        background-color: ${Var.color.surface.variant};
+        color: ${InputVar['icon-color']};
+        background-color: ${InputVar['bg-hover']};
       }
       
       .toggle-btn:focus {
         outline: none;
-        box-shadow: 0 0 0 2px ${Var.color.primary};
+        box-shadow: 0 0 0 2px ${InputVar['focus-ring-color']};
       }
 
       .toggle-btn:disabled {
