@@ -98,6 +98,9 @@ export const schemas: Record<string, z.ZodSchema> = {
     'multi-select': z.object({
         subjects: z.array(z.string()).min(1, "Selecciona al menos una materia"),
         frameworks: z.array(z.string()).min(1, "Selecciona al menos un framework").optional()
+    }),
+    'combobox': z.object({
+        language: z.string().min(1, "Selecciona un lenguaje")
     })
 };
 

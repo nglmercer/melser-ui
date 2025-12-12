@@ -145,7 +145,7 @@ export abstract class MelserBaseInput<T = unknown> extends DynamicStyleMixin(Lit
   @property({ type: Boolean }) debug = false;
   @property({ type: String, attribute: 'input-id' }) inputId = '';
   @property({ type: String, reflect: true }) variant: 'outlined' | 'filled' | 'standard' = 'outlined';
-  @property({ type: String, reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
+  @property({ type: String, reflect: true }) size: 'small' | 'medium' | 'large' | 'sm' | 'md' | 'lg' = 'medium';
   @property({ type: String, reflect: true }) color: 'primary' | 'success' | 'warning' | 'danger' = 'primary';
 
   abstract value: T;
@@ -232,13 +232,15 @@ export abstract class MelserBaseInput<T = unknown> extends DynamicStyleMixin(Lit
     }
 
     /* Size variants overrides */
-    :host([size="small"]) { 
+    :host([size="small"]),
+    :host([size="sm"]) { 
       --base-input-padding: ${InputVar['padding-small']};
       --base-input-font-size: ${InputVar['font-size-small']};
       --base-input-control-size: ${InputVar['control-size-small']};
       --base-input-gap: ${InputVar['gap-small']};
     }
-    :host([size="large"]) { 
+    :host([size="large"]),
+    :host([size="lg"]) { 
       --base-input-padding: ${InputVar['padding-large']};
       --base-input-font-size: ${InputVar['font-size-large']};
       --base-input-control-size: ${InputVar['control-size-large']};

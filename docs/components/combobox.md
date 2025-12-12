@@ -159,7 +159,7 @@ Permite al usuario ingresar valores que no están en la lista.
 
 ## Demo del Formulario
 
-<me-playground-form id="combobox-playground" title="Encuesta de Desarrollo" description="Ejemplo de autocompletado y validación.">
+<me-playground-form id="combobox-playground" schemaName="combobox" title="Encuesta de Desarrollo" description="Ejemplo de autocompletado y validación.">
   <div style="margin-bottom: 1rem;">
     <me-combobox 
       label="Lenguaje de programación"
