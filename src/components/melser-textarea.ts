@@ -1,6 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/base-input';
+import { MelserBaseInput } from '../core/Base';
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-textarea')
