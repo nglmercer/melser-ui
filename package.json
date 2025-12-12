@@ -1,6 +1,6 @@
 {
   "name": "melser-ui",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -32,7 +32,8 @@
     "build:lib": "tsup",
     "build:web": "bun run type-check && vite build",
     "build": "bun run build:lib && bun run build:web",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "publish": "bun run build && bun publish"
   },
   "dependencies": {
     "@types/node": "^24.10.1",
