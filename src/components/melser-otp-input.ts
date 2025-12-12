@@ -237,7 +237,7 @@ export class MelserOtpInput extends MelserBaseInput<string> {
       }
 
       .slot.filled {
-        background: ${Var.color.surface.variant};
+        background:${InputVar['bg-hover']};
       }
 
       .slot.active {

@@ -1,7 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { MelserBaseInput, InputVar } from '../core/base-input';
-import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-number-input')
@@ -266,7 +265,7 @@ export class MelserNumberInput extends MelserBaseInput<number> {
         margin: 0;
       }
       .stepper-btn {
-        background: ${Var.color.surface.variant};
+        background:${InputVar['bg-hover']};
         border: none;
         color: ${InputVar['text-color']};
         width: 40px;

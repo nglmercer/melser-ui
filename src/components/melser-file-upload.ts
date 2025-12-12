@@ -63,16 +63,15 @@ export class MelserFileUpload extends MelserBaseInput<File | null> {
           @dragover="${this.handleDragOver}"
           @dragleave="${this.handleDragLeave}"
           @drop="${this.handleDrop}"
-          @click="${() => this.shadowRoot?.querySelector('input')?.click()}"
         >
           <input
+            class="file-input"
             type="file"
             .accept="${this.accept}"
             ?disabled="${this.disabled}"
             ?required="${this.required}"
             @change="${this.handleChange}"
             part="input"
-            style="display: none;"
           />
           
           <div class="content">
@@ -102,11 +101,11 @@ export class MelserFileUpload extends MelserBaseInput<File | null> {
     // but map them to our tokens where possible.
     css`
       .drop-zone {
+        position: relative; /* Essential for overlay */
         border: 2px dashed ${InputVar['border-color']};
         border-radius: ${InputVar.radius};
         padding: 2rem;
         text-align: center;
-        cursor: pointer;
         transition: all 0.2s;
         background-color: ${InputVar.bg};
         color: ${InputVar['text-color']};
@@ -138,6 +137,29 @@ export class MelserFileUpload extends MelserBaseInput<File | null> {
 
       .icon {
         font-size: 2rem;
+      }
+
+      /* Input Overlay Pattern for Accessibility */
+      .file-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 10;
+      }
+      
+      .file-input:disabled {
+        cursor: not-allowed;
+      }
+
+      /* Visual Focus Ring support */
+      .drop-zone:focus-within {
+         outline: 2px solid ${InputVar['focus-ring-color']};
+         outline-offset: 2px;
+         border-color: ${InputVar['focus-ring-color']};
       }
 
       .filename {

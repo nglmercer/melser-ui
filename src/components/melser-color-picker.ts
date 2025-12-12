@@ -1,7 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { MelserBaseInput, InputVar } from '../core/base-input';
-import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-color-picker')
@@ -106,7 +105,7 @@ export class MelserColorPicker extends MelserBaseInput<string> {
         outline: 2px solid ${InputVar['focus-ring-color']};
         outline-offset: 2px;
         /* Optional: Add box-shadow for better visibility/softness */
-        box-shadow: 0 0 0 4px ${Var.color.surface.variant}; 
+        box-shadow: 0 0 0 4px${InputVar['bg-hover']}; 
         border-radius: ${InputVar.radius};
       }
       

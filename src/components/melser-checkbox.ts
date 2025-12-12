@@ -1,7 +1,6 @@
 import { html, css, nothing } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { MelserBaseInput, InputVar } from '../core/base-input';
-import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-checkbox')
@@ -135,7 +134,7 @@ export class MelserCheckbox extends MelserBaseInput<boolean> {
       :host([variant="card"]) input:checked ~ .checkbox-container,
       :host([variant="card"]) .checkbox-container:has(input:checked) {
         border-color: ${InputVar['control-border-color-checked']};
-        background-color: ${Var.color.surface.variant};
+        background-color:${InputVar['bg-hover']};
       }
 
       /* Disabled states are inherited from base-input */
