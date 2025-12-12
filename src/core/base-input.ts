@@ -32,7 +32,7 @@ export const { styles: BaseInputStyles, vars: InputVar } = createComponentTheme(
   'text-color-placeholder': Var.color.text.placeholder,
 
   'radius': Var.radius.default,
-  'focus-ring-color': Var.color.focusRing,
+  'focus-ring-color': Var.color.primary,
   'focus-ring-width': '2px',
   'focus-offset': '2px',
 

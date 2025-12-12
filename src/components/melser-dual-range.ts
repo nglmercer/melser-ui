@@ -254,10 +254,10 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
         appearance: none;
         width: 1.2rem;
         height: 1.2rem;
-        background: ${Var.color.primary};
+        background: ${InputVar['control-bg-checked']};
         border-radius: 50%;
         cursor: grab;
-        border: 2px solid ${Var.color.primary};
+        border: 2px solid ${InputVar['control-bg-checked']};
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         margin-top: -0.5rem; 
         transition: transform 0.1s, background-color 0.2s;
@@ -270,23 +270,23 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
         pointer-events: auto;
         width: 1.2rem;
         height: 1.2rem;
-        background: ${Var.color.primary};
+        background: ${InputVar['control-bg-checked']};
         border-radius: 50%;
         cursor: grab;
-        border: 2px solid ${Var.color.primary};
+        border: 2px solid ${InputVar['control-bg-checked']};
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         z-index: 11;
       }
 
       /* Estados Focus y Active para los Thumbs */
       input[type=range]:focus::-webkit-slider-thumb {
-        background: ${Var.color.primary};
+        background: ${InputVar['control-bg-checked']};
         border-color: white;
         transform: scale(1.1);
       }
       
       input[type=range]:focus::-moz-range-thumb {
-        background: ${Var.color.primary};
+        background: ${InputVar['control-bg-checked']};
         border-color: white;
         transform: scale(1.1);
       }
@@ -310,7 +310,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
       .track-fill {
         position: absolute;
         height: 0.25rem;
-        background: ${Var.color.primary};
+        background: ${InputVar['control-bg-checked']};
         z-index: 1;
         border-radius: 1rem;
         pointer-events: none;
@@ -320,7 +320,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
       .tooltip {
         position: absolute;
         top: -1.5rem;
-        background: ${Var.color.primary};
+        background: ${InputVar['control-bg-checked']};
         color: white;
         font-size: 0.75rem;
         padding: 0.2rem 0.5rem;

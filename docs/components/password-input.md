@@ -167,7 +167,7 @@ document.getElementById("register-form").addEventListener("submit", (e) => {
   <div style="margin-bottom: 1rem;">
     <me-password-input 
       label="Nueva contraseña *"
-      name="newPassword"
+      name="confirmPassword"
       required
       minlength="8"
       strength-meter
