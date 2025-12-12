@@ -96,7 +96,7 @@ export const { styles: BaseInputStyles, vars: InputVar } = createComponentTheme(
   'gap-large': Var.spacing.gap.large,
 
   // Shadow
-  'focus-shadow': css`0 0 0 3px ${Var.color.primary}`,
+  'focus-shadow': css`0 0 0 3px var(--base-input-focus-ring-color)`,
   'error-shadow': css`0 0 0 3px ${Var.color.error}`,
 
   // Disabled
