@@ -188,7 +188,6 @@
   <script type="module">
     import { registerComponent, MelserSwitch, setTheme } from '/src/index.ts';
     import { z } from 'zod';
-    import { zodToJsonSchema } from "zod-to-json-schema";
 
     // DEMO: Register a component with a custom tag name
     registerComponent('custom-brand-switch', MelserSwitch);
@@ -281,10 +280,6 @@
       });
 
       const schema = z.object(schemaShape);
-
-      // 3. Convert to JSON Schema
-      const jsonSchema = zodToJsonSchema(schema, "myDemoForm");
-
       // 4. Validate Data
       const validationResult = schema.safeParse(formData);
 
@@ -293,8 +288,7 @@
         validationResult: {
           success: validationResult.success,
           errors: validationResult.success ? null : validationResult.error.flatten()
-        },
-        generatedJsonSchema: jsonSchema
+        }
       };
 
       document.getElementById('result').textContent = JSON.stringify(output, null, 2);

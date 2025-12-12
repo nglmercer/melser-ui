@@ -1,6 +1,6 @@
 {
   "name": "melser-ui",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -27,8 +27,7 @@
   "dependencies": {
     "@types/node": "^24.10.1",
     "lit": "^3.3.1",
-    "zod": "^4.1.13",
-    "zod-to-json-schema": "^3.25.0"
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "tsup": "^8.5.1",
