@@ -160,7 +160,8 @@ export const flattenedTokens = flattenTokens(tokens, 'melser');
 
 // Automatically inject tokens into the document root
 import { ThemeManager } from './theme-manager';
-if (typeof window !== 'undefined') {
+// Only inject tokens if we're in a browser environment
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     ThemeManager.setVariables(flattenedTokens);
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "melser-ui",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -16,16 +16,10 @@
       "types": "./dist/*.d.ts",
       "import": "./dist/*.js",
       "require": "./dist/*.js"
-    },
-    "./src/index.ts": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
     }
   },
   "typesVersions": {
     "*": {
-      "src/index": ["./dist/index.d.ts"],
       "*": ["./dist/*"]
     }
   },
