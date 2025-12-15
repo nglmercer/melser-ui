@@ -106,6 +106,13 @@ export default defineConfig({
           { text: 'MelserRange', link: '/components/range' },
           { text: 'MelserDualRange', link: '/components/dual-range' }
         ]
+      },
+      {
+        text: 'Display de Datos',
+        collapsed: true,
+        items: [
+          { text: 'DataTable', link: '/components/data-table' }
+        ]
       }
     ],
 

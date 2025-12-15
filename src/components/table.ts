@@ -541,7 +541,7 @@ export class DataTableLit extends LitElement {
     }
 
     private renderActions(row: DataRow, col: TableColumn, isEditing: boolean) {
-        if (isEditing) {
+        if (isEditing && col) {
             return html`
                 <div style="display: flex; justify-content: flex-end; gap: 4px;">
                     <button class="action-btn save-btn" @click=${(e:Event) => { e.stopPropagation(); this.handleSave(row.id); }}>

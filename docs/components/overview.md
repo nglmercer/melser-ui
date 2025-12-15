@@ -44,6 +44,10 @@ Melser UI incluye una amplia gama de componentes web modernos y accesibles. Todo
 
 - **[MelserSwitch](./switch)** - Interruptor toggle
 
+#### Display de Datos
+
+- **[DataTable](./data-table)** - Tabla de datos avanzada con paginación y ordenamiento
+
 ## Ejemplo de Uso de Componentes
 
 Todos los componentes siguen el mismo patrón de uso:
