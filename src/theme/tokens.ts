@@ -65,7 +65,7 @@ export const tokens = {
         },
 
         border: {
-            default: { $value: '#cccccc' },
+            default: { $value: '#a3a3a3' },
             hover: { $value: '#999999' },
             focus: { $value: '{color.primary}' },
             error: { $value: '{color.error}' },

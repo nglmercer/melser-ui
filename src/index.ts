@@ -19,6 +19,7 @@ export { MelserRating } from './components/melser-rating';
 export { MelserDualRange } from './components/melser-dual-range';
 export { MelserBaseInput } from './core/Base';
 export { MelserSchemaForm } from './components/melser-schema-form';
+export { DataTableLit } from './components/table';
 export type { InputData, MelserDataType, SelectOption } from './types/index';
 
 // Export registration utilities

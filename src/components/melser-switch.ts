@@ -116,8 +116,14 @@ export class MelserSwitch extends MelserBaseInput<boolean> {
       }
       
       input:disabled + .slider {
-        background-color: ${InputVar['control-bg-disabled']};
+        background-color: ${InputVar['text-color-placeholder']};
+        opacity: 0.5;
         cursor: ${InputVar['disabled-cursor']};
+      }
+
+      input:checked:disabled + .slider {
+        background-color: ${InputVar['control-bg-checked']};
+        opacity: 0.5;
       }
     `
   ];

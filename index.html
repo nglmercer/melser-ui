@@ -202,6 +202,30 @@
     <pre id="schema-form-output">No submit yet...</pre>
   </div>
 
+  <div class="card">
+    <h2>Data Table Demo</h2>
+    <p>A powerful data table with sorting, pagination, selection, and inline editing.</p>
+    
+    <div style="margin-bottom: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+      <base-input id="table-search" placeholder="Search..." style="max-width: 300px; flex: 1;"></base-input>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <label style="font-size: 0.9rem;">Density:</label>
+          <select id="table-density" style="padding: 0.5rem; border-radius: 4px; border: 1px solid var(--me-border); background: var(--me-input-bg); color: var(--me-text);">
+              <option value="Normal">Normal</option>
+              <option value="Compact">Compact</option>
+              <option value="Spacious">Spacious</option>
+          </select>
+      </div>
+    </div>
+
+    <data-table-lit id="demo-table"></data-table-lit>
+    
+    <div style="margin-top: 1rem;">
+       <h3>Table Events Log:</h3>
+       <pre id="table-output" style="max-height: 200px; overflow-y: auto;">Logs will appear here...</pre>
+    </div>
+  </div>
+
   <script type="module">
     import { registerComponent, MelserSwitch, setTheme } from '/src/index.ts';
     import { z } from 'zod';
@@ -401,6 +425,115 @@
         const data = e.detail.data;
         document.getElementById('schema-form-output').textContent = JSON.stringify(data, null, 2);
       });
+    }
+
+    // Data Table Demo Initialization
+    const demoTable = document.getElementById('demo-table');
+    const tableLog = document.getElementById('table-output');
+    
+    function logTableEvent(msg) {
+        if (!tableLog) return;
+        const line = document.createElement('div');
+        line.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+        line.style.borderBottom = '1px solid #333';
+        line.style.padding = '4px 0';
+        tableLog.prepend(line);
+    }
+
+    if (demoTable) {
+        // 1. Define Columns
+        demoTable.columns = [
+            { key: 'id', label: 'ID', width: '50px', type: 'number', editable: false },
+            { key: 'name', label: 'Name', type: 'string', editable: true },
+            { key: 'role', label: 'Role', type: 'select', options: ['Admin', 'Manager', 'Developer', 'Designer'], editable: true },
+            { key: 'status', label: 'Status', type: 'select', options: [{label: 'Active', value: 'active'}, {label: 'Inactive', value: 'inactive'}], render: (row) => {
+                const colors = { active: '#22c55e', inactive: '#ef4444' };
+                return document.createRange().createContextualFragment(`
+                    <span style="color: ${colors[row.status] || 'white'}; font-weight: bold; text-transform: capitalize;">
+                        ${row.status}
+                    </span>
+                `);
+            }},
+            { key: 'lastLogin', label: 'Last Login', type: 'date', editable: true },
+            { key: 'verified', label: 'Verified', type: 'boolean', editable: true, align: 'center' },
+            { key: 'actions', label: 'Actions', type: 'actions' }
+        ];
+
+        // 2. Define Data
+        demoTable.data = [
+            { id: 1, name: 'Alice Johnson', role: 'Admin', status: 'active', lastLogin: '2023-10-01', verified: true },
+            { id: 2, name: 'Bob Smith', role: 'Developer', status: 'inactive', lastLogin: '2023-09-15', verified: false },
+            { id: 3, name: 'Charlie Brown', role: 'Manager', status: 'active', lastLogin: '2023-10-05', verified: true },
+            { id: 4, name: 'Diana Prince', role: 'Designer', status: 'active', lastLogin: '2023-10-10', verified: true },
+            { id: 5, name: 'Evan Wright', role: 'Developer', status: 'active', lastLogin: '2023-10-12', verified: false },
+            { id: 6, name: 'Fiona Gallagher', role: 'Manager', status: 'inactive', lastLogin: '2023-08-20', verified: true },
+            { id: 7, name: 'George Harrison', role: 'Developer', status: 'active', lastLogin: '2023-10-14', verified: true },
+            { id: 8, name: 'Hannah Abbott', role: 'Designer', status: 'inactive', lastLogin: '2023-09-30', verified: false },
+        ];
+
+        // 3. Configure
+        demoTable.config = {
+            pagination: true,
+            pageSize: 5,
+            selection: true,
+            expandable: true,
+            density: 'Normal'
+        };
+
+        // 4. Handle Search
+        const searchInput = document.getElementById('table-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                demoTable.searchQuery = e.target.value;
+            });
+        }
+
+        // 5. Handle Configuration Changes
+        document.getElementById('table-density')?.addEventListener('change', (e) => {
+            demoTable.config = { ...demoTable.config, density: e.target.value };
+        });
+
+        // 6. Listen to Events
+        demoTable.addEventListener('selection-change', (e) => {
+            logTableEvent(`Selection changed: ${JSON.stringify(e.detail.selectedIds)}`);
+        });
+
+        demoTable.addEventListener('row-save', (e) => {
+            logTableEvent(`Row Saved (ID: ${e.detail.id}): ${JSON.stringify(e.detail.data)}`);
+            // Update local data to reflect changes
+            const index = demoTable.data.findIndex(r => r.id === e.detail.id);
+            if (index !== -1) {
+                demoTable.data[index] = { ...demoTable.data[index], ...e.detail.data };
+                demoTable.data = [...demoTable.data]; // Trigger re-render
+                logTableEvent(`Data updated locally.`);
+            }
+        });
+
+        demoTable.addEventListener('row-action', (e) => {
+            logTableEvent(`Action: ${e.detail.action} on ID: ${e.detail.id}`);
+            if (e.detail.action === 'delete') {
+                if(confirm('Are you sure you want to delete this row?')) {
+                    demoTable.data = demoTable.data.filter(r => r.id !== e.detail.id);
+                    logTableEvent(`Row ${e.detail.id} deleted.`);
+                }
+            }
+        });
+
+        // Add details slot content dynamically if needed, or use named slots in template
+        // For this demo, we can just rely on the 'details-[id]' slot convention
+        // But since we are in a script tag, we might want to inject slots into the light DOM of the table
+        // However, the table component renders slots inside its shadow root, so we place them as children of the custom element
+        
+        demoTable.data.forEach(row => {
+            const div = document.createElement('div');
+            div.setAttribute('slot', `details-${row.id}`);
+            div.style.padding = '1rem';
+            div.style.color = 'var(--me-text-secondary)';
+            div.innerHTML = `<strong>Details for ${row.name}:</strong><br>
+                             This is an expandable details row. You can put any content here.<br>
+                             ID: ${row.id}, Role: ${row.role}`;
+            demoTable.appendChild(div);
+        });
     }
   </script>
 </body>
