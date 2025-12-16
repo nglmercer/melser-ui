@@ -1,14 +1,10 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { TableLogic } from '../core/TableLogic';
-import type { TableConfig, TableColumn, DataRow, SortConfig, TableStyles } from '../core/types';
+import type { TableConfig, TableColumn, SelectColumn, DataRow, SortConfig, TableStyles } from '../core/types';
 import { InputVar } from '../core/Base';
-import './base-input';
-import './melser-number-input';
-import './melser-switch';
-import './melser-checkbox';
-import './melser-select';
-import './melser-date-picker';
+import './melser-table-cell';
+
 
 @customElement('data-table-lit')
 export class DataTableLit extends LitElement {
@@ -29,6 +25,7 @@ export class DataTableLit extends LitElement {
         delete: html`<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`,
         save: html`<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
         cancel: html`<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`,
+        view: html`<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`,
         more: html`<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>`,
         sortAsc: html`<span class="sort-icon sort-asc"></span>`,
         sortDesc: html`<span class="sort-icon sort-desc"></span>`,
@@ -58,7 +55,6 @@ export class DataTableLit extends LitElement {
             display: flex;
             flex-direction: column;
             --primary-color: ${InputVar['focus-ring-color']}; 
-            --primary-rgb: 59, 130, 246; /* fallback matching blue-500 */
         }
         
         .table-container {
@@ -207,7 +203,7 @@ export class DataTableLit extends LitElement {
             height: 0.65em;
             transform: scale(0);
             transition: 120ms transform ease-in-out;
-            box-shadow: inset 1em 1em ${InputVar['focus-shadow']};
+            box-shadow: inset 1em 1em ${InputVar['focus-ring-color']};
             transform-origin: center;
             clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
         }
@@ -243,7 +239,7 @@ export class DataTableLit extends LitElement {
             font-weight: bold;
             border-color: ${InputVar['border-color']};
         }
-
+        button.page-btn:hover { opacity: 0.8; }
         .sort-icon {
             display: inline-block;
             margin-left: 4px;
@@ -447,7 +443,7 @@ export class DataTableLit extends LitElement {
                                 </th>
                             ` : nothing}
                             ${this.columns.map(col => html`
-                                <th @click=${() => col.key !== 'actions' && this.handleSort(col.key)} 
+                                <th @click=${() => col.key !== 'actions' && this.handleSort(String(col.key))} 
                                     style="${col.key === 'actions' ? 'text-align: right; padding-right: 1.5rem' : ''}">
                                     ${col.label}
                                     ${this.sortConfig?.key === col.key ? html`
@@ -558,6 +554,9 @@ export class DataTableLit extends LitElement {
                 <button class="action-btn" @click=${(e:Event) => { e.stopPropagation(); this.handleEdit(row); }}>
                     ${this.icons.edit}
                 </button>
+                <button class="action-btn" title="View Data" @click=${(e:Event) => { e.stopPropagation(); console.log('Row Data:', row); }}>
+                    ${this.icons.view}
+                </button>
                 <button class="action-btn delete-btn" @click=${(e:Event) => { e.stopPropagation(); this.handleDelete(row.id); }}>
                     ${this.icons.delete}
                 </button>
@@ -568,23 +567,58 @@ export class DataTableLit extends LitElement {
         `;
     }
 
-    private renderCell(row: DataRow, col: TableColumn, isEditing: boolean) {
-        // 1. Custom Overrides
+    renderCell(row: DataRow, col: TableColumn, isEditing: boolean) {
+        // 1. Custom Slot Rendering - NUEVO SISTEMA
+        const slotName = `cell-${row.id}-${String(col.key)}`;
+        const slot = this.querySelector(`[slot="${slotName}"]`);
+        
+        if (slot) {
+            // Si hay un slot personalizado, usarlo
+            slot.setAttribute('data-row', JSON.stringify(row));
+            slot.setAttribute('data-column', JSON.stringify(col));
+            slot.setAttribute('data-value', String(row[col.key as string] || ''));
+            slot.setAttribute('data-editing', String(isEditing));
+            
+            // Permitir que el slot maneje eventos de edición
+            if (isEditing) {
+                slot.addEventListener('cell-change', (e: Event) => {
+                    const customEvent = e as CustomEvent;
+                    this.handleInputChange(col.key as string, customEvent.detail.value);
+                });
+            }
+            
+            return html`<slot name="${slotName}"></slot>`;
+        }
+
+        // 2. Custom Function Overrides (mantener compatibilidad anterior)
         if (isEditing && col.editRender) {
-             return col.editRender(row, (val: any) => this.handleInputChange(col.key, val));
+             return col.editRender(row, (val: any) => this.handleInputChange(col.key as string, val));
         }
         if (!isEditing && col.render) {
              return col.render(row);
         }
 
-        // 2. Actions Column
+        // 3. Actions Column
         if (col.type === 'actions' || col.key === 'actions') {
             return this.renderActions(row, col, isEditing);
         }
 
-        const val = row[col.key];
+        const val = row[col.key as string];
 
-        // 3. Edit Mode - Component Mapping
+        // 3.5 Use MelserTableCell for rich types
+        if (['status', 'progress', 'avatar', 'currency', 'badge'].includes(col.type as string)) {
+             return html`
+                <melser-table-cell
+                    .row=${row}
+                    .column=${col}
+                    .value=${String(val)}
+                    .type=${col.type as string}
+                    .isEditing=${isEditing && col.editable !== false}
+                    @cell-change=${(e: CustomEvent) => this.handleInputChange(col.key as string, e.detail.value)}
+                ></melser-table-cell>`;
+        }
+
+        // 4. Edit Mode - Component Mapping
         if (isEditing && col.editable !== false) {
              const type = col.type || 'string';
              
@@ -593,29 +627,30 @@ export class DataTableLit extends LitElement {
                      return html`
                         <me-number-input
                             .value="${Number(val) || 0}"
-                            @change="${(e: any) => this.handleInputChange(col.key, e.detail?.value !== undefined ? e.detail.value : e.target.value)}"
+                            @change="${(e: any) => this.handleInputChange(col.key as string, e.detail?.value !== undefined ? e.detail.value : e.target.value)}"
                             style="width: 100%"
                         ></me-number-input>`;
                  case 'select':
-                     const options = col.options?.map(o => typeof o === 'string' ? {label: o, value: o} : o) || [];
+                     const selectCol = col as SelectColumn;
+                     const options = selectCol.options?.map(o => typeof o === 'string' ? {label: o, value: o} : o) || [];
                      return html`
                         <me-select
                             .value="${val}"
                             .options="${options}"
-                            @change="${(e: any) => this.handleInputChange(col.key, e.detail?.value !== undefined ? e.detail.value : e.target.value)}"
+                            @change="${(e: any) => this.handleInputChange(col.key as string, e.detail?.value !== undefined ? e.detail.value : e.target.value)}"
                             style="width: 100%"
                         ></me-select>`;
                  case 'boolean':
                      return html`
                         <me-switch
                              .value="${!!val}"
-                             @change="${(e: any) => this.handleInputChange(col.key, e.target.checked)}"
+                             @change="${(e: any) => this.handleInputChange(col.key as string, e.target.checked)}"
                         ></me-switch>`;
                  case 'date':
                       return html`
                          <me-date-picker
                             .value="${val}"
-                            @change="${(e: any) => this.handleInputChange(col.key, e.detail?.value !== undefined ? e.detail.value : e.target.value)}"
+                            @change="${(e: any) => this.handleInputChange(col.key as string, e.detail?.value !== undefined ? e.detail.value : e.target.value)}"
                          ></me-date-picker>`;
                  case 'string':
                  default:
@@ -623,17 +658,18 @@ export class DataTableLit extends LitElement {
                         <base-input
                             .value="${val || ''}"
                             type="${type === 'string' ? 'text' : type}"
-                            @change="${(e: any) => this.handleInputChange(col.key, e.target.value)}"
+                            @change="${(e: any) => this.handleInputChange(col.key as string, e.target.value)}"
                         ></base-input>`;
              }
         }
 
-        // 4. View Mode - Default Rendering
+        // 5. View Mode - Default Rendering
         switch (col.type) {
              case 'boolean':
                  return html`<me-switch disabled .value="${!!val}"></me-switch>`;
              case 'select':
-                 const option = col.options?.find(opt => (typeof opt === 'object' ? opt.value == val : opt == val));
+                 const selectCol = col as SelectColumn;
+                 const option = selectCol.options?.find(opt => (typeof opt === 'object' ? opt.value == val : opt == val));
                  const label = option ? (typeof option === 'object' ? option.label : option) : val;
                  return html`${label}`;
              case 'date':

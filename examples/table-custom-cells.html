@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Table con Celdas Personalizadas</title>
+    <script type="module">
+        import { DataTableLit, MelserTableCell, setTheme } from '../src/index.ts';
+        
+        // Configurar tema
+        setTheme({
+            primary: '#3b82f6',
+            background: '#ffffff',
+            surface: '#f9fafb'
+        });
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+        
+        h1 {
+            margin-bottom: 2rem;
+            color: #1f2937;
+        }
+        
+        .custom-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-inactive {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .custom-avatar {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .avatar-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Table con Celdas Personalizadas</h1>
+        
+        <data-table-lit id="demo-table">
+            <!-- Slots personalizados para celdas específicas -->
+            <melser-table-cell slot="cell-1-name" 
+                               type="avatar"
+                               value="John Doe">
+            </melser-table-cell>
+            
+            <melser-table-cell slot="cell-1-status" 
+                               type="status"
+                               value="active">
+            </melser-table-cell>
+            
+            <melser-table-cell slot="cell-2-name" 
+                               type="avatar"
+                               value="Jane Smith">
+            </melser-table-cell>
+            
+            <melser-table-cell slot="cell-2-status" 
+                               type="status"
+                               value="inactive">
+            </melser-table-cell>
+            
+            <!-- Slots personalizados con HTML puro -->
+            <div slot="cell-3-name" class="custom-avatar">
+                <div class="avatar-img">MJ</div>
+                <span>Michael Johnson</span>
+            </div>
+            
+            <div slot="cell-3-status" class="custom-status status-active">
+                <span>●</span>
+                <span>Active</span>
+            </div>
+            
+            <div slot="cell-4-name" class="custom-avatar">
+                <div class="avatar-img">SW</div>
+                <span>Sarah Williams</span>
+            </div>
+            
+            <div slot="cell-4-status" class="custom-status status-inactive">
+                <span>●</span>
+                <span>Inactive</span>
+            </div>
+        </data-table-lit>
+    </div>
+
+    <script>
+        // Configurar la tabla
+        const table = document.getElementById('demo-table');
+        
+        table.columns = [
+            { key: 'id', label: 'ID', type: 'number' },
+            { key: 'name', label: 'Name', type: 'string' },
+            { key: 'email', label: 'Email', type: 'string' },
+            { key: 'status', label: 'Status', type: 'string' },
+            { key: 'progress', label: 'Progress', type: 'number' },
+            { key: 'salary', label: 'Salary', type: 'number' },
+            { key: 'tags', label: 'Tags', type: 'badge' }
+        ];
+        
+        table.data = [
+            {
+                id: 1,
+                name: 'John Doe',
+                email: 'john@example.com',
+                status: 'active',
+                progress: 75,
+                salary: 75000,
+                tags: ['developer', 'frontend']
+            },
+            {
+                id: 2,
+                name: 'Jane Smith',
+                email: 'jane@example.com',
+                status: 'inactive',
+                progress: 45,
+                salary: 68000,
+                tags: ['designer', 'ui/ux']
+            },
+            {
+                id: 3,
+                name: 'Michael Johnson',
+                email: 'michael@example.com',
+                status: 'active',
+                progress: 90,
+                salary: 82000,
+                tags: ['manager', 'agile']
+            },
+            {
+                id: 4,
+                name: 'Sarah Williams',
+                email: 'sarah@example.com',
+                status: 'inactive',
+                progress: 30,
+                salary: 61000,
+                tags: ['marketing', 'seo']
+            }
+        ];
+        
+        table.config = {
+            pagination: true,
+            pageSize: 5,
+            selection: true,
+            density: 'Normal',
+            expandable: false
+        };
+        
+        // Event listeners
+        table.addEventListener('selection-change', (e) => {
+            console.log('Selected rows:', e.detail.selectedIds);
+        });
+        
+        table.addEventListener('row-save', (e) => {
+            console.log('Row saved:', e.detail);
+        });
+        
+        table.addEventListener('row-action', (e) => {
+            console.log('Row action:', e.detail);
+        });
+    </script>
+</body>
+</html>

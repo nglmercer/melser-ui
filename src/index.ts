@@ -20,7 +20,10 @@ export { MelserDualRange } from './components/melser-dual-range';
 export { MelserBaseInput } from './core/Base';
 export { MelserSchemaForm } from './components/melser-schema-form';
 export { DataTableLit } from './components/table';
+export { MelserTableRow } from './components/melser-table-row';
+export { MelserTableCell } from './components/melser-table-cell';
 export type { InputData, MelserDataType, SelectOption } from './types/index';
+export type { TableColumn, TableConfig, DataRow, TableStyles } from './core/types';
 
 // Export registration utilities
 export { registerComponent, registerWithPrefix, registerComponents } from './utils/registration';
