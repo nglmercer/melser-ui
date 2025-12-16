@@ -79,7 +79,7 @@ Los componentes utilizan variables CSS para facilitar la personalización:
 
 ## 📚 Documentación
 
-Visita nuestra documentación completa en [https://melser-ui.vercel.app](https://melser-ui.vercel.app) o ejecuta localmente:
+Visita nuestra documentación completa en https://nglmercer.github.io/melser-ui/ o ejecuta localmente:
 
 ```bash
 npm run dev:docs
@@ -273,5 +273,6 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 - [TypeScript](https://www.typescriptlang.org/) - Por el tipado estático
 
 ---
+
 
 **⭐ Si este proyecto te fue útil, considera darle una estrella en GitHub!**
