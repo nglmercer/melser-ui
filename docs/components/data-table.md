@@ -1,14 +1,18 @@
-# Data Table
+# Data Table Component
 
-The `<data-table-lit>` component is a feature-rich table solution that supports sorting, pagination, row selection, expandable details, and inline editing. It is designed to be highly customizable and themeable.
+The `data-table-lit` component is a powerful, feature-rich table solution built with Lit. It supports sorting, pagination, selection, inline editing, expandable rows, and extensive customization via a cell renderer registry.
 
-## Basic Usage
+## Usage
 
 ```html
 <script type="module">
-  import "melser-ui/src/components/table.ts";
+  import { DataTableLit } from "melser-ui";
+</script>
 
-  const table = document.querySelector("data-table-lit");
+<data-table-lit id="my-table"></data-table-lit>
+
+<script>
+  const table = document.getElementById("my-table");
 
   table.columns = [
     { key: "id", label: "ID", type: "number" },
@@ -17,109 +21,145 @@ The `<data-table-lit>` component is a feature-rich table solution that supports 
   ];
 
   table.data = [
-    { id: 1, name: "Alice", role: "Admin" },
-    { id: 2, name: "Bob", role: "User" },
+    { id: 1, name: "John Doe", role: "Admin" },
+    { id: 2, name: "Jane Smith", role: "User" },
   ];
+
+  table.config = {
+    pagination: true,
+    pageSize: 10,
+    selection: true,
+    density: "Normal", // 'Compact' | 'Normal' | 'Spacious'
+    expandable: false,
+  };
 </script>
-
-<data-table-lit></data-table-lit>
 ```
 
-## Properties
+## API Reference
 
-| Property       | Type            | Default | Description                                                            |
-| -------------- | --------------- | ------- | ---------------------------------------------------------------------- |
-| `data`         | `DataRow[]`     | `[]`    | Array of data objects to display. Each object must have a unique `id`. |
-| `columns`      | `TableColumn[]` | `[]`    | Configuration for table columns.                                       |
-| `config`       | `TableConfig`   | `{...}` | General configuration for pagination, selection, density, etc.         |
-| `searchQuery`  | `string`        | `''`    | Filter data across all columns based on this string.                   |
-| `customStyles` | `TableStyles`   | `{}`    | Override internal CSS variables for specific theming.                  |
+### Properties
 
-## Configuration Interfaces
+| Property       | Type            | Default | Description                                      |
+| -------------- | --------------- | ------- | ------------------------------------------------ |
+| `data`         | `DataRow[]`     | `[]`    | Array of data objects to display.                |
+| `columns`      | `TableColumn[]` | `[]`    | Configuration for table columns.                 |
+| `config`       | `TableConfig`   | `{...}` | General table configuration (pagination, etc).   |
+| `searchQuery`  | `string`        | `''`    | Text to filter the table data globally.          |
+| `customStyles` | `TableStyles`   | `{}`    | CSS variable overrides for theming.              |
+| `icons`        | `Object`        | `{...}` | Object containing Lit templates for table icons. |
 
-### TableConfig
+### Events
 
-```typescript
-interface TableConfig {
-  pagination?: boolean; // Enable/disable pagination (default: true)
-  pageSize?: number; // Rows per page (default: 5)
-  selection?: boolean; // Enable checkbox selection (default: false)
-  density?: "Compact" | "Normal" | "Spacious"; // Cell padding (default: 'Normal')
-  expandable?: boolean; // Enable expandable detail rows (default: false)
-}
+| Event              | Detail                                      | Description                                                       |
+| ------------------ | ------------------------------------------- | ----------------------------------------------------------------- |
+| `selection-change` | `{ selectedIds: (string\|number)[] }`       | Fired when row selection changes.                                 |
+| `row-action`       | `{ action: string, row: DataRow, id: ... }` | Fired when an action button is clicked (edit, delete, view, etc). |
+| `row-save`         | `{ id: string\|number, data: DataRow }`     | Fired when inline editing is saved.                               |
+| `row-expand`       | `{ id: string\|number }`                    | Fired when a row is expanded.                                     |
+| `cell-change`      | `{ key: string, value: any }`               | Fired when a cell value changes during editing.                   |
+
+## Column Configuration (`TableColumn`)
+
+Each object in the `columns` array can have the following properties:
+
+- `key`: (Required) The property name in the data row.
+- `label`: Header text.
+- `type`: Data type or renderer key (`string`, `number`, `boolean`, `date`, `select`, `actions`, `avatar`, `status`, `badge`).
+- `editable`: Boolean to enable/disable editing for this column.
+- `width`: CSS width string (e.g., `'100px'`).
+- `align`: Text alignment (`'left'`, `'center'`, `'right'`).
+- `options`: Array of options for `select` type columns.
+- `render`: Optional function `(row) => TemplateResult` for custom view rendering.
+- `editRender`: Optional function `(row, changeCallback) => TemplateResult` for custom edit rendering.
+
+## Custom Cell Rendering
+
+You can customize how cells are rendered using the `CellRendererRegistry`. This allows you to define global renderers for specific types or based on custom logic.
+
+### 1. Registering by Type
+
+Register a renderer for a specific column `type` (e.g., 'avatar').
+
+```javascript
+import { CellRendererRegistry } from "melser-ui";
+import { html } from "lit";
+
+CellRendererRegistry.getInstance().register("avatar", (val, row) => {
+  return html`
+    <div class="avatar">
+      <img src="${row.avatarUrl || "default.png"}" alt="${val}" />
+      <span>${val}</span>
+    </div>
+  `;
+});
 ```
 
-### TableColumn
-
-```typescript
-interface TableColumn {
-  key: string; // Property name in data object
-  label: string; // Column header text
-  type?: "string" | "number" | "boolean" | "date" | "select" | "actions";
-  options?: (string | { label: string; value: any })[]; // For 'select' type
-  editable?: boolean; // Enable inline editing for this column
-  width?: string; // CSS width value
-  align?: "left" | "center" | "right";
-  render?: (row: DataRow) => TemplateResult; // Custom render function for view mode
-  editRender?: (row: DataRow, onChange: (val: any) => void) => TemplateResult; // Custom render for edit mode
-}
-```
-
-## Events
-
-| Event Name         | Detail                                     | Description                                         |
-| ------------------ | ------------------------------------------ | --------------------------------------------------- |
-| `selection-change` | `{ selectedIds: (string\|number)[] }`      | Fired when row selection changes.                   |
-| `row-save`         | `{ id: string\|number, data: DataRow }`    | Fired when an inline edit is saved.                 |
-| `row-action`       | `{ action: 'delete', id: string\|number }` | Fired when a row action (like delete) is triggered. |
-
-## Custom Rendering
-
-You can customize how cells are rendered using the `render` property in the column definition.
+Then use it in your column definition:
 
 ```javascript
 table.columns = [
-  {
-    key: "status",
-    label: "Status",
-    render: (row) => {
-      const color = row.status === "active" ? "green" : "red";
-      return html`<span style="color: ${color}">${row.status}</span>`;
-    },
-  },
+  { key: "username", label: "User", type: "avatar" }, // Uses the registered 'avatar' renderer
 ];
 ```
 
-## Expanding Rows
+### 2. Registering by Logic
 
-To using expandable rows, set `config.expandable = true`. Content for expanded rows is provided via slots named `details-{id}` or handled dynamically.
+Register a renderer that applies when a condition is met.
 
-```html
-<data-table-lit id="my-table">
-  <div slot="details-1">Extra details for Row 1...</div>
-  <div slot="details-2">Extra details for Row 2...</div>
-</data-table-lit>
+```javascript
+CellRendererRegistry.getInstance().register(
+  (val, row, col) => col.key === "status", // Matcher function
+  (val) => {
+    const color = val === "Active" ? "green" : "red";
+    return html`<span style="color: ${color}">${val}</span>`;
+  }
+);
 ```
+
+### 3. Custom Actions Column
+
+You can fully replace the default actions column.
+
+```javascript
+CellRendererRegistry.getInstance().register(
+  "actions",
+  (val, row, col, isEditing) => {
+    const dispatch = (action, e) => {
+      e.target.dispatchEvent(
+        new CustomEvent("table-action", {
+          detail: { action, row, id: row.id },
+          bubbles: true,
+          composed: true,
+        })
+      );
+    };
+
+    if (isEditing) {
+      return html`<button @click=${(e) => dispatch("save", e)}>Save</button>`;
+    }
+
+    return html`
+      <button @click=${(e) => dispatch("edit", e)}>Edit</button>
+      <button @click=${(e) => dispatch("delete", e)}>Delete</button>
+      <button @click=${(e) => console.log("Custom!", row)}>Custom</button>
+    `;
+  }
+);
+```
+
+### Demo
+
+<data-table-lit id="demo-table">
+</data-table-lit>
 
 ## Theming
 
-The table uses the Melser UI design system by default but accepts overrides via `customStyles`.
+Use `customStyles` to override default colors and appearance.
 
 ```javascript
 table.customStyles = {
+  primaryColor: "#6366f1",
   headerBackground: "#f3f4f6",
-  primaryColor: "#3b82f6",
-  rowHoverBackground: "#eff6ff",
+  rowHoverBackground: "#f9fafb",
 };
 ```
-
-Available keys in `customStyles`:
-
-- `background`
-- `color`
-- `borderColor`
-- `borderRadius`
-- `headerBackground`
-- `rowHoverBackground`
-- `primaryColor`
-- `textColorSecondary`

@@ -4,7 +4,7 @@ import type { DataRow, TableColumn } from '../core/types';
 import { InputVar } from '../core/Base';
 import { cellRenderers } from '../core/CellRendererRegistry';
 
-@customElement('melser-table-cell')
+@customElement('table-cell')
 export class MelserTableCell extends LitElement {
     @property({ type: Object }) row!: DataRow;
     @property({ type: Object }) column!: TableColumn;

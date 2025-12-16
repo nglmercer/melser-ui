@@ -2,9 +2,9 @@ import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { DataRow, TableColumn } from '../core/types';
 import { InputVar } from '../core/Base';
-import './melser-table-cell'; // Ensure element is defined
+import './table-cell'; // Ensure element is defined
 
-@customElement('melser-table-row')
+@customElement('table-row')
 export class MelserTableRow extends LitElement {
     @property({ type: Object }) row!: DataRow;
     @property({ type: Array }) columns!: TableColumn[];
@@ -157,14 +157,14 @@ export class MelserTableRow extends LitElement {
     private renderDefaultCell(col: TableColumn) {
         // Use MelserTableCell which now handles Registry and Edit modes cleanly
         return html`
-            <melser-table-cell
+            <table-cell
                 .row="${this.row}"
                 .column="${col}"
                 .value="${this.isEditing ? (this.editData?.[col.key as string] ?? this.row[col.key as string]) : this.row[col.key as string]}"
                 .isEditing="${this.isEditing && col.editable !== false}"
                 .type="${col.type || 'text'}"
                 @cell-change="${(e: CustomEvent) => this.dispatchCellChange(col.key as string, e.detail.value)}"
-            ></melser-table-cell>
+            ></table-cell>
 
         `;
     }

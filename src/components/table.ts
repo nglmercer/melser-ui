@@ -3,9 +3,9 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { TableLogic } from '../core/TableLogic';
 import type { TableConfig, TableColumn, SelectColumn, DataRow, SortConfig, TableStyles } from '../core/types';
 import { InputVar } from '../core/Base';
-import './melser-table-cell';
-import './melser-table-row';
-import './melser-table-actions';
+import './table-cell';
+import './table-row';
+import './table-actions';
 import './base-input';
 
 
@@ -13,7 +13,7 @@ import './melser-number-input';
 import './melser-select';
 import './melser-switch';
 import './melser-date-picker';
-// import './melser-table-row'; // Available for future refactoring
+// import './table-row'; // Available for future refactoring
 import { CellRendererRegistry } from '../core/CellRendererRegistry';
 
 @customElement('data-table-lit')
@@ -195,7 +195,7 @@ export class DataTableLit extends LitElement {
             th, td { padding: 0.5rem 0.75rem; font-size: 0.75rem; }
         }
         
-        melser-table-row {
+        table-row {
             display: contents;
         }
     `;
@@ -406,7 +406,7 @@ export class DataTableLit extends LitElement {
                             const isExpanded = this.expandedRows.has(row.id);
 
                             return html`
-                                <melser-table-row
+                                <table-row
                                     .row=${row}
                                     .columns=${this.columns}
                                     .isSelected=${isSelected}
@@ -427,7 +427,7 @@ export class DataTableLit extends LitElement {
                                 >
 
                                     ${isExpanded ? html`<slot name="details-${row.id}" slot="details-${row.id}"></slot>` : nothing}
-                                </melser-table-row>
+                                </table-row>
                             `;
                         })}
 
@@ -502,11 +502,11 @@ export class DataTableLit extends LitElement {
 
         // 4. Default Implementation
         return html`
-            <melser-table-actions
+            <table-actions
                 .row=${row}
                 .isEditing=${isEditing}
                 .icons=${this.icons}
-            ></melser-table-actions>
+            ></table-actions>
         `;
     }
 
@@ -600,14 +600,14 @@ export class DataTableLit extends LitElement {
         // 3.5 Use MelserTableCell for rich types
         if (['status', 'progress', 'avatar', 'currency', 'badge'].includes(col.type as string)) {
              return html`
-                <melser-table-cell
+                <table-cell
                     .row=${effectiveRow}
                     .column=${col}
                     .value=${String(val)}
                     .type=${col.type as string}
                     .isEditing=${isEditing && col.editable !== false}
                     @cell-change=${(e: CustomEvent) => this.handleInputChange(col.key as string, e.detail.value)}
-                ></melser-table-cell>`;
+                ></table-cell>`;
         }
 
         // 4. Edit Mode - Component Mapping

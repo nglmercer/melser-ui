@@ -3,6 +3,7 @@ import './styles/theme.css';
 
 import './index';
 import './components/melser-playground-form'; // New Playground Component
+import './components/table'; // New Table Component
 import { setTheme } from './index';
 if (typeof window !== 'undefined') {
   const htmlElement = document.documentElement;
@@ -31,9 +32,13 @@ if (typeof window !== 'undefined') {
   const init = () => applyTheme(getCurrentTheme());
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', ()=>{
+      init();
+      initTable();
+    });
   } else {
     init();
+    initTable();
   }
   const setupGlobalFormHandler = () => {
     // Crear contenedor para resultados si no existe
@@ -257,5 +262,74 @@ if (typeof window !== 'undefined') {
   } else {
     setupGlobalFormHandler();
   }
+  function initTable(){
+    setTimeout(()=>{
+      tableInit()
+    },3000)
+  }
+  function tableInit(){
+    const table = document.getElementById('demo-table');
+    console.log(table);
+    if (!table)return
+    table.addEventListener('row-action', (event) => {
+      console.log(event.detail);
+    });
+    table.columns = [
+    { key: 'id', label: 'ID', type: 'number' },
+    { key: 'name', label: 'Name', type: 'avatar' },
+    { key: 'email', label: 'Email', type: 'string' },
+    { key: 'status', label: 'Status', type: 'string' },
+    { key: 'progress', label: 'Progress', type: 'number' },
+    { key: 'salary', label: 'Salary', type: 'number' },
+    { key: 'tags', label: 'Tags', type: 'badge' },
+    { key: 'actions', label: 'Actions', type: 'actions' }
+    ];
 
+    table.data = [
+    {
+    id: 1,
+    name: 'John Doe',
+    email: 'john@example.com',
+    status: 'active',
+    progress: 75,
+    salary: 75000,
+    tags: ['developer', 'frontend']
+    },
+    {
+    id: 2,
+    name: 'Jane Smith',
+    email: 'jane@example.com',
+    status: 'inactive',
+    progress: 45,
+    salary: 68000,
+    tags: ['designer', 'ui/ux']
+    },
+    {
+    id: 3,
+    name: 'Michael Johnson',
+    email: 'michael@example.com',
+    status: 'active',
+    progress: 90,
+    salary: 82000,
+    tags: ['manager', 'agile']
+    },
+    {
+    id: 4,
+    name: 'Sarah Williams',
+    email: 'sarah@example.com',
+    status: 'inactive',
+    progress: 30,
+    salary: 61000,
+    tags: ['marketing', 'seo']
+    }
+    ];
+
+    table.config = {
+    pagination: true,
+    pageSize: 5,
+    selection: true,
+    density: 'Normal',
+    expandable: false
+    };
+  }
 }

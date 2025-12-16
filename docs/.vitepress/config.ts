@@ -9,7 +9,7 @@ export default defineConfig({
     template: {
       compilerOptions: {
         // Le dice a Vue que cualquier etiqueta que empiece con "me-" es un Custom Element
-        isCustomElement: (tag) => tag.startsWith('me-') || tag.startsWith('base-')
+        isCustomElement: (tag) => tag.startsWith('me-') || tag.startsWith('base-') || tag.startsWith('melser-') || tag.startsWith('data-table-')
       }
     }
   },

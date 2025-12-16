@@ -13,7 +13,7 @@ export interface ActionIcons {
     [key: string]: TemplateResult | undefined;
 }
 
-@customElement('melser-table-actions')
+@customElement('table-actions')
 export class MelserTableActions extends LitElement {
     @property({ type: Object }) row!: DataRow;
     @property({ type: Boolean }) isEditing = false;

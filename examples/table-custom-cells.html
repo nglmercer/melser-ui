@@ -88,7 +88,7 @@
     <script type="module">
         import { html } from 'lit';
         import { CellRendererRegistry } from '../src/core/CellRendererRegistry.ts';
-        import '../src/components/melser-table-cell.ts';
+        import '../src/components/table-cell.ts';
 
         // 1. Register a renderer for 'avatar' type columns
         // This will replace the hardcoded <div slot="cell-X-name"> mess
@@ -298,7 +298,14 @@
         table.addEventListener('row-action', (e) => {
             console.log('Row action:', e.detail);
             if (e.detail.action === 'view') {
-                console.log('Row Data:', e.detail.row);
+                console.log('Row Data:', e.detail);
+            }
+            if (e.detail.action === 'delete') {
+                console.log('Row Data:', e.detail);
+                if(confirm('Are you sure you want to delete this row?')) {
+                    table.data = table.data.filter(r => r.id !== e.detail.id);
+                    console.log('Row deleted');
+                }
             }
         });
         setTimeout(() => {
