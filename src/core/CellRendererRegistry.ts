@@ -2,7 +2,8 @@ import type { TemplateResult } from 'lit';
 import type { DataRow, TableColumn } from './types';
 
 export type RendererMatcher = string | ((val: any, row: DataRow, col: TableColumn) => boolean);
-export type RendererFunction = (val: any, row: DataRow, col: TableColumn) => TemplateResult;
+export type RendererFunction = (val: any, row: DataRow, col: TableColumn, isEditing?: boolean) => TemplateResult;
+
 
 interface RegistryEntry {
     matcher: RendererMatcher;

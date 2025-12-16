@@ -37,7 +37,9 @@ export interface SelectColumn<T = any> extends BaseColumn<T> {
 
 export interface ActionColumn<T = any> extends BaseColumn<T> {
   type: 'actions';
+  component?: string;
 }
+
 
 export interface CustomColumn<T = any> extends BaseColumn<T> {
   type: 'custom';

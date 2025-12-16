@@ -22,7 +22,9 @@ export { MelserSchemaForm } from './components/melser-schema-form';
 export { DataTableLit } from './components/table';
 export { MelserTableRow } from './components/melser-table-row';
 export { MelserTableCell } from './components/melser-table-cell';
+export { MelserTableActions } from './components/melser-table-actions';
 export type { InputData, MelserDataType, SelectOption } from './types/index';
+
 export type { TableColumn, TableConfig, DataRow, TableStyles } from './core/types';
 
 // Export registration utilities

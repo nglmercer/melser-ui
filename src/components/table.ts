@@ -5,7 +5,9 @@ import type { TableConfig, TableColumn, SelectColumn, DataRow, SortConfig, Table
 import { InputVar } from '../core/Base';
 import './melser-table-cell';
 import './melser-table-row';
+import './melser-table-actions';
 import './base-input';
+
 
 import './melser-number-input';
 import './melser-select';
@@ -111,85 +113,6 @@ export class DataTableLit extends LitElement {
             color: ${InputVar['text-color']};
         }
 
-        tr.data-row:hover td {
-            background: ${InputVar['bg-disabled']}; /* Darker hover for better contrast */
-        }
-        
-        tr.selected td {
-            background: rgba(${InputVar['focus-ring-color']}, 0.1);
-        }
-        
-        tr.editing td {
-            background: ${InputVar['bg-disabled']};
-            border-top: 1px solid ${InputVar['border-color']};
-            border-bottom: 1px solid ${InputVar['border-color']};
-        }
-        
-        /* Ensure inputs in editing rows stand out */
-        tr.editing base-input,
-        tr.editing me-select,
-        tr.editing me-number-input,
-        tr.editing me-date-picker,
-        tr.editing input {
-            --base-input-bg: ${InputVar['bg']};
-            --base-input-border-color: ${InputVar['text-color-placeholder']}; /* Stronger border for inputs */
-        }
-
-        tr.details-row td {
-            background: ${InputVar['bg-disabled']};
-            padding: 0;
-            box-shadow: inset 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Buttons */
-        .expand-btn, .action-btn {
-            background: none; 
-            border: none; 
-            color: ${InputVar['text-color-placeholder']}; 
-            cursor: pointer; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            border-radius: ${InputVar.radius};
-            padding: 4px;
-        }
-        .expand-btn:hover, .action-btn:hover {
-            background: ${InputVar['bg-hover']};
-            color: ${InputVar['text-color']};
-        }
-        .expand-btn.expanded {
-            transform: rotate(90deg);
-            color: ${InputVar['bg']};
-        }
-
-        .save-btn {
-            background: ${InputVar['bg']};
-            color: ${InputVar['text-color']};
-            border-radius: ${InputVar.radius};
-        }
-        .save-btn:hover {
-            opacity: 0.9;
-        }
-        .delete-btn { color: ${InputVar['error-color']}; }
-
-        /* Form Elements - Default Styles for native inputs if used fallback */
-        input[type="text"], input[type="number"], select {
-            background: ${InputVar.bg};
-            border: 1px solid ${InputVar['border-color']};
-            color: ${InputVar['text-color']};
-            border-radius: ${InputVar['radius']};
-            padding: 0.25rem 0.5rem;
-            font-size: ${InputVar['font-size']};
-            width: 100%;
-            box-sizing: border-box;
-            outline: none;
-        }
-        
-        input[type="text"]:focus, input[type="number"]:focus, select:focus {
-            border-color: ${InputVar['border-color']};
-        }
-
         /* Checkbox */
         input[type="checkbox"] {
             appearance: none;
@@ -267,25 +190,16 @@ export class DataTableLit extends LitElement {
             border-top: 4px solid ${InputVar['text-color']};
         }
 
-        .project-cell { display: flex; align-items: center; gap: 12px; }
-        .icon-box {
-            width: 32px; height: 32px; border-radius: 6px;
-            display: flex; align-items: center; justify-content: center;
-            background: ${InputVar['bg-disabled']}; border: 1px solid ${InputVar['border-color']};
-            color: ${InputVar['text-color-placeholder']};
-        }
-
-        
         /* Mobile */
         @media (max-width: 640px) {
             th, td { padding: 0.5rem 0.75rem; font-size: 0.75rem; }
-            .icon-box { width: 24px; height: 24px; font-size: 14px; }
         }
         
         melser-table-row {
             display: contents;
         }
     `;
+
 
 
     // --- Lifecycle ---
@@ -507,9 +421,11 @@ export class DataTableLit extends LitElement {
                                     
                                     @row-select=${this.handleSelectRowEvent}
                                     @row-expand=${this.handleExpandRowEvent}
-                                    @row-action=${(e: CustomEvent) => this.dispatchEvent(new CustomEvent('row-action', { detail: e.detail, bubbles: true, composed: true }))}
+                                    @row-action=${(e: CustomEvent) => { e.stopPropagation(); this.dispatchEvent(new CustomEvent('row-action', { detail: e.detail, bubbles: true, composed: true })); }}
+                                    @table-action=${(e: CustomEvent) => this.handleTableAction(e)}
                                     @cell-change=${(e: CustomEvent) => this.handleInputChange(e.detail.key, e.detail.value)}
                                 >
+
                                     ${isExpanded ? html`<slot name="details-${row.id}" slot="details-${row.id}"></slot>` : nothing}
                                 </melser-table-row>
                             `;
@@ -569,37 +485,59 @@ export class DataTableLit extends LitElement {
             composed: true
         }));
     }
-
+    // @ts-ignore
     private renderActions(row: DataRow, col: TableColumn, isEditing: boolean) {
-        if (isEditing && col) {
-            return html`
-                <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                    <button class="action-btn save-btn" @click=${(e:Event) => { e.stopPropagation(); this.handleSave(row.id); }}>
-                        ${this.icons.save}
-                    </button>
-                    <button class="action-btn" @click=${(e:Event) => { e.stopPropagation(); this.handleCancel(); }}>
-                         ${this.icons.cancel}
-                    </button>
-                </div>
-            `;
+        // 1. Custom Render Function (Highest Priority)
+        // Allows full control via column definition configuration
+        if (col.render) {
+            return col.render(row);
         }
+
+        // 2. Registry Override (Global Priority)
+        // Allows replacing 'actions' renderer globally via CellRendererRegistry
+        const registryRenderer = CellRendererRegistry.getInstance().getRenderer(null, row, col);
+        if (registryRenderer) {
+            return registryRenderer(null, row, col, isEditing);
+        }
+
+        // 4. Default Implementation
         return html`
-            <div style="display: flex; justify-content: flex-end; gap: 4px;">
-                <button class="action-btn" @click=${(e:Event) => { e.stopPropagation(); this.handleEdit(row); }}>
-                    ${this.icons.edit}
-                </button>
-                <button class="action-btn" title="View Data" @click=${(e:Event) => { e.stopPropagation(); this.handleView(row); }}>
-                    ${this.icons.view}
-                </button>
-                <button class="action-btn delete-btn" @click=${(e:Event) => { e.stopPropagation(); this.handleDelete(row.id); }}>
-                    ${this.icons.delete}
-                </button>
-                <button class="action-btn">
-                     ${this.icons.more}
-                </button>
-            </div>
+            <melser-table-actions
+                .row=${row}
+                .isEditing=${isEditing}
+                .icons=${this.icons}
+            ></melser-table-actions>
         `;
     }
+
+    private handleTableAction(e: CustomEvent) {
+        const { action, row, id } = e.detail;
+        switch (action) {
+            case 'edit':
+                this.handleEdit(row);
+                break;
+            case 'save':
+                this.handleSave(id);
+                break;
+            case 'cancel':
+                this.handleCancel();
+                break;
+            case 'delete':
+                this.handleDelete(id);
+                break;
+            case 'view':
+                this.handleView(row);
+                break;
+            default:
+                // Re-emit generic action if it's something custom
+                this.dispatchEvent(new CustomEvent('row-action', {
+                    detail: { action, row, id },
+                    bubbles: true,
+                    composed: true
+                }));
+        }
+    }
+
 
     renderCell(row: DataRow, col: TableColumn, isEditing: boolean) {
         // Use edited data if this row is being edited
