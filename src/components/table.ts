@@ -4,7 +4,7 @@ import { TableLogic } from '../core/TableLogic';
 import type { TableConfig, TableColumn, SelectColumn, DataRow, SortConfig, TableStyles } from '../core/types';
 import { InputVar } from '../core/Base';
 import './melser-table-cell';
-
+import { CellRendererRegistry } from '../core/CellRendererRegistry';
 
 @customElement('data-table-lit')
 export class DataTableLit extends LitElement {
@@ -157,7 +157,7 @@ export class DataTableLit extends LitElement {
 
         .save-btn {
             background: ${InputVar['bg']};
-            color: white;
+            color: ${InputVar['text-color']};
             border-radius: ${InputVar.radius};
         }
         .save-btn:hover {
@@ -235,7 +235,7 @@ export class DataTableLit extends LitElement {
         button.page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         button.page-btn.active {
             background: ${InputVar['bg']};
-            color: white;
+            color: ${InputVar['text-color']};
             font-weight: bold;
             border-color: ${InputVar['border-color']};
         }
@@ -536,6 +536,14 @@ export class DataTableLit extends LitElement {
         `;
     }
 
+    private handleView(row: DataRow) {
+        (this as HTMLElement).dispatchEvent(new CustomEvent('row-action', {
+            detail: { action: 'view', row },
+            bubbles: true,
+            composed: true
+        }));
+    }
+
     private renderActions(row: DataRow, col: TableColumn, isEditing: boolean) {
         if (isEditing && col) {
             return html`
@@ -554,7 +562,7 @@ export class DataTableLit extends LitElement {
                 <button class="action-btn" @click=${(e:Event) => { e.stopPropagation(); this.handleEdit(row); }}>
                     ${this.icons.edit}
                 </button>
-                <button class="action-btn" title="View Data" @click=${(e:Event) => { e.stopPropagation(); console.log('Row Data:', row); }}>
+                <button class="action-btn" title="View Data" @click=${(e:Event) => { e.stopPropagation(); this.handleView(row); }}>
                     ${this.icons.view}
                 </button>
                 <button class="action-btn delete-btn" @click=${(e:Event) => { e.stopPropagation(); this.handleDelete(row.id); }}>
@@ -568,23 +576,37 @@ export class DataTableLit extends LitElement {
     }
 
     renderCell(row: DataRow, col: TableColumn, isEditing: boolean) {
+        // Use edited data if this row is being edited
+        const effectiveRow = isEditing ? this.editFormData : row;
+        const val = effectiveRow[col.key as string];
+
         // 1. Custom Slot Rendering - NUEVO SISTEMA
         const slotName = `cell-${row.id}-${String(col.key)}`;
         const slot = this.querySelector(`[slot="${slotName}"]`);
         
         if (slot) {
             // Si hay un slot personalizado, usarlo
-            slot.setAttribute('data-row', JSON.stringify(row));
+            // Set attributes for styling and dataset usage
+            slot.setAttribute('data-row', JSON.stringify(effectiveRow));
             slot.setAttribute('data-column', JSON.stringify(col));
-            slot.setAttribute('data-value', String(row[col.key as string] || ''));
+            slot.setAttribute('data-value', String(val || ''));
             slot.setAttribute('data-editing', String(isEditing));
-            
+            // Also set standard 'value' attribute which many components observe
+            slot.setAttribute('value', String(val || ''));
+
+            // Set properties directly for complex components (like MelserTableCell)
+            // that might expect objects or booleans
+            const el = slot as any;
+            if (el.value !== val) el.value = val;
+            if (JSON.stringify(el.row) !== JSON.stringify(effectiveRow)) el.row = effectiveRow; // Simple check to avoid loops if needed, though assignment is usually safe
+            el.isEditing = isEditing;
+
             // Permitir que el slot maneje eventos de edición
             if (isEditing) {
-                slot.addEventListener('cell-change', (e: Event) => {
-                    const customEvent = e as CustomEvent;
-                    this.handleInputChange(col.key as string, customEvent.detail.value);
-                });
+                 slot.addEventListener('cell-change', (e: Event) => {
+                     const customEvent = e as CustomEvent;
+                     this.handleInputChange(col.key as string, customEvent.detail.value);
+                 }, { once: true });
             }
             
             return html`<slot name="${slotName}"></slot>`;
@@ -592,7 +614,7 @@ export class DataTableLit extends LitElement {
 
         // 2. Custom Function Overrides (mantener compatibilidad anterior)
         if (isEditing && col.editRender) {
-             return col.editRender(row, (val: any) => this.handleInputChange(col.key as string, val));
+             return col.editRender(effectiveRow, (val: any) => this.handleInputChange(col.key as string, val));
         }
         if (!isEditing && col.render) {
              return col.render(row);
@@ -603,13 +625,19 @@ export class DataTableLit extends LitElement {
             return this.renderActions(row, col, isEditing);
         }
 
-        const val = row[col.key as string];
-
+        // 3.1 Registry-based Rendering (NEW)
+        if (!isEditing) {
+            const renderer = CellRendererRegistry.getInstance().getRenderer(val, effectiveRow, col);
+            if (renderer) {
+                return renderer(val, effectiveRow, col);
+            }
+        }
+        
         // 3.5 Use MelserTableCell for rich types
         if (['status', 'progress', 'avatar', 'currency', 'badge'].includes(col.type as string)) {
              return html`
                 <melser-table-cell
-                    .row=${row}
+                    .row=${effectiveRow}
                     .column=${col}
                     .value=${String(val)}
                     .type=${col.type as string}

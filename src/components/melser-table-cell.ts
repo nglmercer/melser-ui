@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { DataRow, TableColumn } from '../core/types';
+import { InputVar } from '../core/Base';
+import { cellRenderers } from '../core/CellRendererRegistry';
 
 @customElement('melser-table-cell')
 export class MelserTableCell extends LitElement {
@@ -14,12 +16,14 @@ export class MelserTableCell extends LitElement {
         :host {
             display: block;
             width: 100%;
+            color: ${InputVar['text-color']};
+            font-size: ${InputVar['font-size']};
         }
         
         .cell-container {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: ${InputVar.gap};
             width: 100%;
         }
         
@@ -49,14 +53,14 @@ export class MelserTableCell extends LitElement {
         .progress-bar {
             width: 100%;
             height: 8px;
-            background-color: #e5e7eb;
+            background-color: ${InputVar['border-color']};
             border-radius: 4px;
             overflow: hidden;
         }
         
         .progress-fill {
             height: 100%;
-            background-color: #3b82f6;
+            background-color: ${InputVar['focus-ring-color']};
             transition: width 0.3s ease;
         }
         
@@ -64,27 +68,30 @@ export class MelserTableCell extends LitElement {
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background-color: #6b7280;
+            background-color: ${InputVar['border-color']};
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: ${InputVar['text-color']};
             font-weight: 600;
             font-size: 0.875rem;
         }
         
         .editable-input {
             width: 100%;
-            padding: 0.25rem 0.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
+            padding: ${InputVar['padding-small']};
+            background-color: ${InputVar.bg};
+            border: 1px solid ${InputVar['border-color']};
+            border-radius: ${InputVar.radius};
             font-size: inherit;
+            color: ${InputVar['text-color']};
+            transition: ${InputVar['focus-transition']};
         }
         
         .editable-input:focus {
             outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            border-color: ${InputVar['focus-ring-color']};
+            box-shadow: 0 0 0 2px var(--base-input-focus-ring-color, #3b82f6);
         }
     `;
 
@@ -92,8 +99,14 @@ export class MelserTableCell extends LitElement {
         if (this.isEditing) {
             return this.renderEditMode();
         }
+
+        // 1. Try Registry first
+        const registeredRenderer = cellRenderers.getRenderer(this.value, this.row, this.column);
+        if (registeredRenderer) {
+            return registeredRenderer(this.value, this.row, this.column);
+        }
         
-        // Use this.type directly which is passed explicitly, or fall back to column.type if available
+        // 2. Fallback to built-in logic
         const cellType = this.type !== 'text' ? this.type : (this.column?.type || 'text');
 
         switch (cellType) {
@@ -115,7 +128,7 @@ export class MelserTableCell extends LitElement {
     private renderEditMode() {
         return html`
             <input class="editable-input"
-                   type="${this.type}"
+                   type="${this.type === 'number' ? 'number' : 'text'}"
                    .value="${this.value}"
                    @input="${this.handleInputChange}"
                    @blur="${this.handleBlur}">
@@ -186,11 +199,11 @@ export class MelserTableCell extends LitElement {
             'completed': 'status-active',
             'cancelled': 'status-inactive'
         };
-        return statusMap[status.toLowerCase()] || 'status-pending';
+        return statusMap[String(status).toLowerCase()] || 'status-pending';
     }
 
     private getInitials(name: string): string {
-        return name
+        return String(name || '')
             .split(' ')
             .map(word => word[0])
             .join('')

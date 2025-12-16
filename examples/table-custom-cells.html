@@ -81,49 +81,76 @@
         <h1>Data Table con Celdas Personalizadas</h1>
         
         <data-table-lit id="demo-table">
-            <!-- Slots personalizados para celdas específicas -->
-            <melser-table-cell slot="cell-1-name" 
-                               type="avatar"
-                               value="John Doe">
-            </melser-table-cell>
-            
-            <melser-table-cell slot="cell-1-status" 
-                               type="status"
-                               value="active">
-            </melser-table-cell>
-            
-            <melser-table-cell slot="cell-2-name" 
-                               type="avatar"
-                               value="Jane Smith">
-            </melser-table-cell>
-            
-            <melser-table-cell slot="cell-2-status" 
-                               type="status"
-                               value="inactive">
-            </melser-table-cell>
-            
-            <!-- Slots personalizados con HTML puro -->
-            <div slot="cell-3-name" class="custom-avatar">
-                <div class="avatar-img">MJ</div>
-                <span>Michael Johnson</span>
-            </div>
-            
-            <div slot="cell-3-status" class="custom-status status-active">
-                <span>●</span>
-                <span>Active</span>
-            </div>
-            
-            <div slot="cell-4-name" class="custom-avatar">
-                <div class="avatar-img">SW</div>
-                <span>Sarah Williams</span>
-            </div>
-            
-            <div slot="cell-4-status" class="custom-status status-inactive">
-                <span>●</span>
-                <span>Inactive</span>
-            </div>
+            <!-- Slots are no longer needed for dynamic rows! Use the registry below. -->
         </data-table-lit>
     </div>
+
+    <script type="module">
+        import { html } from 'lit';
+        import { CellRendererRegistry } from '../src/core/CellRendererRegistry.ts';
+        import '../src/components/melser-table-cell.ts';
+
+        // 1. Register a renderer for 'avatar' type columns
+        // This will replace the hardcoded <div slot="cell-X-name"> mess
+        CellRendererRegistry.getInstance().register(
+            'avatar', 
+            (val, row) => {
+                if (!val) return html``;
+                // Example of conditional rendering logic inside the renderer
+                const firstParam = row.id % 2 === 0 ? 'even' : 'odd';
+                
+                // We can return any HTML here. Let's reuse standard styles for consistency
+                const initials = val.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+                return html`
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                         <div style="
+                            width: 32px; height: 32px; border-radius: 50%;
+                            background: ${row.id % 2 === 0 ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : '#6b7280'};
+                            display: flex; align-items: center; justify-content: center;
+                            color: white; font-weight: 600; font-size: 0.875rem;">
+                            ${initials}
+                        </div>
+                        <span>${val}</span>
+                    </div>
+                `;
+            }
+        );
+
+        // 2. Register a renderer by logic (Status column)
+        CellRendererRegistry.getInstance().register(
+            (val, row, col) => col.key === 'status', // Matcher function
+            (val) => {
+                const status = String(val).toLowerCase();
+                let colorClass = 'status-pending';
+                if (status === 'active') colorClass = 'status-active';
+                if (status === 'inactive') colorClass = 'status-inactive';
+                
+                return html`
+                    <span class="custom-status ${colorClass}">
+                        ${status === 'active' ? '●' : '○'} ${val}
+                    </span>
+                `;
+            }
+        );
+        
+        // 3. Register a renderer for Badge/Tags
+        CellRendererRegistry.getInstance().register(
+            'badge',
+            (val) => {
+                const tags = Array.isArray(val) ? val : [val];
+                return html`
+                    <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                        ${tags.map(t => html`
+                            <span style="background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">
+                                ${t}
+                            </span>
+                        `)}
+                    </div>
+                `;
+            }
+        );
+
+    </script>
 
     <script>
         // Configurar la tabla
@@ -131,12 +158,13 @@
         
         table.columns = [
             { key: 'id', label: 'ID', type: 'number' },
-            { key: 'name', label: 'Name', type: 'string' },
+            { key: 'name', label: 'Name', type: 'avatar' },
             { key: 'email', label: 'Email', type: 'string' },
             { key: 'status', label: 'Status', type: 'string' },
             { key: 'progress', label: 'Progress', type: 'number' },
             { key: 'salary', label: 'Salary', type: 'number' },
-            { key: 'tags', label: 'Tags', type: 'badge' }
+            { key: 'tags', label: 'Tags', type: 'badge' },
+            { key: 'actions', label: 'Actions', type: 'actions' }
         ];
         
         table.data = [
@@ -197,7 +225,50 @@
         
         table.addEventListener('row-action', (e) => {
             console.log('Row action:', e.detail);
+            if (e.detail.action === 'view') {
+                console.log('Row Data:', e.detail.row);
+            }
         });
+        setTimeout(() => {
+        table.data = [
+            {
+                id: 1,
+                name: 'Alice',
+                email: 'alice@example.com',
+                status: 'active',
+                progress: 75,
+                salary: 75000,
+                tags: ['developer', 'frontend']
+            },
+            {
+                id: 2,
+                name: 'Bob',
+                email: 'bob@example.com',
+                status: 'inactive',
+                progress: 45,
+                salary: 68000,
+                tags: ['designer', 'ui/ux']
+            },
+            {
+                id: 3,
+                name: 'Charlie',
+                email: 'charlie@example.com',
+                status: 'active',
+                progress: 90,
+                salary: 82000,
+                tags: ['manager', 'agile']
+            },
+            {
+                id: 4,
+                name: 'David',
+                email: 'david@example.com',
+                status: 'inactive',
+                progress: 30,
+                salary: 61000,
+                tags: ['marketing', 'seo']
+            }
+        ];
+        }, 3000);
     </script>
 </body>
 </html>

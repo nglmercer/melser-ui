@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { DataRow, TableColumn } from '../core/types';
+import { InputVar } from '../core/Base';
+import './melser-table-cell'; // Ensure element is defined
 
 @customElement('melser-table-row')
 export class MelserTableRow extends LitElement {
@@ -18,11 +20,11 @@ export class MelserTableRow extends LitElement {
         }
         
         td {
-            padding: var(--cell-padding, 1rem);
-            border-bottom: 1px solid var(--border-color, #e5e7eb);
-            font-size: var(--font-size-small, 0.875rem);
+            padding: ${InputVar.padding};
+            border-bottom: 1px solid ${InputVar['border-color']};
+            font-size: ${InputVar['font-size-small']};
             vertical-align: middle;
-            color: var(--text-color, #374151);
+            color: ${InputVar['text-color']};
         }
         
         ::slotted(*) {
@@ -49,13 +51,16 @@ export class MelserTableRow extends LitElement {
     }
 
     private renderDefaultCell(col: TableColumn) {
-        if (this.isEditing && col.editable !== false) {
-            return html`
-                <input type="text" 
-                       .value="${this.editData[col.key as string] || ''}"
-                       @input="${(e: Event) => this.onCellChange(col.key as string, (e.target as HTMLInputElement).value)}">
-            `;
-        }
-        return html`${this.row[col.key as string]}`;
+        // Use MelserTableCell which now handles Registry and Edit modes cleanly
+        return html`
+            <melser-table-cell
+                .row="${this.row}"
+                .column="${col}"
+                .value="${this.isEditing ? (this.editData?.[col.key as string] ?? this.row[col.key as string]) : this.row[col.key as string]}"
+                .isEditing="${this.isEditing && col.editable !== false}"
+                .type="${col.type || 'text'}"
+                @cell-change="${(e: CustomEvent) => this.onCellChange(col.key as string, e.detail.value)}"
+            ></melser-table-cell>
+        `;
     }
 }
