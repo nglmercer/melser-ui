@@ -511,11 +511,11 @@
 
         demoTable.addEventListener('row-action', (e) => {
           console.log(e.detail);
-            logTableEvent(`Action: ${e.detail.action} on ID: ${e.detail.row.id}`);
+            logTableEvent(`Action: ${e.detail.action} on ID: ${e.detail.id}`);
             if (e.detail.action === 'delete') {
                 if(confirm('Are you sure you want to delete this row?')) {
-                    demoTable.data = demoTable.data.filter(r => r.id !== e.detail.row.id);
-                    logTableEvent(`Row ${e.detail.row.id} deleted.`);
+                    demoTable.data = demoTable.data.filter(r => r.id !== e.detail.id);
+                    logTableEvent(`Row ${e.detail.id} deleted.`);
                 }
             }
         });

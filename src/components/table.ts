@@ -150,6 +150,21 @@ export class DataTableLit extends LitElement {
             background: ${InputVar.bg};
         }
 
+        .pagination-info {
+            font-size: ${InputVar['font-size-small']};
+            color: ${InputVar['text-color-placeholder']};
+        }
+
+        .pagination-info strong {
+            color: ${InputVar['text-color']};
+        }
+
+        .no-data {
+            text-align: center;
+            color: ${InputVar['text-color-placeholder']};
+            padding: 2rem;
+        }
+
         button.page-btn {
             background: transparent;
             border: 1px solid ${InputVar['border-color']};
@@ -301,7 +316,7 @@ export class DataTableLit extends LitElement {
     }
 
     private dispatchSelectionEvent() {
-        (this as HTMLElement).dispatchEvent(new CustomEvent('selection-change', {
+        this.dispatchEvent(new CustomEvent('selection-change', {
             detail: { selectedIds: Array.from(this.selectedRows) },
             bubbles: true,
             composed: true
@@ -319,7 +334,7 @@ export class DataTableLit extends LitElement {
     }
 
     private handleSave(id: string | number) {
-        (this as HTMLElement).dispatchEvent(new CustomEvent('row-save', {
+        this.dispatchEvent(new CustomEvent('row-save', {
             detail: { id, data: this.editFormData },
             bubbles: true,
             composed: true
@@ -328,7 +343,7 @@ export class DataTableLit extends LitElement {
     }
 
     private handleDelete(id: string | number) {
-        (this as HTMLElement).dispatchEvent(new CustomEvent('row-action', {
+        this.dispatchEvent(new CustomEvent('row-action', {
             detail: { action: 'delete', id },
             bubbles: true,
             composed: true
@@ -383,7 +398,7 @@ export class DataTableLit extends LitElement {
                                         type="checkbox" 
                                         .checked=${allSelected}
                                         .indeterminate=${!allSelected && someSelected}
-                                        @ui:change=${(e: Event) => this.handleSelectAll(e, allCurrentIds)}
+                                        @change=${(e: Event) => this.handleSelectAll(e, allCurrentIds)}
                                     >
                                 </th>
                             ` : nothing}
@@ -434,7 +449,7 @@ export class DataTableLit extends LitElement {
                         ${paginated.length === 0 ? html`
                             <tr>
                                 <td colspan="${this.columns.length + (this.config.selection ? 1 : 0) + (this.config.expandable ? 1 : 0)}" 
-                                    style="text-align:center; color: ${InputVar['text-color-placeholder']}; padding: 2rem;">
+                                    class="no-data">
                                     No data available
                                 </td>
                             </tr>
@@ -451,8 +466,8 @@ export class DataTableLit extends LitElement {
 
         return html`
             <div class="footer">
-                <span style="font-size: ${InputVar['font-size-small']}; color: ${InputVar['text-color-placeholder']};">
-                    Showing <strong style="color: ${InputVar['text-color']}">${startRecord}</strong> to <strong style="color: ${InputVar['text-color']}">${endRecord}</strong> of <strong style="color: ${InputVar['text-color']}">${totalItems}</strong>
+                <span class="pagination-info">
+                    Showing <strong>${startRecord}</strong> to <strong>${endRecord}</strong> of <strong>${totalItems}</strong>
                 </span>
                 <div style="display: flex; gap: 0.5rem;">
                     <button class="page-btn" 
@@ -479,7 +494,7 @@ export class DataTableLit extends LitElement {
     }
 
     private handleView(row: DataRow) {
-        (this as HTMLElement).dispatchEvent(new CustomEvent('row-action', {
+        this.dispatchEvent(new CustomEvent('row-action', {
             detail: { action: 'view', row },
             bubbles: true,
             composed: true
@@ -539,65 +554,34 @@ export class DataTableLit extends LitElement {
     }
 
 
-    renderCell(row: DataRow, col: TableColumn, isEditing: boolean) {
-        // Use edited data if this row is being edited
-        const effectiveRow = isEditing ? this.editFormData : row;
-        const val = effectiveRow[col.key as string];
-
-        // 1. Custom Slot Rendering - NUEVO SISTEMA
+    private renderSlotCell(row: DataRow, effectiveRow: DataRow, col: TableColumn, val: any, isEditing: boolean) {
         const slotName = `cell-${row.id}-${String(col.key)}`;
         const slot = this.querySelector(`[slot="${slotName}"]`);
         
         if (slot) {
-            // Si hay un slot personalizado, usarlo
-            // Set attributes for styling and dataset usage
             slot.setAttribute('data-row', JSON.stringify(effectiveRow));
             slot.setAttribute('data-column', JSON.stringify(col));
             slot.setAttribute('data-value', String(val || ''));
             slot.setAttribute('data-editing', String(isEditing));
-            // Also set standard 'value' attribute which many components observe
             slot.setAttribute('value', String(val || ''));
 
-            // Set properties directly for complex components (like MelserTableCell)
-            // that might expect objects or booleans
             const el = slot as any;
             if (el.value !== val) el.value = val;
-            if (JSON.stringify(el.row) !== JSON.stringify(effectiveRow)) el.row = effectiveRow; // Simple check to avoid loops if needed, though assignment is usually safe
+            if (JSON.stringify(el.row) !== JSON.stringify(effectiveRow)) el.row = effectiveRow;
             el.isEditing = isEditing;
 
-            // Permitir que el slot maneje eventos de edición
             if (isEditing) {
                  slot.addEventListener('cell-change', (e: Event) => {
                      const customEvent = e as CustomEvent;
                      this.handleInputChange(col.key as string, customEvent.detail.value);
                  }, { once: true });
             }
-            
             return html`<slot name="${slotName}"></slot>`;
         }
+        return null;
+    }
 
-        // 2. Custom Function Overrides (mantener compatibilidad anterior)
-        if (isEditing && col.editRender) {
-             return col.editRender(effectiveRow, (val: any) => this.handleInputChange(col.key as string, val));
-        }
-        if (!isEditing && col.render) {
-             return col.render(row);
-        }
-
-        // 3. Actions Column
-        if (col.type === 'actions' || col.key === 'actions') {
-            return this.renderActions(row, col, isEditing);
-        }
-
-        // 3.1 Registry-based Rendering (NEW)
-        if (!isEditing) {
-            const renderer = CellRendererRegistry.getInstance().getRenderer(val, effectiveRow, col);
-            if (renderer) {
-                return renderer(val, effectiveRow, col);
-            }
-        }
-        
-        // 3.5 Use MelserTableCell for rich types
+    private renderRichTypeCell(effectiveRow: DataRow, col: TableColumn, val: any, isEditing: boolean) {
         if (['status', 'progress', 'avatar', 'currency', 'badge'].includes(col.type as string)) {
              return html`
                 <table-cell
@@ -609,55 +593,53 @@ export class DataTableLit extends LitElement {
                     @cell-change=${(e: CustomEvent) => this.handleInputChange(col.key as string, e.detail.value)}
                 ></table-cell>`;
         }
+        return null;
+    }
 
-        // 4. Edit Mode - Component Mapping
-        if (isEditing && col.editable !== false) {
-             const type = col.type || 'string';
-             
-             switch (type) {
-                 case 'number':
-                     return html`
-                        <me-number-input
-                            .value="${Number(val) || 0}"
-                            @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
-                            style="width: 100%"
-                        ></me-number-input>`;
-                 case 'select':
-                     const selectCol = col as SelectColumn;
-                     const options = selectCol.options?.map(o => typeof o === 'string' ? {label: o, value: o} : o) || [];
-                     return html`
-                        <me-select
-                            .value="${val}"
-                            .options="${options}"
-                            @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
-                            style="width: 100%"
-                        ></me-select>`;
-
-                 case 'boolean':
-                     return html`
-                        <me-switch
-                             .value="${!!val}"
-                             @ui:change="${(e: any) => this.handleInputChange(col.key as string, e.target.checked)}"
-                        ></me-switch>`;
-                 case 'date':
-                      return html`
-                         <me-date-picker
-                            .value="${val}"
-                            @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
-                         ></me-date-picker>`;
-                 case 'string':
-                 default:
-                     return html`
-                        <base-input
-                            .value="${val || ''}"
-                            type="${type === 'string' ? 'text' : type}"
-                            @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
-                        ></base-input>`;
-
-             }
+    private renderStandardEditCell(col: TableColumn, val: any) {
+        const type = col.type || 'string';
+        switch (type) {
+            case 'number':
+                return html`
+                <me-number-input
+                    .value="${Number(val) || 0}"
+                    @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
+                    style="width: 100%"
+                ></me-number-input>`;
+            case 'select':
+                const selectCol = col as SelectColumn;
+                const options = selectCol.options?.map(o => typeof o === 'string' ? {label: o, value: o} : o) || [];
+                return html`
+                <me-select
+                    .value="${val}"
+                    .options="${options}"
+                    @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
+                    style="width: 100%"
+                ></me-select>`;
+            case 'boolean':
+                return html`
+                <me-switch
+                        .value="${!!val}"
+                        @ui:change="${(e: any) => this.handleInputChange(col.key as string, e.target.checked)}"
+                ></me-switch>`;
+            case 'date':
+                return html`
+                    <me-date-picker
+                    .value="${val}"
+                    @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
+                    ></me-date-picker>`;
+            case 'string':
+            default:
+                return html`
+                <base-input
+                    .value="${val || ''}"
+                    type="${type === 'string' ? 'text' : type}"
+                    @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
+                ></base-input>`;
         }
+    }
 
-        // 5. View Mode - Default Rendering
+    private renderStandardViewCell(col: TableColumn, val: any) {
         switch (col.type) {
              case 'boolean':
                  return html`<me-switch disabled .value="${!!val}"></me-switch>`;
@@ -675,5 +657,48 @@ export class DataTableLit extends LitElement {
              default:
                  return html`${val}`;
         }
+    }
+
+    renderCell(row: DataRow, col: TableColumn, isEditing: boolean) {
+        // Use edited data if this row is being edited
+        const effectiveRow = isEditing ? this.editFormData : row;
+        const val = effectiveRow[col.key as string];
+
+        // 1. Custom Slot Rendering
+        const slotRender = this.renderSlotCell(row, effectiveRow, col, val, isEditing);
+        if (slotRender) return slotRender;
+
+        // 2. Custom Function Overrides
+        if (isEditing && col.editRender) {
+             return col.editRender(effectiveRow, (val: any) => this.handleInputChange(col.key as string, val));
+        }
+        if (!isEditing && col.render) {
+             return col.render(row);
+        }
+
+        // 3. Actions Column
+        if (col.type === 'actions' || col.key === 'actions') {
+            return this.renderActions(row, col, isEditing);
+        }
+
+        // 4. Registry-based Rendering
+        if (!isEditing) {
+            const renderer = CellRendererRegistry.getInstance().getRenderer(val, effectiveRow, col);
+            if (renderer) {
+                return renderer(val, effectiveRow, col);
+            }
+        }
+        
+        // 5. Rich Types (MelserTableCell)
+        const richRender = this.renderRichTypeCell(effectiveRow, col, val, isEditing);
+        if (richRender) return richRender;
+
+        // 6. Edit Mode - Component Mapping
+        if (isEditing && col.editable !== false) {
+             return this.renderStandardEditCell(col, val);
+        }
+
+        // 7. View Mode - Default Rendering
+        return this.renderStandardViewCell(col, val);
     }
 }
