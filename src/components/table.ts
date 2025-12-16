@@ -4,6 +4,14 @@ import { TableLogic } from '../core/TableLogic';
 import type { TableConfig, TableColumn, SelectColumn, DataRow, SortConfig, TableStyles } from '../core/types';
 import { InputVar } from '../core/Base';
 import './melser-table-cell';
+import './melser-table-row';
+import './base-input';
+
+import './melser-number-input';
+import './melser-select';
+import './melser-switch';
+import './melser-date-picker';
+// import './melser-table-row'; // Available for future refactoring
 import { CellRendererRegistry } from '../core/CellRendererRegistry';
 
 @customElement('data-table-lit')
@@ -267,12 +275,18 @@ export class DataTableLit extends LitElement {
             color: ${InputVar['text-color-placeholder']};
         }
 
+        
         /* Mobile */
         @media (max-width: 640px) {
             th, td { padding: 0.5rem 0.75rem; font-size: 0.75rem; }
             .icon-box { width: 24px; height: 24px; font-size: 14px; }
         }
+        
+        melser-table-row {
+            display: contents;
+        }
     `;
+
 
     // --- Lifecycle ---
 
@@ -347,15 +361,21 @@ export class DataTableLit extends LitElement {
         this.dispatchSelectionEvent();
     }
 
-    private handleSelectRow(id: string | number) {
-        if (this.selectedRows.has(id)) {
-            this.selectedRows.delete(id);
-        } else {
+    private handleSelectRowEvent(e: CustomEvent) {
+        const { id, selected } = e.detail;
+        if (selected) {
             this.selectedRows.add(id);
+        } else {
+            this.selectedRows.delete(id);
         }
         this.selectedRows = new Set(this.selectedRows);
         this.dispatchSelectionEvent();
     }
+    
+    private handleExpandRowEvent(e: CustomEvent) {
+        this.handleExpandRow(e.detail.id);
+    }
+
 
     private handleExpandRow(id: string | number) {
         if (this.expandedRows.has(id)) {
@@ -442,6 +462,7 @@ export class DataTableLit extends LitElement {
                                     >
                                 </th>
                             ` : nothing}
+
                             ${this.columns.map(col => html`
                                 <th @click=${() => col.key !== 'actions' && this.handleSort(String(col.key))} 
                                     style="${col.key === 'actions' ? 'text-align: right; padding-right: 1.5rem' : ''}">
@@ -460,35 +481,29 @@ export class DataTableLit extends LitElement {
                             const isExpanded = this.expandedRows.has(row.id);
 
                             return html`
-                                <tr class="data-row ${isSelected ? 'selected' : ''} ${isEditing ? 'editing' : ''}">
-                                    ${this.config.expandable ? html`
-                                        <td style="padding: 0 0 0 1rem; text-align: center;">
-                                            <button class="expand-btn ${isExpanded ? 'expanded' : ''}" 
-                                                    @click=${(e: Event) => { e.stopPropagation(); this.handleExpandRow(row.id); }}>
-                                                ${this.icons.expand}
-                                            </button>
-                                        </td>
-                                    ` : nothing}
-                                    ${this.config.selection ? html`
-                                        <td style="padding-left: 1.5rem">
-                                            <input type="checkbox" 
-                                                .checked=${isSelected}
-                                                @change=${(e: Event) => { e.stopPropagation(); this.handleSelectRow(row.id); }}>
-                                        </td>
-                                    ` : nothing}
-                                    ${this.columns.map(col => html`
-                                        <td>${this.renderCell(row, col, isEditing)}</td>
-                                    `)}
-                                </tr>
-                                ${isExpanded ? html`
-                                    <tr class="details-row">
-                                        <td colspan="${this.columns.length + (this.config.selection ? 1 : 0) + (this.config.expandable ? 1 : 0)}">
-                                            <slot name="details-${row.id}"></slot>
-                                        </td>
-                                    </tr>
-                                ` : nothing}
+                                <melser-table-row
+                                    .row=${row}
+                                    .columns=${this.columns}
+                                    .isSelected=${isSelected}
+                                    .isEditing=${isEditing}
+                                    .isExpanded=${isExpanded}
+                                    .editData=${this.editFormData}
+                                    
+                                    .hasSelection=${!!this.config.selection}
+                                    .hasExpansion=${!!this.config.expandable}
+                                    .icons=${this.icons}
+                                    .cellRenderer=${(r: DataRow, c: TableColumn, editing: boolean) => this.renderCell(r, c, editing)}
+                                    
+                                    @row-select=${this.handleSelectRowEvent}
+                                    @row-expand=${this.handleExpandRowEvent}
+                                    @row-action=${(e: CustomEvent) => this.dispatchEvent(new CustomEvent('row-action', { detail: e.detail, bubbles: true, composed: true }))}
+                                    @cell-change=${(e: CustomEvent) => this.handleInputChange(e.detail.key, e.detail.value)}
+                                >
+                                    ${isExpanded ? html`<slot name="details-${row.id}" slot="details-${row.id}"></slot>` : nothing}
+                                </melser-table-row>
                             `;
                         })}
+
                         ${paginated.length === 0 ? html`
                             <tr>
                                 <td colspan="${this.columns.length + (this.config.selection ? 1 : 0) + (this.config.expandable ? 1 : 0)}" 
