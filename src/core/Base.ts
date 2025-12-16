@@ -212,6 +212,11 @@ export abstract class MelserBaseInput<T = unknown> extends DynamicStyleMixin(Lit
       bubbles: true,
       composed: true
     }));
+    this.dispatchEvent(new CustomEvent('change', {
+      detail: this.getData(),
+      bubbles: true,
+      composed: true
+    }));
   }
 
   static styles: CSSResultGroup = [

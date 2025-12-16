@@ -425,6 +425,17 @@ export class DataTableLit extends LitElement {
         this.editFormData = { ...this.editFormData, [key]: value };
     }
 
+    private extractValue(e: any): any {
+        if (e.detail && e.detail.value !== undefined) {
+            return e.detail.value;
+        }
+        if (e.target && e.target.value !== undefined) {
+            return e.target.value;
+        }
+        return e.target.value;
+    }
+
+
     // --- Rendering ---
 
     render() {
@@ -458,7 +469,7 @@ export class DataTableLit extends LitElement {
                                         type="checkbox" 
                                         .checked=${allSelected}
                                         .indeterminate=${!allSelected && someSelected}
-                                        @change=${(e: Event) => this.handleSelectAll(e, allCurrentIds)}
+                                        @ui:change=${(e: Event) => this.handleSelectAll(e, allCurrentIds)}
                                     >
                                 </th>
                             ` : nothing}
@@ -670,7 +681,7 @@ export class DataTableLit extends LitElement {
                      return html`
                         <me-number-input
                             .value="${Number(val) || 0}"
-                            @change="${(e: any) => this.handleInputChange(col.key as string, e.detail?.value !== undefined ? e.detail.value : e.target.value)}"
+                            @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
                             style="width: 100%"
                         ></me-number-input>`;
                  case 'select':
@@ -680,20 +691,21 @@ export class DataTableLit extends LitElement {
                         <me-select
                             .value="${val}"
                             .options="${options}"
-                            @change="${(e: any) => this.handleInputChange(col.key as string, e.detail?.value !== undefined ? e.detail.value : e.target.value)}"
+                            @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
                             style="width: 100%"
                         ></me-select>`;
+
                  case 'boolean':
                      return html`
                         <me-switch
                              .value="${!!val}"
-                             @change="${(e: any) => this.handleInputChange(col.key as string, e.target.checked)}"
+                             @ui:change="${(e: any) => this.handleInputChange(col.key as string, e.target.checked)}"
                         ></me-switch>`;
                  case 'date':
                       return html`
                          <me-date-picker
                             .value="${val}"
-                            @change="${(e: any) => this.handleInputChange(col.key as string, e.detail?.value !== undefined ? e.detail.value : e.target.value)}"
+                            @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
                          ></me-date-picker>`;
                  case 'string':
                  default:
@@ -701,8 +713,9 @@ export class DataTableLit extends LitElement {
                         <base-input
                             .value="${val || ''}"
                             type="${type === 'string' ? 'text' : type}"
-                            @change="${(e: any) => this.handleInputChange(col.key as string, e.target.value)}"
+                            @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
                         ></base-input>`;
+
              }
         }
 
