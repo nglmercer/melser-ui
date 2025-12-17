@@ -14,6 +14,14 @@ import './melser-date-picker';
 // import './table-row'; // Available for future refactoring
 import { CellRendererRegistry } from '../core/CellRendererRegistry';
 
+interface CustomCellElement extends HTMLElement {
+    row?: DataRow;
+    column?: TableColumn;
+    value?: any;
+    isEditing?: boolean;
+    requestUpdate?: () => void;
+}
+
 @customElement('data-table-lit')
 export class DataTableLit extends LitElement {
     @property({ type: Array }) data: DataRow[] = [];
@@ -554,26 +562,33 @@ export class DataTableLit extends LitElement {
 
     private renderSlotCell(row: DataRow, effectiveRow: DataRow, col: TableColumn, val: any, isEditing: boolean) {
         const slotName = `cell-${row.id}-${String(col.key)}`;
-        const slot = this.querySelector(`[slot="${slotName}"]`);
+        const slot = this.querySelector(`[slot="${slotName}"]`) as CustomCellElement;
         
         if (slot) {
-            slot.setAttribute('data-row', JSON.stringify(effectiveRow));
-            slot.setAttribute('data-column', JSON.stringify(col));
-            slot.setAttribute('data-value', String(val || ''));
-            slot.setAttribute('data-editing', String(isEditing));
-            slot.setAttribute('value', String(val || ''));
-
-            const el = slot as any;
-            if (el.value !== val) el.value = val;
-            if (JSON.stringify(el.row) !== JSON.stringify(effectiveRow)) el.row = effectiveRow;
-            el.isEditing = isEditing;
-
-            if (isEditing) {
-                 slot.addEventListener('cell-change', (e: Event) => {
-                     const customEvent = e as CustomEvent<CellChangeDetail>;
-                     this.handleInputChange(col.key as string, customEvent.detail.value);
-                 }, { once: true });
+            // Update attributes for CSS styling or light-DOM usage
+            // Only update string attributes if strictly necessary/changed to avoid mutation loops
+            const strVal = String(val || '');
+            if (slot.getAttribute('value') !== strVal) {
+                slot.setAttribute('value', strVal);
             }
+            if (slot.getAttribute('data-value') !== strVal) {
+                slot.setAttribute('data-value', strVal);
+            }
+            const strEdit = String(isEditing);
+            if (slot.getAttribute('data-editing') !== strEdit) {
+                slot.setAttribute('data-editing', strEdit);
+            }
+
+            // Update complex properties efficiently using equality checks
+            if (slot.row !== effectiveRow) slot.row = effectiveRow;
+            if (slot.value !== val) slot.value = val;
+            if (slot.isEditing !== isEditing) slot.isEditing = isEditing;
+            
+            // Allow element to react if it has a specific update method (Lit/etc)
+            if (typeof slot.requestUpdate === 'function') {
+                slot.requestUpdate();
+            }
+
             return html`<slot name="${slotName}"></slot>`;
         }
         return null;
