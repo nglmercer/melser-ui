@@ -33,3 +33,4 @@ export { registerComponent, registerWithPrefix, registerComponents } from './uti
 // Export Theme utilities
 export { setTheme, Var } from './theme/tokens';
 export { ThemeManager } from './theme/theme-manager';
+export * from './core/types';
