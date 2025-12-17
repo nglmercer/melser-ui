@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { DataRow, TableColumn, CellChangeDetail } from '../core/types';
 import { InputVar } from '../core/Base';
+import { M_EVENTS } from '../types/events';
 import { cellRenderers } from '../core/CellRendererRegistry';
 
 @customElement('table-cell')
@@ -215,7 +216,7 @@ export class MelserTableCell extends LitElement {
 
     private handleInputChange(e: Event) {
         const target = e.target as HTMLInputElement;
-        this.dispatchEvent(new CustomEvent<CellChangeDetail>('cell-change', {
+        this.dispatchEvent(new CustomEvent<CellChangeDetail>(M_EVENTS.CELL_CHANGE, {
             detail: { value: target.value },
             bubbles: true,
             composed: true
@@ -224,7 +225,7 @@ export class MelserTableCell extends LitElement {
 
     private handleBlur() {
         // Opcional: dispatch event cuando termina la edición
-        this.dispatchEvent(new CustomEvent('cell-edit-complete', {
+        this.dispatchEvent(new CustomEvent(M_EVENTS.CELL_EDIT_COMPLETE, {
             detail: { value: this.value },
             bubbles: true,
             composed: true

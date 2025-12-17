@@ -15,3 +15,6 @@ export interface SelectOption {
     disabled?: boolean;
     [key: string]: unknown;
 }
+
+// Re-exportar constantes y tipos de eventos
+export * from './events';

@@ -1,6 +1,7 @@
 import { LitElement, html, css,type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { InputVar } from '../core/Base';
+import { M_EVENTS } from '../types/events';
 import type { DataRow, RowActionDetail } from '../core/types';
 
 export interface ActionIcons {
@@ -75,7 +76,7 @@ export class MelserTableActions extends LitElement {
 
     private dispatchAction(action: string, e: Event) {
         e.stopPropagation();
-        this.dispatchEvent(new CustomEvent<RowActionDetail>('table-action', {
+        this.dispatchEvent(new CustomEvent<RowActionDetail>(M_EVENTS.TABLE_ACTION, {
             detail: { action, row: this.row, id: this.row.id },
             bubbles: true,
             composed: true

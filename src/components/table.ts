@@ -3,6 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { TableLogic } from '../core/TableLogic';
 import type { TableConfig, TableColumn, SelectColumn, DataRow, SortConfig, TableStyles, RowActionDetail, RowSelectDetail, RowExpandDetail, CellChangeDetail, RowSaveDetail, SelectionDetail } from '../core/types';
 import { InputVar } from '../core/Base';
+import { M_EVENTS } from '../types/events';
 import './table-cell';
 import './table-row';
 import './table-actions';
@@ -322,7 +323,7 @@ export class DataTableLit extends LitElement {
     }
 
     private dispatchSelectionEvent() {
-        this.dispatchEvent(new CustomEvent<SelectionDetail>('selection-change', {
+        this.dispatchEvent(new CustomEvent<SelectionDetail>(M_EVENTS.SELECTION_CHANGE, {
             detail: { selectedIds: Array.from(this.selectedRows) },
             bubbles: true,
             composed: true
@@ -340,7 +341,7 @@ export class DataTableLit extends LitElement {
     }
 
     private handleSave(id: string | number) {
-        this.dispatchEvent(new CustomEvent<RowSaveDetail>('row-save', {
+        this.dispatchEvent(new CustomEvent<RowSaveDetail>(M_EVENTS.ROW_SAVE, {
             detail: { id, data: this.editFormData },
             bubbles: true,
             composed: true
@@ -349,7 +350,7 @@ export class DataTableLit extends LitElement {
     }
 
     private handleDelete(id: string | number) {
-        this.dispatchEvent(new CustomEvent<RowActionDetail>('row-action', {
+        this.dispatchEvent(new CustomEvent<RowActionDetail>(M_EVENTS.ROW_ACTION, {
             detail: { action: 'delete', id },
             bubbles: true,
             composed: true
@@ -500,13 +501,12 @@ export class DataTableLit extends LitElement {
     }
 
     private handleView(row: DataRow) {
-        this.dispatchEvent(new CustomEvent<RowActionDetail>('row-action', {
+        this.dispatchEvent(new CustomEvent<RowActionDetail>(M_EVENTS.ROW_ACTION, {
             detail: { action: 'view', row },
             bubbles: true,
             composed: true
         }));
     }
-    // @ts-ignore
     private renderActions(row: DataRow, col: TableColumn, isEditing: boolean) {
         // 1. Custom Render Function (Highest Priority)
         // Allows full control via column definition configuration
@@ -551,7 +551,7 @@ export class DataTableLit extends LitElement {
                 break;
             default:
                 // Re-emit generic action if it's something custom
-                this.dispatchEvent(new CustomEvent<RowActionDetail>('row-action', {
+                this.dispatchEvent(new CustomEvent<RowActionDetail>(M_EVENTS.ROW_ACTION, {
                     detail: { action, row, id },
                     bubbles: true,
                     composed: true

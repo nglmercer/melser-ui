@@ -25,7 +25,6 @@ export { MelserTableCell } from './components/table-cell';
 export { MelserTableActions } from './components/table-actions';
 export { CellRendererRegistry } from './core/CellRendererRegistry';
 export * from './types/index';
-
 // Export registration utilities
 export { registerComponent, registerWithPrefix, registerComponents } from './utils/registration';
 

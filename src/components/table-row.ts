@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { DataRow, TableColumn, RowSelectDetail, RowExpandDetail, CellChangeDetail } from '../core/types';
 import { InputVar } from '../core/Base';
+import { M_EVENTS } from '../types/events';
 import './table-cell'; // Ensure element is defined
 
 @customElement('table-row')
@@ -95,7 +96,7 @@ export class MelserTableRow extends LitElement {
 
     private handleExpand(e: Event) {
         e.stopPropagation();
-        this.dispatchEvent(new CustomEvent<RowExpandDetail>('row-expand', {
+        this.dispatchEvent(new CustomEvent<RowExpandDetail>(M_EVENTS.ROW_EXPAND, {
             detail: { id: this.row.id },
             bubbles: true,
             composed: true
@@ -104,7 +105,7 @@ export class MelserTableRow extends LitElement {
 
     private handleSelect(e: Event) {
         e.stopPropagation();
-        this.dispatchEvent(new CustomEvent<RowSelectDetail>('row-select', {
+        this.dispatchEvent(new CustomEvent<RowSelectDetail>(M_EVENTS.ROW_SELECT, {
             detail: { id: this.row.id, selected: (e.target as HTMLInputElement).checked },
             bubbles: true,
             composed: true
@@ -170,7 +171,7 @@ export class MelserTableRow extends LitElement {
     }
 
     private dispatchCellChange(key: string, value: unknown) {
-         this.dispatchEvent(new CustomEvent<CellChangeDetail>('cell-change', {
+         this.dispatchEvent(new CustomEvent<CellChangeDetail>(M_EVENTS.CELL_CHANGE, {
              detail: { key, value },
              bubbles: true,
              composed: true
