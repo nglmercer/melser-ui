@@ -1,71 +1,71 @@
 export type CellType = 'string' | 'number' | 'boolean' | 'date' | 'select' | 'actions' | 'custom';
 
-export interface BaseColumn<T = any> {
+export interface BaseColumn<T = unknown> {
   key: keyof T | 'actions';
   label: string;
   width?: string;
   align?: 'left' | 'center' | 'right';
   editable?: boolean;
   sortable?: boolean;
-  render?: (row: T) => any;
-  editRender?: (row: T, onChange: (val: any) => void) => any;
+  render?: (row: T) => unknown;
+  editRender?: (row: T, onChange: (val: unknown) => void) => unknown;
 }
 
-export interface StringColumn<T = any> extends BaseColumn<T> {
+export interface StringColumn<T = unknown> extends BaseColumn<T> {
   type?: 'string';
 }
 
-export interface NumberColumn<T = any> extends BaseColumn<T> {
+export interface NumberColumn<T = unknown> extends BaseColumn<T> {
   type: 'number';
   min?: number;
   max?: number;
   step?: number;
 }
 
-export interface BooleanColumn<T = any> extends BaseColumn<T> {
+export interface BooleanColumn<T = unknown> extends BaseColumn<T> {
   type: 'boolean';
 }
 
-export interface DateColumn<T = any> extends BaseColumn<T> {
+export interface DateColumn<T = unknown> extends BaseColumn<T> {
   type: 'date';
 }
 
-export interface SelectColumn<T = any> extends BaseColumn<T> {
+export interface SelectColumn<T = unknown> extends BaseColumn<T> {
   type: 'select';
   options: (string | { label: string; value: string | number })[];
 }
 
-export interface ActionColumn<T = any> extends BaseColumn<T> {
+export interface ActionColumn<T = unknown> extends BaseColumn<T> {
   type: 'actions';
   component?: string;
 }
 
 
-export interface CustomColumn<T = any> extends BaseColumn<T> {
+export interface CustomColumn<T = unknown> extends BaseColumn<T> {
   type: 'custom';
 }
 
-export interface StatusColumn<T = any> extends BaseColumn<T> {
+export interface StatusColumn<T = unknown> extends BaseColumn<T> {
   type: 'status';
 }
 
-export interface ProgressColumn<T = any> extends BaseColumn<T> {
+export interface ProgressColumn<T = unknown> extends BaseColumn<T> {
   type: 'progress';
 }
 
-export interface AvatarColumn<T = any> extends BaseColumn<T> {
+export interface AvatarColumn<T = unknown> extends BaseColumn<T> {
   type: 'avatar';
 }
 
-export interface CurrencyColumn<T = any> extends BaseColumn<T> {
+export interface CurrencyColumn<T = unknown> extends BaseColumn<T> {
   type: 'currency';
 }
 
-export interface BadgeColumn<T = any> extends BaseColumn<T> {
+export interface BadgeColumn<T = unknown> extends BaseColumn<T> {
   type: 'badge';
 }
 
-export type TableColumn<T = any> = 
+export type TableColumn<T = unknown> = 
   | StringColumn<T> 
   | NumberColumn<T> 
   | BooleanColumn<T> 
@@ -89,7 +89,7 @@ export interface TableConfig {
 
 export interface DataRow {
   id: number | string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export type SortDirection = 'asc' | 'desc';
@@ -118,7 +118,7 @@ export function defineColumns<T>(columns: TableColumn<T>[]): TableColumn<T>[] {
 // Event Detail Types
 export interface RowSaveDetail {
     id: string | number;
-    data: any;
+    data: DataRow;
 }
 
 export interface SelectionDetail {
@@ -128,7 +128,7 @@ export interface SelectionDetail {
 export interface RowActionDetail {
     action: 'view' | 'delete' | 'edit' | 'save' | 'cancel' | string;
     id?: string | number;
-    row?: any;
+    row?: DataRow;
 }
 
 export interface RowSelectDetail {
@@ -142,6 +142,6 @@ export interface RowExpandDetail {
 
 export interface CellChangeDetail {
     key?: string;
-    value: any;
+    value: unknown;
 }
 

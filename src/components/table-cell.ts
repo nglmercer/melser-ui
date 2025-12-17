@@ -8,7 +8,7 @@ import { cellRenderers } from '../core/CellRendererRegistry';
 export class MelserTableCell extends LitElement {
     @property({ type: Object }) row!: DataRow;
     @property({ type: Object }) column!: TableColumn;
-    @property({ type: String }) value = '';
+    @property({ attribute: false }) value: unknown = '';
     @property({ type: Boolean }) isEditing = false;
     @property({ type: String }) type = 'text';
 
@@ -129,23 +129,24 @@ export class MelserTableCell extends LitElement {
         return html`
             <input class="editable-input"
                    type="${this.type === 'number' ? 'number' : 'text'}"
-                   .value="${this.value}"
+                   .value="${String(this.value)}"
                    @input="${this.handleInputChange}"
                    @blur="${this.handleBlur}">
         `;
     }
 
     private renderStatusCell() {
-        const statusClass = this.getStatusClass(this.value);
+        const val = String(this.value);
+        const statusClass = this.getStatusClass(val);
         return html`
             <div class="cell-container">
-                <span class="status-badge ${statusClass}">${this.value}</span>
+                <span class="status-badge ${statusClass}">${val}</span>
             </div>
         `;
     }
 
     private renderProgressCell() {
-        const progress = parseInt(this.value) || 0;
+        const progress = parseInt(String(this.value)) || 0;
         return html`
             <div class="cell-container">
                 <div class="progress-bar">
@@ -157,17 +158,18 @@ export class MelserTableCell extends LitElement {
     }
 
     private renderAvatarCell() {
-        const initials = this.getInitials(this.value);
+        const val = String(this.value);
+        const initials = this.getInitials(val);
         return html`
             <div class="cell-container">
                 <div class="avatar">${initials}</div>
-                <span>${this.value}</span>
+                <span>${val}</span>
             </div>
         `;
     }
 
     private renderCurrencyCell() {
-        const amount = parseFloat(this.value) || 0;
+        const amount = parseFloat(String(this.value)) || 0;
         const formatted = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD'
@@ -181,11 +183,11 @@ export class MelserTableCell extends LitElement {
     }
 
     private renderBadgeCell() {
-        const badges = Array.isArray(this.value) ? this.value : [this.value];
+        const badges = Array.isArray(this.value) ? (this.value as unknown[]) : [String(this.value)];
         return html`
             <div class="cell-container">
                 ${badges.map(badge => html`
-                    <span class="status-badge status-active">${badge}</span>
+                    <span class="status-badge status-active">${String(badge)}</span>
                 `)}
             </div>
         `;

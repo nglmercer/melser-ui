@@ -1,8 +1,8 @@
 import type { TemplateResult } from 'lit';
 import type { DataRow, TableColumn } from './types';
 
-export type RendererMatcher = string | ((val: any, row: DataRow, col: TableColumn) => boolean);
-export type RendererFunction = (val: any, row: DataRow, col: TableColumn, isEditing?: boolean) => TemplateResult;
+export type RendererMatcher = string | ((val: unknown, row: DataRow, col: TableColumn) => boolean);
+export type RendererFunction = (val: unknown, row: DataRow, col: TableColumn, isEditing?: boolean) => TemplateResult | unknown;
 
 
 interface RegistryEntry {
@@ -29,7 +29,7 @@ export class CellRendererRegistry {
         this.renderers.sort((a, b) => b.priority - a.priority); // Higher priority first
     }
 
-    getRenderer(val: any, row: DataRow, col: TableColumn): RendererFunction | undefined {
+    getRenderer(val: unknown, row: DataRow, col: TableColumn): RendererFunction | undefined {
         for (const entry of this.renderers) {
             if (typeof entry.matcher === 'string') {
                 if (col.type === entry.matcher) {

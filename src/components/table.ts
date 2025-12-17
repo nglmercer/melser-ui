@@ -1,4 +1,4 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { LitElement, html, css, nothing, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { TableLogic } from '../core/TableLogic';
 import type { TableConfig, TableColumn, SelectColumn, DataRow, SortConfig, TableStyles, RowActionDetail, RowSelectDetail, RowExpandDetail, CellChangeDetail, RowSaveDetail, SelectionDetail } from '../core/types';
@@ -17,7 +17,7 @@ import { CellRendererRegistry } from '../core/CellRendererRegistry';
 interface CustomCellElement extends HTMLElement {
     row?: DataRow;
     column?: TableColumn;
-    value?: any;
+    value?: unknown;
     isEditing?: boolean;
     requestUpdate?: () => void;
 }
@@ -225,7 +225,7 @@ export class DataTableLit extends LitElement {
 
     // --- Lifecycle ---
 
-    updated(changedProperties: Map<string, any>) {
+    updated(changedProperties: PropertyValues) {
         if (changedProperties.has('searchQuery')) {
             this.currentPage = 1;
         }
@@ -356,18 +356,18 @@ export class DataTableLit extends LitElement {
         }));
     }
 
-    private handleInputChange(key: string, value: any) {
+    private handleInputChange(key: string, value: unknown) {
         this.editFormData = { ...this.editFormData, [key]: value };
     }
 
-    private extractValue(e: any): any {
+    private extractValue(e: any): unknown {
         if (e.detail && e.detail.value !== undefined) {
             return e.detail.value;
         }
-        if (e.target && e.target.value !== undefined) {
-            return e.target.value;
+        if (e.target && (e.target as any).value !== undefined) {
+            return (e.target as any).value;
         }
-        return e.target.value;
+        return (e.target as any).value;
     }
 
 
@@ -535,7 +535,7 @@ export class DataTableLit extends LitElement {
         const { action, row, id } = e.detail;
         switch (action) {
             case 'edit':
-                this.handleEdit(row);
+                if (row != null) this.handleEdit(row);
                 break;
             case 'save':
                 if (id != null) this.handleSave(id);
@@ -547,7 +547,7 @@ export class DataTableLit extends LitElement {
                 if (id != null) this.handleDelete(id);
                 break;
             case 'view':
-                this.handleView(row);
+                if (row != null) this.handleView(row);
                 break;
             default:
                 // Re-emit generic action if it's something custom
@@ -560,7 +560,7 @@ export class DataTableLit extends LitElement {
     }
 
 
-    private renderSlotCell(row: DataRow, effectiveRow: DataRow, col: TableColumn, val: any, isEditing: boolean) {
+    private renderSlotCell(row: DataRow, effectiveRow: DataRow, col: TableColumn, val: unknown, isEditing: boolean) {
         const slotName = `cell-${row.id}-${String(col.key)}`;
         const slot = this.querySelector(`[slot="${slotName}"]`) as CustomCellElement;
         
@@ -594,7 +594,7 @@ export class DataTableLit extends LitElement {
         return null;
     }
 
-    private renderRichTypeCell(effectiveRow: DataRow, col: TableColumn, val: any, isEditing: boolean) {
+    private renderRichTypeCell(effectiveRow: DataRow, col: TableColumn, val: unknown, isEditing: boolean) {
         if (['status', 'progress', 'avatar', 'currency', 'badge'].includes(col.type as string)) {
              return html`
                 <table-cell
@@ -609,7 +609,7 @@ export class DataTableLit extends LitElement {
         return null;
     }
 
-    private renderStandardEditCell(col: TableColumn, val: any) {
+    private renderStandardEditCell(col: TableColumn, val: unknown) {
         const type = col.type || 'string';
         switch (type) {
             case 'number':
@@ -633,7 +633,7 @@ export class DataTableLit extends LitElement {
                 return html`
                 <me-switch
                         .value="${!!val}"
-                        @ui:change="${(e: any) => this.handleInputChange(col.key as string, e.target.checked)}"
+                        @ui:change="${(e: any) => this.handleInputChange(col.key as string, (e.target as HTMLInputElement).checked)}"
                 ></me-switch>`;
             case 'date':
                 return html`
@@ -652,7 +652,7 @@ export class DataTableLit extends LitElement {
         }
     }
 
-    private renderStandardViewCell(col: TableColumn, val: any) {
+    private renderStandardViewCell(col: TableColumn, val: unknown) {
         switch (col.type) {
              case 'boolean':
                  return html`<me-switch disabled .value="${!!val}"></me-switch>`;
@@ -664,7 +664,7 @@ export class DataTableLit extends LitElement {
              case 'date':
                  if (!val) return nothing;
                  try {
-                     const d = new Date(val);
+                     const d = val instanceof Date ? val : new Date(String(val));
                      return html`${d.toLocaleDateString()}`;
                  } catch { return html`${val}`; }
              default:
@@ -683,7 +683,7 @@ export class DataTableLit extends LitElement {
 
         // 2. Custom Function Overrides
         if (isEditing && col.editRender) {
-             return col.editRender(effectiveRow, (val: any) => this.handleInputChange(col.key as string, val));
+             return col.editRender(effectiveRow, (val: unknown) => this.handleInputChange(col.key as string, val));
         }
         if (!isEditing && col.render) {
              return col.render(row);

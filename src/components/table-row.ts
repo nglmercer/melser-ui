@@ -17,7 +17,7 @@ export class MelserTableRow extends LitElement {
     @property({ type: Boolean }) hasSelection = false;
     @property({ type: Boolean }) hasExpansion = false;
     @property({ type: Object }) icons: any = {};
-    @property({ attribute: false }) cellRenderer?: (row: DataRow, col: TableColumn, isEditing: boolean) => any;
+    @property({ attribute: false }) cellRenderer?: (row: DataRow, col: TableColumn, isEditing: boolean) => unknown;
     
     // Disable Shadow DOM to allow slot projection from parent
     // Use Shadow DOM (default)
@@ -169,7 +169,7 @@ export class MelserTableRow extends LitElement {
         `;
     }
 
-    private dispatchCellChange(key: string, value: any) {
+    private dispatchCellChange(key: string, value: unknown) {
          this.dispatchEvent(new CustomEvent<CellChangeDetail>('cell-change', {
              detail: { key, value },
              bubbles: true,

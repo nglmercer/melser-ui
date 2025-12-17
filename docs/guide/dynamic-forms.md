@@ -92,11 +92,11 @@ class MyDynamicFeature extends LitElement {
 
 Puedes acceder a estos métodos obteniendo la referencia al elemento (`querySelector('me-schema-form')`).
 
-- **`setData(data: any): void`**
+- **`setData(data: Record<string, unknown>): void`**
   Actualiza los valores del formulario y valida contra el esquema. Útil para "Editar" un registro de una tabla.
 - **`clearData(): void`**
   Resetea el formulario a un estado vacío (o valores por defecto del esquema).
-- **`submit(): any | null`**
+- **`submit(): Record<string, unknown> | null`**
   Ejecuta la validación manualmente. Si es exitoso, dispara el evento `submit` y retorna los datos. Si falla, muestra errores en la UI y retorna `null`.
 
 ## Mapeo de Tipos
