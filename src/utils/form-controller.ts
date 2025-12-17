@@ -70,7 +70,7 @@ export class ZodFormController<T extends z.ZodSchema> implements ReactiveControl
      */
     handleChange(key: keyof z.infer<T>, event: Event) {
         const target = event.target as HTMLInputElement;
-        let value: any = target.value;
+        let value: unknown = target.value;
 
         // Auto-convert numbers if the default input type is number
         // or you can check the schema type (advanced)
@@ -80,7 +80,7 @@ export class ZodFormController<T extends z.ZodSchema> implements ReactiveControl
             value = target.checked;
         }
 
-        this.setValue(key, value, true); // Validate on change by default? Or wait for blur?
+        this.setValue(key, value as z.infer<T>[typeof key], true); // Validate on change by default? Or wait for blur?
     }
 
     /**
@@ -94,9 +94,12 @@ export class ZodFormController<T extends z.ZodSchema> implements ReactiveControl
         const result = this.schema.safeParse(this.data);
 
         if (!result.success) {
-            const fieldErrors = result.error.flatten().fieldErrors;
-            // @ts-ignore
-            this.errors[key] = fieldErrors[key as string]?.[0] || undefined;
+            const errorTree = z.treeifyError(result.error);
+            let propError;
+            if ('properties' in errorTree) {
+                propError = (errorTree.properties as Record<string, { errors: string[] }>)[key as string];
+            }
+            this.errors[key] = propError?.errors?.[0] || undefined;
         } else {
             // If success, current field is valid (though others might not be)
             // But we need to be careful not to clear errors for other fields if we only care about this one.
@@ -115,12 +118,17 @@ export class ZodFormController<T extends z.ZodSchema> implements ReactiveControl
         const result = this.schema.safeParse(this.data);
 
         if (!result.success) {
-            const formatted = result.error.flatten().fieldErrors;
+            const errorTree = z.treeifyError(result.error);
             // Convert array of strings to single string per field
-            const newErrors: any = {};
-            for (const key in formatted) {
-                if (formatted[key]) {
-                    newErrors[key] = formatted[key]![0];
+            const newErrors: Partial<Record<keyof z.infer<T>, string>> = {};
+            
+            if ('properties' in errorTree && errorTree.properties) {
+                const props = errorTree.properties as Record<string, { errors: string[] }>;
+                for (const key in props) {
+                    const prop = props[key];
+                    if (prop?.errors?.[0]) {
+                        newErrors[key as keyof z.infer<T>] = prop.errors[0];
+                    }
                 }
             }
             this.errors = newErrors;

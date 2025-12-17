@@ -56,7 +56,7 @@ The `data-table-lit` component is a powerful, feature-rich table solution built 
 | `row-action`       | `{ action: string, row: DataRow, id: ... }` | Fired when an action button is clicked (edit, delete, view, etc). |
 | `row-save`         | `{ id: string\|number, data: DataRow }`     | Fired when inline editing is saved.                               |
 | `row-expand`       | `{ id: string\|number }`                    | Fired when a row is expanded.                                     |
-| `cell-change`      | `{ key: string, value: any }`               | Fired when a cell value changes during editing.                   |
+| `cell-change`      | `{ key: string, value: unknown }`           | Fired when a cell value changes during editing.                   |
 
 ## Column Configuration (`TableColumn`)
 

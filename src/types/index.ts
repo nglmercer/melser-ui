@@ -1,6 +1,6 @@
 export type MelserDataType = 'string' | 'number' | 'boolean' | 'array' | 'date' | 'object';
 
-export interface InputData<T = any> {
+export interface InputData<T = unknown> {
     name: string;
     value: T;
     isValid: boolean;

@@ -73,7 +73,7 @@ export function flattenTokens(
 
 // 2. Recursive type to map values to CSSResult
 export type TokenCSSMap<T> = {
-    [K in keyof T]: T[K] extends { $value: any }
+    [K in keyof T]: T[K] extends { $value: unknown }
     ? CSSResult // If it's a token, it becomes a CSSResult
     : T[K] extends object
     ? TokenCSSMap<T[K]> // If it's a group, recurse
@@ -90,7 +90,6 @@ export function createTokenAccessors<T extends object>(
     prefix: string = 'melser',
     path: string = ''
 ): TokenCSSMap<T> {
-    // Use Record<string, unknown> to safely build the object dynamically without 'any'
     const accessors: Record<string, unknown> = {};
 
     for (const key in obj) {

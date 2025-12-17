@@ -150,12 +150,15 @@ registerComponents({
 // src/global.d.ts
 declare namespace JSX {
   interface IntrinsicElements {
-    "me-checkbox": any;
-    "base-input": any;
-    // Agregar otros componentes aquí
+    "me-checkbox": HTMLElement; // Prefer 'HTMLElement' or specific interfaces over 'any'
+    "base-input": HTMLElement;
+    // Add other components here.
+    // Types exist for all components; avoid 'any' as it defeats the purpose of TypeScript.
   }
 }
 ```
+
+> **Note**: While `any` might seem convenient, Melser UI exports strong types for all its components and utilities (e.g., `InputData`, `TableColumn`). It is considered bad practice to use `any`. Always use the exported types for better type safety and autocompletion.
 
 ## Ejemplo de Proyecto Completo
 

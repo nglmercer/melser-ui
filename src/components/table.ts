@@ -360,14 +360,14 @@ export class DataTableLit extends LitElement {
         this.editFormData = { ...this.editFormData, [key]: value };
     }
 
-    private extractValue(e: any): unknown {
+    private extractValue(e: CustomEvent<{ value: unknown }>): unknown {
         if (e.detail && e.detail.value !== undefined) {
             return e.detail.value;
         }
-        if (e.target && (e.target as any).value !== undefined) {
-            return (e.target as any).value;
+        if (e.target && (e.target as HTMLInputElement).value !== undefined) {
+            return (e.target as HTMLInputElement).value;
         }
-        return (e.target as any).value;
+        return (e.target as HTMLInputElement).value;
     }
 
 
@@ -616,7 +616,7 @@ export class DataTableLit extends LitElement {
                 return html`
                 <me-number-input
                     .value="${Number(val) || 0}"
-                    @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
+                    @ui:change="${(e: CustomEvent) => this.handleInputChange(col.key as string, this.extractValue(e))}"
                     style="width: 100%"
                 ></me-number-input>`;
             case 'select':
@@ -626,20 +626,20 @@ export class DataTableLit extends LitElement {
                 <me-select
                     .value="${val}"
                     .options="${options}"
-                    @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
+                    @ui:change="${(e: CustomEvent) => this.handleInputChange(col.key as string, this.extractValue(e))}"
                     style="width: 100%"
                 ></me-select>`;
             case 'boolean':
                 return html`
                 <me-switch
                         .value="${!!val}"
-                        @ui:change="${(e: any) => this.handleInputChange(col.key as string, (e.target as HTMLInputElement).checked)}"
+                        @ui:change="${(e: CustomEvent) => this.handleInputChange(col.key as string, (e.target as HTMLInputElement).checked)}"
                 ></me-switch>`;
             case 'date':
                 return html`
                     <me-date-picker
                     .value="${val}"
-                    @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
+                    @ui:change="${(e: CustomEvent) => this.handleInputChange(col.key as string, this.extractValue(e))}"
                     ></me-date-picker>`;
             case 'string':
             default:
@@ -647,7 +647,7 @@ export class DataTableLit extends LitElement {
                 <base-input
                     .value="${val || ''}"
                     type="${type === 'string' ? 'text' : type}"
-                    @ui:change="${(e: any) => this.handleInputChange(col.key as string, this.extractValue(e))}"
+                    @ui:change="${(e: CustomEvent) => this.handleInputChange(col.key as string, this.extractValue(e))}"
                 ></base-input>`;
         }
     }
