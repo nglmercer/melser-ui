@@ -4,6 +4,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { z } from 'zod';
 import { ZodFormController } from '../utils/form-controller';
 import { Var } from '../theme/tokens';
+import type { SelectOption } from '../types/index';
 
 // Import basic components
 import './base-input';
@@ -186,7 +187,7 @@ export class MelserSchemaForm extends LitElement {
         const label = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1'); 
         
         // Extract optional possibilities for Select
-        let options: {label: string, value: string}[] = [];
+        let options: SelectOption[] = [];
         let current = fieldSchema;
         
         // Unwrap logic for options

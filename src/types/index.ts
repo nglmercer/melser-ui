@@ -11,4 +11,5 @@ export interface InputData<T = unknown> {
 export interface SelectOption {
     label: string;
     value: string;
+    group?: string;
 }

@@ -4,9 +4,9 @@ import { MelserBaseInput } from '../core/Base';
 import { Var } from '../theme/tokens';
 import type { MelserDataType, SelectOption } from '../types/index';
 
-interface InternalOption extends SelectOption {
-  group?: string;
-}
+// interface InternalOption extends SelectOption {
+//   group?: string;
+// }
 
 @customElement('me-multi-select')
 export class MelserMultiSelect extends MelserBaseInput<string[]> {
@@ -31,7 +31,7 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
     }
   }) 
   value: string[] = [];
-  @property({ type: Array }) options: InternalOption[] = [];
+  @property({ type: Array }) options: SelectOption[] = [];
   @query('input') inputElement!: HTMLInputElement;
 
   readonly dataType: MelserDataType = 'array';
@@ -50,7 +50,7 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
     return true;
   }
 
-  @state() private _renderedOptions: InternalOption[] = [];
+  @state() private _renderedOptions: SelectOption[] = [];
 
   override firstUpdated() {
     this.syncOptions();
@@ -62,7 +62,7 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
       return;
     }
 
-    const newOptions: InternalOption[] = [];
+    const newOptions: SelectOption[] = [];
     const children = Array.from(this.children);
     const initialSelectedValues: string[] = [];
 
@@ -141,8 +141,8 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
       `);
     }
 
-    const groups: Record<string, InternalOption[]> = {};
-    const orphans: InternalOption[] = [];
+    const groups: Record<string, SelectOption[]> = {};
+    const orphans: SelectOption[] = [];
 
     this._renderedOptions.forEach(opt => {
       if (opt.group) {

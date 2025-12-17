@@ -83,6 +83,7 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
 | `label`             | `string`                                          | `''`              | Etiqueta visible del campo       |
 | `name`              | `string`                                          | `''`              | Nombre para formularios          |
 | `value`             | `string`                                          | `''`              | Valor seleccionado               |
+| `options`           | `SelectOption[]`                                  | `[]`              | Array de opciones                |
 | `color`             | `'primary' \| 'success' \| 'warning' \| 'danger'` | `'primary'`       | Variante de color                |
 | `disabled`          | `boolean`                                         | `false`           | Deshabilita la interacción       |
 | `required`          | `boolean`                                         | `false`           | Campo requerido en formularios   |

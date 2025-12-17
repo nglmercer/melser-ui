@@ -23,9 +23,8 @@ export { DataTableLit } from './components/table';
 export { MelserTableRow } from './components/table-row';
 export { MelserTableCell } from './components/table-cell';
 export { MelserTableActions } from './components/table-actions';
-export type { InputData, MelserDataType, SelectOption } from './types/index';
-
-export type { TableColumn, TableConfig, DataRow, TableStyles } from './core/types';
+export { CellRendererRegistry } from './core/CellRendererRegistry';
+export * from './types/index';
 
 // Export registration utilities
 export { registerComponent, registerWithPrefix, registerComponents } from './utils/registration';
@@ -33,4 +32,6 @@ export { registerComponent, registerWithPrefix, registerComponents } from './uti
 // Export Theme utilities
 export { setTheme, Var } from './theme/tokens';
 export { ThemeManager } from './theme/theme-manager';
+
+// Export all types
 export * from './core/types';

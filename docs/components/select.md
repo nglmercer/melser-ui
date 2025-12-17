@@ -102,17 +102,18 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
 
 ## Propiedades
 
-| Propiedad     | Tipo      | Valor por Defecto | Descripción                    |
-| ------------- | --------- | ----------------- | ------------------------------ |
-| `searchable`  | `boolean` | `false`           | Habilita búsqueda en opciones  |
-| `clearable`   | `boolean` | `false`           | Permite limpiar la selección   |
-| `disabled`    | `boolean` | `false`           | Deshabilita la interacción     |
-| `required`    | `boolean` | `false`           | Campo requerido en formularios |
-| `multiple`    | `boolean` | `false`           | Permite múltiples selecciones  |
-| `placeholder` | `string`  | `''`              | Texto cuando no hay selección  |
-| `label`       | `string`  | `''`              | Etiqueta visible del campo     |
-| `name`        | `string`  | `''`              | Nombre para formularios        |
-| `value`       | `string`  | `''`              | Valor seleccionado             |
+| Propiedad     | Tipo             | Valor por Defecto | Descripción                             |
+| ------------- | ---------------- | ----------------- | --------------------------------------- |
+| `searchable`  | `boolean`        | `false`           | Habilita búsqueda en opciones           |
+| `clearable`   | `boolean`        | `false`           | Permite limpiar la selección            |
+| `disabled`    | `boolean`        | `false`           | Deshabilita la interacción              |
+| `required`    | `boolean`        | `false`           | Campo requerido en formularios          |
+| `multiple`    | `boolean`        | `false`           | Permite múltiples selecciones           |
+| `placeholder` | `string`         | `''`              | Texto cuando no hay selección           |
+| `label`       | `string`         | `''`              | Etiqueta visible del campo              |
+| `name`        | `string`         | `''`              | Nombre para formularios                 |
+| `value`       | `string`         | `''`              | Valor seleccionado                      |
+| `options`     | `SelectOption[]` | `[]`              | Array de opciones (alternativa a slots) |
 
 ## Eventos
 

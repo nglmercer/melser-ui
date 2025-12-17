@@ -5,10 +5,12 @@ import { MelserBaseInput, InputVar } from '../core/Base';
 
 import type { MelserDataType, SelectOption } from '../types/index';
 
-interface InternalOption extends SelectOption {
-  group?: string;
-  originalIndex?: number; // Helps with tracking selection after filtering
-}
+// interface InternalOption extends SelectOption {
+//   group?: string;
+//   originalIndex?: number; // Helps with tracking selection after filtering
+// }
+
+type InternalComboboxOption = SelectOption & { originalIndex?: number };
 
 const chevronIcon = html`
   <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -20,12 +22,12 @@ const chevronIcon = html`
 export class MelserCombobox extends MelserBaseInput<string> {
   @property({ type: String }) value = '';
   @property({ type: String }) placeholder = 'Select an option...';
-  @property({ type: Array }) options: InternalOption[] = [];
+  @property({ type: Array }) options: SelectOption[] = [];
 
   @state() private _isOpen = false;
   @state() private _inputValue = '';
-  @state() private _allOptions: InternalOption[] = [];
-  @state() private _filteredOptions: InternalOption[] = [];
+  @state() private _allOptions: InternalComboboxOption[] = [];
+  @state() private _filteredOptions: InternalComboboxOption[] = [];
   @state() private _highlightedIndex = -1;
 
   @query('input') inputElement!: HTMLInputElement;
@@ -57,7 +59,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
     // Only parse slots if no JS options are provided
     if (this.options && this.options.length > 0) return;
 
-    const optionsFromSlot: InternalOption[] = [];
+    const optionsFromSlot: InternalComboboxOption[] = [];
     const children = Array.from(this.children);
 
     children.forEach(child => {
@@ -165,7 +167,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
     });
   }
 
-  selectOption(option: InternalOption) {
+  selectOption(option: InternalComboboxOption) {
     this.value = option.value;
     this._inputValue = option.label;
     this.closeMenu();

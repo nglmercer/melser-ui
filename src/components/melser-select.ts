@@ -4,19 +4,19 @@ import { MelserBaseInput, InputVar } from '../core/Base';
 import type { MelserDataType, SelectOption } from '../types/index';
 
 // Extendemos la interfaz para soportar grupos si es necesario
-interface InternalOption extends SelectOption {
-  group?: string;
-}
+// interface InternalOption extends SelectOption {
+//   group?: string;
+// }
 
 @customElement('me-select')
 export class MelserSelect extends MelserBaseInput<string> {
   @property({ type: String }) value = '';
   @query('select') inputElement!: HTMLSelectElement;
   // Mantenemos la propiedad por si quieren pasar datos vía JS
-  @property({ type: Array }) options: InternalOption[] = [];
+  @property({ type: Array }) options: SelectOption[] = [];
 
   // Estado interno para combinar props + slots
-  @state() private _renderedOptions: InternalOption[] = [];
+  @state() private _renderedOptions: SelectOption[] = [];
 
   readonly dataType: MelserDataType = 'string';
 
@@ -34,7 +34,7 @@ export class MelserSelect extends MelserBaseInput<string> {
       return;
     }
 
-    const newOptions: InternalOption[] = [];
+    const newOptions: SelectOption[] = [];
     const children = Array.from(this.children);
     let initialSelectedValue: string | undefined;
 
@@ -124,8 +124,8 @@ export class MelserSelect extends MelserBaseInput<string> {
     }
 
     // Lógica de agrupación
-    const groups: Record<string, InternalOption[]> = {};
-    const orphans: InternalOption[] = [];
+    const groups: Record<string, SelectOption[]> = {};
+    const orphans: SelectOption[] = [];
 
     this._renderedOptions.forEach(opt => {
       if (opt.group) {

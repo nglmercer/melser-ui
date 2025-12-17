@@ -114,6 +114,7 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
 | `label`          | `string`                                          | `''`              | Etiqueta visible del campo                 |
 | `name`           | `string`                                          | `''`              | Nombre para formularios                    |
 | `value`          | `string`                                          | `''`              | Valores seleccionados (separados por coma) |
+| `options`        | `SelectOption[]`                                  | `[]`              | Array de opciones (alternativa a slots)    |
 | `color`          | `'primary' \| 'success' \| 'warning' \| 'danger'` | `'primary'`       | Esquema de color del estado.               |
 
 ## Eventos
