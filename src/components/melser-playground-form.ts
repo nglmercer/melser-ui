@@ -1,4 +1,5 @@
-import { LitElement, html, css } from 'lit';
+
+import { LitElement, html, css,type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { z } from 'zod';
 import { ZodFormController } from '../utils/form-controller';
@@ -104,6 +105,17 @@ export const schemas: Record<string, z.ZodSchema> = {
     })
 };
 
+type ThemeColor = 'primary' | 'success' | 'warning' | 'danger';
+
+interface FormElement extends HTMLElement {
+    name: string;
+    value?: string | number | boolean | null;
+    checked?: boolean;
+    type?: string;
+    errorMessage?: string;
+    color?: string;
+}
+
 /**
  * A generic playground form wrapper that handles Zod validation and state management automatically.
  * Useful for documentation examples.
@@ -112,7 +124,7 @@ export const schemas: Record<string, z.ZodSchema> = {
 export class MelserPlaygroundForm extends LitElement {
     @property({ attribute: 'schema-name' }) schemaName = '';
     @property({ attribute: false }) schema: z.ZodSchema = playgroundSchema;
-    @property({ attribute: false }) defaultData: any = {};
+    @property({ attribute: false }) defaultData: Record<string, unknown> = {};
     @property({ type: String }) title = 'Interactive Example';
     @property({ type: String }) description = '';
 
@@ -122,7 +134,7 @@ export class MelserPlaygroundForm extends LitElement {
     private _initialized = false;
 
     @state() private _theme: 'light' | 'dark' = 'light';
-    @state() private _colorScheme: 'primary' | 'success' | 'warning' | 'danger' = 'primary';
+    @state() private _colorScheme: ThemeColor = 'primary';
 
     constructor() {
         super();
@@ -160,7 +172,7 @@ export class MelserPlaygroundForm extends LitElement {
         }
     }
 
-    protected updated(changedProperties: Map<string, any>): void {
+    protected updated(changedProperties: PropertyValues): void {
         if (changedProperties.has('schemaName')) {
             if (this.schemaName && schemas[this.schemaName]) {
                 this.schema = schemas[this.schemaName];
@@ -214,7 +226,7 @@ export class MelserPlaygroundForm extends LitElement {
 
         const name = target.getAttribute('name') || target.name;
         if (name) {
-            let value: any = target.value;
+            let value: string | number | boolean | undefined = target.value;
             if (target.type === 'checkbox') {
                 value = target.checked;
             } else if (target.type === 'number') {
@@ -260,27 +272,28 @@ export class MelserPlaygroundForm extends LitElement {
     handleReset() {
         this.form.updateConfig(this.schema, this.defaultData);
         // Clear inputs visually
-        const inputs = this.querySelectorAll<HTMLInputElement>('[name]');
+        const inputs = this.querySelectorAll<HTMLElement>('[name]');
         inputs.forEach(el => {
-            const name = el.getAttribute('name') || el.name;
+            const element = el as FormElement;
+            const name = element.getAttribute('name') || element.name;
             if (!name) return;
             const initialVal = this.defaultData[name]; // undefined if not in defaultData
 
             // Checkbox/Radio
-            if ('checked' in el && (el.type === 'checkbox' || el.type === 'radio')) {
-                el.checked = !!initialVal;
+            if ('checked' in element && (element.type === 'checkbox' || element.type === 'radio')) {
+                element.checked = !!initialVal;
             }
             // Value based inputs
-            else if ('value' in el) {
-                el.value = initialVal !== undefined ? String(initialVal) : '';
+            else if ('value' in element) {
+                element.value = initialVal !== undefined ? String(initialVal) : '';
             }
 
             // Reset UI error state for Melser components
-            if ('errorMessage' in el) {
-                el.errorMessage = '';
+            if ('errorMessage' in element) {
+                element.errorMessage = '';
             }
             // Reset invalid attribute
-            el.removeAttribute('invalid');
+            element.removeAttribute('invalid');
         });
 
         this.requestUpdate();
@@ -297,17 +310,18 @@ export class MelserPlaygroundForm extends LitElement {
     syncInitialValues() {
         const inputs = this.querySelectorAll<HTMLElement>('[name]');
         inputs.forEach(el => {
-            const name = el.getAttribute('name') || (el as any).name;
+            const element = el as FormElement;
+            const name = element.getAttribute('name') || element.name;
             if (name && this.form.data[name] !== undefined) {
                 const value = this.form.data[name];
 
                 // Handle Checkboxes/Switches
-                if ('checked' in el) {
-                    (el as any).checked = value === true;
+                if ('checked' in element) {
+                    element.checked = value === true;
                 }
                 // Handle Value
-                else if ('value' in el) {
-                    (el as any).value = value;
+                else if ('value' in element) {
+                    element.value = value as string | number;
                 }
             }
         });
@@ -316,18 +330,19 @@ export class MelserPlaygroundForm extends LitElement {
     syncErrors() {
         const inputs = this.querySelectorAll<HTMLElement>('[name]');
         inputs.forEach(el => {
-            const name = el.getAttribute('name') || (el as any).name;
+            const element = el as FormElement;
+            const name = element.getAttribute('name') || element.name;
             if (name) {
                 const error = this.form.getError(name);
                 // Set errorMessage property if it exists (Melser components)
-                if ('errorMessage' in el) {
-                    (el as any).errorMessage = error || '';
+                if ('errorMessage' in element && element.errorMessage !== undefined) {
+                    element.errorMessage = error || '';
                 }
                 // Set invalid attribute
                 if (error) {
-                    el.setAttribute('invalid', '');
+                    element.setAttribute('invalid', '');
                 } else {
-                    el.removeAttribute('invalid');
+                    element.removeAttribute('invalid');
                 }
             }
         });
@@ -340,7 +355,7 @@ export class MelserPlaygroundForm extends LitElement {
         // We'll traverse the light DOM of the playground.
         const traverse = (element: Element) => {
             if ('color' in element) {
-                (element as any).color = this._colorScheme;
+                element.color = this._colorScheme;
             }
             Array.from(element.children).forEach(child => traverse(child));
         };
@@ -350,7 +365,7 @@ export class MelserPlaygroundForm extends LitElement {
 
     handleColorChange(e: Event) {
         const select = e.target as HTMLSelectElement;
-        this._colorScheme = select.value as any;
+        this._colorScheme = select.value as ThemeColor;
     }
 
     render() {

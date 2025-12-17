@@ -1,5 +1,5 @@
 
-import { LitElement, html, css, nothing } from 'lit';
+import { LitElement, html, css, nothing,type PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { z } from 'zod';
 import { ZodFormController } from '../utils/form-controller';
@@ -14,14 +14,33 @@ import './melser-select';
 import './melser-date-picker';
 // Add others as needed
 
+interface ZodDef {
+    typeName?: string;
+    innerType?: z.ZodTypeAny;
+    schema?: z.ZodTypeAny;
+    values?: unknown[];
+    options?: unknown[];
+}
+
+interface ZodEnumLike extends z.ZodTypeAny {
+    options?: unknown[];
+    enum?: Record<string, unknown>;
+}
+
+interface InputLike extends HTMLElement {
+    value?: string | number | boolean | Date | null;
+    checked?: boolean;
+    type?: string;
+}
+
 @customElement('me-schema-form')
 export class MelserSchemaForm extends LitElement {
-    @property({ attribute: false }) schema!: z.ZodObject<any>;
-    @property({ attribute: false }) defaultData: any = {};
+    @property({ attribute: false }) schema!: z.ZodObject<z.ZodRawShape>;
+    @property({ attribute: false }) defaultData: Record<string, unknown> = {};
     @property({ type: Boolean }) showSubmit = true;
     @property({ type: String }) submitLabel = 'Submit';
 
-    public form: ZodFormController<any>;
+    public form: ZodFormController<z.ZodObject<z.ZodRawShape>>;
 
     constructor() {
         super();
@@ -34,7 +53,7 @@ export class MelserSchemaForm extends LitElement {
         this.initForm();
     }
 
-    updated(changedProps: Map<string, any>) {
+    updated(changedProps: PropertyValues) {
         if (changedProps.has('schema') || changedProps.has('defaultData')) {
             this.initForm();
         }
@@ -47,7 +66,7 @@ export class MelserSchemaForm extends LitElement {
     }
 
     // Public methods to interact with the form
-    public setData(data: any) {
+    public setData(data: Record<string, unknown>) {
         this.defaultData = data;
         this.form.updateConfig(this.schema, data);
     }
@@ -69,9 +88,9 @@ export class MelserSchemaForm extends LitElement {
         return null;
     }
 
-    private handleUiChange(name: string, e: CustomEvent) {
-        const target = e.target as any;
-        let value = target.value;
+    private handleUiChange(name: string, e: CustomEvent | Event) {
+        const target = e.target as InputLike;
+        let value: unknown = target.value;
         
         // Basic Checkbox/Switch handling
         if (target.type === 'checkbox' || target.tagName.toLowerCase() === 'me-checkbox' || target.tagName.toLowerCase() === 'me-switch') {
@@ -80,7 +99,7 @@ export class MelserSchemaForm extends LitElement {
 
         // Type-Specific Conversion based on Schema
         if (this.schema && this.schema.shape && this.schema.shape[name]) {
-            const fieldType = this.getZodType(this.schema.shape[name]);
+            const fieldType = this.getZodType(this.schema.shape[name] as z.ZodTypeAny);
             
             if (fieldType === 'number') {
                  // Convert to number, or undefined if empty string to avoid 0
@@ -124,7 +143,7 @@ export class MelserSchemaForm extends LitElement {
         
         // Unwrap optional/nullable/default/effects
         while (depth < 10) {
-            const def = (current as any)._def;
+            const def = current.def as ZodDef;
             if (!def) break;
             
             const tName = def.typeName;
@@ -144,7 +163,7 @@ export class MelserSchemaForm extends LitElement {
             depth++;
         }
 
-        const def = (current as any)._def;
+        const def = current.def as ZodDef;
         const tName = def?.typeName;
         const cName = current.constructor.name;
         
@@ -173,7 +192,7 @@ export class MelserSchemaForm extends LitElement {
         // Unwrap logic for options
         let depth = 0;
         while (depth < 10) {
-             const def = (current as any)._def;
+             const def = current.def as ZodDef;
              if (!def) break;
              
              const tName = def.typeName;
@@ -194,19 +213,19 @@ export class MelserSchemaForm extends LitElement {
         }
 
         const cName = current.constructor.name;
-        const tName = (current as any)._def?.typeName;
+        const tName = (current.def as ZodDef)?.typeName;
 
         if (tName === 'ZodEnum' || cName.includes('ZodEnum')) {
-            const opts = (current as any).options || (current as any)._def?.values;
+            const opts = (current as ZodEnumLike).options || (current.def as ZodDef)?.values;
             if (Array.isArray(opts)) {
-                options = opts.map((o: string) => ({ label: o, value: o }));
+                options = opts.map((o: unknown) => ({ label: String(o), value: String(o) }));
             }
         } else if (tName === 'ZodNativeEnum' || cName.includes('ZodNativeEnum')) {
-            const enumObj = (current as any).enum || (current as any)._def?.values;
+            const enumObj = (current as ZodEnumLike).enum || (current.def as ZodDef)?.values;
              if (enumObj) {
                 options = Object.values(enumObj)
                     .filter(v => typeof v === 'string' || typeof v === 'number')
-                    .map((v: any) => ({ label: String(v), value: String(v) }));
+                    .map((v: unknown) => ({ label: String(v), value: String(v) }));
              }
         }
 
@@ -222,9 +241,9 @@ export class MelserSchemaForm extends LitElement {
                         type="${iType}"
                         value="${value || ''}"
                         .errorMessage="${error || ''}"
-                        @change="${(e: any) => this.handleUiChange(key, e)}"
-                        @ui:change="${(e: any) => this.handleUiChange(key, e)}"
-                        @input="${(e: any) => this.handleUiChange(key, e)}"
+                        @change="${(e: CustomEvent) => this.handleUiChange(key, e)}"
+                        @ui:change="${(e: CustomEvent) => this.handleUiChange(key, e)}"
+                        @input="${(e: CustomEvent) => this.handleUiChange(key, e)}"
                     ></base-input>
                 `;
             case 'number':
@@ -234,8 +253,8 @@ export class MelserSchemaForm extends LitElement {
                         label="${label}"
                         .value="${Number(value) || 0}"
                         .errorMessage="${error || ''}"
-                        @change="${(e: any) => this.handleUiChange(key, e)}"
-                        @ui:change="${(e: any) => this.handleUiChange(key, e)}"
+                        @change="${(e: CustomEvent) => this.handleUiChange(key, e)}"
+                        @ui:change="${(e: CustomEvent) => this.handleUiChange(key, e)}"
                     ></me-number-input>
                 `;
             case 'boolean':
@@ -245,8 +264,8 @@ export class MelserSchemaForm extends LitElement {
                         label="${label}"
                         .value="${!!value}"
                         .errorMessage="${error || ''}"
-                        @change="${(e: any) => this.handleUiChange(key, e)}"
-                        @ui:change="${(e: any) => this.handleUiChange(key, e)}"
+                        @change="${(e: CustomEvent) => this.handleUiChange(key, e)}"
+                        @ui:change="${(e: CustomEvent) => this.handleUiChange(key, e)}"
                     ></me-switch>
                 `;
             case 'date':
@@ -268,8 +287,8 @@ export class MelserSchemaForm extends LitElement {
                         label="${label}"
                         value="${dateValue}"
                         .errorMessage="${error || ''}"
-                        @change="${(e: any) => this.handleUiChange(key, e)}"
-                        @ui:change="${(e: any) => this.handleUiChange(key, e)}"
+                        @change="${(e: CustomEvent) => this.handleUiChange(key, e)}"
+                        @ui:change="${(e: CustomEvent) => this.handleUiChange(key, e)}"
                     ></me-date-picker>
                 `;
             case 'enum':
@@ -280,8 +299,8 @@ export class MelserSchemaForm extends LitElement {
                         .value="${value || ''}"
                         .options="${options}"
                         .errorMessage="${error || ''}"
-                        @change="${(e: any) => this.handleUiChange(key, e)}"
-                        @ui:change="${(e: any) => this.handleUiChange(key, e)}"
+                        @change="${(e: CustomEvent) => this.handleUiChange(key, e)}"
+                        @ui:change="${(e: CustomEvent) => this.handleUiChange(key, e)}"
                     ></me-select>
                 `;
             default:
@@ -307,7 +326,7 @@ export class MelserSchemaForm extends LitElement {
                 <div class="fields-grid">
                     ${keys.map(key => html`
                         <div class="field-item">
-                            ${this.renderField(key, shape[key])}
+                            ${this.renderField(key, shape[key] as z.ZodTypeAny)}
                         </div>
                     `)}
                 </div>

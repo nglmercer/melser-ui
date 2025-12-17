@@ -1,4 +1,15 @@
-import { css, CSSResult } from 'lit';
+import { css, CSSResult, unsafeCSS } from 'lit';
+
+export type TokenValue = string | number;
+export interface DesignToken {
+    $value: TokenValue;
+    $type?: string;
+    [key: string]: unknown;
+}
+export type TokenNode = TokenValue | DesignToken;
+export interface TokenGroup {
+    [key: string]: TokenNode | TokenGroup;
+}
 
 /**
  * Utility: flattenTokens
@@ -10,7 +21,7 @@ import { css, CSSResult } from 'lit';
  * @returns An object where keys are CSS variable names (e.g., --me-color-primary) and values are the token values.
  */
 export function flattenTokens(
-    obj: Record<string, any>,
+    obj: TokenGroup,
     prefix: string = 'melser',
     currentPath: string = ''
 ): Record<string, string> {
@@ -28,7 +39,8 @@ export function flattenTokens(
 
             if (isDTCGToken) {
                 // It's a token object { $value: "#fff", $type: "color" }
-                let valStr = String(value.$value);
+                const token = value as DesignToken;
+                let valStr = String(token.$value);
                 // Resolve aliases: {palette.blue.700} -> var(--me-palette-blue-700)
                 if (valStr.includes('{')) {
                     valStr = valStr.replace(/\{([^}]+)\}/g, (_, aliasPath) => {
@@ -39,7 +51,7 @@ export function flattenTokens(
                 flattened[`--${prefix}-${newPath}`] = valStr;
             } else if (isGroup) {
                 // It's a nested group, recurse deeper
-                const nested = flattenTokens(value, prefix, newPath);
+                const nested = flattenTokens(value as TokenGroup, prefix, newPath);
                 flattened = { ...flattened, ...nested };
             } else {
                 // It's a direct primitive value
@@ -78,38 +90,29 @@ export function createTokenAccessors<T extends object>(
     prefix: string = 'melser',
     path: string = ''
 ): TokenCSSMap<T> {
-    const accessors: any = {};
+    // Use Record<string, unknown> to safely build the object dynamically without 'any'
+    const accessors: Record<string, unknown> = {};
 
     for (const key in obj) {
         const newPath = path ? `${path}-${key}` : key;
-        const value = (obj as any)[key];
+        const value = obj[key as keyof T];
+        
         const isDTCGToken = typeof value === 'object' && value !== null && '$value' in value;
-        const isGroup = typeof value === 'object' && value !== null && !isDTCGToken;
+        const isGroup = typeof value === 'object' && value !== null && !isDTCGToken && !Array.isArray(value);
 
         if (isGroup) {
-            accessors[key] = createTokenAccessors(value, prefix, newPath);
+            // Recurse
+            accessors[key] = createTokenAccessors(value as T[keyof T] & object, prefix, newPath);
         } else {
             // It's a leaf. Return the CSS variable reference.
-            // Note: We use unsafeCSS here safely because the input is controlled by our token system.
-            // However, Lit recommends just returning the string in a css`` template.
-            // The output is: css`var(--me-color-primary)`
             const varName = `--${prefix}-${newPath}`;
-            // We implement a custom toString so it can be interpolated
-            // accessors[key] = css`var(${css([varName] as any)})`; 
-            // The prompt suggested: accessors[key] = css`var(${css([varName] as any)})`;
-            // But css function from lit takes TemplateStringsArray.
-            // A safer way compatible with Lit is creating a CSSResult that behaves like the variable call.
-            // However, usually one just wants the Variable Name or the whole var(...) string.
-            // Prompt says: accessors[key] = css`var(${css([varName] as any)})`; 
-            // Let's try to follow the prompt's implementation strictly if possible, or fix it if it's broken.
-            // css([varName]) might not work if TS complains. css`...` is the standard.
-            // Let's use unsafeCSS for the variable name construction if needed, 
-            // or just construct the string.
-            // If we behave like the prompt:
-            const safeVarName = css([varName] as unknown as TemplateStringsArray);
-            accessors[key] = css`var(${safeVarName})`;
+            
+            // Use unsafeCSS to create a CSSResult from the variable name string
+            // Then wrap it in var()
+            accessors[key] = css`var(${unsafeCSS(varName)})`;
         }
     }
 
-    return accessors;
+    // Assert the final shape matches the mapped type
+    return accessors as TokenCSSMap<T>;
 }
