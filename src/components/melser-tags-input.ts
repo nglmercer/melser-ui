@@ -1,11 +1,11 @@
 import { html, css } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/Base';
+import { BaseInput, InputVar } from '../core/Base';
 
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-tags-input')
-export class MelserTagsInput extends MelserBaseInput<string[]> {
+export class MelserTagsInput extends BaseInput<string[]> {
   @property({ type: Array }) value: string[] = [];
   @state() inputValue = '';
   @query('input') inputElement!: HTMLInputElement;
@@ -87,7 +87,7 @@ export class MelserTagsInput extends MelserBaseInput<string[]> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       .tags-container {
         display: flex;

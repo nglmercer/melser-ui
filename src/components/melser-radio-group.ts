@@ -1,6 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/Base';
+import { BaseInput, InputVar } from '../core/Base';
 import { Var } from '../theme/tokens';
 import type { MelserDataType, SelectOption } from '../types/index';
 
@@ -11,7 +11,7 @@ interface InternalOption extends SelectOption {
 }
 
 @customElement('me-radio-group')
-export class MelserRadioGroup extends MelserBaseInput<string> {
+export class MelserRadioGroup extends BaseInput<string> {
   @property({ type: String }) value = '';
   @property({ type: Array }) options: InternalOption[] = [];
   @query('input') inputElement!: HTMLInputElement;
@@ -129,7 +129,7 @@ export class MelserRadioGroup extends MelserBaseInput<string> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       .main-label {
         display: block;

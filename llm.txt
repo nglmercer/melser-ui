@@ -64,8 +64,8 @@ interface BaseProps {
 
 ### Métodos Públicos (todos los componentes)
 ```typescript
-// Todos los componentes heredan de MelserBaseInput
-class MelserBaseInput<T> {
+// Todos los componentes heredan de BaseInput
+class BaseInput<T> {
   // Obtener datos estructurados
   getData(): InputData<T>
   
@@ -187,7 +187,7 @@ Variables CSS para tematización:
 
 ## Estructura del Proyecto
 - `/src/components/` - Componentes individuales
-- `/src/core/` - Lógica base (MelserBaseInput)
+- `/src/core/` - Lógica base (BaseInput)
 - `/src/theme/` - Sistema de temas
 - `/src/utils/` - Utilidades
 - `/docs/` - Documentación VitePress

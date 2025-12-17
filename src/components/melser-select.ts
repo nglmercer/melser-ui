@@ -1,6 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/Base';
+import { BaseInput, InputVar } from '../core/Base';
 import type { MelserDataType, SelectOption } from '../types/index';
 
 // Extendemos la interfaz para soportar grupos si es necesario
@@ -9,7 +9,7 @@ import type { MelserDataType, SelectOption } from '../types/index';
 // }
 
 @customElement('me-select')
-export class MelserSelect extends MelserBaseInput<string> {
+export class MelserSelect extends BaseInput<string> {
   @property({ type: String }) value = '';
   @query('select') inputElement!: HTMLSelectElement;
   // Mantenemos la propiedad por si quieren pasar datos vía JS
@@ -149,7 +149,7 @@ export class MelserSelect extends MelserBaseInput<string> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       select {
         appearance: none;

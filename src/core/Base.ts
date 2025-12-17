@@ -136,7 +136,7 @@ export const { styles: BaseInputStyles, vars: InputVar } = createComponentTheme(
 });
 
 
-export abstract class MelserBaseInput<T = unknown> extends DynamicStyleMixin(LitElement) {
+export abstract class BaseInput<T = unknown> extends DynamicStyleMixin(LitElement) {
   @property({ type: String }) name = '';
   @property({ type: String }) label = '';
   @property({ type: Boolean }) required = false;

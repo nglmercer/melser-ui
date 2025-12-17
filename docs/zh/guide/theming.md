@@ -32,7 +32,7 @@ export class MyComponent extends LitElement {
 
 ### 2. 组件特定变量
 
-为了获得最大的灵活性，`MelserBaseInput` 和其他核心组件生成它们自己的 CSS 变量，这些变量映射回全局令牌。这允许您在不破坏全局主题的情况下覆盖特定组件的样式。
+为了获得最大的灵活性，`BaseInput` 和其他核心组件生成它们自己的 CSS 变量，这些变量映射回全局令牌。这允许您在不破坏全局主题的情况下覆盖特定组件的样式。
 
 ```css
 /* 仅在本地覆盖 base-input 的背景 */

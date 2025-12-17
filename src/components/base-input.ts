@@ -1,10 +1,10 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/Base';
+import { BaseInput, InputVar } from '../core/Base';
 import type { MelserDataType } from '../types/index';
 
 @customElement('base-input')
-export class MelserTextInput extends MelserBaseInput<string> {
+export class MelserTextInput extends BaseInput<string> {
   @property({ type: String }) value = '';
   @property({ type: String }) placeholder = '';
   @property({ type: String }) type = 'text';
@@ -50,7 +50,7 @@ export class MelserTextInput extends MelserBaseInput<string> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       :host {
         display: block;

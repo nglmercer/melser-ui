@@ -32,7 +32,7 @@ export class MyComponent extends LitElement {
 
 ### 2. Component-Specific Variables
 
-For maximum flexibility, `MelserBaseInput` and other core components generate their own CSS variables that map back to global tokens. This allows you to override a specific component's style without breaking the global theme.
+For maximum flexibility, `BaseInput` and other core components generate their own CSS variables that map back to global tokens. This allows you to override a specific component's style without breaking the global theme.
 
 ```css
 /* Override only base-input's background locally */

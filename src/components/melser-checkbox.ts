@@ -1,10 +1,10 @@
 import { html, css, nothing } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/Base';
+import { BaseInput, InputVar } from '../core/Base';
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-checkbox')
-export class MelserCheckbox extends MelserBaseInput<boolean> {
+export class MelserCheckbox extends BaseInput<boolean> {
   @property({ type: Boolean }) value = false;
 
   @property({ type: Boolean, reflect: true }) checked = false;
@@ -60,7 +60,7 @@ export class MelserCheckbox extends MelserBaseInput<boolean> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       :host {
         display: block;

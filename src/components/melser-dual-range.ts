@@ -1,10 +1,10 @@
 import { html, css, type PropertyValues } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/Base';
+import { BaseInput, InputVar } from '../core/Base';
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-dual-range')
-export class MelserDualRange extends MelserBaseInput<number[]> {
+export class MelserDualRange extends BaseInput<number[]> {
   // FIX: Added custom converter to handle "30,70" string format commonly used in HTML
   @property({
     converter: {
@@ -212,7 +212,7 @@ export class MelserDualRange extends MelserBaseInput<number[]> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       .range-container {
         position: relative;

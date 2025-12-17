@@ -1,11 +1,11 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/Base';
+import { BaseInput, InputVar } from '../core/Base';
 
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-time-picker')
-export class MelserTimePicker extends MelserBaseInput<string> {
+export class MelserTimePicker extends BaseInput<string> {
   @property({ type: String }) value = '';
   @property({ type: String }) min = '';
   @property({ type: String }) max = '';
@@ -39,7 +39,7 @@ export class MelserTimePicker extends MelserBaseInput<string> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       :host {
         display: block;

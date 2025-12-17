@@ -1,12 +1,12 @@
 import { html, css } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/Base';
+import { BaseInput, InputVar } from '../core/Base';
 import { Var } from '../theme/tokens';
 import { classMap } from 'lit/directives/class-map.js';
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-otp-input')
-export class MelserOtpInput extends MelserBaseInput<string> {
+export class MelserOtpInput extends BaseInput<string> {
   @property({ type: Number }) length = 6;
   @property({ type: String }) value = '';
 
@@ -174,7 +174,7 @@ export class MelserOtpInput extends MelserBaseInput<string> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       :host {
         /* Dimensiones */

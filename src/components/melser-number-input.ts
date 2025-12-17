@@ -1,10 +1,10 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/Base';
+import { BaseInput, InputVar } from '../core/Base';
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-number-input')
-export class MelserNumberInput extends MelserBaseInput<number> {
+export class MelserNumberInput extends BaseInput<number> {
   @property({ type: Number }) value = 0;
   @property({ type: Number }) min = Number.MIN_SAFE_INTEGER;
   @property({ type: Number }) max = Number.MAX_SAFE_INTEGER;
@@ -213,7 +213,7 @@ export class MelserNumberInput extends MelserBaseInput<number> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       :host {
         display: block;

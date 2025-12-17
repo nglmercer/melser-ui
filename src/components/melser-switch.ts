@@ -1,11 +1,11 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/Base';
+import { BaseInput, InputVar } from '../core/Base';
 import { Var } from '../theme/tokens';
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-switch')
-export class MelserSwitch extends MelserBaseInput<boolean> {
+export class MelserSwitch extends BaseInput<boolean> {
   @property({ type: Boolean }) value = false;
   @property({ type: Boolean, reflect: true }) checked = false;
   @query('input') inputElement!: HTMLInputElement;
@@ -55,7 +55,7 @@ export class MelserSwitch extends MelserBaseInput<boolean> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       .switch-label {
         display: flex;

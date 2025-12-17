@@ -1,10 +1,10 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/Base';
+import { BaseInput } from '../core/Base';
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-textarea')
-export class MelserTextarea extends MelserBaseInput<string> {
+export class MelserTextarea extends BaseInput<string> {
   @property({ type: String }) value = '';
   @property({ type: String }) placeholder = '';
   @property({ type: Number }) rows = 4;
@@ -37,7 +37,7 @@ export class MelserTextarea extends MelserBaseInput<string> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       textarea {
         resize: vertical;

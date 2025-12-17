@@ -1,11 +1,11 @@
 import { html, css } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
-import { MelserBaseInput, InputVar } from '../core/Base';
+import { BaseInput, InputVar } from '../core/Base';
 
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-file-upload')
-export class MelserFileUpload extends MelserBaseInput<File | null> {
+export class MelserFileUpload extends BaseInput<File | null> {
   @property({ type: String }) accept = '';
   @state() fileName = '';
   @state() isDragging = false;
@@ -96,7 +96,7 @@ export class MelserFileUpload extends MelserBaseInput<File | null> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     // Since this component is quite unique, we keep most custom styles 
     // but map them to our tokens where possible.
     css`

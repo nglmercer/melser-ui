@@ -30,7 +30,7 @@ resolve: {
 
 ```typescript
 // ✅ Usando alias @/ - Recomendado
-import { MelserBaseInput } from "@/core/base-input";
+import { BaseInput } from "@/core/base-input";
 import { registerComponents } from "@/utils/registration";
 import type { MelserComponent } from "@/types";
 
@@ -48,7 +48,7 @@ import "@/components/me-checkbox.css";
 
 ```typescript
 // ❌ Rutas relativas - Pueden causar problemas
-import { MelserBaseInput } from "../core/base-input";
+import { BaseInput } from "../core/base-input";
 import { registerComponents } from "../../utils/registration";
 import type { MelserComponent } from "../types";
 
@@ -64,7 +64,7 @@ import { MelserCheckbox } from "../../../src/components/me-checkbox";
 // ✅ Importaciones con alias
 import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
-import { MelserBaseInput } from "@/core/base-input";
+import { BaseInput } from "@/core/base-input";
 import { registerComponents } from "@/utils/registration";
 import type { MelserFormData } from "@/types";
 
@@ -80,7 +80,7 @@ export class MelserForm extends LitElement {
 
   // ✅ Usar métodos de la clase base con alias
   private handleInput(event: Event) {
-    const target = event.target as MelserBaseInput;
+    const target = event.target as BaseInput;
     this.formData[target.name] = target.value;
   }
 

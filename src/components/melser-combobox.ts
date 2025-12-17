@@ -1,7 +1,7 @@
 import { html, css, type PropertyValues } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js'; // Cleaner classes
-import { MelserBaseInput, InputVar } from '../core/Base';
+import { BaseInput, InputVar } from '../core/Base';
 
 import type { MelserDataType, SelectOption } from '../types/index';
 
@@ -19,7 +19,7 @@ const chevronIcon = html`
 `;
 
 @customElement('me-combobox')
-export class MelserCombobox extends MelserBaseInput<string> {
+export class MelserCombobox extends BaseInput<string> {
   @property({ type: String }) value = '';
   @property({ type: String }) placeholder = 'Select an option...';
   @property({ type: Array }) options: SelectOption[] = [];
@@ -324,7 +324,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       :host { display: block; width: 100%; position: relative; }
       .combobox-container { position: relative; width: 100%; }

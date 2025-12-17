@@ -1,6 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/Base';
+import { BaseInput } from '../core/Base';
 import { Var } from '../theme/tokens';
 import type { MelserDataType, SelectOption } from '../types/index';
 
@@ -9,7 +9,7 @@ import type { MelserDataType, SelectOption } from '../types/index';
 // }
 
 @customElement('me-multi-select')
-export class MelserMultiSelect extends MelserBaseInput<string[]> {
+export class MelserMultiSelect extends BaseInput<string[]> {
   @property({ 
     type: Array,
     converter: {
@@ -183,7 +183,7 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       select[multiple] {
         height: auto;

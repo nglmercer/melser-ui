@@ -1,11 +1,11 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { MelserBaseInput } from '../core/Base';
+import { BaseInput } from '../core/Base';
 import { InputVar } from '../core/Base';
 import type { MelserDataType } from '../types/index';
 
 @customElement('me-range')
-export class MelserRange extends MelserBaseInput<number> {
+export class MelserRange extends BaseInput<number> {
   @property({ type: Number }) value = 0;
   @property({ type: Number }) min = 0;
   @property({ type: Number }) max = 100;
@@ -40,7 +40,7 @@ export class MelserRange extends MelserBaseInput<number> {
   }
 
   static styles = [
-    MelserBaseInput.styles,
+    BaseInput.styles,
     css`
       input[type="range"] {
         padding: 0;
