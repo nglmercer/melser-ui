@@ -76,7 +76,8 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
           newOptions.push({
             label: opt.textContent || '',
             value: opt.value,
-            group: groupLabel
+            group: groupLabel,
+            disabled: opt.disabled
           });
           
           if (opt.hasAttribute('selected')) {
@@ -89,7 +90,8 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
         const opt = child as HTMLOptionElement;
         newOptions.push({
           label: opt.textContent || '',
-          value: opt.value
+          value: opt.value,
+          disabled: opt.disabled
         });
         
         if (opt.hasAttribute('selected')) {
@@ -135,6 +137,7 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
         <option 
           value="${opt.value}" 
           ?selected="${this.value?.includes(opt.value)}"
+          ?disabled="${opt.disabled}"
         >
           ${opt.label}
         </option>
@@ -158,6 +161,7 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
         <option 
           value="${opt.value}" 
           ?selected="${this.value?.includes(opt.value)}"
+          ?disabled="${opt.disabled}"
         >
           ${opt.label}
         </option>
@@ -168,6 +172,7 @@ export class MelserMultiSelect extends MelserBaseInput<string[]> {
             <option 
               value="${opt.value}" 
               ?selected="${this.value?.includes(opt.value)}"
+              ?disabled="${opt.disabled}"
             >
               ${opt.label}
             </option>

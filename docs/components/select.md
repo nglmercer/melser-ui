@@ -115,6 +115,20 @@ Un componente de selector desplegable moderno y accesible con búsqueda, grupos 
 | `value`       | `string`         | `''`              | Valor seleccionado                      |
 | `options`     | `SelectOption[]` | `[]`              | Array de opciones (alternativa a slots) |
 
+### Definición de Tipos
+
+#### SelectOption
+
+```typescript
+interface SelectOption {
+  label: string;
+  value: string;
+  group?: string;
+  disabled?: boolean;
+  [key: string]: unknown;
+}
+```
+
 ## Eventos
 
 | Evento   | Descripción                                         |

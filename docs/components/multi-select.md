@@ -117,6 +117,20 @@ Un componente de selección múltiple avanzado con chips, búsqueda, selección 
 | `options`        | `SelectOption[]`                                  | `[]`              | Array de opciones (alternativa a slots)    |
 | `color`          | `'primary' \| 'success' \| 'warning' \| 'danger'` | `'primary'`       | Esquema de color del estado.               |
 
+### Definición de Tipos
+
+#### SelectOption
+
+```typescript
+interface SelectOption {
+  label: string;
+  value: string;
+  group?: string;
+  disabled?: boolean;
+  [key: string]: unknown;
+}
+```
+
 ## Eventos
 
 | Evento         | Descripción                                  |

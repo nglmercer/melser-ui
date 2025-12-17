@@ -88,6 +88,20 @@ Un componente de combo box con autocompletado, búsqueda avanzada, opciones din�
 | `disabled`          | `boolean`                                         | `false`           | Deshabilita la interacción       |
 | `required`          | `boolean`                                         | `false`           | Campo requerido en formularios   |
 
+### Definición de Tipos
+
+#### SelectOption
+
+```typescript
+interface SelectOption {
+  label: string;
+  value: string;
+  group?: string;
+  disabled?: boolean;
+  [key: string]: unknown;
+}
+```
+
 ## Eventos
 
 | Evento              | Descripción                                  |

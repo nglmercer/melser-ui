@@ -134,15 +134,30 @@ El componente radio group puede usarse de dos formas:
 
 ## Propiedades del Grupo
 
-| Propiedad     | Tipo      | Valor por Defecto | Descripción                        |
-| ------------- | --------- | ----------------- | ---------------------------------- |
-| `orientation` | `string`  | `'vertical'`      | Orientación (vertical, horizontal) |
-| `name`        | `string`  | `''`              | Nombre para formularios            |
-| `value`       | `string`  | `''`              | Valor seleccionado                 |
-| `disabled`    | `boolean` | `false`           | Deshabilita todo el grupo          |
-| `required`    | `boolean` | `false`           | Campo requerido en formularios     |
-| `label`       | `string`  | `''`              | Etiqueta visible del grupo         |
-| `name`        | `string`  | `''`              | Nombre del grupo para formularios  |
+| Propiedad     | Tipo             | Valor por Defecto | Descripción                             |
+| ------------- | ---------------- | ----------------- | --------------------------------------- |
+| `orientation` | `string`         | `'vertical'`      | Orientación (vertical, horizontal)      |
+| `name`        | `string`         | `''`              | Nombre para formularios                 |
+| `value`       | `string`         | `''`              | Valor seleccionado                      |
+| `disabled`    | `boolean`        | `false`           | Deshabilita todo el grupo               |
+| `required`    | `boolean`        | `false`           | Campo requerido en formularios          |
+| `label`       | `string`         | `''`              | Etiqueta visible del grupo              |
+| `name`        | `string`         | `''`              | Nombre del grupo para formularios       |
+| `options`     | `SelectOption[]` | `[]`              | Array de opciones (alternativa a slots) |
+
+### Definición de Tipos
+
+#### SelectOption
+
+```typescript
+interface SelectOption {
+  label: string;
+  value: string;
+  group?: string;
+  disabled?: boolean;
+  [key: string]: unknown;
+}
+```
 
 ## Propiedades de Radio Individual
 

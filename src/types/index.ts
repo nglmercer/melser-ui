@@ -12,4 +12,6 @@ export interface SelectOption {
     label: string;
     value: string;
     group?: string;
+    disabled?: boolean;
+    [key: string]: unknown;
 }

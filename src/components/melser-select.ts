@@ -48,7 +48,8 @@ export class MelserSelect extends MelserBaseInput<string> {
           newOptions.push({
             label: opt.textContent || '',
             value: opt.value,
-            group: groupLabel
+            group: groupLabel,
+            disabled: opt.disabled
           });
 
           if (opt.hasAttribute('selected') && !initialSelectedValue) {
@@ -61,7 +62,8 @@ export class MelserSelect extends MelserBaseInput<string> {
         const opt = child as HTMLOptionElement;
         newOptions.push({
           label: opt.textContent || '',
-          value: opt.value
+          value: opt.value,
+          disabled: opt.disabled
         });
 
         // Si el usuario puso el atributo 'selected' en el HTML
@@ -117,7 +119,7 @@ export class MelserSelect extends MelserBaseInput<string> {
 
     if (!hasGroups) {
       return this._renderedOptions.map(opt => html`
-        <option value="${opt.value}" ?selected="${opt.value === this.value}">
+        <option value="${opt.value}" ?selected="${opt.value === this.value}" ?disabled="${opt.disabled}">
           ${opt.label}
         </option>
       `);
@@ -137,10 +139,10 @@ export class MelserSelect extends MelserBaseInput<string> {
     });
 
     return html`
-      ${orphans.map(opt => html`<option value="${opt.value}" ?selected="${opt.value === this.value}">${opt.label}</option>`)}
+      ${orphans.map(opt => html`<option value="${opt.value}" ?selected="${opt.value === this.value}" ?disabled="${opt.disabled}">${opt.label}</option>`)}
       ${Object.entries(groups).map(([groupName, opts]) => html`
         <optgroup label="${groupName}">
-          ${opts.map(opt => html`<option value="${opt.value}" ?selected="${opt.value === this.value}">${opt.label}</option>`)}
+          ${opts.map(opt => html`<option value="${opt.value}" ?selected="${opt.value === this.value}" ?disabled="${opt.disabled}">${opt.label}</option>`)}
         </optgroup>
       `)}
     `;

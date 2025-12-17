@@ -71,7 +71,8 @@ export class MelserCombobox extends MelserBaseInput<string> {
           optionsFromSlot.push({
             label: opt.textContent || '',
             value: opt.value,
-            group: groupLabel
+            group: groupLabel,
+            disabled: opt.disabled
           });
           this.checkInitialSelected(opt);
         });
@@ -79,7 +80,8 @@ export class MelserCombobox extends MelserBaseInput<string> {
         const opt = child as HTMLOptionElement;
         optionsFromSlot.push({
           label: opt.textContent || '',
-          value: opt.value
+          value: opt.value,
+          disabled: opt.disabled
         });
         this.checkInitialSelected(opt);
       }
@@ -143,7 +145,7 @@ export class MelserCombobox extends MelserBaseInput<string> {
         e.preventDefault();
         if (this._isOpen && this._highlightedIndex >= 0) {
           const opt = this._filteredOptions[this._highlightedIndex];
-          if (opt) this.selectOption(opt);
+          if (opt && !opt.disabled) this.selectOption(opt);
         } else {
           this.openMenu();
         }
@@ -294,10 +296,13 @@ export class MelserCombobox extends MelserBaseInput<string> {
                   class="${classMap({
         'option-item': true,
         'selected': isSelected,
-        'highlighted': isHighlighted
+        'highlighted': isHighlighted,
+        'disabled': !!opt.disabled
       })}"
                   data-index="${index}"
+                  aria-disabled="${!!opt.disabled}"
                   @mousedown="${(e: Event) => {
+          if (opt.disabled) return;
           // Prevent default to avoid blur triggering before click
           e.preventDefault();
           this.selectOption(opt);
@@ -371,6 +376,12 @@ export class MelserCombobox extends MelserBaseInput<string> {
           color: ${InputVar['option-color-checked']}; 
           font-weight: 600; 
           background-color: ${InputVar['option-bg-checked']}; 
+      }
+      
+      .option-item.disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          background-color: transparent;
       }
       
       /* If needed, we can add a specific selected-highlighted state, 
