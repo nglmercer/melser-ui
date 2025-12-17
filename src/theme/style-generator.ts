@@ -11,7 +11,7 @@ import { css, CSSResult, unsafeCSS } from 'lit';
  */
 const getCssText = (value: string | number | CSSResult): string => {
     if (value instanceof CSSResult) {
-        return (value as any).cssText ?? String(value);
+        return value.cssText ?? String(value);
     }
     return String(value);
 };

@@ -23,7 +23,7 @@ export class MelserDatePicker extends MelserBaseInput<string> {
   override willUpdate(changedProperties: PropertyValues) {
     if (changedProperties.has('value') && this.value) {
       // Asegurar que el valor esté en formato YYYY-MM-DD
-      const valueAsAny = this.value as any;
+      const valueAsAny = typeof this.value === 'string' ? new Date(this.value) : this.value;
       if (valueAsAny instanceof Date) {
         const date = valueAsAny as Date;
         const year = date.getFullYear();

@@ -115,3 +115,33 @@ export function defineColumns<T>(columns: TableColumn<T>[]): TableColumn<T>[] {
     return columns;
 }
 
+// Event Detail Types
+export interface RowSaveDetail {
+    id: string | number;
+    data: any;
+}
+
+export interface SelectionDetail {
+    selectedIds: (string | number)[];
+}
+
+export interface RowActionDetail {
+    action: 'view' | 'delete' | 'edit' | 'save' | 'cancel' | string;
+    id?: string | number;
+    row?: any;
+}
+
+export interface RowSelectDetail {
+    id: string | number;
+    selected: boolean;
+}
+
+export interface RowExpandDetail {
+    id: string | number;
+}
+
+export interface CellChangeDetail {
+    key?: string;
+    value: any;
+}
+

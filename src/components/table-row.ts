@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { DataRow, TableColumn } from '../core/types';
+import type { DataRow, TableColumn, RowSelectDetail, RowExpandDetail, CellChangeDetail } from '../core/types';
 import { InputVar } from '../core/Base';
 import './table-cell'; // Ensure element is defined
 
@@ -95,7 +95,7 @@ export class MelserTableRow extends LitElement {
 
     private handleExpand(e: Event) {
         e.stopPropagation();
-        this.dispatchEvent(new CustomEvent('row-expand', {
+        this.dispatchEvent(new CustomEvent<RowExpandDetail>('row-expand', {
             detail: { id: this.row.id },
             bubbles: true,
             composed: true
@@ -104,7 +104,7 @@ export class MelserTableRow extends LitElement {
 
     private handleSelect(e: Event) {
         e.stopPropagation();
-        this.dispatchEvent(new CustomEvent('row-select', {
+        this.dispatchEvent(new CustomEvent<RowSelectDetail>('row-select', {
             detail: { id: this.row.id, selected: (e.target as HTMLInputElement).checked },
             bubbles: true,
             composed: true
@@ -163,14 +163,14 @@ export class MelserTableRow extends LitElement {
                 .value="${this.isEditing ? (this.editData?.[col.key as string] ?? this.row[col.key as string]) : this.row[col.key as string]}"
                 .isEditing="${this.isEditing && col.editable !== false}"
                 .type="${col.type || 'text'}"
-                @cell-change="${(e: CustomEvent) => this.dispatchCellChange(col.key as string, e.detail.value)}"
+                @cell-change="${(e: CustomEvent<CellChangeDetail>) => this.dispatchCellChange(col.key as string, e.detail.value)}"
             ></table-cell>
 
         `;
     }
 
     private dispatchCellChange(key: string, value: any) {
-         this.dispatchEvent(new CustomEvent('cell-change', {
+         this.dispatchEvent(new CustomEvent<CellChangeDetail>('cell-change', {
              detail: { key, value },
              bubbles: true,
              composed: true

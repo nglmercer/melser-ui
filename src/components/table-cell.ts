@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { DataRow, TableColumn } from '../core/types';
+import type { DataRow, TableColumn, CellChangeDetail } from '../core/types';
 import { InputVar } from '../core/Base';
 import { cellRenderers } from '../core/CellRendererRegistry';
 
@@ -213,7 +213,7 @@ export class MelserTableCell extends LitElement {
 
     private handleInputChange(e: Event) {
         const target = e.target as HTMLInputElement;
-        this.dispatchEvent(new CustomEvent('cell-change', {
+        this.dispatchEvent(new CustomEvent<CellChangeDetail>('cell-change', {
             detail: { value: target.value },
             bubbles: true,
             composed: true

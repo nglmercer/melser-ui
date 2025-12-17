@@ -1,14 +1,12 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { TableLogic } from '../core/TableLogic';
-import type { TableConfig, TableColumn, SelectColumn, DataRow, SortConfig, TableStyles } from '../core/types';
+import type { TableConfig, TableColumn, SelectColumn, DataRow, SortConfig, TableStyles, RowActionDetail, RowSelectDetail, RowExpandDetail, CellChangeDetail, RowSaveDetail, SelectionDetail } from '../core/types';
 import { InputVar } from '../core/Base';
 import './table-cell';
 import './table-row';
 import './table-actions';
 import './base-input';
-
-
 import './melser-number-input';
 import './melser-select';
 import './melser-switch';
@@ -290,7 +288,7 @@ export class DataTableLit extends LitElement {
         this.dispatchSelectionEvent();
     }
 
-    private handleSelectRowEvent(e: CustomEvent) {
+    private handleSelectRowEvent(e: CustomEvent<RowSelectDetail>) {
         const { id, selected } = e.detail;
         if (selected) {
             this.selectedRows.add(id);
@@ -301,7 +299,7 @@ export class DataTableLit extends LitElement {
         this.dispatchSelectionEvent();
     }
     
-    private handleExpandRowEvent(e: CustomEvent) {
+    private handleExpandRowEvent(e: CustomEvent<RowExpandDetail>) {
         this.handleExpandRow(e.detail.id);
     }
 
@@ -316,7 +314,7 @@ export class DataTableLit extends LitElement {
     }
 
     private dispatchSelectionEvent() {
-        this.dispatchEvent(new CustomEvent('selection-change', {
+        this.dispatchEvent(new CustomEvent<SelectionDetail>('selection-change', {
             detail: { selectedIds: Array.from(this.selectedRows) },
             bubbles: true,
             composed: true
@@ -334,7 +332,7 @@ export class DataTableLit extends LitElement {
     }
 
     private handleSave(id: string | number) {
-        this.dispatchEvent(new CustomEvent('row-save', {
+        this.dispatchEvent(new CustomEvent<RowSaveDetail>('row-save', {
             detail: { id, data: this.editFormData },
             bubbles: true,
             composed: true
@@ -343,7 +341,7 @@ export class DataTableLit extends LitElement {
     }
 
     private handleDelete(id: string | number) {
-        this.dispatchEvent(new CustomEvent('row-action', {
+        this.dispatchEvent(new CustomEvent<RowActionDetail>('row-action', {
             detail: { action: 'delete', id },
             bubbles: true,
             composed: true
@@ -436,9 +434,9 @@ export class DataTableLit extends LitElement {
                                     
                                     @row-select=${this.handleSelectRowEvent}
                                     @row-expand=${this.handleExpandRowEvent}
-                                    @row-action=${(e: CustomEvent) => { e.stopPropagation(); this.dispatchEvent(new CustomEvent('row-action', { detail: e.detail, bubbles: true, composed: true })); }}
-                                    @table-action=${(e: CustomEvent) => this.handleTableAction(e)}
-                                    @cell-change=${(e: CustomEvent) => this.handleInputChange(e.detail.key, e.detail.value)}
+                                    @row-action=${(e: CustomEvent<RowActionDetail>) => { e.stopPropagation(); this.dispatchEvent(new CustomEvent<RowActionDetail>('row-action', { detail: e.detail, bubbles: true, composed: true })); }}
+                                    @table-action=${(e: CustomEvent<RowActionDetail>) => this.handleTableAction(e)}
+                                    @cell-change=${(e: CustomEvent<CellChangeDetail>) => this.handleInputChange(e.detail.key!, e.detail.value)}
                                 >
 
                                     ${isExpanded ? html`<slot name="details-${row.id}" slot="details-${row.id}"></slot>` : nothing}
@@ -494,7 +492,7 @@ export class DataTableLit extends LitElement {
     }
 
     private handleView(row: DataRow) {
-        this.dispatchEvent(new CustomEvent('row-action', {
+        this.dispatchEvent(new CustomEvent<RowActionDetail>('row-action', {
             detail: { action: 'view', row },
             bubbles: true,
             composed: true
@@ -525,27 +523,27 @@ export class DataTableLit extends LitElement {
         `;
     }
 
-    private handleTableAction(e: CustomEvent) {
+    private handleTableAction(e: CustomEvent<RowActionDetail>) {
         const { action, row, id } = e.detail;
         switch (action) {
             case 'edit':
                 this.handleEdit(row);
                 break;
             case 'save':
-                this.handleSave(id);
+                if (id != null) this.handleSave(id);
                 break;
             case 'cancel':
                 this.handleCancel();
                 break;
             case 'delete':
-                this.handleDelete(id);
+                if (id != null) this.handleDelete(id);
                 break;
             case 'view':
                 this.handleView(row);
                 break;
             default:
                 // Re-emit generic action if it's something custom
-                this.dispatchEvent(new CustomEvent('row-action', {
+                this.dispatchEvent(new CustomEvent<RowActionDetail>('row-action', {
                     detail: { action, row, id },
                     bubbles: true,
                     composed: true
@@ -572,7 +570,7 @@ export class DataTableLit extends LitElement {
 
             if (isEditing) {
                  slot.addEventListener('cell-change', (e: Event) => {
-                     const customEvent = e as CustomEvent;
+                     const customEvent = e as CustomEvent<CellChangeDetail>;
                      this.handleInputChange(col.key as string, customEvent.detail.value);
                  }, { once: true });
             }
@@ -590,7 +588,7 @@ export class DataTableLit extends LitElement {
                     .value=${String(val)}
                     .type=${col.type as string}
                     .isEditing=${isEditing && col.editable !== false}
-                    @cell-change=${(e: CustomEvent) => this.handleInputChange(col.key as string, e.detail.value)}
+                    @cell-change=${(e: CustomEvent<CellChangeDetail>) => this.handleInputChange(col.key as string, e.detail.value)}
                 ></table-cell>`;
         }
         return null;

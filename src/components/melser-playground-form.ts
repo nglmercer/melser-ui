@@ -277,7 +277,7 @@ export class MelserPlaygroundForm extends LitElement {
 
             // Reset UI error state for Melser components
             if ('errorMessage' in el) {
-                (el as any).errorMessage = '';
+                el.errorMessage = '';
             }
             // Reset invalid attribute
             el.removeAttribute('invalid');

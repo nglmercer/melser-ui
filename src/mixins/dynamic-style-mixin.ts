@@ -13,7 +13,7 @@ export const DynamicStyleMixin = <T extends Constructor<LitElement>>(superClass:
          * Uses constructable stylesheets for performance.
          */
         addDynamicStyles(cssText: string) {
-            const shadow = (this as any).shadowRoot;
+            const shadow = this.shadowRoot;
             if (!shadow || !('adoptedStyleSheets' in shadow)) {
                 // Fallback for older environments if needed, though Lit usually handles this.
                 // For strictly standard compliance with Constructable Stylesheets:
