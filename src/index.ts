@@ -23,6 +23,12 @@ export { DataTableLit } from './components/table';
 export { MelserTableRow } from './components/table-row';
 export { MelserTableCell } from './components/table-cell';
 export { MelserTableActions } from './components/table-actions';
+export { MelserSidebar } from './components/melser-sidebar';
+export { MelserSidebarToggle } from './components/melser-sidebar-toggle';
+export { MelserNavbar } from './components/melser-navbar';
+export { MelserNavbarBrand } from './components/melser-navbar-brand';
+export { MelserIconButton } from './components/melser-icon-button';
+export { MelserNavItem } from './components/melser-nav-item';
 export { CellRendererRegistry } from './core/CellRendererRegistry';
 export * from './types/index';
 // Export registration utilities
