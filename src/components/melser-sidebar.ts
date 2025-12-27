@@ -20,6 +20,8 @@ export class MelserSidebar extends LitElement {
   @property({ type: Boolean, reflect: true }) collapsed = false;
   @property({ type: Boolean, reflect: true }) open = false;
   @property({ type: Boolean, reflect: true }) fixed = false;
+  @property({ type: Number }) navbarHeight = 64; // Default navbar height in pixels
+  @property({ type: Boolean, reflect: true }) noNavbar = false; // If true, sidebar starts from top
 
   static styles = [
     SidebarStyles,
@@ -46,8 +48,8 @@ export class MelserSidebar extends LitElement {
 
       :host([fixed]) {
         position: fixed;
-        top: 64px; /* Below navbar height */
-        height: calc(100vh - 64px); /* Exclude navbar height */
+        top: 0; /* Default: start from top unless noNavbar is false */
+        height: 100vh; /* Default: full viewport height unless noNavbar is false */
         z-index: 1000;
       }
 
@@ -57,6 +59,18 @@ export class MelserSidebar extends LitElement {
 
       :host([fixed][position="left"]) {
         left: 0;
+      }
+
+      /* When sidebar should be below navbar (default behavior) */
+      :host([fixed]:not([noNavbar])) {
+        top: var(--sidebar-navbar-height, 64px);
+        height: calc(100vh - var(--sidebar-navbar-height, 64px));
+      }
+
+      /* When sidebar starts from top (no navbar) */
+      :host([fixed][noNavbar]) {
+        top: 0;
+        height: 100vh;
       }
 
       :host([open]) {

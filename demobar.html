@@ -40,7 +40,7 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      padding-top: 64px; /* Space for fixed navbar */
+      padding-top: 0; /* No padding needed in desktop */
     }
 
     .app-content-wrapper {
@@ -180,11 +180,51 @@
       background: var(--me-bg);
     }
 
+    /* Hide navbar on desktop, show on mobile/tablet */
+    @media (min-width: 1024px) {
+      .hide-on-desktop {
+        display: none !important;
+      }
+      
+      .app-layout {
+        padding-top: 0 !important;
+      }
+      
+      .main-content {
+        padding-top: 2rem !important;
+      }
+      
+      /* Set noNavbar attribute on sidebar when navbar is hidden */
+      #main-sidebar {
+        --sidebar-navbar-height: 0px;
+      }
+    }
+
+    /* Show navbar on mobile/tablet */
+    @media (max-width: 1023px) {
+      .hide-on-desktop {
+        display: block !important;
+      }
+      
+      .app-layout {
+        padding-top: 64px !important;
+      }
+      
+      .main-content {
+        padding-top: 2rem !important;
+      }
+      
+      /* Remove noNavbar attribute on sidebar when navbar is visible */
+      #main-sidebar {
+        --sidebar-navbar-height: 64px;
+      }
+    }
+
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .main-content {
         margin-left: 0 !important;
-        padding: 1rem;
+        padding: 1rem !important;
       }
 
       .cards-grid {
@@ -230,8 +270,8 @@
 </head>
 
 <body>
-  <!-- Fixed Navbar -->
-  <me-navbar id="main-navbar" variant="default" fixed>
+  <!-- Fixed Navbar (Only visible on mobile/tablet) -->
+  <me-navbar id="main-navbar" variant="default" fixed class="hide-on-desktop">
     <me-navbar-brand slot="brand" logo="/vite.svg">
       Melser UI
     </me-navbar-brand>
@@ -282,7 +322,8 @@
   </me-navbar>
 
   <!-- Fixed Sidebar -->
-  <me-sidebar id="main-sidebar" position="left" fixed>
+  <!-- noNavbar is set dynamically based on screen size -->
+  <me-sidebar id="main-sidebar" position="left" fixed navbar-height="64">
     <div class="sidebar-content" style="padding: 1rem;">
       <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
         <me-nav-item active>
@@ -520,7 +561,15 @@
       // Handle window resize
       window.addEventListener('resize', () => {
         const isMobile = window.innerWidth <= 768;
+        const isTablet = window.innerWidth <= 1023;
+        
         if (isMobile) {
+          // On mobile, remove collapsed state
+          mainContent.classList.remove('sidebar-collapsed');
+        }
+        
+        // On desktop (> 1024px), ensure proper layout
+        if (!isTablet) {
           mainContent.classList.remove('sidebar-collapsed');
         }
       });
