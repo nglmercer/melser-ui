@@ -1,15 +1,14 @@
 import { html, css, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { createComponentTheme } from '../theme/style-generator';
 import { Var } from '../theme/tokens';
 
-/**
- * Component-specific tokens for navbar styling
- */
 export const { styles: NavbarStyles, vars: NavbarVar } = createComponentTheme('navbar', {
   'height': '64px',
   'bg': Var.color.surface.primary,
   'border-color': Var.color.border.default,
+  'padding': '0 1.25rem',
+  'transition': '300ms cubic-bezier(0.4, 0, 0.2, 1)',
 });
 
 @customElement('me-navbar')
@@ -17,173 +16,136 @@ export class MelserNavbar extends LitElement {
   @property({ type: Boolean }) fixed = false;
   @property({ type: Boolean }) sticky = false;
   @property({ type: String }) variant: 'default' | 'light' | 'dark' = 'default';
-  @property({ type: Boolean, reflect: true }) open = false;
+  @state() private open = false;
 
-  static styles = [
+
+static styles = [
     NavbarStyles,
     css`
       :host {
-        display: flex;
+        display: block;
+        width: 100%;
         height: ${NavbarVar.height};
         background-color: ${NavbarVar.bg};
         border-bottom: 1px solid ${NavbarVar['border-color']};
-        align-items: center;
-        position: relative;
-        width: 100%;
+        z-index: 100;
+        font-family: ${Var.font.family};
+        transition: background-color ${NavbarVar.transition}, border-color ${NavbarVar.transition};
+        position: relative; 
       }
-
-      :host([fixed]) {
-        position: fixed;
-        top: 0;
-        left: 0;
+      
+      :host([fixed]) { 
+        position: fixed; /* Fixed is usually relative to viewport */
+        top: 0; 
+        left: 0; 
         right: 0;
-        z-index: 1000;
+      }
+      
+      :host([sticky]) { 
+        position: sticky; 
+        top: 0; 
       }
 
-      :host([sticky]) {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-      }
-
+      /* Variant overrides */
       :host([variant="light"]) {
-        background-color: var(--me-neutral-0, #ffffff);
-        border-color: var(--me-neutral-200, #e5e7eb);
+        --navbar-bg: ${Var.palette.neutral[0]};
+        --navbar-border-color: ${Var.palette.neutral[200]};
       }
-
       :host([variant="dark"]) {
-        background-color: var(--me-neutral-900, #111827);
-        border-color: var(--me-neutral-700, #374151);
+        --navbar-bg: ${Var.palette.neutral[900]};
+        --navbar-border-color: ${Var.palette.neutral[700]};
       }
 
-      /* Navbar Container */
       .navbar-container {
-        display: flex;
+        display: grid;
+        /* Grid: Brand | Desktop Links | Actions */
+        grid-template-columns: auto 1fr auto;
         align-items: center;
-        width: 100%;
-        padding: 0;
-        position: relative;
+        height: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: ${NavbarVar.padding};
+        gap: 1rem;
       }
 
-      /* Mobile Menu Overlay */
-      .mobile-menu-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 998;
-        display: none;
-        opacity: 0;
-        transition: opacity 0.3s ease;
+      .brand-section { 
+        display: flex; 
+        align-items: center; 
+        gap: 0.5rem; 
       }
-
-      .mobile-menu-overlay.visible {
-        display: block;
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      /* Sections */
-      .brand-section {
+      
+      /* DESKTOP LINKS (Default Slot) */
+      .nav-desktop {
         display: flex;
-        align-items: center;
-        padding: 0 1rem;
-        flex-shrink: 0;
-        gap: 0.5rem;
-        overflow: hidden;
-      }
-
-      .center-section {
-        flex: 1;
-        display: flex;
-        align-items: center;
         justify-content: center;
-        justify-content: center;
-        overflow: hidden;
+        align-items: center;
+        gap: 1.5rem;
+        height: 100%;
+      }
+
+      /* MOBILE MENU DRAWER */
+      .nav-mobile-drawer {
+        display: none; /* Hidden on desktop */
       }
 
       .actions-section {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        padding: 0 1rem;
-        flex-shrink: 0;
-        overflow: hidden;
+        gap: ${Var.spacing.gap.default};
       }
 
-      /* Mobile Menu Button */
-      .mobile-menu-button {
+      .mobile-toggle {
         display: none;
-        align-items: center;
-        justify-content: center;
-        width: 2.5rem;
-        height: 2.5rem;
-        padding: 0;
         background: transparent;
         border: none;
-        border-radius: ${Var.radius.default};
-        cursor: pointer;
         color: ${Var.color.text.primary};
-        flex-shrink: 0;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: ${Var.radius.default};
+        margin-left: 0.5rem;
       }
 
-      .mobile-menu-button:hover {
-        background-color: ${Var.color.bg.hover};
-      }
-
-      .mobile-menu-button svg {
-        width: 1.5rem;
-        height: 1.5rem;
-      }
-
-      /* Mobile Menu */
-      .mobile-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: ${NavbarVar.bg};
-        border-bottom: 1px solid ${NavbarVar['border-color']};
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        z-index: 999;
-        overflow: hidden;
-        max-height: 0;
-        transition: max-height 0.3s ease;
-      }
-
-      .mobile-menu.open {
-        max-height: 500px;
-      }
-
-      .mobile-menu-content {
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      /* Responsive */
+      /* --- MOBILE BREAKPOINT --- */
       @media (max-width: 768px) {
-        .center-section {
-          display: none;
+        .navbar-container {
+           /* On mobile, middle column (desktop links) collapses */
+           grid-template-columns: 1fr auto; 
         }
 
-        .mobile-menu-button {
+        .mobile-toggle { 
+            display: block; 
+        }
+
+        /* Hide desktop links */
+        .nav-desktop {
+            display: none;
+        }
+
+        /* Show Mobile Drawer Logic */
+        .nav-mobile-drawer {
           display: flex;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: ${NavbarVar.bg};
+          flex-direction: column;
+          padding: 1.5rem;
+          border-bottom: 1px solid ${NavbarVar['border-color']};
+          
+          /* Animation States */
+          transform: translateY(-10px);
+          opacity: 0;
+          pointer-events: none;
+          transition: all ${NavbarVar.transition};
+          box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+          box-sizing: border-box; /* Ensure padding doesn't break width */
         }
 
-        .mobile-menu {
-          display: block;
-        }
-      }
-
-      /* Show mobile menu only when open on desktop */
-      @media (min-width: 769px) {
-        .mobile-menu {
-          display: none !important;
+        :host([open]) .nav-mobile-drawer {
+          transform: translateY(0);
+          opacity: 1;
+          pointer-events: auto;
         }
       }
     `
@@ -191,45 +153,36 @@ export class MelserNavbar extends LitElement {
 
   render() {
     return html`
-      <div class="navbar-container">
-        <!-- Mobile Menu Overlay -->
-        <div class="mobile-menu-overlay ${this.open ? 'visible' : ''}" @click="${this.close}"></div>
-
-        <!-- Brand Section -->
+      <nav class="navbar-container" role="navigation">
         <div class="brand-section">
           <slot name="brand"></slot>
         </div>
 
-        <!-- Center Section -->
-        <div class="center-section">
-          <slot name="center"></slot>
+        <div class="nav-desktop">
+           <slot></slot> 
         </div>
 
-        <!-- Actions Section -->
         <div class="actions-section">
           <slot name="actions"></slot>
-          <button class="mobile-menu-button" @click="${this.toggleOpen}" aria-label="Toggle mobile menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
+          
+          <button class="mobile-toggle" @click="${this.toggleMenu}" aria-label="Menu">
+            ${this.open
+              ? html`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>`
+              : html`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>`
+            }
           </button>
         </div>
 
-        <!-- Mobile Menu -->
-        <div class="mobile-menu ${this.open ? 'open' : ''}">
-          <div class="mobile-menu-content">
+        <div class="nav-mobile-drawer">
             <slot name="mobile-menu"></slot>
-          </div>
         </div>
-      </div>
+      </nav>
     `;
   }
-
+  
   connectedCallback() {
     super.connectedCallback();
-    
+
     // Add resize listener to handle transitions
     this._handleResize = () => this._handleMobileTransition();
     window.addEventListener('resize', this._handleResize);
@@ -237,16 +190,26 @@ export class MelserNavbar extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    
+
     // Clean up resize listener
     if (this._handleResize) {
       window.removeEventListener('resize', this._handleResize);
     }
   }
-
+  private toggleMenu() {
+    this.open = !this.open;
+    
+    // This line is crucial! It adds/removes the 'open' attribute 
+    // on the <me-navbar> tag itself.
+    if (this.open) {
+      this.setAttribute('open', '');
+    } else {
+      this.removeAttribute('open');
+    }
+  }
   updated(changedProperties: Map<PropertyKey, unknown>) {
     super.updated(changedProperties);
-    
+
     // When switching to desktop, close mobile menu
     if (changedProperties.has('open')) {
       this._handleMobileTransition();
@@ -257,7 +220,7 @@ export class MelserNavbar extends LitElement {
 
   private _handleMobileTransition() {
     const isMobile = window.innerWidth <= 768;
-    
+
     // When transitioning to desktop, close mobile menu
     if (!isMobile && this.open) {
       this.open = false;
@@ -329,9 +292,9 @@ export class MelserNavbar extends LitElement {
    */
   setVariant(variant: 'default' | 'light' | 'dark'): void {
     this.variant = variant;
-    this.dispatchEvent(new CustomEvent('navbar-variant', { 
+    this.dispatchEvent(new CustomEvent('navbar-variant', {
       detail: { variant },
-      bubbles: true 
+      bubbles: true
     }));
   }
 
@@ -343,9 +306,9 @@ export class MelserNavbar extends LitElement {
     const currentIndex = variants.indexOf(this.variant);
     const nextIndex = (currentIndex + 1) % variants.length;
     this.variant = variants[nextIndex];
-    this.dispatchEvent(new CustomEvent('navbar-variant', { 
+    this.dispatchEvent(new CustomEvent('navbar-variant', {
       detail: { variant: this.variant },
-      bubbles: true 
+      bubbles: true
     }));
   }
 }
