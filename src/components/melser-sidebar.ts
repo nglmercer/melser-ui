@@ -46,8 +46,8 @@ export class MelserSidebar extends LitElement {
 
       :host([fixed]) {
         position: fixed;
-        top: 0;
-        height: 100vh;
+        top: 64px; /* Below navbar height */
+        height: calc(100vh - 64px); /* Exclude navbar height */
         z-index: 1000;
       }
 
@@ -194,26 +194,6 @@ export class MelserSidebar extends LitElement {
     }
   }
 
-  updated(changedProperties: Map<PropertyKey, unknown>) {
-    super.updated(changedProperties);
-    
-    // Update nav-items when collapsed state changes (only on desktop)
-    const isMobile = window.innerWidth <= 768;
-    if (changedProperties.has('collapsed') && !isMobile) {
-      this.updateNavItemsCollapsed();
-    }
-    
-    // Update overlay when open state changes or on window resize
-    if (changedProperties.has('open')) {
-      this._updateOverlay();
-    }
-    
-    // When switching to mobile mode, ensure nav-items are not collapsed
-    if (changedProperties.has('position') || changedProperties.size > 0) {
-      this._handleMobileTransition();
-    }
-  }
-
   private _overlayElement: HTMLElement | null = null;
   private _handleResize: (() => void) | null = null;
 
@@ -344,5 +324,74 @@ export class MelserSidebar extends LitElement {
       bubbles: true,
       composed: true
     }));
+  }
+
+  /**
+   * Get the current width of the sidebar (only for desktop)
+   * Returns 0 on mobile
+   */
+  getWidth(): number {
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) return 0;
+    
+    return this.collapsed ? 
+      parseInt(String(SidebarVar['width-collapsed'])) : 
+      parseInt(String(SidebarVar.width));
+  }
+
+  /**
+   * Get the current position of the sidebar ('left' or 'right')
+   */
+  getPosition(): 'left' | 'right' {
+    return this.position;
+  }
+
+  /**
+   * Check if sidebar is visible on desktop
+   */
+  isVisible(): boolean {
+    const isMobile = window.innerWidth <= 768;
+    return !isMobile;
+  }
+
+  /**
+   * Notify about width changes (for navbar to adjust)
+   */
+  private _notifyWidthChange() {
+    if (!this.fixed) return;
+    
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) return;
+
+    this.dispatchEvent(new CustomEvent('sidebar-width-change', {
+      detail: {
+        width: this.getWidth(),
+        position: this.getPosition(),
+        collapsed: this.collapsed
+      },
+      bubbles: true,
+      composed: true
+    }));
+  }
+
+  updated(changedProperties: Map<PropertyKey, unknown>) {
+    super.updated(changedProperties);
+    
+    // Update nav-items when collapsed state changes (only on desktop)
+    const isMobile = window.innerWidth <= 768;
+    if (changedProperties.has('collapsed') && !isMobile) {
+      this.updateNavItemsCollapsed();
+      this._notifyWidthChange();
+    }
+    
+    // Update overlay when open state changes or on window resize
+    if (changedProperties.has('open')) {
+      this._updateOverlay();
+    }
+    
+    // When switching to mobile mode, ensure nav-items are not collapsed
+    if (changedProperties.has('position') || changedProperties.size > 0) {
+      this._handleMobileTransition();
+    }
   }
 }

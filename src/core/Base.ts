@@ -64,17 +64,17 @@ export const { styles: BaseInputStyles, vars: InputVar } = createComponentTheme(
   'control-size': '1.25rem',
   'control-size-small': '1rem',
   'control-size-large': '1.6rem',
-  'control-bg': 'var(--base-input-bg)',
-  'control-bg-hover': 'var(--base-input-bg-hover)',
+  'control-bg': Var.input.bg,
+  'control-bg-hover': Var.input.bgHover,
   'control-bg-checked': Var.color.primary,
   'control-bg-disabled': Var.color.surface.variant,
-  'control-border-color': 'var(--base-input-border-color)',
-  'control-border-color-hover': 'var(--base-input-border-color-hover)',
-  'control-border-color-focus': 'var(--base-input-focus-ring-color)',
+  'control-border-color': Var.color.border.default,
+  'control-border-color-hover': Var.color.border.hover,
+  'control-border-color-focus': Var.color.border.focus,
   'control-border-color-checked': Var.color.primary,
   'control-border-color-disabled': Var.color.border.disabled,
   'control-border-width': '2px',
-  'control-radius': 'var(--base-input-radius)',
+  'control-radius': Var.input.radius,
 
   // Icon
   'icon-color': Var.color.primary,
@@ -96,12 +96,12 @@ export const { styles: BaseInputStyles, vars: InputVar } = createComponentTheme(
   'gap-large': Var.spacing.gap.large,
 
   // Shadow
-  'focus-shadow': css`0 0 0 3px var(--base-input-focus-ring-color)`,
+  'focus-shadow': css`0 0 0 3px var(${Var.color.focusRing})`,
   'error-shadow': css`0 0 0 3px ${Var.color.error}`,
 
   // Disabled
   'disabled-cursor': 'not-allowed',
-  'disabled-color': 'var(--base-input-text-color-disabled)',
+  'disabled-color': Var.color.bg.disabled,
 
   // Select
   'select-bg-image': `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`,
@@ -125,14 +125,14 @@ export const { styles: BaseInputStyles, vars: InputVar } = createComponentTheme(
   'radio-scale-checked': '1',
 
   // Option
-  'option-padding': 'var(--base-input-padding)',
-  'option-bg': 'var(--base-input-bg)',
-  'option-color': 'var(--base-input-text-color)',
+  'option-padding': Var.spacing.padding.input.default,
+  'option-bg': Var.color.bg.default,
+  'option-color': Var.color.text.primary,
   'option-cursor': 'pointer',
-  'option-bg-hover': 'var(--base-input-bg-hover)',
+  'option-bg-hover': Var.color.bg.hover,
   'option-color-hover': Var.color.primary,
   'option-bg-checked': Var.color.primary,
-  'option-color-checked': 'var(--base-input-bg)',
+  'option-color-checked': Var.color.bg.default,
 });
 
 
@@ -402,11 +402,16 @@ export abstract class BaseInput<T = unknown> extends DynamicStyleMixin(LitElemen
        cursor: ${InputVar['disabled-cursor']};
     }
 
-    /* Error message styling */
+    /* Error message styling - only visible when has content */
     .error {
+      display: none;
       color: ${InputVar['error-color']};
       font-size: ${InputVar['error-font-size']};
       margin-top: ${InputVar['error-margin-top']};
+    }
+
+    .error:not(:empty) {
+      display: block;
     }
 
     /* Color Variants */

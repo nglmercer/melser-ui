@@ -27,7 +27,7 @@ static styles = [
         width: 100%;
         height: ${NavbarVar.height};
         background-color: ${NavbarVar.bg};
-        border-bottom: 1px solid ${NavbarVar['border-color']};
+        border-bottom:1px solid ${NavbarVar['border-color']};
         z-index: 100;
         font-family: ${Var.font.family};
         transition: background-color ${NavbarVar.transition}, border-color ${NavbarVar.transition};
@@ -39,6 +39,7 @@ static styles = [
         top: 0; 
         left: 0; 
         right: 0;
+        z-index: 1050;
       }
       
       :host([sticky]) { 

@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Melser UI - Application Layout</title>
+  <script type="module" src="/src/index.ts"></script>
+  <style>
+    /* Import Theme Variables */
+    @import url('./src/styles/theme.css');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 0;
+      margin: 0;
+      background-color: var(--me-bg);
+      color: var(--me-text);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      background: var(--me-surface);
+      padding: 0.75rem 1rem;
+      border-radius: var(--me-radius);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Main Application Layout */
+    .app-layout {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-top: 64px; /* Space for fixed navbar */
+    }
+
+    .app-content-wrapper {
+      display: flex;
+      flex: 1;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+      margin-left: 260px; /* Default sidebar width */
+      transition: margin-left 0.3s ease;
+      overflow-y: auto;
+    }
+
+    .main-content.sidebar-collapsed {
+      margin-left: 64px; /* Collapsed sidebar width */
+    }
+
+    /* Content Sections */
+    .content-section {
+      background: var(--me-surface);
+      border-radius: var(--me-radius);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--me-border);
+    }
+
+    .content-section h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 2rem;
+      color: var(--me-text);
+    }
+
+    .content-section h2 {
+      margin: 1.5rem 0 1rem 0;
+      font-size: 1.5rem;
+      color: var(--me-text);
+    }
+
+    .content-section p {
+      color: var(--me-text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .card {
+      background: var(--me-bg);
+      border-radius: var(--me-radius);
+      padding: 1.5rem;
+      border: 1px solid var(--me-border);
+    }
+
+    .card h3 {
+      margin: 0 0 0.75rem 0;
+      color: var(--me-text);
+      font-size: 1.125rem;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--me-text-secondary);
+    }
+
+    /* Stats Cards */
+    .stat-card {
+      background: var(--me-bg);
+      border-radius: var(--me-radius);
+      padding: 1.5rem;
+      border: 1px solid var(--me-border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--me-radius);
+      background: var(--me-primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--me-text);
+      margin: 0;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--me-text-secondary);
+      margin: 0.25rem 0 0 0;
+    }
+
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .data-table th,
+    .data-table td {
+      text-align: left;
+      padding: 1rem;
+      border-bottom: 1px solid var(--me-border);
+    }
+
+    .data-table th {
+      font-weight: 600;
+      color: var(--me-text);
+      background: var(--me-bg);
+    }
+
+    .data-table td {
+      color: var(--me-text-secondary);
+    }
+
+    .data-table tr:hover {
+      background: var(--me-bg);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .main-content {
+        margin-left: 0 !important;
+        padding: 1rem;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .content-section {
+        padding: 1.5rem;
+      }
+
+      .content-section h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .content-section {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .content-section:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .content-section:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+    #theme-switch {
+      --base-input-gap: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Fixed Navbar -->
+  <me-navbar id="main-navbar" variant="default" fixed>
+    <me-navbar-brand slot="brand" logo="/vite.svg">
+      Melser UI
+    </me-navbar-brand>
+    
+    <div style="display: flex; gap: 1rem;">
+        <me-switch id="theme-switch" label="Theme"></me-switch>
+      </div>
+      <me-nav-item active>
+        <span slot="text">Dashboard</span>
+      </me-nav-item>
+      <me-nav-item>
+        <span slot="text">Analytics</span>
+      </me-nav-item>
+      <me-nav-item>
+        <span slot="text">Projects</span>
+      </me-nav-item>
+      <me-nav-item>
+        <span slot="text">Settings</span>
+      </me-nav-item>
+    </div>
+    
+    <div slot="mobile-menu" style="display: flex; flex-direction: column; gap: 0.5rem;">
+      <me-nav-item active>
+        <span slot="text">Dashboard</span>
+      </me-nav-item>
+      <me-nav-item>
+        <span slot="text">Analytics</span>
+      </me-nav-item>
+      <me-nav-item>
+        <span slot="text">Projects</span>
+      </me-nav-item>
+      <me-nav-item>
+        <span slot="text">Settings</span>
+      </me-nav-item>
+      <hr style="border: 0; border-top: 1px solid var(--me-border); margin: 0.5rem 0;">
+      <button style="padding: 0.5rem 1rem; background: var(--me-primary); color: white; border: none; border-radius: var(--me-radius); cursor: pointer;">Sign In</button>
+    </div>
+    
+    <div slot="actions" style="display: flex; gap: 1rem;">
+      <me-icon-button label="Notifications">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+      </me-icon-button>
+      <button style="padding: 0.5rem 1rem; background: var(--me-primary); color: white; border: none; border-radius: var(--me-radius); cursor: pointer;">Sign In</button>
+    </div>
+  </me-navbar>
+
+  <!-- Fixed Sidebar -->
+  <me-sidebar id="main-sidebar" position="left" fixed>
+    <div class="sidebar-content" style="padding: 1rem;">
+      <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+        <me-nav-item active>
+          <svg slot="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span slot="text">Dashboard</span>
+        </me-nav-item>
+        
+        <me-nav-item>
+          <svg slot="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+          </svg>
+          <span slot="text">Favorites</span>
+        </me-nav-item>
+        
+        <me-nav-item>
+          <svg slot="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span slot="text">Users</span>
+        </me-nav-item>
+        
+        <me-nav-item>
+          <svg slot="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span slot="text">Documents</span>
+          <span slot="badge">12</span>
+        </me-nav-item>
+        
+        <me-nav-item>
+          <svg slot="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 .82-.33L9 9a1.65 1.65 0 0 0 1-1.82-.33l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 .82.33V12a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2v-.09a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82z"></path>
+          </svg>
+          <span slot="text">Settings</span>
+        </me-nav-item>
+      </div>
+    </div>
+  </me-sidebar>
+
+  <!-- Main Content -->
+  <div class="app-layout">
+    <div class="app-content-wrapper">
+      <div class="main-content" id="main-content">
+        <div class="content-section">
+          <h1>Dashboard Overview</h1>
+          <p>Welcome to your Melser UI application dashboard. Here you can find an overview of your projects, analytics, and recent activity.</p>
+        </div>
+
+        <div class="content-section">
+          <h2>Statistics</h2>
+          <div class="cards-grid">
+            <div class="stat-card">
+              <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                  <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="stat-value">2,451</p>
+                <p class="stat-label">Total Views</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="stat-value">1,892</p>
+                <p class="stat-label">Active Users</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <div>
+                <p class="stat-value">384</p>
+                <p class="stat-label">Documents</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <div>
+                <p class="stat-value">94%</p>
+                <p class="stat-label">Completion Rate</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Recent Activity</h2>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Status</th>
+                <th>Progress</th>
+                <th>Last Updated</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Website Redesign</td>
+                <td><span style="color: #10b981; font-weight: 600;">In Progress</span></td>
+                <td>75%</td>
+                <td>2 hours ago</td>
+              </tr>
+              <tr>
+                <td>Mobile App Development</td>
+                <td><span style="color: #f59e0b; font-weight: 600;">Review</span></td>
+                <td>90%</td>
+                <td>5 hours ago</td>
+              </tr>
+              <tr>
+                <td>Database Migration</td>
+                <td><span style="color: #3b82f6; font-weight: 600;">Completed</span></td>
+                <td>100%</td>
+                <td>1 day ago</td>
+              </tr>
+              <tr>
+                <td>API Integration</td>
+                <td><span style="color: #10b981; font-weight: 600;">In Progress</span></td>
+                <td>45%</td>
+                <td>2 days ago</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="content-section">
+          <h2>Quick Actions</h2>
+          <div class="cards-grid">
+            <div class="card">
+              <h3>📝 Create Project</h3>
+              <p>Start a new project and define its goals and milestones.</p>
+            </div>
+            <div class="card">
+              <h3>📊 View Analytics</h3>
+              <p>Analyze your data and track performance metrics.</p>
+            </div>
+            <div class="card">
+              <h3>👥 Manage Team</h3>
+              <p>Add or remove team members and assign roles.</p>
+            </div>
+            <div class="card">
+              <h3>⚙️ Configure Settings</h3>
+              <p>Customize your application preferences and configurations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { registerComponent, MelserSwitch, setTheme } from '/src/index.ts';
+
+    // Theme Management
+    function initTheme() {
+      const themeSwitch = document.getElementById('theme-switch');
+      if (!themeSwitch) return;
+
+      // Check system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        themeSwitch.value = true;
+        document.documentElement.setAttribute('data-theme', 'dark');
+        setTheme('dark');
+      }
+
+      themeSwitch.addEventListener('ui:change', (e) => {
+        const isDark = e.detail.value;
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        setTheme(isDark ? 'dark' : 'light');
+      });
+    }
+
+    // Sidebar and Navbar connection
+    function initSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const mainContent = document.getElementById('main-content');
+
+      if (!sidebar || !mainContent) return;
+
+      // Listen for sidebar collapse events
+      sidebar.addEventListener('sidebar-toggle', (e) => {
+        const collapsed = e.detail.collapsed;
+        if (collapsed) {
+          mainContent.classList.add('sidebar-collapsed');
+        } else {
+          mainContent.classList.remove('sidebar-collapsed');
+        }
+      });
+
+      // Also listen to collapse and expand events
+      sidebar.addEventListener('sidebar-collapse', () => {
+        mainContent.classList.add('sidebar-collapsed');
+      });
+
+      sidebar.addEventListener('sidebar-expand', () => {
+        mainContent.classList.remove('sidebar-collapsed');
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+          mainContent.classList.remove('sidebar-collapsed');
+        }
+      });
+    }
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      initSidebar();
+
+      console.log('✅ Melser UI Application initialized successfully');
+      console.log('📱 Resize window below 768px to see mobile responsive behavior');
+    });
+
+    // Register custom components (if needed)
+    registerComponent('custom-brand-switch', MelserSwitch);
+  </script>
+</body>
+
+</html>

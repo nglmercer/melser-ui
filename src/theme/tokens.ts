@@ -115,6 +115,7 @@ export const tokens = {
     // Tier 3: Component Specific (Optional, or can be composed in component)
     input: {
         bg: { $value: '{color.bg.default}' },
+        bgHover: { $value: '{color.bg.hover}' },
         border: { $value: '{color.border.default}' },
         radius: { $value: '{radius.default}' },
     }
