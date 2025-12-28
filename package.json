@@ -69,6 +69,7 @@
   "homepage": "https://github.com/nglmercer/melser-ui#readme",
   "sideEffects": [
     "src/components/*.ts",
+    "src/core/icons.ts",
     "src/index.ts"
   ],
   "engines": {

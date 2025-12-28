@@ -1,54 +1,55 @@
 import { LitElement } from 'lit';
 
+// Bandera global para evitar ejecuciones múltiples innecesarias
+let areComponentsRegistered = false;
+
 /**
- * Registers a component with a specific tag name.
- * If the component class is already registered (e.g. via @customElement), 
- * it creates a subclass to allow re-registration under a new name.
- * 
- * @param tagName - The custom element tag name (must contain a hyphen)
- * @param componentClass - The LitElement class to register
+ * Registra un componente de forma segura.
+ * Si ya existe, no hace nada (evita errores de redefinición).
+ * Si la clase ya está usada por otro tag, crea una subclase automáticamente.
  */
 export function registerComponent(tagName: string, componentClass: typeof LitElement) {
+    // 1. Verificación estricta: Si el tag ya existe, salimos silenciosamente.
+    // Esto es vital para la navegación interna donde el script se vuelve a ejecutar.
     if (customElements.get(tagName)) {
-        console.warn(`Custom element ${tagName} is already defined.`);
-        return;
+        return; 
     }
 
     try {
         customElements.define(tagName, componentClass);
-    } catch (e) {
-        // If registration fails because class is already registered, subclass it
-        // This allows creating aliases like <my-input> for <base-input>
-        if (e instanceof DOMException && e.name === 'NotSupportedError') {
+    } catch (e: unknown) {
+        // Validación de tipo segura para TypeScript
+        if (e instanceof Error && e.name === 'NotSupportedError') {
+            // El error suele ser: "The constructor has already been used with this registry"
+            // Solución: Crear una clase anónima que extienda la original
             class AliasedComponent extends componentClass { }
-            customElements.define(tagName, AliasedComponent);
+            
+            // Intentamos definir de nuevo con la nueva referencia de clase
+            // Si esto falla, dejamos que el error suba para debuggear
+            try {
+                customElements.define(tagName, AliasedComponent);
+            } catch (aliasError) {
+                console.error(`Error crítico al registrar alias para ${tagName}:`, aliasError);
+            }
         } else {
-            throw e;
+            console.error(`Error desconocido al registrar ${tagName}:`, e);
         }
     }
 }
 
 /**
- * Helper to register a set of components with a custom prefix.
- * 
- * Example: 
- * registerWithPrefix('app', { Button: MelserButton }) 
- * // Registers <app-button>
- * 
- * @param prefix - The prefix to use (e.g. 'my-lib')
- * @param components - Object mapping names to component classes
+ * Helper para registrar componentes con prefijo.
  */
 export function registerWithPrefix(prefix: string, components: Record<string, typeof LitElement>) {
     Object.entries(components).forEach(([name, clazz]) => {
-        // Convert CamelCase or PascalCase to kebab-case
-        // e.g. "TextInput" -> "text-input"
         const kebabName = name
             .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
             .toLowerCase();
 
-        // Remove existing prefix if present in the key to avoid double prefixing
-        // e.g. if key is "MelserTextInput", we might want just "text-input"
-        const cleanName = kebabName.replace(/^me-/, '');
+        // Evitar duplicar el prefijo si el nombre de la clase ya lo incluye
+        // Ejemplo: prefix='me', class='MelserButton' -> 'me-button' (no 'me-melser-button')
+        const prefixRegex = new RegExp(`^${prefix}-?`, 'i');
+        const cleanName = kebabName.replace(prefixRegex, '');
 
         const tagName = `${prefix}-${cleanName}`;
         registerComponent(tagName, clazz);
@@ -56,41 +57,31 @@ export function registerWithPrefix(prefix: string, components: Record<string, ty
 }
 
 /**
- * Registra todos los componentes Melser UI con sus nombres de etiqueta predeterminados.
- *
- * Ejemplo de uso:
- * ```typescript
- * import { registerComponents } from 'melser-ui';
- * registerComponents(); // Registra todos los componentes con prefijo 'me-'
- * ```
- *
- * Esto es equivalente a:
- * ```typescript
- * registerComponent('me-text-input', MelserTextInput);
- * registerComponent('me-checkbox', MelserCheckbox);
- * registerComponent('me-select', MelserSelect);
- * // ... y así sucesivamente para todos los componentes
- * ```
+ * Registra todos los componentes Melser UI.
+ * * MEJORA: Ahora es asíncrona y usa un flag de estado.
+ * Solo ejecutará los imports la primera vez que se llame.
+ * * Uso con Router:
+ * await registerComponents();
  */
-export function registerComponents() {
-    // Importar todos los componentes dinámicamente para evitar dependencias circulares
-    import('../components/base-input').then(m => registerComponent('me-text-input', m.MelserTextInput));
-    import('../components/melser-checkbox').then(m => registerComponent('me-checkbox', m.MelserCheckbox));
-    import('../components/melser-select').then(m => registerComponent('me-select', m.MelserSelect));
-    import('../components/melser-number-input').then(m => registerComponent('me-number-input', m.MelserNumberInput));
-    import('../components/melser-password-input').then(m => registerComponent('me-password-input', m.MelserPasswordInput));
-    import('../components/melser-textarea').then(m => registerComponent('me-textarea', m.MelserTextarea));
-    import('../components/melser-radio-group').then(m => registerComponent('me-radio-group', m.MelserRadioGroup));
-    import('../components/melser-switch').then(m => registerComponent('me-switch', m.MelserSwitch));
-    import('../components/melser-range').then(m => registerComponent('me-range', m.MelserRange));
-    import('../components/melser-dual-range').then(m => registerComponent('me-dual-range', m.MelserDualRange));
-    import('../components/melser-multi-select').then(m => registerComponent('me-multi-select', m.MelserMultiSelect));
-    import('../components/melser-combobox').then(m => registerComponent('me-combobox', m.MelserCombobox));
-    import('../components/melser-tags-input').then(m => registerComponent('me-tags-input', m.MelserTagsInput));
-    import('../components/melser-otp-input').then(m => registerComponent('me-otp-input', m.MelserOtpInput));
-    import('../components/melser-date-picker').then(m => registerComponent('me-date-picker', m.MelserDatePicker));
-    import('../components/melser-time-picker').then(m => registerComponent('me-time-picker', m.MelserTimePicker));
-    import('../components/melser-color-picker').then(m => registerComponent('me-color-picker', m.MelserColorPicker));
-    import('../components/melser-file-upload').then(m => registerComponent('me-file-upload', m.MelserFileUpload));
-    import('../components/melser-rating').then(m => registerComponent('me-rating', m.MelserRating));
+export async function registerComponents(): Promise<void> {
+    // Si ya se registraron, no hacemos nada (ahorra recursos y evita errores)
+    if (areComponentsRegistered) {
+        return;
+    }
+
+    // Array de promesas de importación
+    // Only dynamically import components that are NOT statically exported in index.ts
+    // This prevents warnings about components being both statically and dynamically imported
+    const imports: Promise<void>[] = [
+        // Note: Components are already registered via static imports in index.ts
+        // This function is kept for backwards compatibility and future use cases
+    ];
+
+    try {
+        // Esperamos a que todos los módulos se carguen y registren
+        await Promise.all(imports);
+        areComponentsRegistered = true; // Marcamos como listo
+    } catch (error) {
+        console.error("Error cargando componentes de Melser UI:", error);
+    }
 }

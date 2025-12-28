@@ -1,3 +1,4 @@
+// Export all components
 export { MelserTextInput } from './components/base-input';
 export { MelserSelect } from './components/melser-select';
 export { MelserCheckbox } from './components/melser-checkbox';
@@ -25,12 +26,19 @@ export { MelserTableCell } from './components/table-cell';
 export { MelserTableActions } from './components/table-actions';
 export { MelserSidebar } from './components/melser-sidebar';
 export { MelserSidebarToggle } from './components/melser-sidebar-toggle';
+export { MelserAccordion } from './components/melser-accordion';
 export { MelserNavbar } from './components/melser-navbar';
 export { MelserNavbarBrand } from './components/melser-navbar-brand';
 export { MelserIconButton } from './components/melser-icon-button';
 export { MelserNavItem } from './components/melser-nav-item';
+export { MelserIcon } from './components/melser-icon';
 export { CellRendererRegistry } from './core/CellRendererRegistry';
+export { svgIconRegistry, SvgIconRegistry } from './core/SvgIconRegistry';
+
+// Import icons to auto-register them
+import './core/icons';
 export * from './types/index';
+
 // Export registration utilities
 export { registerComponent, registerWithPrefix, registerComponents } from './utils/registration';
 
@@ -38,5 +46,7 @@ export { registerComponent, registerWithPrefix, registerComponents } from './uti
 export { setTheme, Var } from './theme/tokens';
 export { ThemeManager } from './theme/theme-manager';
 
+// Export Intersection utilities
+export { getGlobalTracker, findMostVisibleElement, isElementVisible } from './utils/intersection';
 // Export all types
 export * from './core/types';

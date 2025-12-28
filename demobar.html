@@ -263,8 +263,95 @@
     .content-section:nth-child(3) {
       animation-delay: 0.2s;
     }
+
+    /* Smooth Scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
     #theme-switch {
       --base-input-gap: 0;
+    }
+
+    /* Accordion Sub-items Styling */
+    .accordion-subitem {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      border-radius: var(--me-radius);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      color: var(--me-text);
+      text-decoration: none;
+      margin-top: 0.25rem;
+    }
+
+    .accordion-subitem:hover {
+      background-color: var(--me-bg);
+      color: var(--me-primary);
+    }
+
+    .accordion-subitem .subitem-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    /* Custom Accordion Item Styling */
+    .custom-accordion-item {
+      width: 100%;
+      border: 1px solid var(--me-border);
+      border-radius: var(--me-radius);
+      background: var(--me-bg);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      background-color: var(--me-surface);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      user-select: none;
+    }
+
+    .accordion-header:hover {
+      background-color: var(--me-bg);
+    }
+
+    .accordion-header span {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--me-text);
+    }
+
+    .accordion-header .chevron {
+      transition: transform 0.2s ease;
+      color: var(--me-text-secondary);
+    }
+
+    .custom-accordion-item[data-expanded="true"] .accordion-header .chevron {
+      transform: rotate(180deg);
+    }
+
+    .custom-accordion-item[data-expanded="true"] .accordion-header {
+      background-color: var(--me-bg);
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 1rem;
+    }
+
+    .custom-accordion-item[data-expanded="true"] .accordion-content {
+      display: block;
     }
   </style>
 </head>
@@ -312,62 +399,144 @@
     
     <div slot="actions" style="display: flex; gap: 1rem;">
       <me-icon-button label="Notifications">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-        </svg>
+        <me-icon name="bell" slot="icon"></me-icon>
       </me-icon-button>
       <button style="padding: 0.5rem 1rem; background: var(--me-primary); color: white; border: none; border-radius: var(--me-radius); cursor: pointer;">Sign In</button>
     </div>
   </me-navbar>
 
-  <!-- Fixed Sidebar -->
+  <!-- Fixed Sidebar with Accordion Navigation -->
   <!-- noNavbar is set dynamically based on screen size -->
   <me-sidebar id="main-sidebar" position="left" fixed navbar-height="64">
-    <div class="sidebar-content" style="padding: 1rem;">
+    <div class="sidebar-content" style="padding: 1rem; overflow-y: auto;">
       <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
-        <me-nav-item active>
-          <svg slot="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
-          </svg>
+        <!-- Dashboard Navigation -->
+        <me-nav-item data-section="overview">
+          <me-icon name="grid" slot="icon"></me-icon>
           <span slot="text">Dashboard</span>
         </me-nav-item>
-        
-        <me-nav-item>
-          <svg slot="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-          </svg>
+
+        <!-- Documentation Accordion Group -->
+        <me-accordion id="sidebar-docs-accordion">
+          <div class="custom-accordion-item" data-value="doc1" data-section="doc1">
+            <div class="accordion-header">
+              <span>Getting Started</span>
+              <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-subitem" data-section="doc1">
+                <span class="subitem-label">Introduction</span>
+              </div>
+              <div class="accordion-subitem" data-section="doc1">
+                <span class="subitem-label">Quick Start</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="custom-accordion-item" data-value="doc2" data-section="doc2">
+            <div class="accordion-header">
+              <span>Installation</span>
+              <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-subitem" data-section="doc2">
+                <span class="subitem-label">NPM Install</span>
+              </div>
+              <div class="accordion-subitem" data-section="doc2">
+                <span class="subitem-label">Yarn Install</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="custom-accordion-item" data-value="doc3" data-section="doc3">
+            <div class="accordion-header">
+              <span>API Reference</span>
+              <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-subitem" data-section="doc3">
+                <span class="subitem-label">Components API</span>
+              </div>
+              <div class="accordion-subitem" data-section="doc3">
+                <span class="subitem-label">Utilities</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="custom-accordion-item" data-value="doc4" data-section="doc4">
+            <div class="accordion-header">
+              <span>Components</span>
+              <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-subitem" data-section="doc4">
+                <span class="subitem-label">Buttons</span>
+              </div>
+              <div class="accordion-subitem" data-section="doc4">
+                <span class="subitem-label">Forms</span>
+              </div>
+              <div class="accordion-subitem" data-section="doc4">
+                <span class="subitem-label">Navigation</span>
+              </div>
+            </div>
+          </div>
+        </me-accordion>
+
+        <!-- FAQ Accordion Group -->
+        <me-accordion id="sidebar-faq-accordion">
+          <div class="custom-accordion-item" data-value="faq1" data-section="faq1">
+            <div class="accordion-header">
+              <span>What is Melser UI?</span>
+              <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-subitem" data-section="faq1">
+                <span class="subitem-label">Overview</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="custom-accordion-item" data-value="faq2" data-section="faq2">
+            <div class="accordion-header">
+              <span>How do I get started?</span>
+              <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-subitem" data-section="faq2">
+                <span class="subitem-label">Getting Started Guide</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="custom-accordion-item" data-value="faq3" data-section="faq3">
+            <div class="accordion-header">
+              <span>Is Melser UI customizable?</span>
+              <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-subitem" data-section="faq3">
+                <span class="subitem-label">Theming Guide</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="custom-accordion-item" data-value="faq4" data-section="faq4">
+            <div class="accordion-header">
+              <span>Does it support dark mode?</span>
+              <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+            </div>
+            <div class="accordion-content">
+            </div>
+          </div>
+        </me-accordion>
+
+        <me-nav-item data-section="overview">
+          <me-icon name="star" slot="icon"></me-icon>
           <span slot="text">Favorites</span>
         </me-nav-item>
-        
-        <me-nav-item>
-          <svg slot="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          <span slot="text">Users</span>
-        </me-nav-item>
-        
-        <me-nav-item>
-          <svg slot="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          <span slot="text">Documents</span>
-          <span slot="badge">12</span>
-        </me-nav-item>
-        
-        <me-nav-item>
-          <svg slot="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l.06.06a1.65 1.65 0 0 0 .33 1.82V9a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 .82-.33L9 9a1.65 1.65 0 0 0 1-1.82-.33l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 .82.33V12a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2v-.09a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82z"></path>
-          </svg>
+
+        <me-nav-item data-section="overview">
+          <me-icon name="settings" slot="icon"></me-icon>
           <span slot="text">Settings</span>
         </me-nav-item>
       </div>
@@ -378,20 +547,17 @@
   <div class="app-layout">
     <div class="app-content-wrapper">
       <div class="main-content" id="main-content">
-        <div class="content-section">
+        <div class="content-section" id="overview">
           <h1>Dashboard Overview</h1>
           <p>Welcome to your Melser UI application dashboard. Here you can find an overview of your projects, analytics, and recent activity.</p>
         </div>
 
-        <div class="content-section">
+        <div class="content-section" id="statistics">
           <h2>Statistics</h2>
           <div class="cards-grid">
             <div class="stat-card">
               <div class="stat-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-                  <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
-                </svg>
+                <me-icon name="eye" color="success"></me-icon>
               </div>
               <div>
                 <p class="stat-value">2,451</p>
@@ -401,12 +567,7 @@
 
             <div class="stat-card">
               <div class="stat-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
+                <me-icon name="users" color="primary"></me-icon>
               </div>
               <div>
                 <p class="stat-value">1,892</p>
@@ -416,13 +577,7 @@
 
             <div class="stat-card">
               <div class="stat-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="16" y1="13" x2="8" y2="13"></line>
-                  <line x1="16" y1="17" x2="8" y2="17"></line>
-                  <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
+                <me-icon name="file" color="warning"></me-icon>
               </div>
               <div>
                 <p class="stat-value">384</p>
@@ -432,10 +587,7 @@
 
             <div class="stat-card">
               <div class="stat-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
+                <me-icon name="check" color="danger"></me-icon>
               </div>
               <div>
                 <p class="stat-value">94%</p>
@@ -445,7 +597,7 @@
           </div>
         </div>
 
-        <div class="content-section">
+        <div class="content-section" id="activity">
           <h2>Recent Activity</h2>
           <table class="data-table">
             <thead>
@@ -485,7 +637,7 @@
           </table>
         </div>
 
-        <div class="content-section">
+        <div class="content-section" id="actions">
           <h2>Quick Actions</h2>
           <div class="cards-grid">
             <div class="card">
@@ -503,6 +655,164 @@
             <div class="card">
               <h3>⚙️ Configure Settings</h3>
               <p>Customize your application preferences and configurations.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Accordion Navigation System -->
+        <div class="content-section" id="accordion-navigation">
+          <h2>Accordion Navigation System</h2>
+          <p>The accordion system now supports navigation with shared state across different groups. Each accordion group can have one selected item, allowing you to navigate between sections easily.</p>
+          
+          <div class="cards-grid">
+            <div class="card">
+              <h3>📚 Documentation</h3>
+              <p>Explore documentation topics with accordion navigation.</p>
+            </div>
+            <div class="card">
+              <h3>📊 Dashboard</h3>
+              <p>Navigate dashboard sections using accordions.</p>
+            </div>
+            <div class="card">
+              <h3>⚙️ Settings</h3>
+              <p>Access different configuration groups.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accordion Sections with Navigation -->
+        <div class="content-section" id="accordions">
+          <h2>Documentation (Accordion Navigation)</h2>
+          <me-accordion id="docs-accordion">
+            <div class="custom-accordion-item" data-value="doc1" data-section="doc1" data-expanded="true">
+              <div class="accordion-header">
+                <span>Getting Started</span>
+                <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+              </div>
+              <div class="accordion-content">
+                <p>Welcome to Melser UI! This guide will help you get started with our component library.</p>
+              </div>
+            </div>
+            <div class="custom-accordion-item" data-value="doc2" data-section="doc2">
+              <div class="accordion-header">
+                <span>Installation</span>
+                <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+              </div>
+              <div class="accordion-content">
+                <p>Install Melser UI using npm or yarn: <code>npm install melser-ui</code></p>
+              </div>
+            </div>
+            <div class="custom-accordion-item" data-value="doc3" data-section="doc3">
+              <div class="accordion-header">
+                <span>API Reference</span>
+                <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+              </div>
+              <div class="accordion-content">
+                <p>Complete API documentation for all Melser UI components.</p>
+              </div>
+            </div>
+            <div class="custom-accordion-item" data-value="doc4" data-section="doc4">
+              <div class="accordion-header">
+                <span>Components</span>
+                <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+              </div>
+              <div class="accordion-content">
+                <p>Available components in Melser UI: Buttons, Forms, Navigation, and Data Display.</p>
+              </div>
+            </div>
+          </me-accordion>
+        </div>
+
+        <div class="content-section" id="faq-accordions">
+          <h2>FAQ (Separate Group)</h2>
+          <me-accordion id="faq-accordion">
+            <div class="custom-accordion-item" data-value="faq1" data-section="faq1">
+              <div class="accordion-header">
+                <span>What is Melser UI?</span>
+                <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+              </div>
+              <div class="accordion-content">
+                <p>Melser UI is a comprehensive component library built with LitElement, providing accessible and customizable UI components for modern web applications.</p>
+              </div>
+            </div>
+            <div class="custom-accordion-item" data-value="faq2" data-section="faq2">
+              <div class="accordion-header">
+                <span>How do I get started?</span>
+                <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+              </div>
+              <div class="accordion-content">
+                <p>Simply install the package using npm or yarn, import the components you need, and start building. Check our documentation for detailed installation guides.</p>
+              </div>
+            </div>
+            <div class="custom-accordion-item" data-value="faq3" data-section="faq3">
+              <div class="accordion-header">
+                <span>Is Melser UI customizable?</span>
+                <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+              </div>
+              <div class="accordion-content">
+                <p>Yes! Melser UI provides extensive theming capabilities through CSS custom properties and a built-in theme manager for easy customization.</p>
+              </div>
+            </div>
+            <div class="custom-accordion-item" data-value="faq4" data-section="faq4">
+              <div class="accordion-header">
+                <span>Does it support dark mode?</span>
+                <me-icon name="chevron-down" size="sm" class="chevron"></me-icon>
+              </div>
+              <div class="accordion-content">
+                <p>Absolutely! Melser UI includes built-in dark mode support that can be toggled programmatically or based on system preferences.</p>
+              </div>
+            </div>
+          </me-accordion>
+        </div>
+
+        <div class="content-section" id="doc1">
+          <h1>Getting Started</h1>
+          <p>Welcome to Melser UI! This guide will help you get started with our component library.</p>
+          <h2>Installation</h2>
+          <p>Install Melser UI using npm or yarn:</p>
+          <div class="card" style="margin-top: 1rem;">
+            <code style="background: var(--me-bg); padding: 1rem; display: block; border-radius: var(--me-radius); font-family: monospace;">npm install melser-ui</code>
+          </div>
+        </div>
+
+        <div class="content-section" id="doc2">
+          <h2>Installation Guide</h2>
+          <p>Follow these steps to integrate Melser UI into your project:</p>
+          <ol style="margin-left: 1.5rem; color: var(--me-text-secondary);">
+            <li style="margin-bottom: 0.5rem;">Install the package</li>
+            <li style="margin-bottom: 0.5rem;">Import components</li>
+            <li style="margin-bottom: 0.5rem;">Configure theme</li>
+            <li>Start building!</li>
+          </ol>
+        </div>
+
+        <div class="content-section" id="doc3">
+          <h2>API Reference</h2>
+          <p>Complete API documentation for all Melser UI components.</p>
+          <div class="card" style="margin-top: 1rem;">
+            <h3>Components</h3>
+            <p>Explore our 20+ UI components including buttons, forms, navigation, and more.</p>
+          </div>
+        </div>
+
+        <div class="content-section" id="doc4">
+          <h2>Components</h2>
+          <p>Available components in Melser UI:</p>
+          <div class="cards-grid">
+            <div class="card">
+              <h3>Buttons</h3>
+              <p>Various button styles and variants.</p>
+            </div>
+            <div class="card">
+              <h3>Forms</h3>
+              <p>Input fields, selects, checkboxes, and more.</p>
+            </div>
+            <div class="card">
+              <h3>Navigation</h3>
+              <p>Sidebar, navbar, and accordion components.</p>
+            </div>
+            <div class="card">
+              <h3>Data Display</h3>
+              <p>Tables, cards, and statistical widgets.</p>
             </div>
           </div>
         </div>
@@ -575,13 +885,146 @@
       });
     }
 
+    // Tab Navigation System
+    function initTabNavigation() {
+      const sections = document.querySelectorAll('.content-section');
+
+      // Map section IDs to tab values
+      const sectionToTabMap = new Map();
+      const tabToSectionMap = new Map();
+      const tabElementMap = new Map();
+
+      // Update active tab based on hash
+      function updateActiveNav() {
+        const hash = window.location.hash || '#overview';
+        const sectionId = hash.replace('#', '');
+
+        // Update all tabs
+        sectionToTabMap.forEach((tabInfo, secId) => {
+          if (secId === sectionId) {
+            tabInfo.tab.value = sectionId;
+          }
+        });
+      }
+
+      // Update active nav item based on scroll position
+      function updateActiveNavOnScroll() {
+        const scrollPosition = window.scrollY + 100; // Offset for better detection
+
+        let currentSection = 'overview';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+
+          if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            currentSection = section.id;
+          }
+        });
+
+        // Update hash without triggering scroll
+        if (window.location.hash !== '#' + currentSection) {
+          history.replaceState(null, null, '#' + currentSection);
+          updateActiveNav();
+        }
+      }
+
+      // Handle hash change
+      window.addEventListener('hashchange', () => {
+        updateActiveNav();
+        const hash = window.location.hash || '#overview';
+        const targetElement = document.querySelector(hash);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+
+
+      // Listen to scroll events with debounce
+      let scrollTimeout;
+      window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(updateActiveNavOnScroll, 50);
+      });
+
+      // Initial setup
+      updateActiveNav();
+      updateActiveNavOnScroll();
+
+      console.log('🔑 Tab navigation initialized');
+    }
+
+    // Navigation System with Event Delegation
+    function initNavigationSystem() {
+      // Add click handlers to all sub-items
+      const subItems = document.querySelectorAll('.accordion-subitem');
+      subItems.forEach(subItem => {
+        subItem.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const sectionId = subItem.dataset.section;
+          if (sectionId) {
+            console.log('📌 Sub-item clicked:', sectionId);
+            const targetElement = document.getElementById(sectionId);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        });
+      });
+
+      console.log('🧭 Navigation system initialized with event delegation');
+    }
+
+    // Accordion System with Event Delegation
+    function initAccordionSystem() {
+      // Add event delegation for all accordions
+      document.addEventListener('click', (e) => {
+        const header = e.target.closest('.accordion-header');
+        if (!header) return;
+
+        const accordionItem = header.closest('.custom-accordion-item');
+        if (!accordionItem) return;
+
+        const accordion = accordionItem.closest('me-accordion');
+        if (!accordion) return;
+
+        // Check if this accordion allows multiple open items
+        const allowMultiple = accordion === document.getElementById('sidebar-docs-accordion') || 
+                           accordion === document.getElementById('sidebar-faq-accordion');
+        
+        const isExpanded = accordionItem.dataset.expanded === 'true';
+        
+        if (!allowMultiple) {
+          // Close all other items in the same accordion
+          const allItems = accordion.querySelectorAll(':scope > .custom-accordion-item');
+          allItems.forEach(item => {
+            item.dataset.expanded = 'false';
+          });
+        }
+
+        // Toggle current item
+        accordionItem.dataset.expanded = isExpanded ? 'false' : 'true';
+
+        console.log('🔽 Accordion toggled:', accordionItem.dataset.value, 'expanded:', !isExpanded);
+      });
+
+      console.log('📦 Accordion system initialized with event delegation');
+    }
+
     // Initialize when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
       initSidebar();
+      initTabNavigation();
+      initNavigationSystem();
+      initAccordionSystem();
 
       console.log('✅ Melser UI Application initialized successfully');
       console.log('📱 Resize window below 768px to see mobile responsive behavior');
+      console.log('🔑 Use tab navigation or scroll to see active section highlighting');
+      console.log('🧭 Use sidebar accordions to navigate to different sections');
+      console.log('📚 Accordions now use simple event delegation - users handle their own events');
     });
 
     // Register custom components (if needed)
