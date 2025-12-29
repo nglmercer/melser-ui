@@ -147,10 +147,20 @@ CellRendererRegistry.getInstance().register(
 );
 ```
 
-### Demo
+### Interactive Demo
 
-<data-table-lit id="demo-table">
-</data-table-lit>
+For a comprehensive interactive demonstration of all table features, use the `me-table-playground` component:
+
+<me-table-playground></me-table-playground>
+
+The playground provides:
+- **Data Management**: Add, edit, delete rows and export data
+- **Live Configuration**: Toggle pagination, selection, density, and expandable rows
+- **Real-time Styling**: Customize colors, borders, and appearance
+- **Event Monitoring**: Watch all table events in real-time
+- **Template System**: Switch between different data templates (users, products)
+
+Try the [interactive playground example](../examples/table-playground.html) to explore all features.
 
 ## Theming
 

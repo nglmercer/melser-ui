@@ -4,6 +4,7 @@ import './styles/theme.css';
 import './index';
 import './components/melser-playground-form'; // New Playground Component
 import './components/table'; // New Table Component
+import './components/melser-table-playground'; // New Table Playground Component
 import { setTheme } from './index';
 if (typeof window !== 'undefined') {
   const htmlElement = document.documentElement;
