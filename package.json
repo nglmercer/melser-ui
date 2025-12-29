@@ -35,7 +35,8 @@
     "build:web": "bun run type-check && vite build",
     "build": "bun run build:lib && bun run build:web",
     "preview": "vite preview",
-    "publish": "bun run build && bun publish"
+    "publish": "bun run build && bun publish",
+    "test": "bun test"
   },
   "dependencies": {
     "@types/node": "^24.10.1",

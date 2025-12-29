@@ -737,9 +737,14 @@ export class DataTableLit extends LitElement {
                  const label = option ? (typeof option === 'object' ? option.label : option) : val;
                  return html`${label}`;
              case 'date':
+                 // If a transform was applied, we assume the output is already formatted for display
+                 if (col.transform) return html`${val}`;
+                 
                  if (!val) return nothing;
                  try {
                      const d = val instanceof Date ? val : new Date(String(val));
+                     // Prevent "Invalid Date" text
+                     if (isNaN(d.getTime())) return html`${val}`;
                      return html`${d.toLocaleDateString()}`;
                  } catch { return html`${val}`; }
              default:
@@ -750,7 +755,7 @@ export class DataTableLit extends LitElement {
     renderCell(row: DataRow, col: TableColumn, isEditing: boolean) {
         // Use edited data if this row is being edited
         const effectiveRow = isEditing ? this.editFormData : row;
-        const rawValue = effectiveRow[col.key as string];
+        const rawValue = effectiveRow[col.key as string] ?? col.defaultValue;
         
         // Apply transform for display (only in view mode)
         const val = isEditing ? rawValue : this.applyTransform(rawValue, col);

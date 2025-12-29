@@ -35,6 +35,7 @@ export { MelserIcon } from './components/melser-icon';
 export { CellRendererRegistry } from './core/CellRendererRegistry';
 export { svgIconRegistry, SvgIconRegistry } from './core/SvgIconRegistry';
 export { TableRenderer } from './utils/table-renderer';
+export { map, getColumns, type MapOptions } from './utils/maptable';
 
 // Import icons to auto-register them
 import './core/icons';
