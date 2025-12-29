@@ -110,6 +110,16 @@ export interface TableStyles {
   textColorSecondary?: string;
 }
 
+export interface PaginationState {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    hasNext?: boolean;
+    hasPrev?: boolean;
+}
+
+
 // Utility type helper for defining columns with autocomplete
 export function defineColumns<T>(columns: TableColumn<T>[]): TableColumn<T>[] {
     return columns;

@@ -1,7 +1,7 @@
 import { LitElement, html, css, nothing, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { TableLogic } from '../core/TableLogic';
-import type { TableConfig, TableColumn, SelectColumn, DataRow, SortConfig, TableStyles, RowActionDetail, RowSelectDetail, RowExpandDetail, CellChangeDetail, RowSaveDetail, SelectionDetail } from '../core/types';
+import type { TableConfig, TableColumn, SelectColumn, DataRow, SortConfig, TableStyles, RowActionDetail, RowSelectDetail, RowExpandDetail, CellChangeDetail, RowSaveDetail, SelectionDetail, PaginationState } from '../core/types';
 import { InputVar } from '../core/Base';
 import { M_EVENTS } from '../types/events';
 import './table-cell';
@@ -34,7 +34,7 @@ export class DataTableLit extends LitElement {
         density: 'Normal',
         expandable: false
     };
-    @property({ type: Number }) total?: number;
+    @property({ type: Object }) pagination?: PaginationState;
     @property({ type: String }) searchQuery = '';
     @property({ type: Object }) customStyles: TableStyles = {};
     @property({ type: Object }) icons = {
@@ -284,12 +284,21 @@ export class DataTableLit extends LitElement {
     }
 
     private handlePageChange(newPage: number) {
-        this.currentPage = newPage;
+        // If controlled via pagination prop, we trust the parent to update the data/pagination object
+        // But we still emit the event so parent can do its logic
         this.dispatchEvent(new CustomEvent(M_EVENTS.PAGE_CHANGE, {
-            detail: { page: newPage, pageSize: this.config.pageSize },
+            detail: { 
+                page: newPage, 
+                pageSize: this.pagination ? this.pagination.limit : this.config.pageSize 
+            },
             bubbles: true,
             composed: true
         }));
+        
+        // If NOT controlled, we update internal state
+        if (!this.pagination) {
+            this.currentPage = newPage;
+        }
     }
 
     private handleSelectAll(e: Event, currentIds: (string|number)[]) {
@@ -385,22 +394,47 @@ export class DataTableLit extends LitElement {
         processed = TableLogic.search(processed, this.searchQuery);
         processed = TableLogic.sort(processed, this.sortConfig);
         
-        const pageSize = this.config.pageSize || 5;
-        // If 'total' property is provided, we assume server-side pagination.
-        // In this case, 'processed' (the data prop) IS the current page data.
-        const isServerSide = this.total !== undefined;
-        const totalItems = isServerSide ? this.total! : processed.length;
-
-        const { totalPages, startRecord, endRecord } = TableLogic.getPaginationMeta(totalItems, this.currentPage, pageSize);
+        const pageSize = this.pagination ? this.pagination.limit : (this.config.pageSize || 5);
         
-        if (this.currentPage > totalPages && totalPages > 0) {
-            this.currentPage = totalPages;
-        }
+        // --- Pagination Logic ---
+        let paginated: DataRow[] = [];
+        let totalItems = 0;
+        let totalPages = 0;
+        let startRecord = 0;
+        let endRecord = 0;
+        let currentPage = 1;
 
-        // If server-side, we do NOT slice the data, because the input data is already the slice for the current page.
-        const paginated = (this.config.pagination && !isServerSide) 
-            ? TableLogic.paginate(processed, this.currentPage, pageSize) 
-            : processed;
+        if (this.pagination) {
+            // Server-side / Externally Controlled Mode
+            // The data prop MUST contain the rows for the current page.
+            // We assume the parent has sliced it or fetched it correctly.
+            // However, we respect the user's wish: "if passed data 91-110... should be page 9"
+            
+            currentPage = this.pagination.page;
+            totalItems = this.pagination.total;
+            totalPages = this.pagination.totalPages;
+            
+            // Calculate display range for footer
+            startRecord = ((currentPage - 1) * pageSize) + 1;
+            endRecord = Math.min(currentPage * pageSize, totalItems);
+            
+            paginated = processed; // Display what is given
+        } else {
+             // Client-side Mode (Legacy behavior)
+             currentPage = this.currentPage;
+             totalItems = processed.length;
+             const meta = TableLogic.getPaginationMeta(totalItems, currentPage, pageSize);
+             totalPages = meta.totalPages;
+             startRecord = meta.startRecord;
+             endRecord = meta.endRecord;
+ 
+             if (currentPage > totalPages && totalPages > 0) {
+                 currentPage = totalPages;
+                 this.currentPage = totalPages; // Sync internal state
+             }
+             
+             paginated = this.config.pagination ? TableLogic.paginate(processed, currentPage, pageSize) : processed;
+        }
 
         const allCurrentIds = processed.map(r => r.id);
         const allSelected = allCurrentIds.length > 0 && allCurrentIds.every(id => this.selectedRows.has(id));
@@ -477,11 +511,11 @@ export class DataTableLit extends LitElement {
                     </tbody>
                 </table>
             </div>
-            ${this.renderFooter(totalItems, startRecord, endRecord, totalPages)}
+            ${this.renderFooter(totalItems, startRecord, endRecord, totalPages, currentPage)}
         `;
     }
 
-    private renderFooter(totalItems: number, startRecord: number, endRecord: number, totalPages: number) {
+    private renderFooter(totalItems: number, startRecord: number, endRecord: number, totalPages: number, currentPage: number) {
         if (!this.config.pagination || totalItems === 0) return nothing;
 
         return html`
@@ -491,23 +525,23 @@ export class DataTableLit extends LitElement {
                 </span>
                 <div style="display: flex; gap: 0.5rem;">
                     <button class="page-btn" 
-                        ?disabled=${this.currentPage === 1}
-                        @click=${() => this.handlePageChange(this.currentPage - 1)}>&lt;</button>
+                        ?disabled=${currentPage === 1}
+                        @click=${() => this.handlePageChange(currentPage - 1)}>&lt;</button>
                     
                     ${(() => {
                         const window = 3;
-                        const start = Math.max(1, Math.min(this.currentPage - 1, totalPages - window + 1));
+                        const start = Math.max(1, Math.min(currentPage - 1, totalPages - window + 1));
                         const end = Math.min(totalPages, start + window - 1);
                         
                         return Array.from({length: end - start + 1}, (_, i) => start + i).map(p => html`
-                            <button class="page-btn ${this.currentPage === p ? 'active' : ''}" 
+                            <button class="page-btn ${currentPage === p ? 'active' : ''}" 
                                 @click=${() => this.handlePageChange(p)}>${p}</button>
                         `);
                     })()}
 
                     <button class="page-btn" 
-                        ?disabled=${this.currentPage === totalPages}
-                        @click=${() => this.handlePageChange(this.currentPage + 1)}>&gt;</button>
+                        ?disabled=${currentPage === totalPages}
+                        @click=${() => this.handlePageChange(currentPage + 1)}>&gt;</button>
                 </div>
             </div>
         `;
