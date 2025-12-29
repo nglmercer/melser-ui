@@ -9,6 +9,8 @@ export interface BaseColumn<T = unknown> {
   sortable?: boolean;
   render?: (row: T) => unknown;
   editRender?: (row: T, onChange: (val: unknown) => void) => unknown;
+  transform?: (value: unknown) => unknown;
+  reverseTransform?: (value: unknown) => unknown;
 }
 
 export interface StringColumn<T = unknown> extends BaseColumn<T> {
@@ -154,4 +156,3 @@ export interface CellChangeDetail {
     key?: string;
     value: unknown;
 }
-

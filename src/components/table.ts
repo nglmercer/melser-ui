@@ -356,8 +356,10 @@ export class DataTableLit extends LitElement {
     }
 
     private handleSave(id: string | number) {
+        // Apply reverse transforms before saving to preserve original types
+        const transformedData = this.applyReverseTransform(this.editFormData, this.columns);
         this.dispatchEvent(new CustomEvent<RowSaveDetail>(M_EVENTS.ROW_SAVE, {
-            detail: { id, data: this.editFormData },
+            detail: { id, data: transformedData },
             bubbles: true,
             composed: true
         }));
@@ -554,6 +556,32 @@ export class DataTableLit extends LitElement {
             composed: true
         }));
     }
+
+    private applyTransform(value: unknown, col: TableColumn): unknown {
+        if (col.transform) {
+            return col.transform(value);
+        }
+        return value;
+    }
+
+    private applyReverseTransform(data: DataRow, columns: TableColumn[]): DataRow {
+        const transformed: DataRow = { id: data.id };
+        
+        columns.forEach(col => {
+            const key = col.key as string;
+            if (key === 'actions') return;
+            
+            const value = data[key];
+            if (col.reverseTransform && value !== undefined) {
+                transformed[key] = col.reverseTransform(value);
+            } else {
+                transformed[key] = value;
+            }
+        });
+        
+        return transformed;
+    }
+
     private renderActions(row: DataRow, col: TableColumn, isEditing: boolean) {
         // 1. Custom Render Function (Highest Priority)
         // Allows full control via column definition configuration
@@ -722,7 +750,10 @@ export class DataTableLit extends LitElement {
     renderCell(row: DataRow, col: TableColumn, isEditing: boolean) {
         // Use edited data if this row is being edited
         const effectiveRow = isEditing ? this.editFormData : row;
-        const val = effectiveRow[col.key as string];
+        const rawValue = effectiveRow[col.key as string];
+        
+        // Apply transform for display (only in view mode)
+        const val = isEditing ? rawValue : this.applyTransform(rawValue, col);
 
         // 1. Custom Slot Rendering
         const slotRender = this.renderSlotCell(row, effectiveRow, col, val, isEditing);
