@@ -13,6 +13,7 @@ export const M_EVENTS = {
   CELL_CHANGE: 'cell-change',
   CELL_EDIT_COMPLETE: 'cell-edit-complete',
   TABLE_ACTION: 'table-action',
+  PAGE_CHANGE: 'page-change',
   
   // Eventos de formulario
   SUBMIT: 'submit',
@@ -41,6 +42,7 @@ export interface SubmitEvent extends CustomEvent<{ data: any }> {}
 export interface PlaygroundSubmitEvent extends CustomEvent<{ data: any; isValid: boolean }> {}
 export interface UiChangeEvent extends CustomEvent<any> {}
 export interface ChangeEvent extends CustomEvent<any> {}
+export interface PageChangeEvent extends CustomEvent<{ page: number; pageSize: number }> {}
 
 // Mapeo de eventos para type guards y autocompletado
 export interface MelserEventMap {
@@ -56,6 +58,7 @@ export interface MelserEventMap {
   [M_EVENTS.PLAYGROUND_SUBMIT]: PlaygroundSubmitEvent;
   [M_EVENTS.UI_CHANGE]: UiChangeEvent;
   [M_EVENTS.CHANGE]: ChangeEvent;
+  [M_EVENTS.PAGE_CHANGE]: PageChangeEvent;
 }
 
 // Helper type para obtener el tipo correcto del evento

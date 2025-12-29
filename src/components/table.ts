@@ -34,6 +34,7 @@ export class DataTableLit extends LitElement {
         density: 'Normal',
         expandable: false
     };
+    @property({ type: Number }) total?: number;
     @property({ type: String }) searchQuery = '';
     @property({ type: Object }) customStyles: TableStyles = {};
     @property({ type: Object }) icons = {
@@ -284,6 +285,11 @@ export class DataTableLit extends LitElement {
 
     private handlePageChange(newPage: number) {
         this.currentPage = newPage;
+        this.dispatchEvent(new CustomEvent(M_EVENTS.PAGE_CHANGE, {
+            detail: { page: newPage, pageSize: this.config.pageSize },
+            bubbles: true,
+            composed: true
+        }));
     }
 
     private handleSelectAll(e: Event, currentIds: (string|number)[]) {
@@ -380,14 +386,21 @@ export class DataTableLit extends LitElement {
         processed = TableLogic.sort(processed, this.sortConfig);
         
         const pageSize = this.config.pageSize || 5;
-        const totalItems = processed.length;
+        // If 'total' property is provided, we assume server-side pagination.
+        // In this case, 'processed' (the data prop) IS the current page data.
+        const isServerSide = this.total !== undefined;
+        const totalItems = isServerSide ? this.total! : processed.length;
+
         const { totalPages, startRecord, endRecord } = TableLogic.getPaginationMeta(totalItems, this.currentPage, pageSize);
         
         if (this.currentPage > totalPages && totalPages > 0) {
             this.currentPage = totalPages;
         }
 
-        const paginated = this.config.pagination ? TableLogic.paginate(processed, this.currentPage, pageSize) : processed;
+        // If server-side, we do NOT slice the data, because the input data is already the slice for the current page.
+        const paginated = (this.config.pagination && !isServerSide) 
+            ? TableLogic.paginate(processed, this.currentPage, pageSize) 
+            : processed;
 
         const allCurrentIds = processed.map(r => r.id);
         const allSelected = allCurrentIds.length > 0 && allCurrentIds.every(id => this.selectedRows.has(id));
