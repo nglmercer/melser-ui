@@ -1,6 +1,6 @@
 {
   "name": "melser-ui",
-  "version": "0.1.6-alpha.1",
+  "version": "0.1.6-alpha.2",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
