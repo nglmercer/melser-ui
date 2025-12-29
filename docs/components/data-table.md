@@ -160,8 +160,6 @@ The playground provides:
 - **Event Monitoring**: Watch all table events in real-time
 - **Template System**: Switch between different data templates (users, products)
 
-Try the [interactive playground example](../examples/table-playground.html) to explore all features.
-
 ## Theming
 
 Use `customStyles` to override default colors and appearance.
