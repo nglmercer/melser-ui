@@ -334,6 +334,83 @@
   </div>
 
   <div class="card">
+    <h2>Modal Demo</h2>
+    <p>A fully accessible modal component with ARIA support, keyboard navigation, and focus management.</p>
+    
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+      <button class="btn" id="open-modal-basic">Open Basic Modal</button>
+      <button class="btn" id="open-modal-small">Open Small Modal</button>
+      <button class="btn" id="open-modal-large">Open Large Modal</button>
+      <button class="btn" id="open-modal-no-backdrop-click">No Backdrop Click</button>
+      <button class="btn" id="open-modal-no-backdrop">No Backdrop</button>
+    </div>
+
+    <!-- Basic Modal -->
+    <modal-content id="demo-modal" aria-label="Demo Modal">
+      <span slot="title">Demo Modal</span>
+      <p>This is a fully accessible modal component with ARIA support, keyboard navigation, and focus management.</p>
+      <p>You can close it by:</p>
+      <ul>
+        <li>Clicking the X button</li>
+        <li>Clicking outside the modal (backdrop)</li>
+        <li>Pressing the Escape key</li>
+      </ul>
+      <div slot="actions">
+        <button class="btn" id="cancel-modal" style="background: var(--me-border); color: var(--me-text);">Cancel</button>
+        <button class="btn" id="confirm-modal">Confirm</button>
+      </div>
+    </modal-content>
+
+    <!-- Small Modal -->
+    <modal-content id="demo-modal-small" size="sm" aria-label="Small Modal">
+      <span slot="title">Small Modal</span>
+      <p>This is a small modal variant.</p>
+      <div slot="actions">
+        <button class="btn" id="close-modal-small">Close</button>
+      </div>
+    </modal-content>
+
+    <!-- Large Modal -->
+    <modal-content id="demo-modal-large" size="lg" aria-label="Large Modal">
+      <span slot="title">Large Modal</span>
+      <p>This is a large modal variant with more content.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <div slot="actions">
+        <button class="btn" id="close-modal-large">Close</button>
+      </div>
+    </modal-content>
+
+    <!-- Modal without backdrop click -->
+    <modal-content id="demo-modal-no-backdrop-click" close-on-backdrop-click="false" aria-label="No Backdrop Click Modal">
+      <span slot="title">No Backdrop Click</span>
+      <p>This modal cannot be closed by clicking the backdrop.</p>
+      <p>You can only close it by:</p>
+      <ul>
+        <li>Clicking the X button</li>
+        <li>Pressing the Escape key</li>
+      </ul>
+      <div slot="actions">
+        <button class="btn" id="close-modal-no-backdrop-click">Close</button>
+      </div>
+    </modal-content>
+
+    <!-- Modal without backdrop -->
+    <modal-content id="demo-modal-no-backdrop" show-backdrop="false" aria-label="No Backdrop Modal">
+      <span slot="title">No Backdrop</span>
+      <p>This modal has no backdrop overlay.</p>
+      <p>You can still close it by:</p>
+      <ul>
+        <li>Clicking the X button</li>
+        <li>Pressing the Escape key</li>
+      </ul>
+      <div slot="actions">
+        <button class="btn" id="close-modal-no-backdrop">Close</button>
+      </div>
+    </modal-content>
+  </div>
+
+  <div class="card">
     <h2>Data Table Demo</h2>
     <p>A powerful data table with sorting, pagination, selection, and inline editing.</p>
     
@@ -498,6 +575,69 @@
     // Initial check and add resize listener
     handleResize();
     window.addEventListener('resize', handleResize);
+
+    // Modal Demo Logic
+    const demoModal = document.getElementById('demo-modal');
+    const demoModalSmall = document.getElementById('demo-modal-small');
+    const demoModalLarge = document.getElementById('demo-modal-large');
+
+    document.getElementById('open-modal-basic')?.addEventListener('click', () => {
+      demoModal.openModal();
+    });
+
+    document.getElementById('open-modal-small')?.addEventListener('click', () => {
+      demoModalSmall.openModal();
+    });
+
+    document.getElementById('open-modal-large')?.addEventListener('click', () => {
+      demoModalLarge.openModal();
+    });
+
+    document.getElementById('cancel-modal')?.addEventListener('click', () => {
+      demoModal.close();
+    });
+
+    document.getElementById('confirm-modal')?.addEventListener('click', () => {
+      alert('Confirmed!');
+      demoModal.close();
+    });
+
+    document.getElementById('close-modal-small')?.addEventListener('click', () => {
+      demoModalSmall.close();
+    });
+
+    document.getElementById('close-modal-large')?.addEventListener('click', () => {
+      demoModalLarge.close();
+    });
+
+    document.getElementById('open-modal-no-backdrop-click')?.addEventListener('click', () => {
+      const modal = document.getElementById('demo-modal-no-backdrop-click');
+      modal.openModal();
+    });
+
+    document.getElementById('open-modal-no-backdrop')?.addEventListener('click', () => {
+      const modal = document.getElementById('demo-modal-no-backdrop');
+      modal.openModal();
+    });
+
+    document.getElementById('close-modal-no-backdrop-click')?.addEventListener('click', () => {
+      const modal = document.getElementById('demo-modal-no-backdrop-click');
+      modal.close();
+    });
+
+    document.getElementById('close-modal-no-backdrop')?.addEventListener('click', () => {
+      const modal = document.getElementById('demo-modal-no-backdrop');
+      modal.close();
+    });
+
+    // Listen to modal events
+    demoModal?.addEventListener('open', () => {
+      console.log('Modal opened');
+    });
+
+    demoModal?.addEventListener('close', () => {
+      console.log('Modal closed');
+    });
 
     // Navbar Toggle Logic
     const demoNavbar = document.getElementById('demo-navbar');

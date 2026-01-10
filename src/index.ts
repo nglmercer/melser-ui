@@ -32,6 +32,7 @@ export { MelserNavbarBrand } from './components/melser-navbar-brand';
 export { MelserIconButton } from './components/melser-icon-button';
 export { MelserNavItem } from './components/melser-nav-item';
 export { MelserIcon } from './components/melser-icon';
+export { MelserModal } from './components/modal/modal';
 export { CellRendererRegistry } from './core/CellRendererRegistry';
 export { svgIconRegistry, SvgIconRegistry } from './core/SvgIconRegistry';
 export { TableRenderer } from './utils/table-renderer';

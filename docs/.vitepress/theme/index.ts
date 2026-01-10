@@ -1,11 +1,12 @@
 // docs/.vitepress/theme/index.ts
 import DefaultTheme from 'vitepress/theme'
-//import './custom.css' // Aquí pondremos tus variables CSS
+import './docs.css' // Aquí pondremos tus variables CSS
 
 export default {
   extends: DefaultTheme,
+  //@ts-ignore
   async enhanceApp({ app }) {
-    // 1. Importación dinámica SOLO para el cliente (Navegador)
+    // @ts-ignore
     if (!import.meta.env.SSR) {
       try {
         // Importamos todo desde tu index.ts principal

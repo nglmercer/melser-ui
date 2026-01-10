@@ -5,6 +5,7 @@ import './index';
 import './components/melser-playground-form'; // New Playground Component
 import './components/table'; // New Table Component
 import './components/melser-table-playground'; // New Table Playground Component
+import './components/modal/modal'; // New Modal Component
 import { setTheme } from './index';
 if (typeof window !== 'undefined') {
   const htmlElement = document.documentElement;
@@ -36,10 +37,12 @@ if (typeof window !== 'undefined') {
     document.addEventListener('DOMContentLoaded', ()=>{
       init();
       initTable();
+      initModals();
     });
   } else {
     init();
     initTable();
+    initModals();
   }
   const setupGlobalFormHandler = () => {
     // Crear contenedor para resultados si no existe
@@ -332,5 +335,34 @@ if (typeof window !== 'undefined') {
     density: 'Normal',
     expandable: false
     };
+  }
+  
+  function initModals() {
+    // Use event delegation for modal open buttons
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      const openButton = target.closest('[data-modal-open]');
+      if (openButton) {
+        console.log('openButton', openButton);
+        const modalId = openButton.getAttribute('data-modal-open');
+        const modal = document.getElementById(modalId);
+        if (modal && typeof (modal).openModal === 'function') {
+          console.log('modal', modal);
+          (modal).openModal();
+        }
+      }
+      
+      // Handle modal close buttons
+      const closeButton = target.closest('[data-modal-close]');
+      console.log('closeButton', closeButton);
+      if (closeButton) {
+        const modalId = closeButton.getAttribute('data-modal-close');
+        const modal = document.getElementById(modalId);
+        if (modal && typeof (modal).close === 'function') {
+          console.log('modal', modal);
+          (modal).close();
+        }
+      }
+    });
   }
 }

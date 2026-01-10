@@ -113,6 +113,13 @@ export default defineConfig({
             items: [
               { text: 'DataTable', link: '/components/data-table' }
             ]
+          },
+          {
+            text: 'Otros',
+            collapsed: true,
+            items: [
+              { text: 'MelserModal', link: '/components/modal' }
+            ]
           }
         ],
         docFooter: {
@@ -126,7 +133,7 @@ export default defineConfig({
         editLink: {
           pattern: 'https://github.com/nglmercer/melser-ui/edit/main/docs/:path',
           text: 'Editar esta página en GitHub'
-        }
+        },
       }
     },
     en: {
@@ -210,6 +217,13 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   { text: 'DataTable', link: '/en/components/data-table' }
+                ]
+              },
+              {
+                text: 'Others',
+                collapsed: true,
+                items: [
+                  { text: 'MelserModal', link: '/en/components/modal' }
                 ]
               }
         ],
@@ -302,6 +316,13 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   { text: 'DataTable', link: '/zh/components/data-table' }
+                ]
+              },
+              {
+                text: '其他',
+                collapsed: true,
+                items: [
+                  { text: 'MelserModal', link: '/zh/components/modal' }
                 ]
               }
         ],
