@@ -108,12 +108,12 @@ title: MelserModal
 | 属性                   | 类型                              | 默认值       | 描述                                             |
 | ---------------------- | --------------------------------- | ------------- | ---------------------------------------------------- |
 | `open`                 | `boolean`                         | `false`       | 模态框当前是否打开。                           |
-| `closeOnBackdropClick` | `boolean`                         | `true`        | 是否可以通过点击背景关闭模态框。                 |
+| `ManualClose` | `boolean`                         | `true`        | 是否可以通过点击背景关闭模态框。                 |
 | `closeOnEscape`        | `boolean`                         | `true`        | 是否可以通过按 Escape 键关闭模态框。               |
 | `trapFocus`            | `boolean`                         | `true`        | 是否在模态框内捕获焦点。                         |
 | `ariaLabel`            | `string \| null`                  | `null`        | 模态框的 ARIA 标签（用于屏幕阅读器）。           |
 | `ariaDescribedby`      | `string \| null`                  | `null`        | ARIA 描述元素 ID。                                  |
-| `showBackdrop`         | `boolean`                         | `true`        | 是否显示背景覆盖。                               |
+| `BackdropHidden`         | `boolean`                         | `true`        | 是否显示背景覆盖。                               |
 | `centered`             | `boolean`                         | `true`        | 是否垂直居中模态框。                             |
 | `containerClass`       | `string \| undefined`             | `undefined`   | 模态框容器的自定义类。                           |
 
@@ -311,7 +311,7 @@ modal.addEventListener('before-close', (e) => {
 
 **点击背景时模态框未关闭：**
 
-检查 `closeOnBackdropClick` 是否设置为 `false`：
+检查 `ManualClose` 是否设置为 `false`：
 
 ```html
 <me-modal close-on-backdrop-click="false">

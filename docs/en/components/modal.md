@@ -108,12 +108,12 @@ A fully accessible, customizable modal component with ARIA support, keyboard nav
 | Property               | Type                              | Default       | Description                                                    |
 | ---------------------- | --------------------------------- | ------------- | -------------------------------------------------------------- |
 | `open`                 | `boolean`                         | `false`       | Whether the modal is currently open.                           |
-| `closeOnBackdropClick` | `boolean`                         | `true`        | Whether the modal can be closed by clicking the backdrop.     |
+| `ManualClose` | `boolean`                         | `true`        | Whether the modal can be closed by clicking the backdrop.     |
 | `closeOnEscape`        | `boolean`                         | `true`        | Whether the modal can be closed by pressing Escape key.       |
 | `trapFocus`            | `boolean`                         | `true`        | Whether to trap focus within the modal.                       |
 | `ariaLabel`            | `string \| null`                  | `null`        | ARIA label for the modal (for screen readers).                |
 | `ariaDescribedby`      | `string \| null`                  | `null`        | ARIA describedby element ID.                                  |
-| `showBackdrop`         | `boolean`                         | `true`        | Whether to show the backdrop overlay.                         |
+| `BackdropHidden`         | `boolean`                         | `true`        | Whether to show the backdrop overlay.                         |
 | `centered`             | `boolean`                         | `true`        | Whether to center the modal vertically.                       |
 | `containerClass`       | `string \| undefined`             | `undefined`   | Custom class for the modal container.                         |
 
@@ -311,7 +311,7 @@ The modal includes comprehensive accessibility features:
 
 **Modal not closing on backdrop click:**
 
-Check if `closeOnBackdropClick` is set to `false`:
+Check if `ManualClose` is set to `false`:
 
 ```html
 <me-modal close-on-backdrop-click="false">

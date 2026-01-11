@@ -7,11 +7,11 @@ import './modal-base';
 export class MelserModal extends LitElement {
   // Properties
   @property({ type: Boolean, reflect: true }) open = false;
-  @property({ type: Boolean, reflect: true }) closeOnBackdropClick = true;
-  @property({ type: Boolean, reflect: true }) closeOnEscape = true;
-  @property({ type: Boolean, reflect: true }) trapFocus = true;
-  @property({ type: Boolean, reflect: true }) showBackdrop = true;
-  @property({ type: Boolean, reflect: true }) centered = true;
+  @property({ type: Boolean, reflect: true }) ManualClose: boolean | string = false;
+  @property({ type: Boolean, reflect: true }) closeOnEscape: boolean | string = true;
+  @property({ type: Boolean, reflect: true }) trapFocus: boolean | string = true;
+  @property({ type: Boolean, reflect: true }) BackdropHidden: boolean | string = false;
+  @property({ type: Boolean, reflect: true }) centered: boolean | string = true;
   @property({ type: String, reflect: false }) ariaLabel: string | null = null;
   @property({ type: String, reflect: false }) ariaDescribedby: string | null = null;
   @property({ type: String, reflect: false }) containerClass?: string;
@@ -175,6 +175,7 @@ export class MelserModal extends LitElement {
 
     if (!beforeCloseEvent.defaultPrevented) {
       this.open = false;
+      // _handleClose will be called by willUpdate when open changes
     }
   }
 
@@ -196,19 +197,28 @@ export class MelserModal extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     window.addEventListener('keydown', this._handleKeyDown);
+    requestAnimationFrame(() => {
+      console.log({
+        BackdropHidden: this.BackdropHidden,
+        trapFocus: this.trapFocus,
+        closeOnEscape: this.closeOnEscape,
+        ManualClose: this.ManualClose,
+        centered: this.centered
+      });
+    });
   }
 
   render() {
 
     return html`
-      <modal-base 
-        .open="${this.open}" 
-        .closeOnBackdropClick="${this.closeOnBackdropClick}"
-        .showBackdrop="${this.showBackdrop}"
+      <modal-base
+        .open="${this.open}"
+        .ManualClose="${this.ManualClose}"
+        .BackdropHidden="${this.BackdropHidden}"
         .centered="${this.centered}"
         .ariaLabel="${this.ariaLabel}"
         .ariaDescribedby="${this.ariaDescribedby}"
-        @close="${this._handleClose}"
+        @close="${() => this.close()}"
       >
         <slot></slot>
       </modal-base>

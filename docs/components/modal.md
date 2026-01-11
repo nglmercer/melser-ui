@@ -74,7 +74,7 @@ Un componente de modal completamente accesible y personalizable con soporte ARIA
   <button data-modal-open="modal-no-backdrop-es" class="btn">Sin Fondo</button>
 </div>
 
-<me-modal id="modal-no-backdrop-es" show-backdrop="false" aria-label="Modal Sin Fondo">
+<me-modal id="modal-no-backdrop-es" BackdropHidden="true" aria-label="Modal Sin Fondo">
   <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
       <h2 style="margin: 0;">Sin Fondo</h2>
@@ -84,13 +84,27 @@ Un componente de modal completamente accesible y personalizable con soporte ARIA
   </div>
 </me-modal>
 
+### Modal con Control Manual de Cierre
+
+<div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+  <button data-modal-open="modal-manual-close-es" class="btn">Cierre Manual</button>
+</div>
+
+<me-modal id="modal-manual-close-es" ManualClose="true" BackdropHidden="true" class="card" aria-label="Modal con Cierre Manual">
+  <div>
+    <h2 x style="margin-top: 0;">Test Modal</h2>
+    <p>Este modal tiene `ManualClose="true"` y `BackdropHidden="true"`. Solo se puede cerrar con el botón, la tecla Escape o elementos con el atributo `x`.</p>
+    <button type="button" data-modal-close="modal-manual-close-es" class="btn">Cerrar</button>
+  </div>
+</me-modal>
+
 ### Evitar Cerrar al Hacer Clic en el Fondo
 
 <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
   <button data-modal-open="modal-no-backdrop-click-es" class="btn">Sin Clic en Fondo</button>
 </div>
 
-<me-modal id="modal-no-backdrop-click-es" close-on-backdrop-click="false" aria-label="Modal que Evita Cerrar con Clic en Fondo">
+<me-modal id="modal-no-backdrop-click-es" ManualClose="true" aria-label="Modal que Evita Cerrar con Clic en Fondo">
   <div style="padding: 1.5rem;">
     <h2 style="margin-top: 0;">Confirmar Acción</h2>
     <p>Este modal no se puede cerrar haciendo clic en el fondo. Debes usar los botones o la tecla Escape.</p>
@@ -108,12 +122,12 @@ Un componente de modal completamente accesible y personalizable con soporte ARIA
 | Propiedad              | Tipo                              | Default       | Descripción                                                  |
 | ---------------------- | --------------------------------- | ------------- | ------------------------------------------------------------ |
 | `open`                 | `boolean`                         | `false`       | Si el modal está actualmente abierto.                        |
-| `closeOnBackdropClick` | `boolean`                         | `true`        | Si el modal se puede cerrar haciendo clic en el fondo.       |
+| `ManualClose` | `boolean`                         | `false`       | Si el modal SOLO se puede cerrar manualmente (no se cierra al hacer clic en el fondo).       |
 | `closeOnEscape`        | `boolean`                         | `true`        | Si el modal se puede cerrar presionando la tecla Escape.    |
 | `trapFocus`            | `boolean`                         | `true`        | Si capturar el foco dentro del modal.                       |
 | `ariaLabel`            | `string \| null`                  | `null`        | Etiqueta ARIA para el modal (para lectores de pantalla).    |
 | `ariaDescribedby`      | `string \| null`                  | `null`        | ID del elemento descrito por ARIA.                          |
-| `showBackdrop`         | `boolean`                         | `true`        | Si mostrar la superposición de fondo.                       |
+| `BackdropHidden`         | `boolean`                         | `false`        | Si ocultar la superposición de fondo.                       |
 | `centered`             | `boolean`                         | `true`        | Si centrar el modal verticalmente.                          |
 | `containerClass`       | `string \| undefined`             | `undefined`   | Clase personalizada para el contenedor del modal.           |
 
@@ -311,10 +325,10 @@ El modal incluye características completas de accesibilidad:
 
 **El modal no se cierra al hacer clic en el fondo:**
 
-Verifica si `closeOnBackdropClick` está configurado en `false`:
+Verifica si `ManualClose` está configurado en `true`:
 
 ```html
-<me-modal close-on-backdrop-click="false">
+<me-modal ManualClose="true">
   <!-- Contenido del modal -->
 </me-modal>
 ```

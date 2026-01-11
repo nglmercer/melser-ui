@@ -1,110 +1,71 @@
 import { LitElement, html, css, type CSSResultGroup } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { ModalThemeStyles, ModalVar } from './modal-theme.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { ModalThemeStyles, ModalVar as V } from './modal-theme.js';
 
 @customElement('modal-base')
 export class ModalBase extends LitElement {
   @property({ type: Boolean, reflect: true }) open = false;
-  @property({ type: Boolean, reflect: true }) closeOnBackdropClick = false;
-  @property({ type: Boolean, reflect: true }) showBackdrop = true;
+  @property({ type: Boolean, reflect: true }) ManualClose = false; // ManualClose shortened
+  @property({ type: Boolean, reflect: true }) BackdropHidden = false;
   @property({ type: Boolean, reflect: true }) centered = true;
-  @property({ type: String, reflect: false }) ariaLabel: string | null = null;
-  @property({ type: String, reflect: false }) ariaDescribedby: string | null = null;
+  @property() ariaLabel: string | null = null;
+  @property() ariaDescribedby: string | null = null;
 
-  @query('.backdrop') private _backdropElement?: HTMLElement;
+  @query('.backdrop') private _el?: HTMLElement;
 
-  protected updated(changedProperties: Map<string, any>) {
-    if (changedProperties.has('open')) {
-      this._toggleBodyScroll(this.open);
-      if (this.open) {
-        window.addEventListener('keydown', this._handleKeyDown);
-      } else {
-        window.removeEventListener('keydown', this._handleKeyDown);
-      }
+  protected updated(changed: Map<string, any>) {
+    if (changed.has('open')) {
+      document.body.style.overflow = this.open ? 'hidden' : '';
+      const fn = this.open ? window.addEventListener : window.removeEventListener;
+      fn('keydown', this._onEsc);
     }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this._toggleBodyScroll(false);
-    window.removeEventListener('keydown', this._handleKeyDown);
+    document.body.style.overflow = '';
+    window.removeEventListener('keydown', this._onEsc);
   }
 
-  private _toggleBodyScroll(lock: boolean) {
-    document.body.style.overflow = lock ? 'hidden' : '';
+  private _onEsc = (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && this.open) this._close();
   }
 
-  private _handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape' && this.open) {
-      // Let the parent component handle the close event
-      this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
+  private _onBackdropClick(e: MouseEvent) {
+    // If user clicked exactly the backdrop and setting is enabled
+    // Use target to check if the backdrop itself was clicked (not its children)
+    if (!this.ManualClose && e.target === this._el) {
+      console.log(e, e.target === this._el, this.ManualClose);
+      this._close();
     }
   }
 
-  private _handleBackdropClick(e: MouseEvent) {
-    // Only close if closeOnBackdropClick is true AND the click was on the backdrop itself
-    if (this.closeOnBackdropClick && e.target === this._backdropElement) {
-      this._requestClose();
-    }
-  }
-
-  private _requestClose() {
+  private _close() {
     this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
-  }
-
-  private _getAriaLabel() {
-    // If ariaLabel is provided, use it
-    if (this.ariaLabel) {
-      return this.ariaLabel;
-    }
-    // Otherwise, return null to let the browser infer from title slot
-    return null;
+    this.open = false;
   }
 
   render() {
-    const backdropClasses = [
-      'backdrop',
-      this.open ? 'open' : '',
-      !this.showBackdrop ? 'no-backdrop' : '',
-      !this.centered ? 'not-centered' : ''
-    ].filter(Boolean).join(' ');
-
-    // Don't render backdrop at all if showBackdrop is false
-    if (!this.showBackdrop) {
-      return html`
-        <div 
-          class="${backdropClasses}"
-          part="backdrop"
-          style="background: transparent; pointer-events: none; backdrop-filter: none;"
-        >
-          <div 
-            class="modal-wrapper" 
-            part="modal"
-            role="dialog" 
-            aria-modal="true"
-            aria-label="${this._getAriaLabel() || ''}"
-            aria-describedby="${this.ariaDescribedby || ''}"
-          >
-            <slot></slot>
-          </div>
-        </div>
-      `;
-    }
-
     return html`
-      <div 
-        class="${backdropClasses}"
+      <div
+        class=${classMap({
+          backdrop: true,
+          open: this.open,
+          'not-centered': !this.centered,
+          'hide-bg': this.BackdropHidden
+        })}
         part="backdrop"
-        @click=${this._handleBackdropClick}
-        ?close-on-backdrop-click="${this.closeOnBackdropClick}"
+        @click=${this._onBackdropClick}
       >
-        <div 
-          class="modal-wrapper" 
+        <div
+          class="modal-wrapper"
           part="modal"
-          role="dialog" 
+          role="dialog"
           aria-modal="true"
-          aria-label="${this._getAriaLabel() || ''}"
-          aria-describedby="${this.ariaDescribedby || ''}"
+          aria-label=${this.ariaLabel || ''}
+          aria-describedby=${this.ariaDescribedby || ''}
+          @click=${(e: Event) => e.stopPropagation()}
         >
           <slot></slot>
         </div>
@@ -120,33 +81,28 @@ export class ModalBase extends LitElement {
       .backdrop {
         position: fixed;
         inset: 0;
-        z-index: ${ModalVar['z-index-backdrop']};
-        background: ${ModalVar['backdrop-bg']};
-        backdrop-filter: blur(${ModalVar['backdrop-blur']});
+        z-index: ${V['z-index-backdrop']};
+        background: ${V['backdrop-bg']};
+        backdrop-filter: blur(${V['backdrop-blur']});
         display: flex;
         align-items: center;
         justify-content: center;
         opacity: 0;
-        pointer-events: none;
         visibility: hidden;
-        transition: opacity ${ModalVar['transition-duration']} ${ModalVar['transition-easing']};
+        pointer-events: none;
+        transition: opacity ${V['transition-duration']} ${V['transition-easing']};
       }
 
       .backdrop.open {
         opacity: 1;
-        pointer-events: auto;
         visibility: visible;
+        pointer-events: auto; /* Always allow clicks if open; JS handles logic */
       }
 
-      
-      /* When close-on-click is enabled, allow pointer events on backdrop */
-      .backdrop.open[close-on-backdrop-click="true"] {
-        pointer-events: auto;
-      }
-      
-      /* When close-on-click is disabled, prevent backdrop clicks but allow pointer events for children */
-      .backdrop.open[close-on-backdrop-click="false"] {
-        cursor: default;
+      /* Fixed the logic here: if BackdropHidden is false, hide the visual */
+      .backdrop.hide-bg {
+        background: transparent;
+        backdrop-filter: none;
       }
       
       .backdrop.not-centered {
@@ -154,24 +110,16 @@ export class ModalBase extends LitElement {
         padding-top: 10vh;
       }
 
-      /* Prevent clicks on modal-wrapper from closing the modal */
       .modal-wrapper {
-        pointer-events: auto;
         transform: scale(0.95);
-        transition: transform ${ModalVar['transition-duration']} ${ModalVar['transition-easing']};
-        display: flex;
-        justify-content: center;
-        z-index: ${ModalVar['z-index-modal']};
+        transition: transform ${V['transition-duration']} ${V['transition-easing']};
+        z-index: ${V['z-index-modal']};
       }
 
-      .backdrop.open .modal-wrapper { transform: scale(1); }
+      .open .modal-wrapper { transform: scale(1); }
 
-      /* Reduced motion support */
       @media (prefers-reduced-motion: reduce) {
-        .backdrop,
-        .modal-wrapper {
-          transition: none;
-        }
+        .backdrop, .modal-wrapper { transition: none; }
       }
     `
   ];
