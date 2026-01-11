@@ -1,6 +1,6 @@
 {
   "name": "melser-ui",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -71,7 +71,7 @@
   },
   "homepage": "https://github.com/nglmercer/melser-ui#readme",
   "sideEffects": [
-    "src/components/*.ts",
+    "src/components/**/*.ts",
     "src/core/icons.ts",
     "src/index.ts"
   ],
