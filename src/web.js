@@ -6,6 +6,8 @@ import './components/melser-playground-form'; // New Playground Component
 import './components/table'; // New Table Component
 import './components/melser-table-playground'; // New Table Playground Component
 import './components/modal/modal'; // New Modal Component
+import { MelserModal } from './index';
+console.log("MelserModal",MelserModal)
 import { setTheme } from './index';
 if (typeof window !== 'undefined') {
   const htmlElement = document.documentElement;

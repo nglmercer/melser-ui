@@ -13,7 +13,7 @@ export default {
         // Asegúrate que la ruta relativa apunte a tu src/index.ts
         const MelserUI = await import('../../../src/web.js')
         
-        console.log('Melser UI Components Registered!',MelserUI);
+        console.log('Components Registered!',MelserUI);
       } catch (e) {
         console.error('Error loading Melser UI:', e);
       }
