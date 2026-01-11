@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { query } from 'lit/decorators.js';
+//import { query } from 'lit/decorators.js';
 import './modal-base';
 
 @customElement('me-modal')
@@ -15,10 +15,6 @@ export class MelserModal extends LitElement {
   @property({ type: String, reflect: false }) ariaLabel: string | null = null;
   @property({ type: String, reflect: false }) ariaDescribedby: string | null = null;
   @property({ type: String, reflect: false }) containerClass?: string;
-
-  // Query elements
-  @query('.modal-wrapper') private _modalWrapper?: HTMLElement;
-
   // State for focus management
   @state() private _previousActiveElement: HTMLElement | null = null;
   @state() private _focusableElements: HTMLElement[] = [];
@@ -74,10 +70,10 @@ export class MelserModal extends LitElement {
 
   private _setupCloseButtons() {
     // Find all elements with 'x' attribute within the modal
-    if (!this._modalWrapper) return;
+    const closeButtons = this.querySelectorAll<HTMLElement>('[x]');
 
-    const closeButtons = this._modalWrapper.querySelectorAll<HTMLElement>('[x]');
-
+    // Query both 'x' and '[x]' attributes
+    //console.log("closeButtons", closeButtons);
     // Remove existing listeners (cleanup)
     closeButtons.forEach(btn => {
       // Clone and replace to remove old listeners
@@ -86,14 +82,19 @@ export class MelserModal extends LitElement {
     });
 
     // Add new listeners to the fresh elements
-    const freshCloseButtons = this._modalWrapper.querySelectorAll<HTMLElement>('[x]');
+    const freshCloseButtons = this.querySelectorAll<HTMLElement>('[x]');
     freshCloseButtons.forEach(btn => {
       btn.addEventListener('click', () => this.close());
     });
   }
 
+  private _handleSlotChange() {
+    // Re-setup close buttons when slot content changes
+    this._setupCloseButtons();
+  }
+
   private _setupFocusTrap() {
-    if (!this.trapFocus || !this._modalWrapper) return;
+    if (!this.trapFocus) return;
 
     // Get all focusable elements within the modal
     const focusableSelectors = [
@@ -106,7 +107,7 @@ export class MelserModal extends LitElement {
     ].join(', ');
 
     this._focusableElements = Array.from(
-      this._modalWrapper.querySelectorAll<HTMLElement>(focusableSelectors)
+      this.querySelectorAll<HTMLElement>(focusableSelectors)
     );
 
     if (this._focusableElements.length === 0) return;
@@ -209,7 +210,6 @@ export class MelserModal extends LitElement {
   }
 
   render() {
-
     return html`
       <modal-base
         .open="${this.open}"
@@ -220,7 +220,7 @@ export class MelserModal extends LitElement {
         .ariaDescribedby="${this.ariaDescribedby}"
         @close="${() => this.close()}"
       >
-        <slot></slot>
+        <slot @slotchange="${this._handleSlotChange}"></slot>
       </modal-base>
     `;
   }
