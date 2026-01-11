@@ -8,20 +8,21 @@ title: MelserModal
 
 ## 主要特性
 
-- 🎨 **多种尺寸变体：** `sm`、`md`、`lg`、`xl` 和全屏选项。
 - ♿ **无障碍优先：** 完整的 ARIA 支持、键盘导航和焦点捕获。
 - 🔒 **焦点管理：** 打开/关闭时自动捕获和恢复焦点。
-- 🎭 **灵活插槽：** 可自定义的页眉、标题、正文和操作按钮。
+- 🎭 **灵活插槽：** 完全可定制的内容，无预定义样式。
 - 🌙 **背景控制：** 可配置的背景和模糊效果。
 - ⌨️ **键盘支持：** Escape 关闭，Tab/Shift+Tab 导航。
+- 🎯 **自动关闭：** `x` 属性可从任何元素关闭模态框。
 
 ## 基本示例
 
 ```html
-<me-modal open>
-  <span slot="title">模态框标题</span>
-  <p>这是模态框内容。您可以在这里放置任何 HTML。</p>
-  <div slot="actions">
+<me-modal id="basic-modal" open>
+  <div>
+    <h2>模态框标题</h2>
+    <p>这是模态框内容。您可以在这里放置任何 HTML。</p>
+    <button x>×</button>
     <button>取消</button>
     <button>确认</button>
   </div>
@@ -34,64 +35,19 @@ title: MelserModal
   <button data-modal-open="basic-modal-zh" style="padding: 0.5rem 1rem; cursor: pointer;">打开基本模态框</button>
   
   <me-modal id="basic-modal-zh" aria-label="基本模态框示例">
-    <span slot="title">基本模态框</span>
-    <p>这是一个具有默认设置的基本模态框。您可以通过点击背景、按 Escape 键或点击 X 按钮来关闭它。</p>
-    <div slot="actions">
-      <button data-modal-close="basic-modal-zh">取消</button>
-      <button data-modal-close="basic-modal-zh">确定</button>
+    <div style="padding: 1.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2 style="margin: 0;">基本模态框</h2>
+        <button x aria-label="关闭" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">×</button>
+      </div>
+      <p>这是一个内容完全可定制的基本模态框。您可以通过点击 × 按钮、按 Escape 键或点击背景来关闭它。</p>
+      <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem; justify-content: flex-end;">
+        <button data-modal-close="basic-modal-zh">取消</button>
+        <button data-modal-close="basic-modal-zh">确定</button>
+      </div>
     </div>
   </me-modal>
 </div>
-
-### 尺寸变体
-
-<div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-  <button data-modal-open="modal-sm-zh" style="padding: 0.5rem 1rem; cursor: pointer;">小</button>
-  <button data-modal-open="modal-md-zh" style="padding: 0.5rem 1rem; cursor: pointer;">中</button>
-  <button data-modal-open="modal-lg-zh" style="padding: 0.5rem 1rem; cursor: pointer;">大</button>
-  <button data-modal-open="modal-xl-zh" style="padding: 0.5rem 1rem; cursor: pointer;">特大</button>
-  <button data-modal-open="modal-full-zh" style="padding: 0.5rem 1rem; cursor: pointer;">全屏</button>
-</div>
-
-<me-modal id="modal-sm-zh" size="sm" aria-label="小模态框">
-  <span slot="title">小模态框</span>
-  <p>尺寸：sm (400px)</p>
-  <div slot="actions">
-    <button data-modal-close="modal-sm-zh">关闭</button>
-  </div>
-</me-modal>
-
-<me-modal id="modal-md-zh" size="md" aria-label="中模态框">
-  <span slot="title">中模态框</span>
-  <p>尺寸：md (500px)</p>
-  <div slot="actions">
-    <button data-modal-close="modal-md-zh">关闭</button>
-  </div>
-</me-modal>
-
-<me-modal id="modal-lg-zh" size="lg" aria-label="大模态框">
-  <span slot="title">大模态框</span>
-  <p>尺寸：lg (700px)</p>
-  <div slot="actions">
-    <button data-modal-close="modal-lg-zh">关闭</button>
-  </div>
-</me-modal>
-
-<me-modal id="modal-xl-zh" size="xl" aria-label="特大模态框">
-  <span slot="title">特大模态框</span>
-  <p>尺寸：xl (900px)</p>
-  <div slot="actions">
-    <button data-modal-close="modal-xl-zh">关闭</button>
-  </div>
-</me-modal>
-
-<me-modal id="modal-full-zh" size="full" aria-label="全屏模态框">
-  <span slot="title">全屏模态框</span>
-  <p>尺寸：full (95vw)</p>
-  <div slot="actions">
-    <button data-modal-close="modal-full-zh">关闭</button>
-  </div>
-</me-modal>
 
 ### 自定义页眉
 
@@ -100,13 +56,15 @@ title: MelserModal
 </div>
 
 <me-modal id="modal-custom-header-zh" aria-label="自定义页眉模态框">
-  <div slot="header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; color: white;">
-    <h2 style="margin: 0; font-size: 1.5rem;">自定义页眉</h2>
+  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; color: white;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2 style="margin: 0; font-size: 1.5rem;">自定义页眉</h2>
+      <button x aria-label="关闭" style="background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: white; padding: 0.5rem;">×</button>
+    </div>
     <p style="margin: 0.5rem 0 0 0; opacity: 0.9;">带渐变背景</p>
   </div>
-  <p>此模态框具有完全自定义的页眉，带有渐变样式。</p>
-  <div slot="actions">
-    <button data-modal-close="modal-custom-header-zh">关闭</button>
+  <div style="padding: 1.5rem;">
+    <p>此模态框具有完全自定义的页眉，带有渐变样式。所有内容都是可定制的。</p>
   </div>
 </me-modal>
 
@@ -117,10 +75,12 @@ title: MelserModal
 </div>
 
 <me-modal id="modal-no-backdrop-zh" show-backdrop="false" aria-label="无背景模态框">
-  <span slot="title">无背景</span>
-  <p>此模态框没有背景覆盖。您只能使用关闭按钮或 Escape 键来关闭它。</p>
-  <div slot="actions">
-    <button data-modal-close="modal-no-backdrop-zh">关闭</button>
+  <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <h2 style="margin: 0;">无背景</h2>
+      <button x aria-label="关闭" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">×</button>
+    </div>
+    <p>此模态框没有背景覆盖。您只能使用关闭按钮或 Escape 键来关闭它。</p>
   </div>
 </me-modal>
 
@@ -131,11 +91,13 @@ title: MelserModal
 </div>
 
 <me-modal id="modal-no-backdrop-click-zh" close-on-backdrop-click="false" aria-label="防止背景点击关闭的模态框">
-  <span slot="title">确认操作</span>
-  <p>此模态框不能通过点击背景关闭。您必须使用按钮或 Escape 键。</p>
-  <div slot="actions">
-    <button data-modal-close="modal-no-backdrop-click-zh">取消</button>
-    <button data-modal-close="modal-no-backdrop-click-zh">确认</button>
+  <div style="padding: 1.5rem;">
+    <h2 style="margin-top: 0;">确认操作</h2>
+    <p>此模态框不能通过点击背景关闭。您必须使用按钮或 Escape 键。</p>
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+      <button data-modal-close="modal-no-backdrop-click-zh">取消</button>
+      <button data-modal-close="modal-no-backdrop-click-zh">确认</button>
+    </div>
   </div>
 </me-modal>
 
@@ -146,16 +108,26 @@ title: MelserModal
 | 属性                   | 类型                              | 默认值       | 描述                                             |
 | ---------------------- | --------------------------------- | ------------- | ---------------------------------------------------- |
 | `open`                 | `boolean`                         | `false`       | 模态框当前是否打开。                           |
-| `size`                 | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'`    | 模态框尺寸变体。                                 |
 | `closeOnBackdropClick` | `boolean`                         | `true`        | 是否可以通过点击背景关闭模态框。                 |
 | `closeOnEscape`        | `boolean`                         | `true`        | 是否可以通过按 Escape 键关闭模态框。               |
-| `showCloseButton`      | `boolean`                         | `true`        | 是否在页眉中显示关闭按钮。                       |
 | `trapFocus`            | `boolean`                         | `true`        | 是否在模态框内捕获焦点。                         |
 | `ariaLabel`            | `string \| null`                  | `null`        | 模态框的 ARIA 标签（用于屏幕阅读器）。           |
 | `ariaDescribedby`      | `string \| null`                  | `null`        | ARIA 描述元素 ID。                                  |
 | `showBackdrop`         | `boolean`                         | `true`        | 是否显示背景覆盖。                               |
 | `centered`             | `boolean`                         | `true`        | 是否垂直居中模态框。                             |
 | `containerClass`       | `string \| undefined`             | `undefined`   | 模态框容器的自定义类。                           |
+
+### 特殊属性：`x`
+
+`x` 属性可以添加到模态框内的任何元素以作为关闭按钮：
+
+```html
+<button x>×</button>
+<span x>关闭</span>
+<div x role="button" tabindex="0">关闭</div>
+```
+
+点击任何具有 `x` 属性的元素将自动关闭模态框。
 
 ### Shadow Parts (用于高级 CSS)
 
@@ -165,11 +137,6 @@ title: MelserModal
 | --------------- | -------------------------- |
 | `backdrop`      | 背景覆盖元素。             |
 | `modal`         | 主模态框容器。             |
-| `header`        | 页眉部分。                 |
-| `title`         | 页眉中的标题元素。         |
-| `close-button`  | 页眉中的关闭按钮。         |
-| `body`          | 主内容/正文部分。          |
-| `footer`        | 页脚/操作按钮部分。        |
 
 ### 事件
 
@@ -189,39 +156,26 @@ title: MelserModal
 
 ## 定制指南
 
-### 1. 尺寸变体
+### 1. 基本结构
 
-从五个预定义的尺寸选项中选择：
+模态框完全可定制，没有预定义样式：
 
 ```html
-<!-- 小 (400px) -->
-<me-modal size="sm">
-  <span slot="title">小模态框</span>
-  <p>内容在这里...</p>
-</me-modal>
-
-<!-- 中 (500px) - 默认 -->
-<me-modal size="md">
-  <span slot="title">中模态框</span>
-  <p>内容在这里...</p>
-</me-modal>
-
-<!-- 大 (700px) -->
-<me-modal size="lg">
-  <span slot="title">大模态框</span>
-  <p>内容在这里...</p>
-</me-modal>
-
-<!-- 特大 (900px) -->
-<me-modal size="xl">
-  <span slot="title">特大模态框</span>
-  <p>内容在这里...</p>
-</me-modal>
-
-<!-- 全屏 (95vw) -->
-<me-modal size="full">
-  <span slot="title">全屏模态框</span>
-  <p>内容在这里...</p>
+<me-modal id="my-modal">
+  <!-- 完全自定义的内容 -->
+  <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 500px;">
+    <header style="display: flex; justify-content: space-between; align-items: center;">
+      <h2>自定义标题</h2>
+      <button x aria-label="关闭">×</button>
+    </header>
+    <main style="margin: 1.5rem 0;">
+      <p>模态框内容...</p>
+    </main>
+    <footer style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <button>取消</button>
+      <button>确认</button>
+    </footer>
+  </div>
 </me-modal>
 ```
 
@@ -251,8 +205,11 @@ title: MelserModal
 
 ```html
 <me-modal class="my-custom-modal">
-  <span slot="title">自定义样式模态框</span>
-  <p>此模态框使用自定义 CSS 变量。</p>
+  <div style="padding: 1.5rem;">
+    <h2>自定义样式模态框</h2>
+    <p>此模态框使用自定义 CSS 变量来设置背景。</p>
+    <button x>×</button>
+  </div>
 </me-modal>
 ```
 
@@ -261,65 +218,38 @@ title: MelserModal
 对于变量无法覆盖的更改，请使用 `::part`：
 
 ```css
-/* 自定义页眉样式 */
-me-modal::part(header) {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-bottom: none;
-  padding: 2rem;
+/* 自定义背景样式 */
+me-modal::part(backdrop) {
+  background: rgba(255, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
 }
 
-me-modal::part(title) {
-  color: white;
-  font-size: 1.75rem;
-  font-weight: 700;
-}
-
-/* 自定义关闭按钮 */
-me-modal::part(close-button) {
-  color: white;
-  opacity: 0.8;
-}
-
-me-modal::part(close-button):hover {
-  opacity: 1;
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* 自定义正文样式 */
-me-modal::part(body) {
-  background: #f8f9fa;
-  color: #333;
-}
-
-/* 自定义页脚样式 */
-me-modal::part(footer) {
-  background: #f0f0f0;
-  border-top: 2px solid #e0e0e0;
+/* 自定义模态框包装器 */
+me-modal::part(modal) {
+  max-width: 800px;
 }
 ```
 
-### 4. 使用插槽
+### 4. 使用 `x` 属性
 
-模态框提供灵活的插槽用于内容自定义：
+`x` 属性允许从任何元素关闭模态框：
 
 ```html
 <me-modal>
-  <!-- 带有标题插槽的默认页眉 -->
-  <span slot="title">模态框标题</span>
-  
-  <!-- 或完全自定义的页眉 -->
-  <div slot="header">
-    <img src="logo.png" alt="Logo" style="height: 32px;">
-    <h2>自定义页眉</h2>
-  </div>
-  
-  <!-- 默认正文插槽（不需要插槽名称） -->
-  <p>这是主要内容。</p>
-  
-  <!-- 操作页脚插槽 -->
-  <div slot="actions">
-    <button>取消</button>
-    <button>确认</button>
+  <div style="padding: 1.5rem;">
+    <!-- 带 × 的关闭按钮 -->
+    <button x style="float: right; background: none; border: none; font-size: 1.5rem;">×</button>
+    
+    <h2>标题</h2>
+    <p>内容...</p>
+    
+    <!-- 带文本的关闭按钮 -->
+    <button x>关闭</button>
+    
+    <!-- 任何元素都可以关闭模态框 -->
+    <div x role="button" tabindex="0" style="cursor: pointer; padding: 0.5rem; background: #f0f0f0;">
+      点击关闭
+    </div>
   </div>
 </me-modal>
 ```
@@ -366,11 +296,13 @@ modal.addEventListener('before-close', (e) => {
 
 ```html
 <me-modal aria-label="删除确认" aria-describedby="delete-desc">
-  <span slot="title">删除项目</span>
-  <p id="delete-desc">您确定要删除此项目吗？此操作无法撤消。</p>
-  <div slot="actions">
-    <button>取消</button>
-    <button>删除</button>
+  <div style="padding: 1.5rem;">
+    <h2>删除项目</h2>
+    <p id="delete-desc">您确定要删除此项目吗？此操作无法撤消。</p>
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+      <button data-modal-close="delete-modal">取消</button>
+      <button data-modal-close="delete-modal">删除</button>
+    </div>
   </div>
 </me-modal>
 ```
@@ -397,13 +329,26 @@ modal.addEventListener('before-close', (e) => {
 </me-modal>
 ```
 
+**带有 `x` 属性的按钮未关闭模态框：**
+
+确保带有 `x` 属性的元素在模态框内：
+
+```html
+<me-modal>
+  <div>
+    <button x>×</button>  <!-- 这将起作用 -->
+  </div>
+</me-modal>
+```
+
 **模态框内容对于屏幕来说太高：**
 
-模态框正文具有 `overflow-y: auto` 用于滚动。调整最大高度：
+为模态框容器添加溢出：
 
 ```css
-me-modal::part(body) {
+.modal-content {
   max-height: 70vh;
+  overflow-y: auto;
 }
 ```
 
@@ -428,10 +373,11 @@ me-modal::part(modal) {
 
 ## 最佳实践
 
-1. **始终提供标题** 使用 `title` 插槽或 `aria-label` 以确保无障碍性
+1. **始终提供标题** 或 `aria-label` 以确保无障碍性
 2. **使用描述性 ARIA 标签** 当标题不能完全解释模态框的用途时
-3. **提供清晰的操作按钮** 在页脚插槽中
+3. **提供清晰的操作按钮** 用于关闭或确认
 4. **考虑 `before-close` 事件** 用于未保存更改的警告
 5. **测试键盘导航** 以确保所有交互元素都可访问
 6. **保持模态框专注于** 单个任务或操作
-7. **使用适当的尺寸** - `sm` 用于确认，`md` 用于表单，`lg` 用于复杂内容
+7. **使用** `x` **属性** 用于关闭元素，而不是添加手动事件监听器
+8. **为带有** `x` **属性的关闭按钮添加** `aria-label`，当使用 × 等符号时

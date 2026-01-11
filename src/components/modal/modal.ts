@@ -2,16 +2,13 @@ import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { query } from 'lit/decorators.js';
 import './modal-base';
-import './modal-content';
 
 @customElement('me-modal')
 export class MelserModal extends LitElement {
   // Properties
   @property({ type: Boolean, reflect: true }) open = false;
-  @property({ type: String, reflect: true }) size: 'sm' | 'md' | 'lg' | 'xl' | 'full' = 'md';
   @property({ type: Boolean, reflect: true }) closeOnBackdropClick = true;
   @property({ type: Boolean, reflect: true }) closeOnEscape = true;
-  @property({ type: Boolean, reflect: true }) showCloseButton = true;
   @property({ type: Boolean, reflect: true }) trapFocus = true;
   @property({ type: Boolean, reflect: true }) showBackdrop = true;
   @property({ type: Boolean, reflect: true }) centered = true;
@@ -20,7 +17,6 @@ export class MelserModal extends LitElement {
   @property({ type: String, reflect: false }) containerClass?: string;
 
   // Query elements
-  @query('.backdrop') private _backdropElement?: HTMLElement;
   @query('.modal-wrapper') private _modalWrapper?: HTMLElement;
 
   // State for focus management
@@ -54,6 +50,7 @@ export class MelserModal extends LitElement {
     // Set up focus trap after render
     requestAnimationFrame(() => {
       this._setupFocusTrap();
+      this._setupCloseButtons();
     });
   }
 
@@ -75,20 +72,24 @@ export class MelserModal extends LitElement {
     this._previousActiveElement = null;
   }
 
-  private _handleBeforeClose(e: CustomEvent) {
-    const beforeCloseEvent = new CustomEvent('before-close', {
-      bubbles: true,
-      composed: true,
-      cancelable: true,
-      detail: { modal: this }
+  private _setupCloseButtons() {
+    // Find all elements with 'x' attribute within the modal
+    if (!this._modalWrapper) return;
+
+    const closeButtons = this._modalWrapper.querySelectorAll<HTMLElement>('[x]');
+
+    // Remove existing listeners (cleanup)
+    closeButtons.forEach(btn => {
+      // Clone and replace to remove old listeners
+      const newBtn = btn.cloneNode(true) as HTMLElement;
+      btn.parentNode?.replaceChild(newBtn, btn);
     });
 
-    this.dispatchEvent(beforeCloseEvent);
-
-    if (beforeCloseEvent.defaultPrevented) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    // Add new listeners to the fresh elements
+    const freshCloseButtons = this._modalWrapper.querySelectorAll<HTMLElement>('[x]');
+    freshCloseButtons.forEach(btn => {
+      btn.addEventListener('click', () => this.close());
+    });
   }
 
   private _setupFocusTrap() {
@@ -198,35 +199,19 @@ export class MelserModal extends LitElement {
   }
 
   render() {
-    const containerClasses = ['modal-container'];
-    if (this.containerClass) {
-      containerClasses.push(this.containerClass);
-    }
 
     return html`
-      <div class="${containerClasses.join(' ')}">
-        <modal-base 
-          .open="${this.open}" 
-          .closeOnBackdropClick="${this.closeOnBackdropClick}"
-          .showBackdrop="${this.showBackdrop}"
-          .centered="${this.centered}"
-          .ariaLabel="${this.ariaLabel}"
-          .ariaDescribedby="${this.ariaDescribedby}"
-          @close="${this._handleClose}"
-        >
-          <modal-content 
-            .size="${this.size}" 
-            .showCloseButton="${this.showCloseButton}"
-            @close="${this.close}"
-          >
-            <slot name="header">
-              <h2 slot="title"><slot name="title">Default Title</slot></h2>
-            </slot>
-            <slot></slot>
-            <div slot="actions"><slot name="actions"></slot></div>
-          </modal-content>
-        </modal-base>
-      </div>
+      <modal-base 
+        .open="${this.open}" 
+        .closeOnBackdropClick="${this.closeOnBackdropClick}"
+        .showBackdrop="${this.showBackdrop}"
+        .centered="${this.centered}"
+        .ariaLabel="${this.ariaLabel}"
+        .ariaDescribedby="${this.ariaDescribedby}"
+        @close="${this._handleClose}"
+      >
+        <slot></slot>
+      </modal-base>
     `;
   }
 

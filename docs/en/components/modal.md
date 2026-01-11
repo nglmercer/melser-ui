@@ -8,20 +8,21 @@ A fully accessible, customizable modal component with ARIA support, keyboard nav
 
 ## Key Features
 
-- 🎨 **Multiple Size Variants:** `sm`, `md`, `lg`, `xl`, and `full` screen options.
 - ♿ **Accessibility First:** Full ARIA support, keyboard navigation, and focus trapping.
 - 🔒 **Focus Management:** Automatic focus capture and restoration when opening/closing.
-- 🎭 **Flexible Slots:** Customizable header, title, body, and action buttons.
+- 🎭 **Flexible Slots:** Fully customizable content without predefined styles.
 - 🌙 **Backdrop Control:** Configurable backdrop with blur effect.
 - ⌨️ **Keyboard Support:** Escape to close, Tab/Shift+Tab to navigate.
+- 🎯 **Auto Close:** The `x` attribute to close modal from any element.
 
 ## Basic Example
 
 ```html
-<me-modal open>
-  <span slot="title">Modal Title</span>
-  <p>This is the modal content. You can put any HTML here.</p>
-  <div slot="actions">
+<me-modal id="basic-modal" open>
+  <div>
+    <h2>Modal Title</h2>
+    <p>This is the modal content. You can put any HTML here.</p>
+    <button x>×</button>
     <button>Cancel</button>
     <button>Confirm</button>
   </div>
@@ -34,64 +35,19 @@ A fully accessible, customizable modal component with ARIA support, keyboard nav
   <button data-modal-open="basic-modal" style="padding: 0.5rem 1rem; cursor: pointer;">Open Basic Modal</button>
   
   <me-modal id="basic-modal" aria-label="Basic Modal Example">
-    <span slot="title">Basic Modal</span>
-    <p>This is a basic modal with default settings. You can close it by clicking the backdrop, pressing Escape, or clicking the X button.</p>
-    <div slot="actions">
-      <button data-modal-close="basic-modal">Cancel</button>
-      <button data-modal-close="basic-modal">OK</button>
+    <div style="padding: 1.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2 style="margin: 0;">Basic Modal</h2>
+        <button x aria-label="Close" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">×</button>
+      </div>
+      <p>This is a basic modal with fully customizable content. You can close it by clicking the × button, pressing Escape, or clicking the backdrop.</p>
+      <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem; justify-content: flex-end;">
+        <button data-modal-close="basic-modal">Cancel</button>
+        <button data-modal-close="basic-modal">OK</button>
+      </div>
     </div>
   </me-modal>
 </div>
-
-### Size Variants
-
-<div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-  <button data-modal-open="modal-sm" style="padding: 0.5rem 1rem; cursor: pointer;">Small</button>
-  <button data-modal-open="modal-md" style="padding: 0.5rem 1rem; cursor: pointer;">Medium</button>
-  <button data-modal-open="modal-lg" style="padding: 0.5rem 1rem; cursor: pointer;">Large</button>
-  <button data-modal-open="modal-xl" style="padding: 0.5rem 1rem; cursor: pointer;">Extra Large</button>
-  <button data-modal-open="modal-full" style="padding: 0.5rem 1rem; cursor: pointer;">Full Screen</button>
-</div>
-
-<me-modal id="modal-sm" size="sm" aria-label="Small Modal">
-  <span slot="title">Small Modal</span>
-  <p>Size: sm (400px)</p>
-  <div slot="actions">
-    <button data-modal-close="modal-sm">Close</button>
-  </div>
-</me-modal>
-
-<me-modal id="modal-md" size="md" aria-label="Medium Modal">
-  <span slot="title">Medium Modal</span>
-  <p>Size: md (500px)</p>
-  <div slot="actions">
-    <button data-modal-close="modal-md">Close</button>
-  </div>
-</me-modal>
-
-<me-modal id="modal-lg" size="lg" aria-label="Large Modal">
-  <span slot="title">Large Modal</span>
-  <p>Size: lg (700px)</p>
-  <div slot="actions">
-    <button data-modal-close="modal-lg">Close</button>
-  </div>
-</me-modal>
-
-<me-modal id="modal-xl" size="xl" aria-label="Extra Large Modal">
-  <span slot="title">Extra Large Modal</span>
-  <p>Size: xl (900px)</p>
-  <div slot="actions">
-    <button data-modal-close="modal-xl">Close</button>
-  </div>
-</me-modal>
-
-<me-modal id="modal-full" size="full" aria-label="Full Screen Modal">
-  <span slot="title">Full Screen Modal</span>
-  <p>Size: full (95vw)</p>
-  <div slot="actions">
-    <button data-modal-close="modal-full">Close</button>
-  </div>
-</me-modal>
 
 ### Custom Header
 
@@ -100,13 +56,15 @@ A fully accessible, customizable modal component with ARIA support, keyboard nav
 </div>
 
 <me-modal id="modal-custom-header" aria-label="Custom Header Modal">
-  <div slot="header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; color: white;">
-    <h2 style="margin: 0; font-size: 1.5rem;">Custom Header</h2>
+  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; color: white;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2 style="margin: 0; font-size: 1.5rem;">Custom Header</h2>
+      <button x aria-label="Close" style="background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: white; padding: 0.5rem;">×</button>
+    </div>
     <p style="margin: 0.5rem 0 0 0; opacity: 0.9;">With gradient background</p>
   </div>
-  <p>This modal has a completely custom header with gradient styling.</p>
-  <div slot="actions">
-    <button data-modal-close="modal-custom-header">Close</button>
+  <div style="padding: 1.5rem;">
+    <p>This modal has a completely custom header with gradient styling. All content is fully customizable.</p>
   </div>
 </me-modal>
 
@@ -117,10 +75,12 @@ A fully accessible, customizable modal component with ARIA support, keyboard nav
 </div>
 
 <me-modal id="modal-no-backdrop" show-backdrop="false" aria-label="Modal Without Backdrop">
-  <span slot="title">No Backdrop</span>
-  <p>This modal has no backdrop overlay. You can only close it with the close button or Escape key.</p>
-  <div slot="actions">
-    <button data-modal-close="modal-no-backdrop">Close</button>
+  <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <h2 style="margin: 0;">No Backdrop</h2>
+      <button x aria-label="Close" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">×</button>
+    </div>
+    <p>This modal has no backdrop overlay. You can only close it with the close button or Escape key.</p>
   </div>
 </me-modal>
 
@@ -131,11 +91,13 @@ A fully accessible, customizable modal component with ARIA support, keyboard nav
 </div>
 
 <me-modal id="modal-no-backdrop-click" close-on-backdrop-click="false" aria-label="Modal That Prevents Backdrop Close">
-  <span slot="title">Confirm Action</span>
-  <p>This modal cannot be closed by clicking the backdrop. You must use the buttons or Escape key.</p>
-  <div slot="actions">
-    <button data-modal-close="modal-no-backdrop-click">Cancel</button>
-    <button data-modal-close="modal-no-backdrop-click">Confirm</button>
+  <div style="padding: 1.5rem;">
+    <h2 style="margin-top: 0;">Confirm Action</h2>
+    <p>This modal cannot be closed by clicking the backdrop. You must use the buttons or Escape key.</p>
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+      <button data-modal-close="modal-no-backdrop-click">Cancel</button>
+      <button data-modal-close="modal-no-backdrop-click">Confirm</button>
+    </div>
   </div>
 </me-modal>
 
@@ -146,16 +108,26 @@ A fully accessible, customizable modal component with ARIA support, keyboard nav
 | Property               | Type                              | Default       | Description                                                    |
 | ---------------------- | --------------------------------- | ------------- | -------------------------------------------------------------- |
 | `open`                 | `boolean`                         | `false`       | Whether the modal is currently open.                           |
-| `size`                 | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'`    | Modal size variant.                                            |
 | `closeOnBackdropClick` | `boolean`                         | `true`        | Whether the modal can be closed by clicking the backdrop.     |
 | `closeOnEscape`        | `boolean`                         | `true`        | Whether the modal can be closed by pressing Escape key.       |
-| `showCloseButton`      | `boolean`                         | `true`        | Whether to show the close button in the header.               |
 | `trapFocus`            | `boolean`                         | `true`        | Whether to trap focus within the modal.                       |
 | `ariaLabel`            | `string \| null`                  | `null`        | ARIA label for the modal (for screen readers).                |
 | `ariaDescribedby`      | `string \| null`                  | `null`        | ARIA describedby element ID.                                  |
 | `showBackdrop`         | `boolean`                         | `true`        | Whether to show the backdrop overlay.                         |
 | `centered`             | `boolean`                         | `true`        | Whether to center the modal vertically.                       |
-| `containerClass`       | `string \| undefined`             | `undefined`   | Custom class for the modal container.                          |
+| `containerClass`       | `string \| undefined`             | `undefined`   | Custom class for the modal container.                         |
+
+### Special Attribute: `x`
+
+The `x` attribute can be added to any element within the modal to act as a close button:
+
+```html
+<button x>×</button>
+<span x>Close</span>
+<div x role="button" tabindex="0">Close</div>
+```
+
+Clicking any element with the `x` attribute will automatically close the modal.
 
 ### Shadow Parts (For Advanced CSS)
 
@@ -165,11 +137,6 @@ Use `::part(name)` to style internal elements without variables.
 | --------------- | ---------------------------------------- |
 | `backdrop`      | The backdrop overlay element.            |
 | `modal`         | The main modal container.                |
-| `header`        | The header section.                      |
-| `title`         | The title element within the header.         |
-| `close-button`  | The close button in the header.          |
-| `body`          | The main content/body section.           |
-| `footer`        | The footer/action buttons section.        |
 
 ### Events
 
@@ -189,39 +156,26 @@ Use `::part(name)` to style internal elements without variables.
 
 ## Customization Guide
 
-### 1. Size Variants
+### 1. Basic Structure
 
-Choose from five predefined size options:
+The modal is fully customizable without predefined styles:
 
 ```html
-<!-- Small (400px) -->
-<me-modal size="sm">
-  <span slot="title">Small Modal</span>
-  <p>Content here...</p>
-</me-modal>
-
-<!-- Medium (500px) - Default -->
-<me-modal size="md">
-  <span slot="title">Medium Modal</span>
-  <p>Content here...</p>
-</me-modal>
-
-<!-- Large (700px) -->
-<me-modal size="lg">
-  <span slot="title">Large Modal</span>
-  <p>Content here...</p>
-</me-modal>
-
-<!-- Extra Large (900px) -->
-<me-modal size="xl">
-  <span slot="title">Extra Large Modal</span>
-  <p>Content here...</p>
-</me-modal>
-
-<!-- Full Screen (95vw) -->
-<me-modal size="full">
-  <span slot="title">Full Screen Modal</span>
-  <p>Content here...</p>
+<me-modal id="my-modal">
+  <!-- Fully customized content -->
+  <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 500px;">
+    <header style="display: flex; justify-content: space-between; align-items: center;">
+      <h2>Custom Title</h2>
+      <button x aria-label="Close">×</button>
+    </header>
+    <main style="margin: 1.5rem 0;">
+      <p>Modal content...</p>
+    </main>
+    <footer style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <button>Cancel</button>
+      <button>Confirm</button>
+    </footer>
+  </div>
 </me-modal>
 ```
 
@@ -251,8 +205,11 @@ Override theme variables for custom styling:
 
 ```html
 <me-modal class="my-custom-modal">
-  <span slot="title">Custom Styled Modal</span>
-  <p>This modal uses custom CSS variables.</p>
+  <div style="padding: 1.5rem;">
+    <h2>Custom Styled Modal</h2>
+    <p>This modal uses custom CSS variables for the backdrop.</p>
+    <button x>×</button>
+  </div>
 </me-modal>
 ```
 
@@ -261,65 +218,38 @@ Override theme variables for custom styling:
 For changes that variables don't cover, use `::part`:
 
 ```css
-/* Custom header styling */
-me-modal::part(header) {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-bottom: none;
-  padding: 2rem;
+/* Custom backdrop styling */
+me-modal::part(backdrop) {
+  background: rgba(255, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
 }
 
-me-modal::part(title) {
-  color: white;
-  font-size: 1.75rem;
-  font-weight: 700;
-}
-
-/* Custom close button */
-me-modal::part(close-button) {
-  color: white;
-  opacity: 0.8;
-}
-
-me-modal::part(close-button):hover {
-  opacity: 1;
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* Custom body styling */
-me-modal::part(body) {
-  background: #f8f9fa;
-  color: #333;
-}
-
-/* Custom footer styling */
-me-modal::part(footer) {
-  background: #f0f0f0;
-  border-top: 2px solid #e0e0e0;
+/* Custom modal wrapper */
+me-modal::part(modal) {
+  max-width: 800px;
 }
 ```
 
-### 4. Using Slots
+### 4. Using the `x` Attribute
 
-The modal provides flexible slots for content customization:
+The `x` attribute allows closing the modal from any element:
 
 ```html
 <me-modal>
-  <!-- Default header with title slot -->
-  <span slot="title">Modal Title</span>
-  
-  <!-- OR completely custom header -->
-  <div slot="header">
-    <img src="logo.png" alt="Logo" style="height: 32px;">
-    <h2>Custom Header</h2>
-  </div>
-  
-  <!-- Default body slot (no slot name needed) -->
-  <p>This is the main content.</p>
-  
-  <!-- Actions footer slot -->
-  <div slot="actions">
-    <button>Cancel</button>
-    <button>Confirm</button>
+  <div style="padding: 1.5rem;">
+    <!-- Close button with × -->
+    <button x style="float: right; background: none; border: none; font-size: 1.5rem;">×</button>
+    
+    <h2>Title</h2>
+    <p>Content...</p>
+    
+    <!-- Close button with text -->
+    <button x>Close</button>
+    
+    <!-- Any element can close the modal -->
+    <div x role="button" tabindex="0" style="cursor: pointer; padding: 0.5rem; background: #f0f0f0;">
+      Click to close
+    </div>
   </div>
 </me-modal>
 ```
@@ -366,11 +296,13 @@ The modal includes comprehensive accessibility features:
 
 ```html
 <me-modal aria-label="Delete Confirmation" aria-describedby="delete-desc">
-  <span slot="title">Delete Item</span>
-  <p id="delete-desc">Are you sure you want to delete this item? This action cannot be undone.</p>
-  <div slot="actions">
-    <button>Cancel</button>
-    <button>Delete</button>
+  <div style="padding: 1.5rem;">
+    <h2>Delete Item</h2>
+    <p id="delete-desc">Are you sure you want to delete this item? This action cannot be undone.</p>
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+      <button data-modal-close="delete-modal">Cancel</button>
+      <button data-modal-close="delete-modal">Delete</button>
+    </div>
   </div>
 </me-modal>
 ```
@@ -397,13 +329,26 @@ Ensure `trapFocus` is enabled (default is `true`):
 </me-modal>
 ```
 
+**Button with `x` attribute not closing modal:**
+
+Make sure the element with the `x` attribute is inside the modal:
+
+```html
+<me-modal>
+  <div>
+    <button x>×</button>  <!-- This will work -->
+  </div>
+</me-modal>
+```
+
 **Modal content too tall for screen:**
 
-The modal body has `overflow-y: auto` for scrolling. Adjust the max height:
+Add overflow to your modal container:
 
 ```css
-me-modal::part(body) {
+.modal-content {
   max-height: 70vh;
+  overflow-y: auto;
 }
 ```
 
@@ -428,10 +373,11 @@ The modal has responsive styles. Ensure viewport meta tag is set:
 
 ## Best Practices
 
-1. **Always provide a title** using the `title` slot or `aria-label` for accessibility
-2. **Use descriptive ARIA labels** when the title doesn't fully explain the modal's purpose
-3. **Provide clear action buttons** in the footer slot
+1. **Always provide a title** or `aria-label` for accessibility
+2. **Use descriptive ARIA labels** when title doesn't fully explain modal's purpose
+3. **Provide clear action buttons** for closing or confirming
 4. **Consider the `before-close` event** for unsaved changes warnings
 5. **Test keyboard navigation** to ensure all interactive elements are reachable
 6. **Keep modals focused** on a single task or action
-7. **Use appropriate sizes** - `sm` for confirmations, `md` for forms, `lg` for complex content
+7. **Use the `x` attribute** for close elements instead of adding manual event listeners
+8. **Add `aria-label` to close buttons** with `x` when using symbols like ×

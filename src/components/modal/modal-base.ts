@@ -5,7 +5,7 @@ import { ModalThemeStyles, ModalVar } from './modal-theme.js';
 @customElement('modal-base')
 export class ModalBase extends LitElement {
   @property({ type: Boolean, reflect: true }) open = false;
-  @property({ type: Boolean, reflect: true }) closeOnBackdropClick = true;
+  @property({ type: Boolean, reflect: true }) closeOnBackdropClick = false;
   @property({ type: Boolean, reflect: true }) showBackdrop = true;
   @property({ type: Boolean, reflect: true }) centered = true;
   @property({ type: String, reflect: false }) ariaLabel: string | null = null;
@@ -42,6 +42,7 @@ export class ModalBase extends LitElement {
   }
 
   private _handleBackdropClick(e: MouseEvent) {
+    // Only close if closeOnBackdropClick is true AND the click was on the backdrop itself
     if (this.closeOnBackdropClick && e.target === this._backdropElement) {
       this._requestClose();
     }
@@ -68,11 +69,34 @@ export class ModalBase extends LitElement {
       !this.centered ? 'not-centered' : ''
     ].filter(Boolean).join(' ');
 
+    // Don't render backdrop at all if showBackdrop is false
+    if (!this.showBackdrop) {
+      return html`
+        <div 
+          class="${backdropClasses}"
+          part="backdrop"
+          style="background: transparent; pointer-events: none; backdrop-filter: none;"
+        >
+          <div 
+            class="modal-wrapper" 
+            part="modal"
+            role="dialog" 
+            aria-modal="true"
+            aria-label="${this._getAriaLabel() || ''}"
+            aria-describedby="${this.ariaDescribedby || ''}"
+          >
+            <slot></slot>
+          </div>
+        </div>
+      `;
+    }
+
     return html`
       <div 
         class="${backdropClasses}"
         part="backdrop"
         @click=${this._handleBackdropClick}
+        ?close-on-backdrop-click="${this.closeOnBackdropClick}"
       >
         <div 
           class="modal-wrapper" 
@@ -114,17 +138,25 @@ export class ModalBase extends LitElement {
         visibility: visible;
       }
 
-      .backdrop.no-backdrop {
-        background: transparent;
-        backdrop-filter: none;
+      
+      /* When close-on-click is enabled, allow pointer events on backdrop */
+      .backdrop.open[close-on-backdrop-click="true"] {
+        pointer-events: auto;
       }
-
+      
+      /* When close-on-click is disabled, prevent backdrop clicks but allow pointer events for children */
+      .backdrop.open[close-on-backdrop-click="false"] {
+        cursor: default;
+      }
+      
       .backdrop.not-centered {
         align-items: flex-start;
         padding-top: 10vh;
       }
 
+      /* Prevent clicks on modal-wrapper from closing the modal */
       .modal-wrapper {
+        pointer-events: auto;
         transform: scale(0.95);
         transition: transform ${ModalVar['transition-duration']} ${ModalVar['transition-easing']};
         display: flex;

@@ -433,11 +433,28 @@
        <pre id="table-output" style="max-height: 200px; overflow-y: auto;">Logs will appear here...</pre>
     </div>
   </div>
-
+  <div class="card">
+      <me-modal id="test-modal" close-on-backdrop-click="false" show-backdrop="false">
+        <div>
+          <h2>Test Modal</h2>
+          <button type="button" id="close-modal">Close</button>
+        </div>
+        
+      </me-modal>
+      <button type="button" id="open-modal">Open Modal</button>
+  </div>
   <script type="module">
     import { registerComponent, MelserSwitch, setTheme } from '/src/index.ts';
     import { z } from 'zod';
-
+    const openModalBtn = document.getElementById('open-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+    const testModal = document.getElementById('test-modal');
+    openModalBtn.addEventListener('click', () => {
+      testModal.openModal();
+    });
+    closeModalBtn.addEventListener('click', () => {
+      testModal.close();
+    });
     // DEMO: Register a component with a custom tag name
     registerComponent('custom-brand-switch', MelserSwitch);
 
